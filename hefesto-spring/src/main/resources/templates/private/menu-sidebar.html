@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+
+<div th:fragment="menu-sidebar">	
+
+<nav id="sidebar">
+	<div id="dismiss">
+		<i class="fas fa-arrow-left"></i>
+	</div>
+
+	<div class="sidebar-header">
+
+		<a class="navbar-brand" id="anchorSidebarHomePage"
+			th:href="@{'/index.html'}"
+			style="float: left; height: 50px; padding: 5px 5px; font-size: 22px; text-decoration: none; color: white;">
+			<span th:text="#{main.framework}"></span>
+		</a>
+
+	</div>
+	<br>
+
+	<ul class="list-unstyled components">
+
+		<li class="nav-item" sec:authorize="hasRole('ADMIN')">
+			<a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
+				class="nav-link dropdown-toggle" style="color: black;"> <span th:text="#{menu.administrative}" th:remove="tag"></span>
+			</a>
+			<ul class="collapse list-unstyled" id="adminSubmenu">
+				<li><a class="dropdown-item" th:href="@{/private/admParameterCategoryView}"><span th:text="#{menu.admParameterCategory}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/admParameterView}"><span th:text="#{menu.admParameter}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/admPageView}"><span th:text="#{menu.admPage}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/admMenuView}"><span th:text="#{menu.admMenu}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/admProfileView}"><span th:text="#{menu.admProfile}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/admUserView}"><span th:text="#{menu.admUser}" th:remove="tag"></span></a></li>
+			</ul>
+		</li>
+
+		<li class="nav-item">
+			<a href="#settingsSubmenu" data-toggle="collapse" aria-expanded="false"
+				class="nav-link dropdown-toggle" style="color: black;"><span th:text="#{menu.settings}" th:remove="tag"></span>
+			</a>
+			<ul class="collapse list-unstyled" id="settingsSubmenu">
+				<li><a class="dropdown-item" th:href="@{/private/changePassword}"><span th:text="#{menu.changePassword}" th:remove="tag"></span></a></li>
+				<li><a class="dropdown-item" th:href="@{/private/about}"><span th:text="#{menu.about}" th:remove="tag"></span></a></li>
+			</ul>
+		</li>
+		<li><a class="dropdown-item" th:href="@{/logout}" >
+				<img class="inverted-image" th:src="@{/img/sair.png}" />
+				<span th:text="#{menu.exit}" th:remove="tag"></span>
+		</a></li>
+
+	</ul>
+
+</nav>
+
+<script th:src="@{/vendor/sidebar/sidebar.js}"></script>
+
+</div>
+</body>
+</html>

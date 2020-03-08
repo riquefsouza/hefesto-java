@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="infoUser">
+
+<form id="infoUserForm">
+
+	<div id="infoUserDialog" class="modal fade" role="dialog">
+	  <div class="modal-dialog modal-sm">
+
+		<div class="modal-content">
+		  <div class="modal-header">			
+			<h4 class="modal-title"><span th:text="#{infoUser.title}" th:remove="tag"></span></h4>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+		  </div>
+		  <div class="modal-body">
+
+			<table class="table table-bordered table-condensed">
+				<tbody>
+					<tr>
+						<td style="font-weight: bold;"><span th:text="#{login.username}" th:remove="tag"></span></td>
+						<td class="infoUser-username" th:text="${userLogged.username}"></td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold;"><span th:text="#{infoUser.email}" th:remove="tag"></span></td>
+						<td class="infoUser-email" th:text="${userLogged.email}"></td>
+					</tr>
+					<tr>
+						<td style="font-weight: bold;"><span th:text="#{infoUser.roles}" th:remove="tag"></span></td>
+						<td class="infoUser-roles" th:text="${userLogged.authorities}"></td>
+					</tr>
+				</tbody>
+			</table>
+
+		  
+		  </div>
+		</div>
+
+	  </div>
+	</div>
+
+</form>
+
+</div>
+
+</body>
+</html>

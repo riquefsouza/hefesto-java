@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments/header :: header">
+</head>
+<body>
+<div class="wrapper">
+	<div th:replace="private/menu-sidebar :: menu-sidebar"></div>
+	<div id="content">
+		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->		
+
+	<form id="formListAdmParameterCategory" action="#" th:action="@{/private/admParameterCategoryView/edit}" method="get" th:object="${bean}">
+
+		<input type="hidden" id="admParameterCategory_jsonText" th:field="*{jsonText}" />
+		
+		<div class="card">
+			<div class="card-header" 
+				style="font-weight: bold;font-size: large;">				
+				<span th:text="#{listAdmParameterCategory.title}" id="formTitle"></span>
+			</div>
+			<div class="card-body">				
+				<div class="row">
+					<th:block th:include="/fragments/panelReport"></th:block>				
+				</div>
+			</div>
+		</div>
+
+		<div class="form-actions" style="margin:5px 0;">
+			<button type="button" class="btn btn-primary btn-icon-split" id="btnExport">
+				<span class="icon text-white-50">
+					<i class="fa fa-file"></i>
+				</span>
+				<span class="text" th:text="#{button.export}"></span>
+			</button>			
+			<button type="button" class="btn btn-success btn-icon-split" id="btnAdd">
+				<span class="icon text-white-50">
+					<i class="fa fa-plus-circle"></i>
+				</span>
+				<span class="text" th:text="#{button.add}"></span>
+			</button>			
+			<button type="button" class="btn btn-warning btn-icon-split" id="btnEdit">
+				<span class="icon text-white-50">
+					<i class="fa fa-chevron-circle-up"></i>
+				</span>
+				<span class="text" th:text="#{button.edit}"></span>
+			</button>			
+			<button type="button" class="btn btn-danger btn-icon-split" id="btnDelete">
+				<span class="icon text-white-50">
+					<i class="fa fa-minus-circle"></i>
+				</span>
+				<span class="text" th:text="#{button.delete}"></span>
+			</button>			
+			<button type="button" class="btn btn-primary btn-icon-split" id="btnBack">
+				<span class="icon text-white-50">
+					<i class="fa fa-arrow-circle-left"></i>
+				</span>
+				<span class="text" th:text="#{button.back}"></span>
+			</button>			
+		</div>
+
+		<div id="dlgDeleteConfirmation" th:title="#{dlgDeleteConfirmation.title}" style="display: none;">
+		    <p><span th:text="#{dlgDeleteConfirmation.text}" th:remove="tag"></span></p>
+		</div>
+
+		<div id="tableAdmParameterCategory"></div>
+		
+	</form>
+
+<script th:src="@{/js/admin/admParameterCategory/listAdmParameterCategory.js}"></script>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
+
+</body>
+</html>

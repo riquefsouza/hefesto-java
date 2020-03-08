@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+</head>
+<body>
+<div class="wrapper">
+	<div th:replace="private/menu-sidebar :: menu-sidebar"></div>
+	<div id="content">
+		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->		
+
+	<form id="formEditVwAdmLog" action="#" th:action="@{/private/vwAdmLogView}" method="post" th:object="${bean}">
+	
+		<div class="card">
+			<div class="card-header" 
+				style="font-weight: bold;font-size: large;">
+				<span th:text="#{editVwAdmLog.title}" th:remove="tag"></span>
+			</div>
+			<div class="card-body">				
+				<div class="form-actions">				
+					<button type="submit" class="btn btn-success btn-icon-split" id="btnSave">
+						<span class="icon text-white-50">
+							<i class="fa fa-check-circle"></i>
+						</span>
+						<span class="text" th:text="#{button.save}"></span>
+					</button>
+								
+					<button type="reset" class="btn btn-light btn-icon-split" id="btnReset">
+	                    <span class="icon text-gray-600">
+	                      <i class="fa fa-eraser"></i>
+	                    </span>
+						<span class="text" th:text="#{button.reset}"></span>
+					</button>
+
+					<button type="button" class="btn btn-primary btn-icon-split" id="btnCancel">
+						<span class="icon text-white-50"> 
+							<i class="fa fa-times-circle"></i>
+						</span>	
+						<span class="text" th:text="#{button.cancel}"></span>
+					</button>
+				</div>				
+				<div class="row">
+					<div class="col-md-4 form-group">
+						<input type="hidden" id="vwAdmLog_id" th:field="*{id}" />
+						
+						<label for="vwAdmLog_name"><span th:text="#{editVwAdmLog.name}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="vwAdmLog_name" maxlength="64" required="required" th:field="*{name}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</form>	
+ 
+<script th:src="@{/js/admin/vwAdmLog/editVwAdmLog.js}"></script>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
+
+</body>
+</html>

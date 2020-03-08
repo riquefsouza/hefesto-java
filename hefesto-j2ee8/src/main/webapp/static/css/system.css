@@ -1,0 +1,58 @@
+/*
+* {
+	font-size: 11px;
+	line-height: 1.428;	
+}
+*/
+
+.main-theme {
+	background-color: lightblue;
+}
+
+.central-footer {
+	position: absolute;
+	bottom: 0;
+	width: 98%;
+	float: right;
+	padding: 20px;
+	margin-bottom: 30px;
+}
+
+.form-actions {
+	text-align: right;
+	padding-bottom: 0.5em;
+}
+
+.web-content {
+	padding-top: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.inverted-image {
+	-webkit-filter: invert(100%);
+	filter: invert(100%);
+}
+
+.picklistBigger .ui-picklist-list {
+	height: 24em !important;
+	width: 24em !important;
+}
+
+.picklistSmaller .ui-picklist-list {
+	height: 15em !important;
+	width: 20em !important;
+}
+
+#content {
+    width: 100%;
+    padding-top: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+		

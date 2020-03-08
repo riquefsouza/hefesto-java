@@ -1,0 +1,13 @@
+<div class="col-md-3 form-group">		
+	<label for="cmbReportType"><span th:text="#{panelReport.cmbReportType}" th:remove="tag"></span></label>
+	<select class="form-control" id="cmbReportType">
+	 	<optgroup th:each="group : ${listReportType}" th:label="${group.group}">
+	 		<option th:each="option : ${group.types}" th:value="${option}" th:text="${option.description}"></option>
+	    </optgroup>
+	</select>
+</div>
+<div class="col-md-3 form-group">
+	<label class="checkbox-inline" for="forceDownload">
+		<input type="checkbox" id="forceDownload">&nbsp;<span th:text="#{panelReport.forceDownload}" th:remove="tag"></span>
+	</label>
+</div>

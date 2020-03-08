@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<body>
+<div th:fragment="menu-horizontal">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+		<button type="button" id="sidebarCollapse" class="btn btn-info">
+			<i class="fas fa-align-left"></i>
+		</button>
+
+  <a class="navbar-brand" id="anchorHomePage" th:href="@{'/index.html'}"  
+    style="float: left; height: 50px; padding: 5px 5px; font-size: 14px; text-decoration:none">
+  	<span th:text="#{main.framework}"></span><br>
+  	<span th:text="#{main.app.title}"></span>
+  </a>
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navb">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navb">
+    <ul class="navbar-nav mr-auto">
+
+	  <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
+		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><span th:text="#{menu.administrative}" th:remove="tag"></span></a>
+		<div class="dropdown-menu">
+			<a class="dropdown-item" th:href="@{/private/admParameterCategoryView}"><span th:text="#{menu.admParameterCategory}" th:remove="tag"></span></a>
+			<a class="dropdown-item" th:href="@{/private/admParameterView}"><span th:text="#{menu.admParameter}" th:remove="tag"></span></a>
+			<a class="dropdown-item" th:href="@{/private/admPageView}"><span th:text="#{menu.admPage}" th:remove="tag"></span></a>
+			<a class="dropdown-item" th:href="@{/private/admMenuView}"><span th:text="#{menu.admMenu}" th:remove="tag"></span></a>
+			<a class="dropdown-item" th:href="@{/private/admProfileView}"><span th:text="#{menu.admProfile}" th:remove="tag"></span></a>
+			<a class="dropdown-item" th:href="@{/private/admUserView}"><span th:text="#{menu.admUser}" th:remove="tag"></span></a>		
+		</div>
+	  </li>
+	  
+	  <li class="nav-item dropdown">
+		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><span th:text="#{menu.settings}" th:remove="tag"></span></a>
+		<div class="dropdown-menu">
+		  <a class="dropdown-item" th:href="@{/private/changePassword}"><span th:text="#{menu.changePassword}" th:remove="tag"></span></a>
+		  <a class="dropdown-item" th:href="@{/private/about}"><span th:text="#{menu.about}" th:remove="tag"></span></a>
+		  <a class="dropdown-item" th:href="@{/public/ldap/list}">Ldap</a>
+		</div>
+	  </li>	  
+	  <li class="nav-item">
+	  	<a class="nav-link" th:href="@{/logout}"><img class="inverted-image" th:src="@{/img/sair.png}" /><span th:text="#{menu.exit}" th:remove="tag"></span></a>
+	  </li>	
+    </ul>
+		
+	<div class="form-inline my-2 my-lg-0">
+
+		<small>
+			<span th:text="#{lang.change}"></span>:
+			<select id="locales">
+			    <option value=""></option>
+			    <option value="en_US" th:text="#{lang.en_US}"></option>
+			    <option value="pt_BR" th:text="#{lang.pt_BR}"></option>
+			</select>	
+		 
+			<span id="infos-user" style="color: lightgray"> 				
+				<i class="fas fa-user fa-sm"></i> 
+				<a data-toggle="modal" data-target="#infoUserDialog" style="cursor: pointer; cursor: hand; text-decoration: none;">
+					<span sec:authentication="name" th:remove="tag"></span>
+				</a>
+			</span>
+		</small>
+
+	</div>
+  </div>
+
+</nav>
+
+<div class="web-content" style="margin:5px 0;" th:replace="fragments/alertMessages :: alertMessages"></div> 
+<div th:replace="fragments/infoUser :: infoUser"></div>
+
+</div>
+</body>
+</html>
