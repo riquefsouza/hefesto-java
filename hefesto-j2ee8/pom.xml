@@ -15,7 +15,7 @@
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<log4j-core>2.11.1</log4j-core>
+		<log4j-core>2.13.2</log4j-core>
 	</properties>
 
 	<repositories>
