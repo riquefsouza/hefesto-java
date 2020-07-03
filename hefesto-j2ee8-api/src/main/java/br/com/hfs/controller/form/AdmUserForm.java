@@ -14,6 +14,12 @@ public class AdmUserForm {
 
 	@NotBlank
 	private String password;
+	
+	@NotBlank
+	private String name;
+
+	@NotBlank
+	private String email;
 
 	public String getLogin() {
 		return login;
@@ -31,8 +37,25 @@ public class AdmUserForm {
 		this.password = password;
 	}
 
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	public AdmUser convert() {
-		return new AdmUser(null, login, password);
+		return new AdmUser(null, login, password, name, email);
 	}
 
 	public AdmUser update(AdmUser user, AdmUserDAO dao) {
@@ -40,6 +63,8 @@ public class AdmUserForm {
 		if (bean.isPresent()) {
 			bean.get().setLogin(this.login);
 			bean.get().setPassword(this.password);
+			bean.get().setName(this.name);
+			bean.get().setEmail(this.email);
 			return bean.get();	
 		}
 		return null;

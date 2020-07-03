@@ -21,27 +21,27 @@ import br.com.hfs.service.AdmProfileService;
 public class AdmProfileController {
 
 	@Inject
-	private AdmProfileService roleService;
+	private AdmProfileService profileService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAll() {
-		return Response.ok(roleService.findAll()).build();
+		return Response.ok(profileService.findAll()).build();
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findById(@PathParam("id") Long id) {
-		return Response.ok(roleService.findById(id).orElseGet(null)).build();
+		return Response.ok(profileService.findById(id).orElseGet(null)).build();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response save(@FormParam("role") @NotBlank String role) {
+	public Response save(@FormParam("description") @NotBlank String role) {
 
-		AdmProfile bean = roleService.insert(new AdmProfile(null, role, true, false));
+		AdmProfile bean = profileService.insert(new AdmProfile(null, role, true, false));
 
-		return Response.created(URI.create("role/" + bean.getId())).build();
+		return Response.created(URI.create("admProfile/" + bean.getId())).build();
 	}
 }

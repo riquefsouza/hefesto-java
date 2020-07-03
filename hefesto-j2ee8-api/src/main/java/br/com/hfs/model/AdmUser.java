@@ -157,11 +157,13 @@ public class AdmUser implements Serializable {
 		clear();
 	}
 
-	public AdmUser(Long id, String login, String password) {
+	public AdmUser(Long id, String login, String password, String name, String email) {
 		super();
 		this.id = id;
 		this.login = login;
 		this.password = password;
+		this.name = name;
+		this.email = email;
 		this.createdDate = LocalDateTime.now();
 	}
 		

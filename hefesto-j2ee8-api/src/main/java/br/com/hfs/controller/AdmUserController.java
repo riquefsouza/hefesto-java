@@ -38,11 +38,13 @@ public class AdmUserController {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response save(@FormParam("userName") @NotBlank String userName,
-			@FormParam("password") @NotBlank String password) {
+	public Response save(@FormParam("login") @NotBlank String userName,
+			@FormParam("password") @NotBlank String password,
+			@FormParam("name") @NotBlank String name,
+			@FormParam("email") @NotBlank String email) {
 
-		AdmUser bean = userService.insert(new AdmUser(null, userName, password));
+		AdmUser bean = userService.insert(new AdmUser(null, userName, password, name, email));
 
-		return Response.created(URI.create("user/" + bean.getId())).build();
+		return Response.created(URI.create("admUser/" + bean.getId())).build();
 	}
 }

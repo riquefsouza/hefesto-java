@@ -1,5 +1,6 @@
 package br.com.hfs;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.logging.log4j.LogManager;
@@ -39,9 +40,9 @@ public class HefestoJ2ee8ApiApplication {
 		roles.add(role2);
 		
 		//senha = 123456
-		AdmUser user0 = new AdmUser(null, "admin", "$2a$10$nhU38YCtaWpLzTIeG/uAIeGnu7GItrvGsQAQrgsjM9hN19cGp25N6");
-		user0.setName("Henrique");
-		user0.setEmail("henrique.souza@gmail.com");
+		AdmUser user0 = new AdmUser(null, "admin", "$2a$10$nhU38YCtaWpLzTIeG/uAIeGnu7GItrvGsQAQrgsjM9hN19cGp25N6",
+				"Henrique", "henrique.souza@gmail.com");
+		user0.setCpf(new BigDecimal("02685748474"));
 		
 		AdmUser user1 = userService.insert(user0);
 		
