@@ -1,6 +1,7 @@
 package br.com.hfs.base;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,10 @@ public abstract class BaseDAO<T, I extends Serializable> implements IBaseCrud<T,
 		this.clazz = clazz;
 	}
 
+	public Class<T> getClazz() {
+		return clazz;
+	}
+	
 	public Optional<T> findById(I id) {
 		return (Optional<T>) Optional.ofNullable(em.find(clazz, id));
 	}
@@ -49,12 +54,30 @@ public abstract class BaseDAO<T, I extends Serializable> implements IBaseCrud<T,
 	}
 
 	@Transactional
+	public T saveById(T entity, I id) {
+		if (id == null) {
+			entity = insert(entity);
+		} else {
+			entity = update(entity);
+		}
+		return entity;
+	}
+	
+	@Transactional
 	public void delete(T entity) {
 		if (!em.contains(entity)) {
 			entity = em.merge(entity);
 		}
 		em.remove(entity);
 		em.flush();
+	}
+	
+	@Transactional
+	public void deleteById(I id) {
+		Optional<T> entity = findById(id);
+		if (entity.isPresent()) {
+			delete(entity.get());
+		}
 	}
 
 	public List<T> findAll(int start, int max) {
@@ -121,5 +144,28 @@ public abstract class BaseDAO<T, I extends Serializable> implements IBaseCrud<T,
 		q.setParameter(2, isNew.toLowerCase());
 		Long existe = (Long) q.getSingleResult();
 		return (existe > 0);
+	}
+	
+	@Transactional
+	public List<T> insert(List<T> listEntity) {
+		List<T> listOut = new ArrayList<T>();
+		listEntity.forEach(entity -> {
+			listOut.add(insert(entity));
+		});
+		return listOut;
+	}
+	
+	@Transactional
+	public List<T> update(List<T> listEntity) {
+		List<T> listOut = new ArrayList<T>();
+		listEntity.forEach(entity -> {
+			listOut.add(update(entity));
+		});
+		return listOut;
+	}
+	
+	@Transactional
+	public void delete(List<T> listEntity) {
+		listEntity.forEach(entity -> delete(entity));
 	}
 }

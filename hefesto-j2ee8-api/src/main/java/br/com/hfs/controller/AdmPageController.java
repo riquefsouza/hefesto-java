@@ -14,34 +14,35 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.com.hfs.model.AdmProfile;
-import br.com.hfs.service.AdmProfileService;
+import br.com.hfs.model.AdmPage;
+import br.com.hfs.service.AdmPageService;
 
-@Path("/admProfile")
-public class AdmProfileController {
+@Path("/admPage")
+public class AdmPageController {
 
 	@Inject
-	private AdmProfileService profileService;
+	private AdmPageService pageService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findAll() {
-		return Response.ok(profileService.findAll()).build();
+		return Response.ok(pageService.findAll()).build();
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response findById(@PathParam("id") Long id) {
-		return Response.ok(profileService.findById(id).orElseGet(null)).build();
+		return Response.ok(pageService.findById(id).orElseGet(null)).build();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	public Response save(@FormParam("description") @NotBlank String description) {
+	public Response save(@FormParam("url") @NotBlank String url,
+			@FormParam("description") @NotBlank String description) {
 
-		AdmProfile bean = profileService.insert(new AdmProfile(description, true, false));
+		AdmPage bean = pageService.insert(new AdmPage(url, description));
 
-		return Response.created(URI.create("admProfile/" + bean.getId())).build();
+		return Response.created(URI.create("admPage/" + bean.getId())).build();
 	}
 }

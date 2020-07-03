@@ -59,11 +59,33 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 			throw new TransactionException(msg, e);
 		}
 	}
-
+	
+	@Override
+	public T saveById(T bean, I id) throws TransactionException {
+		try {
+			return repository.saveById(bean, id);
+		} catch (Exception e) {
+			String msg = ERRO_SALVAR + e.getMessage();
+			ExceptionUtil.getErrors(log, e, msg, true);
+			throw new TransactionException(msg, e);
+		}
+	}
+	
 	@Override
 	public void delete(T bean) throws TransactionException {
 		try {
 			repository.delete(bean);
+		} catch (Exception e) {
+			String msg = ERRO_DELETE + e.getMessage();
+			ExceptionUtil.getErrors(log, e, msg, true);
+			throw new TransactionException(msg, e);
+		}
+	}
+	
+	@Override
+	public void deleteById(I id) throws TransactionException {
+		try {
+			repository.deleteById(id);
 		} catch (Exception e) {
 			String msg = ERRO_DELETE + e.getMessage();
 			ExceptionUtil.getErrors(log, e, msg, true);
@@ -99,7 +121,38 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 	public boolean thereIsFieldOld(String field, I id, String isNew) {
 		return repository.thereIsFieldOld(field, id, isNew);
 	}
+
+	@Override
+	public List<T> insert(List<T> listEntity) throws TransactionException {
+		try {
+			return repository.insert(listEntity);
+		} catch (Exception e) {
+			String msg = ERRO_UPDATE + e.getMessage();
+			ExceptionUtil.getErrors(log, e, msg, true);
+			throw new TransactionException(msg, e);
+		}
+	}
+
+	@Override
+	public List<T> update(List<T> listEntity) throws TransactionException {
+		try {
+			return repository.update(listEntity);
+		} catch (Exception e) {
+			String msg = ERRO_UPDATE + e.getMessage();
+			ExceptionUtil.getErrors(log, e, msg, true);
+			throw new TransactionException(msg, e);
+		}
+	}
+
+	@Override
+	public void delete(List<T> listEntity) throws TransactionException {
+		try {
+			repository.delete(listEntity);
+		} catch (Exception e) {
+			String msg = ERRO_DELETE + e.getMessage();
+			ExceptionUtil.getErrors(log, e, msg, true);
+			throw new TransactionException(msg, e);
+		}
+	}
 	
-
-
 }

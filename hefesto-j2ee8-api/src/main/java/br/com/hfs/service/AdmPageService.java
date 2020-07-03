@@ -2,13 +2,10 @@ package br.com.hfs.service;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
-
 import br.com.hfs.base.BaseService;
 import br.com.hfs.dao.AdmPageDAO;
 import br.com.hfs.model.AdmPage;
 
-@Stateless
 public class AdmPageService extends BaseService<AdmPage, Long, AdmPageDAO> {
 
 	private static final long serialVersionUID = 1L;

@@ -2,12 +2,9 @@ package br.com.hfs.dao;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
-
 import br.com.hfs.base.BaseDAO;
 import br.com.hfs.model.AdmParameterCategory;
 
-@Stateless
 public class AdmParameterCategoryDAO extends BaseDAO<AdmParameterCategory, Long> {
 
 	private static final long serialVersionUID = 1L;

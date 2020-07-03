@@ -2,12 +2,9 @@ package br.com.hfs.dao;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
-
 import br.com.hfs.base.BaseDAO;
 import br.com.hfs.model.AdmPage;
 
-@Stateless
 public class AdmPageDAO extends BaseDAO<AdmPage, Long> {
 
 	private static final long serialVersionUID = 1L;

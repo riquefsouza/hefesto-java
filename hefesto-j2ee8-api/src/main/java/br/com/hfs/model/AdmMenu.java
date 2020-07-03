@@ -27,6 +27,10 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.hfs.vo.MenuVO;
+
 // TODO: Auto-generated Javadoc
 /**
  * The persistent class for the ADM_MENU database table.
@@ -41,7 +45,7 @@ import org.hibernate.annotations.Parameter;
 	@NamedQuery(name = "AdmMenu.findMenuRaiz", query = "SELECT m FROM AdmMenu m left join m.admMenuParent mp left join m.admPage f WHERE m.admMenuParent IS NULL ORDER BY m.order, mp.order"),
 	@NamedQuery(name = "AdmMenu.findMenuRaizByDescription", query = "SELECT m FROM AdmMenu m left join m.admMenuParent mp left join m.admPage f WHERE m.admMenuParent IS NULL AND m.description = ?1 ORDER BY m.order, mp.order"),
 	@NamedQuery(name = "AdmMenu.countMenuByPage", query = "SELECT COUNT(m) FROM AdmMenu m WHERE m.admPage = ?1"),
-	@NamedQuery(name = "AdmMenu.findMenusChilds", query = "SELECT m FROM AdmMenu m left join m.admMenuParent mp WHERE m.admMenuParent = ?1 ORDER BY m.order, mp.order"),
+	@NamedQuery(name = "AdmMenu.findChildrenMenus", query = "SELECT m FROM AdmMenu m left join m.admMenuParent mp WHERE m.admMenuParent = ?1 ORDER BY m.order, mp.order"),
 	@NamedQuery(name = "AdmMenu.findAdminMenuParentByPage", query="SELECT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmMenu m WHERE m.admPage = ?1 AND m.admMenuParent IS NULL AND m.id <= 9) ORDER BY t.id, t.order"),
 	@NamedQuery(name = "AdmMenu.findMenuParentByPage", query="SELECT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmMenu m WHERE m.admPage = ?1 AND m.admMenuParent IS NULL AND m.id > 9) ORDER BY t.id, t.order"),
 	@NamedQuery(name = "AdmMenu.findPageByMenu", query="SELECT m.admPage FROM AdmMenu m WHERE m.admPage = ?1 AND m.id = ?2")	
@@ -86,16 +90,19 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 	@JoinColumn(name = "MNU_PAG_SEQ", nullable = false, insertable = false, updatable = false)
 	private AdmPage admPage;
 
+	@Column(name = "MNU_PARENT_SEQ", nullable = true)
+	private Long idMenuParent;
+
 	/** The adm menu. */
 	// bi-directional many-to-one association to AdmMenu
 	@ManyToOne(fetch = FetchType.LAZY) //(cascade={CascadeType.ALL}) //
-	@JoinColumn(name = "MNU_PARENT_SEQ") //, nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "MNU_PARENT_SEQ", nullable = false, insertable = false, updatable = false)
 	private AdmMenu admMenuParent;
 
 	/** The adm menus. */
 	// bi-directional many-to-one association to AdmMenu
 	//@OrderBy("order")
-	//@JsonIgnore
+	@JsonIgnore
 	//@JsonSerialize(using = AdmMenuListSerializer.class)
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(mappedBy = "admMenuParent", fetch = FetchType.EAGER)	
@@ -106,22 +113,21 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 	 */
 	public AdmMenu() {
 		this.admSubMenus = new ArrayList<AdmMenu>();
-		limpar();
+		clean();
 	}
 	
-	public AdmMenu(Long id, String description, AdmMenu admMenuParent, Long idPage, Integer order) {
+	public AdmMenu(String description, Long idMenuParent, Long idPage, Integer order) {
 		super();
-		this.id = id;
 		this.description = description;
 		this.order = order;
 		this.idPage = idPage;
-		this.admMenuParent = admMenuParent;
+		this.idMenuParent = idMenuParent;
 	}
 
 	/**
 	 * Limpar.
 	 */
-	public void limpar() {
+	public void clean() {
 		this.id = null;
 		this.description = null;
 		this.order = null;
@@ -431,6 +437,15 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 		this.idPage = idPage;
 	}
 	
+	
+	public Long getIdMenuParent() {
+		return idMenuParent;
+	}
+
+	public void setIdMenuParent(Long idMenuParent) {
+		this.idMenuParent = idMenuParent;
+	}
+	
 	/**
 	 * Gets the nome recursivo.
 	 *
@@ -450,6 +465,23 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 	 */
 	public String getNomeRecursivo() {
 		return this.getNomeRecursivo(this);
+	}
+
+	public MenuVO toMenuVO() {
+		MenuVO m = new MenuVO();
+		
+		m.setId(id);
+		m.setDescription(description);
+		m.setOrder(order);
+		m.setIdPage(idPage);
+		if (admPage!=null) {
+				m.setPage(admPage.toPageVO());
+		}
+		for (AdmMenu admSubMenu : admSubMenus) {
+			m.getSubMenus().add(admSubMenu.toMenuVO());
+		}
+		
+		return m;
 	}
 
 }

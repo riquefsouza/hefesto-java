@@ -21,8 +21,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="ADM_PARAMETER_CATEGORY")
@@ -61,8 +64,9 @@ public class AdmParameterCategory implements Serializable {
 	@Column(name="PMC_ORDER")
 	private Long order;
 
+	@JsonIgnore
 	@OneToMany(mappedBy="admParameterCategory", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(org.hibernate.annotations.FetchMode.SUBSELECT)
+	@Fetch(FetchMode.SUBSELECT)
 	private Set<AdmParameter> admParameters;
 
 	/**
@@ -70,7 +74,7 @@ public class AdmParameterCategory implements Serializable {
 	 */
 	public AdmParameterCategory() {
 		this.admParameters = new HashSet<AdmParameter>();
-		limpar();
+		clean();
 	}
 
 	public AdmParameterCategory(Long id) {
@@ -78,9 +82,9 @@ public class AdmParameterCategory implements Serializable {
 		this.id = id;
 	}
 
-	public AdmParameterCategory(Long id, String description, Long order) {
+	public AdmParameterCategory(String description, Long order) {
 		super();
-		this.id = id;
+		//this.id = id;
 		this.description = description;
 		this.order = order;
 	}
@@ -88,7 +92,7 @@ public class AdmParameterCategory implements Serializable {
 	/**
 	 * Limpar.
 	 */
-	public void limpar() {
+	public void clean() {
 		this.id = null;
 		this.description = null;
 		this.order = null;

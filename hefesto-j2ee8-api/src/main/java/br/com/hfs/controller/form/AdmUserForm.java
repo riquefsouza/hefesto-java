@@ -55,7 +55,7 @@ public class AdmUserForm {
 	}
 	
 	public AdmUser convert() {
-		return new AdmUser(null, login, password, name, email);
+		return new AdmUser(login, password);
 	}
 
 	public AdmUser update(AdmUser user, AdmUserDAO dao) {

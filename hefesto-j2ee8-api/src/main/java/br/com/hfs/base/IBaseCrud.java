@@ -17,6 +17,9 @@ public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 	/** The Constant ERRO_DELETE. */
 	public static final String ERRO_DELETE = "Erro de Transação ao Excluir: ";
 	
+	/** The Constant ERRO_SALVAR. */
+	public static final String ERRO_SALVAR = "Erro de Transação ao Salvar: ";
+	
 	Optional<T> findById(I id);	
 
 	List<T> findAll();
@@ -24,8 +27,12 @@ public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 	T insert(T bean) throws TransactionException;
 
 	T update(T bean) throws TransactionException;
+	
+	T saveById(T entity, I id) throws TransactionException;
 
 	void delete(T bean) throws TransactionException;
+	
+	void deleteById(I id) throws TransactionException;
 	
 	List<T> findAll(int start, int max);
 	
@@ -40,5 +47,11 @@ public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 	boolean thereIsFieldNew(String field, String isNew);
 	
 	boolean thereIsFieldOld(String field, I id, String isNew);
+	
+	List<T> insert(List<T> listEntity) throws TransactionException;
+	
+	List<T> update(List<T> listEntity) throws TransactionException;
+	
+	void delete(List<T> listEntity) throws TransactionException;
 
 }

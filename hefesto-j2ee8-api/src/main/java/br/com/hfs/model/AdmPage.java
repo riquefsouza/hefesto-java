@@ -27,6 +27,10 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.hfs.vo.PageVO;
+
 @Entity
 @Table(name="ADM_PAGE")
 @NamedQueries({
@@ -72,16 +76,17 @@ public class AdmPage implements Serializable {
 	/** The adm profiles. */ 
 	//bi-directional many-to-many association to AdmProfile
 	//@ManyToMany(mappedBy="admPages", fetch = FetchType.LAZY) //, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-	//@JsonIgnore
+	@JsonIgnore
 	//@JsonSerialize(using = AdmProfileSetSerializer.class)
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "ADM_PAGE_PROFILE", joinColumns = { 
 			@JoinColumn(name = "PGL_PAG_SEQ") }, inverseJoinColumns = {@JoinColumn(name = "PGL_PRF_SEQ") })
 	private Set<AdmProfile> admProfiles;
 	
 	/** The adm menus. */
+	@JsonIgnore
 	@Fetch(FetchMode.SUBSELECT)
-	@OneToMany(mappedBy = "admPage", fetch = FetchType.EAGER)	
+	@OneToMany(mappedBy = "admPage", fetch = FetchType.LAZY)	
 	private Set<AdmMenu> admMenus;	
 
 	/**
@@ -91,20 +96,28 @@ public class AdmPage implements Serializable {
 		super();
 		this.admProfiles = new HashSet<AdmProfile>();
 		this.admMenus = new HashSet<AdmMenu>();
-		limpar();
+		clean();
 	}
 	
-	public AdmPage(Long id, String url, String description) {
+	public AdmPage(String url, String description) {
 		super();
-		this.id = id;
+		//this.id = id;
 		this.description = description;
 		this.url = url;
 	}
 	
+	public AdmPage(PageVO p) {
+		this();
+		
+		this.id = p.getId();
+		this.description = p.getDescription();
+		this.url = p.getUrl();
+	}
+
 	/**
 	 * Limpar.
 	 */
-	public void limpar() {
+	public void clean() {
 		this.id = null;
 		this.description = null;
 		this.url = null;
@@ -249,6 +262,16 @@ public class AdmPage implements Serializable {
 			ret = ret.substring(0, ret.length() - 2);
 		}
 		return ret;
+	}
+
+	public PageVO toPageVO() {
+		PageVO p = new PageVO();
+
+		p.setId(id);
+		p.setDescription(description);
+		p.setUrl(url);
+		
+		return p;
 	}
 	
 }

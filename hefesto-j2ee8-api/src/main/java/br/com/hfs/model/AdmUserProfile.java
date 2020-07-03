@@ -36,13 +36,13 @@ public class AdmUserProfile implements Serializable {
 	 * Instantiates a new adm cargo profile.
 	 */
 	public AdmUserProfile() {
-		limpar();
+		clean();
 	}
 	
 	/**
 	 * Limpar.
 	 */
-	public void limpar(){
+	public void clean(){
 		this.id = new AdmUserProfilePK();
 		//this.admProfile = new AdmProfile();
 	}

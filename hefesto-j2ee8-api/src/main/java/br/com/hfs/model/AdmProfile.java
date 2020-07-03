@@ -28,6 +28,9 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import br.com.hfs.converter.BooleanToStringConverter;
+import br.com.hfs.vo.PageVO;
+import br.com.hfs.vo.ProfileVO;
+import br.com.hfs.vo.UserVO;
 
 @Entity
 @Table(name = "ADM_PROFILE")
@@ -35,9 +38,9 @@ import br.com.hfs.converter.BooleanToStringConverter;
 	@NamedQuery(name = "AdmProfile.getDescriptionById", query = "SELECT c.description FROM AdmProfile c WHERE c.id = ?1"),
 	@NamedQuery(name = "AdmProfile.countNovo", query = "SELECT COUNT(c) FROM AdmProfile c WHERE LOWER(c.description) = ?1"),
 	@NamedQuery(name = "AdmProfile.countAntigo", query = "SELECT COUNT(c) FROM AdmProfile c WHERE LOWER(c.description) <> ?1 AND LOWER(c.description) = ?2"),
-	@NamedQuery(name = "AdmProfile.findPagesPorProfile", query = "SELECT distinct pag FROM AdmProfile p inner join p.admPages pag where p = ?1"),
-	@NamedQuery(name = "AdmProfile.findUsersPorProfile", query = "SELECT distinct fp.id.userSeq FROM AdmProfile p, AdmUserProfile fp where p.id = fp.id.profileSeq AND p = ?1"),
-	@NamedQuery(name = "AdmProfile.findPerfisPorUser", query = "SELECT distinct p FROM AdmProfile p, AdmUserProfile fp where p.id = fp.id.profileSeq AND fp.id.userSeq = ?1"),	
+	@NamedQuery(name = "AdmProfile.findPagesByProfile", query = "SELECT distinct pag FROM AdmProfile p inner join p.admPages pag where p = ?1"),
+	@NamedQuery(name = "AdmProfile.findUsersByProfile", query = "SELECT distinct fp.id.userSeq FROM AdmProfile p, AdmUserProfile fp where p.id = fp.id.profileSeq AND p = ?1"),
+	@NamedQuery(name = "AdmProfile.findProfilesByUser", query = "SELECT distinct p FROM AdmProfile p, AdmUserProfile fp where p.id = fp.id.profileSeq AND fp.id.userSeq = ?1"),
 	@NamedQuery(name = "AdmProfile.findAdminMenuParentByProfile", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p = ?1 AND m.id <= 9) ORDER BY t.order, t.id"),
 	@NamedQuery(name = "AdmProfile.findMenuParentByProfile", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p = ?1 AND m.id > 9) ORDER BY t.order, t.id"),
 	@NamedQuery(name = "AdmProfile.findAdminMenuByProfile", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p = ?1 AND m.id <= 9 AND m.admMenuParent = ?2 ORDER BY m.order, m.id"),
@@ -45,7 +48,9 @@ import br.com.hfs.converter.BooleanToStringConverter;
 	@NamedQuery(name = "AdmProfile.findAdminMenuParentByIdPerfis", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id <= 9) ORDER BY t.id, t.order"),
 	@NamedQuery(name = "AdmProfile.findMenuParentByIdPerfis", query="SELECT DISTINCT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id > 9) ORDER BY t.order, t.id"),
 	@NamedQuery(name = "AdmProfile.findAdminMenuByIdPerfis", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id <= 9 AND m.admMenuParent = ?2 ORDER BY m.id, m.order"),
-	@NamedQuery(name = "AdmProfile.findMenuByIdPerfis", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id > 9 AND m.admMenuParent = ?2 ORDER BY m.id, m.order")			
+	@NamedQuery(name = "AdmProfile.findMenuByIdPerfis", query="SELECT DISTINCT m FROM AdmProfile p INNER JOIN p.admPages f INNER JOIN f.admMenus m WHERE p.id IN ?1 AND m.id > 9 AND m.admMenuParent = ?2 ORDER BY m.id, m.order"),
+	
+	@NamedQuery(name = "AdmProfile.findByGeneral", query = "SELECT DISTINCT p FROM AdmProfile p WHERE p.general = ?1")
 })
 
 public class AdmProfile implements Serializable {
@@ -109,21 +114,38 @@ public class AdmProfile implements Serializable {
 		super();
 		this.admPages = new HashSet<AdmPage>();
 		this.admUsers = new HashSet<AdmUser>();
-		clear();
+		clean();
 	}
 		
-	public AdmProfile(Long id, String description, Boolean administrator, Boolean general) {
+	public AdmProfile(String description, Boolean administrator, Boolean general) {
 		super();
-		this.id = id;
 		this.administrator = administrator;
 		this.description = description;
 		this.general = general;
 	}
 
+	public AdmProfile(ProfileVO p) {
+		this();
+		
+		this.id = p.getId();
+		this.administrator = p.getAdministrator();
+		this.description = p.getDescription();
+		this.general = p.getGeneral();
+
+		for (PageVO page : p.getPages()) {
+			this.admPages.add(new AdmPage(page));	
+		}
+		
+		for (UserVO user : p.getUsers()) {
+			this.admUsers.add(new AdmUser(user));	
+		}
+
+	}
+
 	/**
 	 * Limpar.
 	 */
-	public void clear() {
+	public void clean() {
 		this.id = null;
 		this.administrator = null;
 		this.description = null;
@@ -284,6 +306,25 @@ public class AdmProfile implements Serializable {
 	@Override
 	public String toString() {
 		return description;
+	}
+	
+	public ProfileVO toProfileVO(){
+		ProfileVO p = new ProfileVO();
+		
+		p.setId(id);
+		p.setAdministrator(administrator);
+		p.setDescription(description);
+		p.setGeneral(general);
+
+		for (AdmPage admPagina : admPages) {
+			p.getPages().add(admPagina.toPageVO());
+		}
+		
+		for (AdmUser admUser : admUsers) {
+			p.getUsers().add(admUser.toUserVO());
+		}
+		
+		return p;
 	}
 	
 }

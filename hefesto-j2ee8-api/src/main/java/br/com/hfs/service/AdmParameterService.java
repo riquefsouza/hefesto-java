@@ -2,13 +2,10 @@ package br.com.hfs.service;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
-
 import br.com.hfs.base.BaseService;
 import br.com.hfs.dao.AdmParameterDAO;
 import br.com.hfs.model.AdmParameter;
 
-@Stateless
 public class AdmParameterService extends BaseService<AdmParameter, Long, AdmParameterDAO> {
 
 	private static final long serialVersionUID = 1L;
@@ -21,4 +18,11 @@ public class AdmParameterService extends BaseService<AdmParameter, Long, AdmPara
 		return repository.listByRange(startInterval, endInterval);
 	}
 	
+	public String getValueByCode(String code){
+		try {
+			return repository.getValueByCode(code);
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

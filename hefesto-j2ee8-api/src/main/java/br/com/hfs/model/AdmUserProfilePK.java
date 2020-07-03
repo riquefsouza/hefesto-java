@@ -24,13 +24,13 @@ public class AdmUserProfilePK implements Serializable {
 	 */
 	public AdmUserProfilePK() {
 		super();
-		limpar();
+		clean();
 	}
 
 	/**
 	 * Limpar.
 	 */
-	public void limpar() {
+	public void clean() {
 		this.userSeq = 0L;
 		this.profileSeq = 0L;
 	}

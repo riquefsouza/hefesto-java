@@ -2,12 +2,11 @@ package br.com.hfs.dao;
 
 import java.util.List;
 
-import javax.ejb.Stateless;
+import javax.persistence.TypedQuery;
 
 import br.com.hfs.base.BaseDAO;
 import br.com.hfs.model.AdmParameter;
 
-@Stateless
 public class AdmParameterDAO extends BaseDAO<AdmParameter, Long> {
 
 	private static final long serialVersionUID = 1L;
@@ -22,5 +21,11 @@ public class AdmParameterDAO extends BaseDAO<AdmParameter, Long> {
 
 	public List<AdmParameter> listByRange(int startInterval, int endInterval) {
 		return listByRange("ADM_PARAMETER", "PAR_SEQ", startInterval, endInterval);
+	}
+
+	public String getValueByCode(String code) {
+		TypedQuery<String> query = em.createNamedQuery("AdmParameter.getValueByCode", String.class);
+		query.setParameter(1, code);
+		return query.getSingleResult();
 	}
 }

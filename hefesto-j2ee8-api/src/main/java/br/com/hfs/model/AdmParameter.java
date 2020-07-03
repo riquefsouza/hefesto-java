@@ -62,9 +62,7 @@ public class AdmParameter implements Serializable {
 	private String description;
 
 	/** The value. */
-	@NotBlank
-	@Size(min=4, max=4000)
-	@Column(name="PAR_VALUE", nullable = false, length = 4000)
+	@Column(name="PAR_VALUE", length = 4000)
 	private String value;
 	
 	/** The id adm parameter category. */
@@ -82,13 +80,23 @@ public class AdmParameter implements Serializable {
 	 * Instantiates a new adm parameter.
 	 */
 	public AdmParameter() {
-		limpar();
+		clean();
 	}
 	
+	public AdmParameter(String value, String description, String code, Long idAdmParameterCategory) {
+		super();
+		this.code = code;
+		this.description = description;
+		this.value = value;
+		this.idAdmParameterCategory = idAdmParameterCategory;
+	}
+
+
+
 	/**
 	 * Limpar.
 	 */
-	public void limpar() {
+	public void clean() {
 		this.id = null;
 		this.code = null;
 		this.description = null;
