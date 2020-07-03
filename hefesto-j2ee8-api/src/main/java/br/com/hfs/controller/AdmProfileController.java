@@ -14,14 +14,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.com.hfs.model.Role;
-import br.com.hfs.service.RoleService;
+import br.com.hfs.model.AdmProfile;
+import br.com.hfs.service.AdmProfileService;
 
-@Path("/role")
-public class RoleController {
+@Path("/admProfile")
+public class AdmProfileController {
 
 	@Inject
-	private RoleService roleService;
+	private AdmProfileService roleService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -40,7 +40,7 @@ public class RoleController {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response save(@FormParam("role") @NotBlank String role) {
 
-		Role bean = roleService.save(new Role(role));
+		AdmProfile bean = roleService.insert(new AdmProfile(null, role, true, false));
 
 		return Response.created(URI.create("role/" + bean.getId())).build();
 	}

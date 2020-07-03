@@ -2,7 +2,8 @@ package br.com.hfs;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
@@ -11,42 +12,49 @@ import javax.enterprise.event.Observes;
 import javax.faces.event.PostConstructApplicationEvent;
 import javax.inject.Inject;
 
-import br.com.hfs.model.Role;
-import br.com.hfs.model.User;
-import br.com.hfs.service.RoleService;
-import br.com.hfs.service.UserService;
+import br.com.hfs.model.AdmProfile;
+import br.com.hfs.model.AdmUser;
+import br.com.hfs.service.AdmProfileService;
+import br.com.hfs.service.AdmUserService;
 
 @ApplicationScoped
 public class HefestoJ2ee8ApiApplication {
 
-	private Logger log = Logger.getLogger(this.getClass().getName());
+	private Logger log = LogManager.getLogger(HefestoJ2ee8ApiApplication.class);
 	
 	@Inject
-	private RoleService roleService;
+	private AdmProfileService profileService;
 	
 	@Inject
-	private UserService userService;
+	private AdmUserService userService;
 	
 	public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
 		log.info("Init " + this.getClass().getName());
 		
-		Role role1 = roleService.save(new Role("ADMIN"));
-		Role role2 = roleService.save(new Role("USER"));
+		AdmProfile role1 = profileService.insert(new AdmProfile(null, "ADMIN", true, false));
+		AdmProfile role2 = profileService.insert(new AdmProfile(null, "USER", false, true));
 		
-		Set<Role> roles = new HashSet<Role>();
+		Set<AdmProfile> roles = new HashSet<AdmProfile>();
 		roles.add(role1);
 		roles.add(role2);
 		
 		//senha = 123456
-		User user = userService.save(new User("admin", "$2a$10$nhU38YCtaWpLzTIeG/uAIeGnu7GItrvGsQAQrgsjM9hN19cGp25N6", true));
+		AdmUser user0 = new AdmUser(null, "admin", "$2a$10$nhU38YCtaWpLzTIeG/uAIeGnu7GItrvGsQAQrgsjM9hN19cGp25N6");
+		user0.setName("Henrique");
+		user0.setEmail("henrique.souza@gmail.com");
+		
+		AdmUser user1 = userService.insert(user0);
+		
+		Set<AdmUser> users = new HashSet<AdmUser>();
+		users.add(user1);
 
-		user.setRoles(roles);
-		userService.update(user);
+		role1.setAdmUsers(users);
+		profileService.update(role1);
 		
 		
 		log.info("-------------------------------");
-		for (User user1 : userService.findAll()) {
-			log.info(user1.toString());
+		for (AdmUser item : userService.findAll()) {
+			log.info(item.toString());
 		}
 		log.info("");
 	}

@@ -14,14 +14,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import br.com.hfs.model.User;
-import br.com.hfs.service.UserService;
+import br.com.hfs.model.AdmUser;
+import br.com.hfs.service.AdmUserService;
 
-@Path("/user")
-public class UserController {
+@Path("/admUser")
+public class AdmUserController {
 
 	@Inject
-	private UserService userService;
+	private AdmUserService userService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -41,7 +41,7 @@ public class UserController {
 	public Response save(@FormParam("userName") @NotBlank String userName,
 			@FormParam("password") @NotBlank String password) {
 
-		User bean = userService.save(new User(userName, password, true));
+		AdmUser bean = userService.insert(new AdmUser(null, userName, password));
 
 		return Response.created(URI.create("user/" + bean.getId())).build();
 	}
