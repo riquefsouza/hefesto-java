@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 
-import br.com.hfs.dao.AdmUserDAO;
 import br.com.hfs.model.AdmUser;
+import br.com.hfs.service.AdmUserService;
 
 public class AdmUserForm {
 	
@@ -39,8 +39,8 @@ public class AdmUserForm {
 		return new AdmUser(login, password);
 	}
 
-	public AdmUser update(Long id, AdmUserDAO dao) {
-		Optional<AdmUser> bean = dao.findById(id);
+	public AdmUser update(Long id, AdmUserService service) {
+		Optional<AdmUser> bean = service.findById(id);
 		if (bean.isPresent()) {
 			bean.get().setLogin(this.login);
 			bean.get().setPassword(this.password);

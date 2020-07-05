@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import br.com.hfs.dao.AdmParameterDAO;
 import br.com.hfs.model.AdmParameter;
+import br.com.hfs.service.AdmParameterService;
 
 public class AdmParameterForm {
 
@@ -35,8 +35,8 @@ public class AdmParameterForm {
 		return new AdmParameter(value, description, code, admParameterCategory.getId());
 	}
 
-	public AdmParameter update(Long id, AdmParameterDAO dao) {
-		Optional<AdmParameter> bean = dao.findById(id);
+	public AdmParameter update(Long id, AdmParameterService service) {
+		Optional<AdmParameter> bean = service.findById(id);
 		if (bean.isPresent()) {
 			bean.get().setValue(this.value);
 			bean.get().setDescription(this.description);

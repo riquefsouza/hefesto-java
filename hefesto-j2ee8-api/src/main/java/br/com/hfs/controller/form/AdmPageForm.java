@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import br.com.hfs.dao.AdmPageDAO;
 import br.com.hfs.model.AdmPage;
+import br.com.hfs.service.AdmPageService;
 
 public class AdmPageForm {
 	
@@ -29,8 +29,8 @@ public class AdmPageForm {
 		return new AdmPage(url, description);
 	}
 
-	public AdmPage update(Long id, AdmPageDAO dao) {
-		Optional<AdmPage> bean = dao.findById(id);
+	public AdmPage update(Long id, AdmPageService service) {
+		Optional<AdmPage> bean = service.findById(id);
 		if (bean.isPresent()) {
 			bean.get().setDescription(this.description);
 			bean.get().setUrl(this.url);

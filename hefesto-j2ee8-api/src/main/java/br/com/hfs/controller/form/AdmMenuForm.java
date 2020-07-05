@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import br.com.hfs.dao.AdmMenuDAO;
 import br.com.hfs.model.AdmMenu;
+import br.com.hfs.service.AdmMenuService;
 
 public class AdmMenuForm {
 	
@@ -35,8 +35,8 @@ public class AdmMenuForm {
 		return new AdmMenu(description, idMenuParent, admPage.getId(), order);
 	}
 
-	public AdmMenu update(Long id, AdmMenuDAO dao) {
-		Optional<AdmMenu> bean = dao.findById(id);
+	public AdmMenu update(Long id, AdmMenuService service) {
+		Optional<AdmMenu> bean = service.findById(id);
 		if (bean.isPresent()) {
 			bean.get().setDescription(this.description);
 			bean.get().setIdMenuParent(this.idMenuParent);

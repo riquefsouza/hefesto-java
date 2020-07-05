@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import br.com.hfs.dao.AdmParameterCategoryDAO;
 import br.com.hfs.model.AdmParameterCategory;
+import br.com.hfs.service.AdmParameterCategoryService;
 
 public class AdmParameterCategoryForm {
 
@@ -29,8 +29,8 @@ public class AdmParameterCategoryForm {
 		return new AdmParameterCategory(description, order);
 	}
 
-	public AdmParameterCategory update(Long id, AdmParameterCategoryDAO dao) {
-		Optional<AdmParameterCategory> bean = dao.findById(id);
+	public AdmParameterCategory update(Long id, AdmParameterCategoryService service) {
+		Optional<AdmParameterCategory> bean = service.findById(id);
 		if (bean.isPresent()) {
 			bean.get().setDescription(this.description);
 			bean.get().setOrder(this.order);

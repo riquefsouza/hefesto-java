@@ -11,25 +11,25 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import br.com.hfs.controller.dto.AdmUserDTO;
+import br.com.hfs.controller.dto.AdmPageDTO;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 @TestMethodOrder(OrderAnnotation.class)
-public class AdmUserTests extends BaseTests {
+public class AdmPageTests extends BaseTests {
 
 	@Test
 	@Order(1)
 	void findAllTest() {
-		AdmUserDTO[] dtos =
+		AdmPageDTO[] dtos =
 		given()
 			.spec(spec)
 		.when()
-			.get("admUser")
+			.get("admPage")
 		.then()
 			.statusCode(Status.OK.getStatusCode())
 			.contentType(ContentType.JSON)
-			.extract().as(AdmUserDTO[].class);
+			.extract().as(AdmPageDTO[].class);
 		
 		assertEquals(2, dtos.length);
 	}
@@ -37,18 +37,18 @@ public class AdmUserTests extends BaseTests {
 	@Test
 	@Order(2)
 	public void findByIdTest() {
-		AdmUserDTO dto = 
+		AdmPageDTO dto = 
 		given()
 			.spec(spec)
 		.when()
-			.get("admUser/2")
+			.get("admPage/2")
 		.then()
 			.statusCode(Status.OK.getStatusCode())
 			.contentType(ContentType.JSON)
-			.extract().as(AdmUserDTO.class);
+			.extract().as(AdmPageDTO.class);
 		
-		assertEquals("USER", dto.getLogin());
-		assertThat("USER").isEqualTo(dto.getLogin());
+		assertEquals("USER", dto.getDescription());
+		assertThat("USER").isEqualTo(dto.getDescription());
 	}
 
 	@Test
@@ -59,44 +59,44 @@ public class AdmUserTests extends BaseTests {
 			.spec(spec)
 			.accept(ContentType.JSON)
 			.body("{\"administrator\": false,"
-					+ "\"description\": \"OLD_USER\","
+					+ "\"description\": \"OLD_PAGE\","
 					+ "\"general\": false,"
-					+ "\"admUsers\": [],"
+					+ "\"admPages\": [],"
 					+ "\"admUsers\": []}")
 		.when()
-			.post("admUser");
+			.post("admPage");
 		
-		AdmUserDTO dto = r.then()
+		AdmPageDTO dto = r.then()
 			.statusCode(Status.CREATED.getStatusCode())
 			.contentType(ContentType.JSON)
-			.extract().as(AdmUserDTO.class);
+			.extract().as(AdmPageDTO.class);
 		
 		String slocation = r.getHeader("Location");
 		
-		assertEquals("OLD_USER", dto.getLogin());
-		assertEquals(uriBase + "admUser/3", slocation);
+		assertEquals("OLD_PAGE", dto.getDescription());
+		assertEquals(uriBase + "admPage/3", slocation);
 	}
 	
 	@Test
 	@Order(4)
 	public void updateTest() {
-		AdmUserDTO dto =
+		AdmPageDTO dto =
 		given()
 			.spec(spec)
 			.accept(ContentType.JSON)
 			.body("{\"administrator\": false,"
-					+ "\"description\": \"NEW_USER\","
+					+ "\"description\": \"NEW_PAGE\","
 					+ "\"general\": false,"
-					+ "\"admUsers\": [],"
+					+ "\"admPages\": [],"
 					+ "\"admUsers\": []}")
 		.when()
-			.put("admUser/3")
+			.put("admPage/3")
 		.then()
 			.statusCode(Status.OK.getStatusCode())
 			.contentType(ContentType.JSON)
-			.extract().as(AdmUserDTO.class);
+			.extract().as(AdmPageDTO.class);
 		
-		assertEquals("NEW_USER", dto.getLogin());
+		assertEquals("NEW_PAGE", dto.getDescription());
 	}
 	
 	@Test
@@ -105,7 +105,7 @@ public class AdmUserTests extends BaseTests {
 		given()
 			.spec(spec)
 		.when()
-			.delete("admUser/3")
+			.delete("admPage/3")
 		.then()
 			.statusCode(Status.OK.getStatusCode());
 	}
