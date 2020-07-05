@@ -81,7 +81,7 @@ public abstract class BaseDAO<T, I extends Serializable> implements IBaseCrud<T,
 	}
 	
 	@Transactional
-	public int directDeleteById(Long id) {	
+	public int directDeleteById(I id) {	
 		Query query = em.createQuery("DELETE FROM " + clazz.getName() + " m WHERE m.id = ?1");
 		query.setParameter(1, id);
 		 

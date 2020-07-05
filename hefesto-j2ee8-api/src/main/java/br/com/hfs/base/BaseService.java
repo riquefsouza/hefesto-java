@@ -95,7 +95,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 	}
 	
 	@Transactional
-	public int directDeleteById(Long id) throws TransactionException {
+	public int directDeleteById(I id) throws TransactionException {
 		try {
 			return repository.directDeleteById(id);
 		} catch (Exception e) {
@@ -139,7 +139,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			return repository.insert(listEntity);
 		} catch (Exception e) {
-			String msg = ERRO_UPDATE + e.getMessage();
+			String msg = ERRO_INSERT + e.getMessage();
 			ExceptionUtil.getErrors(log, e, msg, true);
 			throw new TransactionException(msg, e);
 		}

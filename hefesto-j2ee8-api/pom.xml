@@ -18,6 +18,8 @@
         <log4j-core.version>2.13.3</log4j-core.version>
         <slf4j.version>2.0.0-alpha1</slf4j.version>
         <jackson.version>2.11.1</jackson.version>
+        <hibernate-validator.version>7.0.0.Alpha4</hibernate-validator.version>
+        <rest-assured.version>4.3.0</rest-assured.version>
     </properties>
     <dependencies>
         <dependency>
@@ -37,12 +39,12 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>7.0.0.Alpha4</version>
+			<version>${hibernate-validator.version}</version>
 		</dependency>		
 		<dependency>
 		    <groupId>org.hibernate.validator</groupId>
 		    <artifactId>hibernate-validator-annotation-processor</artifactId>
-		    <version>7.0.0.Alpha4</version>
+		    <version>${hibernate-validator.version}</version>
 		</dependency>
 
 		<dependency>
@@ -89,13 +91,13 @@
 		<dependency>
 		    <groupId>io.rest-assured</groupId>
 		    <artifactId>rest-assured</artifactId>
-		    <version>4.3.0</version>
+		    <version>${rest-assured.version}</version>
 		    <scope>test</scope>
 		</dependency>
 		<dependency>
 		    <groupId>io.rest-assured</groupId>
 		    <artifactId>json-path</artifactId>
-		    <version>4.3.0</version>
+		    <version>${rest-assured.version}</version>
 		</dependency>
 		<dependency>
 		    <groupId>io.rest-assured</groupId>

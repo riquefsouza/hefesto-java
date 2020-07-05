@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.TransactionException;
+import org.springframework.transaction.TransactionException;
 
 public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 
