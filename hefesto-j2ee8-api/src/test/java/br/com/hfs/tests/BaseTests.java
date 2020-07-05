@@ -1,4 +1,4 @@
-package br.com.hfs;
+package br.com.hfs.tests;
 
 import org.junit.jupiter.api.BeforeAll;
 
@@ -13,6 +13,8 @@ public class BaseTests {
 	protected static RequestSpecification spec;
 	
 	protected static String uriBase = "http://localhost:8080/api/v1/";
+	
+	protected static Long id;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {

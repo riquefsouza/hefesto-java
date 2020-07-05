@@ -69,20 +69,17 @@ public class HefestoJ2ee8ApiApplication {
 		
 		List<AdmPage> listaAdmPage = new ArrayList<AdmPage>();
 		
-		listaAdmPage.add(new AdmPage("admin/admParametroCategoria/listarAdmParametroCategoria.xhtml", "Categoria dos Parâmetros de Configuração"));
-		listaAdmPage.add(new AdmPage("admin/admParametroCategoria/editarAdmParametroCategoria.xhtml", "Editar Categoria dos Parâmetros de Configuração"));
-		listaAdmPage.add(new AdmPage("admin/admParametro/listarAdmParametro.xhtml", "Parâmetros de Configuração"));
-		listaAdmPage.add(new AdmPage("admin/admParametro/editarAdmParametro.xhtml", "Editar Parâmetros de Configuração"));
-		listaAdmPage.add(new AdmPage("admin/admPerfil/listarAdmPerfil.xhtml", "Administrar Perfil"));
-		listaAdmPage.add(new AdmPage("admin/admPerfil/editarAdmPerfil.xhtml", "Editar Administrar Perfil"));
-		listaAdmPage.add(new AdmPage("admin/admPagina/listarAdmPagina.xhtml", "Administrar Página"));
-		listaAdmPage.add(new AdmPage("admin/admPagina/editarAdmPagina.xhtml", "Editar Administrar Página"));
-		listaAdmPage.add(new AdmPage("admin/admMenu/listarAdmMenu.xhtml", "Administrar Menu"));
-		listaAdmPage.add(new AdmPage("admin/admMenu/editarAdmMenu.xhtml", "Editar Administrar Menu"));
-		listaAdmPage.add(new AdmPage("admin/admCargo/listarAdmCargo.xhtml", "Visualizar os Cargos"));
-		listaAdmPage.add(new AdmPage("admin/admFuncionario/listarAdmFuncionario.xhtml", "Visualizar os Funcionários"));
-		listaAdmPage.add(new AdmPage("admin/admSetor/listarAdmSetor.xhtml", "Visualizar os Setores"));
-		listaAdmPage.add(new AdmPage("admin/admUsuario/listarAdmUsuario.xhtml", "Visualizar os Usuários"));
+		listaAdmPage.add(new AdmPage("admin/admParameterCategory/listAdmParameterCategory.xhtml", "Category of Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("admin/admParameterCategory/editAdmParameterCategory.xhtml", "Edit Category of Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("admin/admParameter/listAdmParameter.xhtml", "Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("admin/admParameter/editAdmParameter.xhtml", "Edit Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("admin/admProfile/listAdmProfile.xhtml", "Administer Profile"));
+		listaAdmPage.add(new AdmPage("admin/admProfile/editAdmProfile.xhtml", "Edit Administer Profile"));
+		listaAdmPage.add(new AdmPage("admin/admPage/listAdmPage.xhtml", "Administer Page"));
+		listaAdmPage.add(new AdmPage("admin/admPage/editAdmPage.xhtml", "Edit Administer Page"));
+		listaAdmPage.add(new AdmPage("admin/admMenu/listAdmMenu.xhtml", "Administer Menu"));
+		listaAdmPage.add(new AdmPage("admin/admMenu/editAdmMenu.xhtml", "Edit Administer Menu"));
+		listaAdmPage.add(new AdmPage("admin/admUser/listAdmUser.xhtml", "Visualize Users"));
 
 		listaAdmPage.forEach(p -> p.setAdmProfiles(profiles1));
 		
@@ -110,11 +107,11 @@ public class HefestoJ2ee8ApiApplication {
 		
 		List<AdmParameterCategory> listaAdmPC = new ArrayList<AdmParameterCategory>();
 		
-		listaAdmPC.add(new AdmParameterCategory("Parâmetros do Tribunal", 1L));
-		listaAdmPC.add(new AdmParameterCategory("Parâmetros de Login", 2L));
-		listaAdmPC.add(new AdmParameterCategory("Parâmetros de E-mail", 3L));
-		listaAdmPC.add(new AdmParameterCategory("Parâmetros de Conexão de Rede", 4L));
-		listaAdmPC.add(new AdmParameterCategory("Parâmetros do Sistema", null));
+		listaAdmPC.add(new AdmParameterCategory("Court Parameters", 1L));
+		listaAdmPC.add(new AdmParameterCategory("Login Parameters", 2L));
+		listaAdmPC.add(new AdmParameterCategory("E-mail Parameters", 3L));
+		listaAdmPC.add(new AdmParameterCategory("Network connection Parameters", 4L));
+		listaAdmPC.add(new AdmParameterCategory("System Parameters", null));
 
 		parameterCategoryService.insert(listaAdmPC);
 		
@@ -151,12 +148,12 @@ public class HefestoJ2ee8ApiApplication {
 		
 		List<AdmMenu> listaAdmMenu = new ArrayList<AdmMenu>();
 		
-		listaAdmMenu.add(new AdmMenu("Administrativo", null, null, 1));
-		listaAdmMenu.add(new AdmMenu("Categoria dos Parâmetros de Configuração", 1L, 1L, 2));
-		listaAdmMenu.add(new AdmMenu("Parâmetros de Configuração", 1L, 3L, 3));
-		listaAdmMenu.add(new AdmMenu("Administrar Perfil", 1L, 5L, 4));
-		listaAdmMenu.add(new AdmMenu("Administrar Página", 1L, 9L, 6));
-		listaAdmMenu.add(new AdmMenu("Administrar Menu", 1L, 11L, 7));
+		listaAdmMenu.add(new AdmMenu("Administrative", null, null, 1));
+		listaAdmMenu.add(new AdmMenu("Category of Configuration Parameters", 1L, 1L, 2));
+		listaAdmMenu.add(new AdmMenu("Configuration Parameters", 1L, 3L, 3));
+		listaAdmMenu.add(new AdmMenu("Administer Profile", 1L, 5L, 4));
+		listaAdmMenu.add(new AdmMenu("Administer Page", 1L, 9L, 6));
+		listaAdmMenu.add(new AdmMenu("Administer Menu", 1L, 11L, 7));
 				
 		menuService.insert(listaAdmMenu);
 		

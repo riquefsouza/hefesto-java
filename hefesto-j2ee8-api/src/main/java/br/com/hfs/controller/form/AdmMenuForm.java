@@ -15,7 +15,7 @@ public class AdmMenuForm {
 
 	private Integer order;
 	
-	private AdmPageForm admPage;
+	private Long idPage;
 	
 	private Long idMenuParent;
 		
@@ -27,12 +27,13 @@ public class AdmMenuForm {
 		this.id = obj.getId();
 		this.description = obj.getDescription();
 		this.order = obj.getOrder();
-		this.admPage = new AdmPageForm(obj.getAdmPage());
+		//this.admPage = new AdmPageForm(obj.getAdmPage());
+		this.idPage = obj.getIdPage();
 		this.idMenuParent = obj.getIdMenuParent();
 	}
 	
 	public AdmMenu convert() {
-		return new AdmMenu(description, idMenuParent, admPage.getId(), order);
+		return new AdmMenu(description, idMenuParent, idPage, order);
 	}
 
 	public AdmMenu update(Long id, AdmMenuService service) {
@@ -40,7 +41,7 @@ public class AdmMenuForm {
 		if (bean.isPresent()) {
 			bean.get().setDescription(this.description);
 			bean.get().setIdMenuParent(this.idMenuParent);
-			bean.get().setIdPage(this.admPage.getId());
+			bean.get().setIdPage(this.idPage);
 			bean.get().setOrder(this.order);
 			return bean.get();	
 		}
@@ -71,14 +72,6 @@ public class AdmMenuForm {
 		this.order = order;
 	}
 
-	public AdmPageForm getAdmPage() {
-		return admPage;
-	}
-
-	public void setAdmPage(AdmPageForm admPage) {
-		this.admPage = admPage;
-	}
-
 	public Long getIdMenuParent() {
 		return idMenuParent;
 	}
@@ -93,6 +86,14 @@ public class AdmMenuForm {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getIdPage() {
+		return idPage;
+	}
+
+	public void setIdPage(Long idPage) {
+		this.idPage = idPage;
 	}
 
 }

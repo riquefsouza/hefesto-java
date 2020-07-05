@@ -17,31 +17,31 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import br.com.hfs.controller.dto.AdmPageDTO;
-import br.com.hfs.controller.form.AdmPageForm;
-import br.com.hfs.model.AdmPage;
-import br.com.hfs.service.AdmPageService;
+import br.com.hfs.controller.dto.AdmMenuDTO;
+import br.com.hfs.controller.form.AdmMenuForm;
+import br.com.hfs.model.AdmMenu;
+import br.com.hfs.service.AdmMenuService;
 
-@Path("/admPage")
-public class AdmPageController {
+@Path("/admMenu")
+public class AdmMenuRestController {
 
 	@Inject
-	private AdmPageService pageService;
+	private AdmMenuService menuService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
-		List<AdmPage> objList = pageService.findAll();
-		return Response.ok(AdmPageDTO.convert(objList)).build();
+		List<AdmMenu> objList = menuService.findAll();
+		return Response.ok(AdmMenuDTO.convert(objList)).build();
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long id) {
-		Optional<AdmPage> obj = pageService.findById(id);
+		Optional<AdmMenu> obj = menuService.findById(id);
 		if (obj.isPresent()) {
-			return Response.ok(new AdmPageDTO(obj.get())).build();
+			return Response.ok(new AdmMenuDTO(obj.get())).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
 	}
@@ -49,12 +49,13 @@ public class AdmPageController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response save(AdmPageForm form) {
-		AdmPage obj = form.convert();
-		obj = pageService.insert(obj);
+	public Response save(AdmMenuForm form) {
+		AdmMenu obj = form.convert();
+		obj = menuService.insert(obj);
+		obj = menuService.findById(obj.getId()).get();
 		
-		return Response.ok(new AdmPageDTO(obj))
-				.location(URI.create("admPage/" + obj.getId()))
+		return Response.ok(new AdmMenuDTO(obj))
+				.location(URI.create("admMenu/" + obj.getId()))
 				.status(Status.CREATED).build();
 	}
 	
@@ -62,12 +63,12 @@ public class AdmPageController {
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") Long id, AdmPageForm form) {
-		Optional<AdmPage> obj = pageService.findById(id);
+	public Response update(@PathParam("id") Long id, AdmMenuForm form) {
+		Optional<AdmMenu> obj = menuService.findById(id);
 		if (obj.isPresent()) {
-			AdmPage bean = form.update(id, pageService);
-			bean = pageService.update(bean);
-			return Response.ok(new AdmPageDTO(bean)).build();
+			AdmMenu bean = form.update(id, menuService);
+			bean = menuService.update(bean);
+			return Response.ok(new AdmMenuDTO(bean)).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
 	}
@@ -75,11 +76,12 @@ public class AdmPageController {
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id") Long id) {
-		Optional<AdmPage> obj = pageService.findById(id);
+		Optional<AdmMenu> obj = menuService.findById(id);
 		if (obj.isPresent()) {
-			pageService.deleteById(id);
+			menuService.directDeleteById(id);
 			return Response.ok().build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
 	}
+	
 }

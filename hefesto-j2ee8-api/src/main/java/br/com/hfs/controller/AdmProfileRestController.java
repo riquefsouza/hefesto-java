@@ -17,31 +17,31 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import br.com.hfs.controller.dto.AdmMenuDTO;
-import br.com.hfs.controller.form.AdmMenuForm;
-import br.com.hfs.model.AdmMenu;
-import br.com.hfs.service.AdmMenuService;
+import br.com.hfs.controller.dto.AdmProfileDTO;
+import br.com.hfs.controller.form.AdmProfileForm;
+import br.com.hfs.model.AdmProfile;
+import br.com.hfs.service.AdmProfileService;
 
-@Path("/admMenu")
-public class AdmMenuController {
+@Path("/admProfile")
+public class AdmProfileRestController {
 
 	@Inject
-	private AdmMenuService menuService;
+	private AdmProfileService profileService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
-		List<AdmMenu> objList = menuService.findAll();
-		return Response.ok(AdmMenuDTO.convert(objList)).build();
+		List<AdmProfile> objList = profileService.findAll();
+		return Response.ok(AdmProfileDTO.convert(objList)).build();
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long id) {
-		Optional<AdmMenu> obj = menuService.findById(id);
+		Optional<AdmProfile> obj = profileService.findById(id);
 		if (obj.isPresent()) {
-			return Response.ok(new AdmMenuDTO(obj.get())).build();
+			return Response.ok(new AdmProfileDTO(obj.get())).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
 	}
@@ -49,12 +49,12 @@ public class AdmMenuController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response save(AdmMenuForm form) {
-		AdmMenu obj = form.convert();
-		obj = menuService.insert(obj);
+	public Response save(AdmProfileForm form) {
+		AdmProfile obj = form.convert();
+		obj = profileService.insert(obj);
 		
-		return Response.ok(new AdmMenuDTO(obj))
-				.location(URI.create("admMenu/" + obj.getId()))
+		return Response.ok(new AdmProfileDTO(obj))
+				.location(URI.create("admProfile/" + obj.getId()))
 				.status(Status.CREATED).build();
 	}
 	
@@ -62,12 +62,12 @@ public class AdmMenuController {
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") Long id, AdmMenuForm form) {
-		Optional<AdmMenu> obj = menuService.findById(id);
+	public Response update(@PathParam("id") Long id, AdmProfileForm form) {
+		Optional<AdmProfile> obj = profileService.findById(id);
 		if (obj.isPresent()) {
-			AdmMenu bean = form.update(id, menuService);
-			bean = menuService.update(bean);
-			return Response.ok(new AdmMenuDTO(bean)).build();
+			AdmProfile bean = form.update(id, profileService);
+			bean = profileService.update(bean);
+			return Response.ok(new AdmProfileDTO(bean)).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
 	}
@@ -75,12 +75,11 @@ public class AdmMenuController {
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id") Long id) {
-		Optional<AdmMenu> obj = menuService.findById(id);
+		Optional<AdmProfile> obj = profileService.findById(id);
 		if (obj.isPresent()) {
-			menuService.deleteById(id);
+			profileService.deleteById(id);
 			return Response.ok().build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
 	}
-	
 }

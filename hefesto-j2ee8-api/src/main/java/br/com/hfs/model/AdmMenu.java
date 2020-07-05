@@ -49,7 +49,7 @@ import br.com.hfs.vo.MenuVO;
 	@NamedQuery(name = "AdmMenu.findChildrenMenus", query = "SELECT m FROM AdmMenu m left join m.admMenuParent mp WHERE m.admMenuParent = ?1 ORDER BY m.order, mp.order"),
 	@NamedQuery(name = "AdmMenu.findAdminMenuParentByPage", query="SELECT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmMenu m WHERE m.admPage = ?1 AND m.admMenuParent IS NULL AND m.id <= 9) ORDER BY t.id, t.order"),
 	@NamedQuery(name = "AdmMenu.findMenuParentByPage", query="SELECT t FROM AdmMenu t WHERE t.id IN (SELECT m.admMenuParent.id FROM AdmMenu m WHERE m.admPage = ?1 AND m.admMenuParent IS NULL AND m.id > 9) ORDER BY t.id, t.order"),
-	@NamedQuery(name = "AdmMenu.findPageByMenu", query="SELECT m.admPage FROM AdmMenu m WHERE m.admPage = ?1 AND m.id = ?2")	
+	@NamedQuery(name = "AdmMenu.findPageByMenu", query="SELECT m.admPage FROM AdmMenu m WHERE m.admPage = ?1 AND m.id = ?2")
 })
 
 public class AdmMenu implements Serializable, Comparable<AdmMenu> {
@@ -88,7 +88,7 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 	/** The adm pagina. */
 	// bi-directional many-to-one association to AdmPage
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	@JoinColumn(name = "MNU_PAG_SEQ", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "MNU_PAG_SEQ", nullable = true, insertable = false, updatable = false)
 	private AdmPage admPage;
 
 	@Column(name = "MNU_PARENT_SEQ", nullable = true)
@@ -97,7 +97,7 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 	/** The adm menu. */
 	// bi-directional many-to-one association to AdmMenu
 	@ManyToOne(fetch = FetchType.LAZY) //(cascade={CascadeType.ALL}) //
-	@JoinColumn(name = "MNU_PARENT_SEQ", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "MNU_PARENT_SEQ", nullable = true, insertable = false, updatable = false)
 	private AdmMenu admMenuParent;
 
 	/** The adm menus. */
@@ -106,7 +106,7 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 	@JsonIgnore
 	//@JsonSerialize(using = AdmMenuListSerializer.class)
 	@Fetch(FetchMode.SUBSELECT)
-	@OneToMany(mappedBy = "admMenuParent", fetch = FetchType.EAGER)	
+	@OneToMany(mappedBy = "admMenuParent", orphanRemoval = true, fetch = FetchType.EAGER)	
 	private List<AdmMenu> admSubMenus;
 
 	/**
@@ -139,7 +139,7 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 		this.id = m.getId();
 		this.description = m.getDescription();
 		this.order = m.getOrder();
-		this.idPage = m.getAdmPage().getId();
+		this.idPage = m.getIdPage();
 		this.idMenuParent = m.getIdMenuParent();
 	}
 

@@ -1,4 +1,4 @@
-package br.com.hfs;
+package br.com.hfs.tests;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,6 +20,64 @@ public class AdmMenuTests extends BaseTests {
 
 	@Test
 	@Order(1)
+	public void insertTest() {
+		Response r = 
+		given()
+			.spec(spec)
+			.accept(ContentType.JSON)
+			.body("{\"description\": \"OLD_MENU\","
+					+ "\"order\": 1,"
+					+ "\"idPage\": 1,"
+					+ "\"idMenuParent\": 1}")
+		.when()
+			.post("admMenu");
+		
+		AdmMenuDTO dto = r.then()
+			.statusCode(Status.CREATED.getStatusCode())
+			.contentType(ContentType.JSON)
+			.extract().as(AdmMenuDTO.class);
+		
+		String slocation = r.getHeader("Location");
+		id = dto.getId();
+		
+		assertEquals("OLD_MENU", dto.getDescription());
+		assertEquals(uriBase + "admMenu/" + id, slocation);
+	}
+	
+	@Test
+	@Order(2)
+	public void updateTest() {
+		AdmMenuDTO dto =
+		given()
+			.spec(spec)
+			.accept(ContentType.JSON)
+			.body("{\"description\": \"NEW_MENU\","
+					+ "\"order\": 1,"
+					+ "\"idPage\": 1,"
+					+ "\"idMenuParent\": 1}")
+		.when()
+			.put("admMenu/" + id)
+		.then()
+			.statusCode(Status.OK.getStatusCode())
+			.contentType(ContentType.JSON)
+			.extract().as(AdmMenuDTO.class);
+		
+		assertEquals("NEW_MENU", dto.getDescription());
+	}
+	
+	@Test
+	@Order(3)
+	public void deleteTest() {
+		given()
+			.spec(spec)
+		.when()
+			.delete("admMenu/" + id)
+		.then()
+			.statusCode(Status.OK.getStatusCode());
+	}
+	
+	@Test
+	@Order(4)
 	void findAllTest() {
 		AdmMenuDTO[] dtos =
 		given()
@@ -31,11 +89,11 @@ public class AdmMenuTests extends BaseTests {
 			.contentType(ContentType.JSON)
 			.extract().as(AdmMenuDTO[].class);
 		
-		assertEquals(2, dtos.length);
+		assertEquals(6, dtos.length);
 	}
 
 	@Test
-	@Order(2)
+	@Order(5)
 	public void findByIdTest() {
 		AdmMenuDTO dto = 
 		given()
@@ -47,67 +105,8 @@ public class AdmMenuTests extends BaseTests {
 			.contentType(ContentType.JSON)
 			.extract().as(AdmMenuDTO.class);
 		
-		assertEquals("USER", dto.getDescription());
-		assertThat("USER").isEqualTo(dto.getDescription());
-	}
-
-	@Test
-	@Order(3)
-	public void insertTest() {
-		Response r = 
-		given()
-			.spec(spec)
-			.accept(ContentType.JSON)
-			.body("{\"administrator\": false,"
-					+ "\"description\": \"OLD_MENU\","
-					+ "\"general\": false,"
-					+ "\"admMenus\": [],"
-					+ "\"admUsers\": []}")
-		.when()
-			.post("admMenu");
-		
-		AdmMenuDTO dto = r.then()
-			.statusCode(Status.CREATED.getStatusCode())
-			.contentType(ContentType.JSON)
-			.extract().as(AdmMenuDTO.class);
-		
-		String slocation = r.getHeader("Location");
-		
-		assertEquals("OLD_MENU", dto.getDescription());
-		assertEquals(uriBase + "admMenu/3", slocation);
-	}
-	
-	@Test
-	@Order(4)
-	public void updateTest() {
-		AdmMenuDTO dto =
-		given()
-			.spec(spec)
-			.accept(ContentType.JSON)
-			.body("{\"administrator\": false,"
-					+ "\"description\": \"NEW_MENU\","
-					+ "\"general\": false,"
-					+ "\"admMenus\": [],"
-					+ "\"admUsers\": []}")
-		.when()
-			.put("admMenu/3")
-		.then()
-			.statusCode(Status.OK.getStatusCode())
-			.contentType(ContentType.JSON)
-			.extract().as(AdmMenuDTO.class);
-		
-		assertEquals("NEW_MENU", dto.getDescription());
-	}
-	
-	@Test
-	@Order(5)
-	public void deleteTest() {
-		given()
-			.spec(spec)
-		.when()
-			.delete("admMenu/3")
-		.then()
-			.statusCode(Status.OK.getStatusCode());
+		assertEquals("Category of Configuration Parameters", dto.getDescription());
+		assertThat("Category of Configuration Parameters").isEqualTo(dto.getDescription());
 	}
 	
 }

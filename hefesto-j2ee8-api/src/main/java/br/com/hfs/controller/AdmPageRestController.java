@@ -17,31 +17,31 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import br.com.hfs.controller.dto.AdmUserDTO;
-import br.com.hfs.controller.form.AdmUserForm;
-import br.com.hfs.model.AdmUser;
-import br.com.hfs.service.AdmUserService;
+import br.com.hfs.controller.dto.AdmPageDTO;
+import br.com.hfs.controller.form.AdmPageForm;
+import br.com.hfs.model.AdmPage;
+import br.com.hfs.service.AdmPageService;
 
-@Path("/admUser")
-public class AdmUserController {
+@Path("/admPage")
+public class AdmPageRestController {
 
 	@Inject
-	private AdmUserService userService;
+	private AdmPageService pageService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
-		List<AdmUser> objList = userService.findAll();
-		return Response.ok(AdmUserDTO.convert(objList)).build();
+		List<AdmPage> objList = pageService.findAll();
+		return Response.ok(AdmPageDTO.convert(objList)).build();
 	}
 
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long id) {
-		Optional<AdmUser> obj = userService.findById(id);
+		Optional<AdmPage> obj = pageService.findById(id);
 		if (obj.isPresent()) {
-			return Response.ok(new AdmUserDTO(obj.get())).build();
+			return Response.ok(new AdmPageDTO(obj.get())).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
 	}
@@ -49,12 +49,12 @@ public class AdmUserController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response save(AdmUserForm form) {
-		AdmUser obj = form.convert();
-		obj = userService.insert(obj);
+	public Response save(AdmPageForm form) {
+		AdmPage obj = form.convert();
+		obj = pageService.insert(obj);
 		
-		return Response.ok(new AdmUserDTO(obj))
-				.location(URI.create("admUser/" + obj.getId()))
+		return Response.ok(new AdmPageDTO(obj))
+				.location(URI.create("admPage/" + obj.getId()))
 				.status(Status.CREATED).build();
 	}
 	
@@ -62,12 +62,12 @@ public class AdmUserController {
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response update(@PathParam("id") Long id, AdmUserForm form) {
-		Optional<AdmUser> obj = userService.findById(id);
+	public Response update(@PathParam("id") Long id, AdmPageForm form) {
+		Optional<AdmPage> obj = pageService.findById(id);
 		if (obj.isPresent()) {
-			AdmUser bean = form.update(id, userService);
-			bean = userService.update(bean);
-			return Response.ok(new AdmUserDTO(bean)).build();
+			AdmPage bean = form.update(id, pageService);
+			bean = pageService.update(bean);
+			return Response.ok(new AdmPageDTO(bean)).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
 	}
@@ -75,9 +75,9 @@ public class AdmUserController {
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id") Long id) {
-		Optional<AdmUser> obj = userService.findById(id);
+		Optional<AdmPage> obj = pageService.findById(id);
 		if (obj.isPresent()) {
-			userService.deleteById(id);
+			pageService.deleteById(id);
 			return Response.ok().build();
 		}
 		return Response.status(Status.NOT_FOUND).build();

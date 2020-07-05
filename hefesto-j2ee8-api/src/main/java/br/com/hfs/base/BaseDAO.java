@@ -79,6 +79,14 @@ public abstract class BaseDAO<T, I extends Serializable> implements IBaseCrud<T,
 			delete(entity.get());
 		}
 	}
+	
+	@Transactional
+	public int directDeleteById(Long id) {	
+		Query query = em.createQuery("DELETE FROM " + clazz.getName() + " m WHERE m.id = ?1");
+		query.setParameter(1, id);
+		 
+		return query.executeUpdate(); 
+	}
 
 	public List<T> findAll(int start, int max) {
 		TypedQuery<T> query = em.createQuery("SELECT x FROM " + clazz.getName() + " x", clazz);

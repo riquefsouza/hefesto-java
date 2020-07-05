@@ -28,4 +28,5 @@ public class AdmMenuDAO extends BaseDAO<AdmMenu, Long> {
 		query.setParameter(1, menu);
 		return query.getResultList();
 	}
+	
 }

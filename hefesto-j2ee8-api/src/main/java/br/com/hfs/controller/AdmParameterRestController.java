@@ -23,7 +23,7 @@ import br.com.hfs.model.AdmParameter;
 import br.com.hfs.service.AdmParameterService;
 
 @Path("/admParameter")
-public class AdmParameterController {
+public class AdmParameterRestController {
 
 	@Inject
 	private AdmParameterService parameterService;
@@ -52,6 +52,7 @@ public class AdmParameterController {
 	public Response save(AdmParameterForm form) {
 		AdmParameter obj = form.convert();
 		obj = parameterService.insert(obj);
+		obj = parameterService.findById(obj.getId()).get();
 		
 		return Response.ok(new AdmParameterDTO(obj))
 				.location(URI.create("admParameter/" + obj.getId()))

@@ -23,7 +23,7 @@ import br.com.hfs.model.AdmParameterCategory;
 import br.com.hfs.service.AdmParameterCategoryService;
 
 @Path("/admParameterCategory")
-public class AdmParameterCategoryController {
+public class AdmParameterCategoryRestController {
 
 	@Inject
 	private AdmParameterCategoryService parameterCategoryService;

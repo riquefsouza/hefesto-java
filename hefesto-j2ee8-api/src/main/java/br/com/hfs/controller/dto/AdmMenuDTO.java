@@ -13,7 +13,7 @@ public class AdmMenuDTO {
 
 	private Integer order;
 	
-	private AdmPageDTO admPage;
+	private Long idPage;
 	
 	private Long idMenuParent;
 		
@@ -25,7 +25,13 @@ public class AdmMenuDTO {
 		this.id = obj.getId();
 		this.description = obj.getDescription();
 		this.order = obj.getOrder();
-		this.admPage = new AdmPageDTO(obj.getAdmPage());
+		/*
+		if (obj.getAdmPage()!=null)
+			this.admPage = new AdmPageDTO(obj.getAdmPage());
+		else
+			this.admPage = new AdmPageDTO();
+		*/
+		this.idPage = obj.getIdPage();
 		this.idMenuParent = obj.getIdMenuParent();
 	}
 
@@ -40,16 +46,16 @@ public class AdmMenuDTO {
 	public Integer getOrder() {
 		return order;
 	}
-
-	public AdmPageDTO getAdmPage() {
-		return admPage;
-	}
-
+	
 	public Long getIdMenuParent() {
 		return idMenuParent;
 	}
 
 	public Long getId() {
 		return id;
+	}
+
+	public Long getIdPage() {
+		return idPage;
 	}
 }

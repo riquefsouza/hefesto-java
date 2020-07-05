@@ -25,74 +25,74 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.hfs.controller.dto.RoleDTO;
-import br.com.hfs.controller.form.RoleForm;
-import br.com.hfs.model.Role;
-import br.com.hfs.repository.RoleRepository;
+import br.com.hfs.controller.dto.UserDTO;
+import br.com.hfs.controller.form.UserForm;
+import br.com.hfs.model.User;
+import br.com.hfs.repository.UserRepository;
 
 @RestController
-@RequestMapping("/api/v1/role")
-public class RoleController {
+@RequestMapping("/api/v1/user")
+public class UserRestController {
 
 	@Autowired
-	private RoleRepository roleRepository;
+	private UserRepository userRepository;
 
 	@GetMapping
-	@Cacheable(value = "roleControllerList")
-	public Page<RoleDTO> list(@RequestParam(required = false) String role,
-		@PageableDefault(page = 0, size = 20, direction = Direction.ASC, sort = "id") Pageable pagination) {
-			//@RequestParam int page, @RequestParam int size, @RequestParam String fieldToSort) {
-		
+	@Cacheable(value = "userControllerList")
+	public Page<UserDTO> list(@RequestParam(required = false) String user, 
+			@PageableDefault(page = 0, size = 20, direction = Direction.ASC, sort = "id") Pageable pagination) {
+		//@RequestParam int page, @RequestParam int size, @RequestParam String fieldToSort) {
+	
 		//Pageable pagination = PageRequest.of(page, size, Direction.ASC, fieldToSort);
 		
-		if (role == null) {
-			Page<Role> roles = roleRepository.findAll(pagination);
-			return RoleDTO.convert(roles);
+		if (user == null) {
+			Page<User> users = userRepository.findAll(pagination);
+			return UserDTO.convert(users);
 		} else {
-			Page<Role> roles = roleRepository.findByRole(role, pagination);
-			return RoleDTO.convert(roles);
+			Page<User> users = userRepository.findByUserNameLike(user + "%", pagination);
+			return UserDTO.convert(users);
 		}
 	}
 	
 	@PostMapping
 	@Transactional
-	@CacheEvict(value = "roleControllerList", allEntries = true)
-	public ResponseEntity<RoleDTO> save(@RequestBody @Valid RoleForm form, UriComponentsBuilder uriBuilder) {
-		Role role = form.convert();
-		roleRepository.save(role);
+	@CacheEvict(value = "userControllerList", allEntries = true)
+	public ResponseEntity<UserDTO> save(@RequestBody @Valid UserForm form, UriComponentsBuilder uriBuilder) {
+		User user = form.convert();
+		userRepository.save(user);
 		
-		URI uri = uriBuilder.path("/role/{id}").buildAndExpand(role.getId()).toUri();
-		return ResponseEntity.created(uri).body(new RoleDTO(role));
+		URI uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
+		return ResponseEntity.created(uri).body(new UserDTO(user));
 	}
 
 	@GetMapping("{id}")
-	public ResponseEntity<RoleDTO> get(@PathVariable Long id) {
-		Optional<Role> bean = roleRepository.findById(id);
+	public ResponseEntity<UserDTO> get(@PathVariable Long id) {
+		Optional<User> bean = userRepository.findById(id);
 		if (bean.isPresent()) {
-			return ResponseEntity.ok(new RoleDTO(bean.get()));
+			return ResponseEntity.ok(new UserDTO(bean.get()));
 		}
 		return ResponseEntity.notFound().build();
 	}
 	
 	@PutMapping("{id}")
 	@Transactional
-	@CacheEvict(value = "roleControllerList", allEntries = true)
-	public ResponseEntity<RoleDTO> update(@PathVariable Long id, @RequestBody @Valid RoleForm form){
-		Optional<Role> bean = roleRepository.findById(id);
+	@CacheEvict(value = "userControllerList", allEntries = true)
+	public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserForm form){
+		Optional<User> bean = userRepository.findById(id);
 		if (bean.isPresent()) {
-			Role role = form.update(id, roleRepository);
-			return ResponseEntity.ok(new RoleDTO(role));
+			User user = form.update(id, userRepository);
+			return ResponseEntity.ok(new UserDTO(user));
 		}
 		return ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("{id}")
 	@Transactional
-	@CacheEvict(value = "roleControllerList", allEntries = true)
+	@CacheEvict(value = "userControllerList", allEntries = true)
 	public ResponseEntity<?> delete(@PathVariable Long id) {
-		Optional<Role> bean = roleRepository.findById(id);
+		Optional<User> bean = userRepository.findById(id);
 		if (bean.isPresent()) {
-			roleRepository.deleteById(id);
+			userRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();

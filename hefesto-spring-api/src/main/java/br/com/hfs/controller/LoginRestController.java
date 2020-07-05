@@ -19,7 +19,7 @@ import br.com.hfs.security.TokenService;
 
 @RestController
 @RequestMapping("/auth")
-public class LoginController {
+public class LoginRestController {
 
 	@Autowired
 	private AuthenticationManager authManager;

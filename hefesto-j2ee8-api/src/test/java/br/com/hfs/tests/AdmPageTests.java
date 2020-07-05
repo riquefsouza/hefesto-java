@@ -1,4 +1,4 @@
-package br.com.hfs;
+package br.com.hfs.tests;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,6 +20,60 @@ public class AdmPageTests extends BaseTests {
 
 	@Test
 	@Order(1)
+	public void insertTest() {
+		Response r = 
+		given()
+			.spec(spec)
+			.accept(ContentType.JSON)
+			.body("{\"url\": \"admin/admTest/listTest.xhtml\","
+					+ "\"description\": \"OLD_PAGE\"}")
+		.when()
+			.post("admPage");
+		
+		AdmPageDTO dto = r.then()
+			.statusCode(Status.CREATED.getStatusCode())
+			.contentType(ContentType.JSON)
+			.extract().as(AdmPageDTO.class);
+		
+		String slocation = r.getHeader("Location");
+		id = dto.getId();
+		
+		assertEquals("OLD_PAGE", dto.getDescription());
+		assertEquals(uriBase + "admPage/" + id, slocation);
+	}
+	
+	@Test
+	@Order(2)
+	public void updateTest() {
+		AdmPageDTO dto =
+		given()
+			.spec(spec)
+			.accept(ContentType.JSON)
+			.body("{\"url\": \"admin/admTest/listTest.xhtml\","
+					+ "\"description\": \"NEW_PAGE\"}")
+		.when()
+			.put("admPage/" + id)
+		.then()
+			.statusCode(Status.OK.getStatusCode())
+			.contentType(ContentType.JSON)
+			.extract().as(AdmPageDTO.class);
+		
+		assertEquals("NEW_PAGE", dto.getDescription());
+	}
+	
+	@Test
+	@Order(3)
+	public void deleteTest() {
+		given()
+			.spec(spec)
+		.when()
+			.delete("admPage/" + id)
+		.then()
+			.statusCode(Status.OK.getStatusCode());
+	}
+	
+	@Test
+	@Order(4)
 	void findAllTest() {
 		AdmPageDTO[] dtos =
 		given()
@@ -31,11 +85,11 @@ public class AdmPageTests extends BaseTests {
 			.contentType(ContentType.JSON)
 			.extract().as(AdmPageDTO[].class);
 		
-		assertEquals(2, dtos.length);
+		assertEquals(11, dtos.length);
 	}
 
 	@Test
-	@Order(2)
+	@Order(5)
 	public void findByIdTest() {
 		AdmPageDTO dto = 
 		given()
@@ -47,67 +101,7 @@ public class AdmPageTests extends BaseTests {
 			.contentType(ContentType.JSON)
 			.extract().as(AdmPageDTO.class);
 		
-		assertEquals("USER", dto.getDescription());
-		assertThat("USER").isEqualTo(dto.getDescription());
+		assertEquals("admin/admParameterCategory/editAdmParameterCategory.xhtml", dto.getUrl());
+		assertThat("admin/admParameterCategory/editAdmParameterCategory.xhtml").isEqualTo(dto.getUrl());
 	}
-
-	@Test
-	@Order(3)
-	public void insertTest() {
-		Response r = 
-		given()
-			.spec(spec)
-			.accept(ContentType.JSON)
-			.body("{\"administrator\": false,"
-					+ "\"description\": \"OLD_PAGE\","
-					+ "\"general\": false,"
-					+ "\"admPages\": [],"
-					+ "\"admUsers\": []}")
-		.when()
-			.post("admPage");
-		
-		AdmPageDTO dto = r.then()
-			.statusCode(Status.CREATED.getStatusCode())
-			.contentType(ContentType.JSON)
-			.extract().as(AdmPageDTO.class);
-		
-		String slocation = r.getHeader("Location");
-		
-		assertEquals("OLD_PAGE", dto.getDescription());
-		assertEquals(uriBase + "admPage/3", slocation);
-	}
-	
-	@Test
-	@Order(4)
-	public void updateTest() {
-		AdmPageDTO dto =
-		given()
-			.spec(spec)
-			.accept(ContentType.JSON)
-			.body("{\"administrator\": false,"
-					+ "\"description\": \"NEW_PAGE\","
-					+ "\"general\": false,"
-					+ "\"admPages\": [],"
-					+ "\"admUsers\": []}")
-		.when()
-			.put("admPage/3")
-		.then()
-			.statusCode(Status.OK.getStatusCode())
-			.contentType(ContentType.JSON)
-			.extract().as(AdmPageDTO.class);
-		
-		assertEquals("NEW_PAGE", dto.getDescription());
-	}
-	
-	@Test
-	@Order(5)
-	public void deleteTest() {
-		given()
-			.spec(spec)
-		.when()
-			.delete("admPage/3")
-		.then()
-			.statusCode(Status.OK.getStatusCode());
-	}
-	
 }

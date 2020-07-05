@@ -1,4 +1,4 @@
-package br.com.hfs;
+package br.com.hfs.tests;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,9 +17,67 @@ import io.restassured.response.Response;
 
 @TestMethodOrder(OrderAnnotation.class)
 public class AdmUserTests extends BaseTests {
-
+	
 	@Test
 	@Order(1)
+	public void insertTest() {
+		Response r = 
+		given()
+			.spec(spec)
+			.accept(ContentType.JSON)
+			.body("{\"login\": \"OLD_USER\","
+					+ "\"password\": \"OLD_PASSWORD\","
+					+ "\"name\": \"OLD_NAME\","
+					+ "\"email\": \"old_mail@gmail.com\"}")
+		.when()
+			.post("admUser");
+		
+		AdmUserDTO dto = r.then()
+			.statusCode(Status.CREATED.getStatusCode())
+			.contentType(ContentType.JSON)
+			.extract().as(AdmUserDTO.class);
+		
+		String slocation = r.getHeader("Location");
+		id = dto.getId();
+		
+		assertEquals("OLD_USER", dto.getLogin());
+		assertEquals(uriBase + "admUser/" + id, slocation);
+	}
+	
+	@Test
+	@Order(2)
+	public void updateTest() {
+		AdmUserDTO dto =
+		given()
+			.spec(spec)
+			.accept(ContentType.JSON)
+			.body("{\"login\": \"NEW_USER\","
+					+ "\"password\": \"NEW_PASSWORD\","
+					+ "\"name\": \"NEW_NAME\","
+					+ "\"email\": \"new_mail@gmail.com\"}")
+		.when()
+			.put("admUser/" + id)
+		.then()
+			.statusCode(Status.OK.getStatusCode())
+			.contentType(ContentType.JSON)
+			.extract().as(AdmUserDTO.class);
+		
+		assertEquals("NEW_USER", dto.getLogin());
+	}
+	
+	@Test
+	@Order(3)
+	public void deleteTest() {
+		given()
+			.spec(spec)
+		.when()
+			.delete("admUser/" + id)
+		.then()
+			.statusCode(Status.OK.getStatusCode());
+	}
+	
+	@Test
+	@Order(4)
 	void findAllTest() {
 		AdmUserDTO[] dtos =
 		given()
@@ -31,83 +89,23 @@ public class AdmUserTests extends BaseTests {
 			.contentType(ContentType.JSON)
 			.extract().as(AdmUserDTO[].class);
 		
-		assertEquals(2, dtos.length);
+		assertEquals(1, dtos.length);
 	}
 
 	@Test
-	@Order(2)
+	@Order(5)
 	public void findByIdTest() {
 		AdmUserDTO dto = 
 		given()
 			.spec(spec)
 		.when()
-			.get("admUser/2")
+			.get("admUser/1")
 		.then()
 			.statusCode(Status.OK.getStatusCode())
 			.contentType(ContentType.JSON)
 			.extract().as(AdmUserDTO.class);
 		
-		assertEquals("USER", dto.getLogin());
-		assertThat("USER").isEqualTo(dto.getLogin());
+		assertEquals("admin", dto.getLogin());
+		assertThat("admin").isEqualTo(dto.getLogin());
 	}
-
-	@Test
-	@Order(3)
-	public void insertTest() {
-		Response r = 
-		given()
-			.spec(spec)
-			.accept(ContentType.JSON)
-			.body("{\"administrator\": false,"
-					+ "\"description\": \"OLD_USER\","
-					+ "\"general\": false,"
-					+ "\"admUsers\": [],"
-					+ "\"admUsers\": []}")
-		.when()
-			.post("admUser");
-		
-		AdmUserDTO dto = r.then()
-			.statusCode(Status.CREATED.getStatusCode())
-			.contentType(ContentType.JSON)
-			.extract().as(AdmUserDTO.class);
-		
-		String slocation = r.getHeader("Location");
-		
-		assertEquals("OLD_USER", dto.getLogin());
-		assertEquals(uriBase + "admUser/3", slocation);
-	}
-	
-	@Test
-	@Order(4)
-	public void updateTest() {
-		AdmUserDTO dto =
-		given()
-			.spec(spec)
-			.accept(ContentType.JSON)
-			.body("{\"administrator\": false,"
-					+ "\"description\": \"NEW_USER\","
-					+ "\"general\": false,"
-					+ "\"admUsers\": [],"
-					+ "\"admUsers\": []}")
-		.when()
-			.put("admUser/3")
-		.then()
-			.statusCode(Status.OK.getStatusCode())
-			.contentType(ContentType.JSON)
-			.extract().as(AdmUserDTO.class);
-		
-		assertEquals("NEW_USER", dto.getLogin());
-	}
-	
-	@Test
-	@Order(5)
-	public void deleteTest() {
-		given()
-			.spec(spec)
-		.when()
-			.delete("admUser/3")
-		.then()
-			.statusCode(Status.OK.getStatusCode());
-	}
-	
 }

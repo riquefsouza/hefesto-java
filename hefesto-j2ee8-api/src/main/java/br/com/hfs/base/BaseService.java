@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -92,7 +93,18 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 			throw new TransactionException(msg, e);
 		}
 	}
-
+	
+	@Transactional
+	public int directDeleteById(Long id) throws TransactionException {
+		try {
+			return repository.directDeleteById(id);
+		} catch (Exception e) {
+			String msg = ERRO_DELETE + e.getMessage();
+			ExceptionUtil.getErrors(log, e, msg, true);
+			throw new TransactionException(msg, e);
+		}
+	}
+	
 	@Override
 	public List<T> findAll(int start, int max) {
 		return repository.findAll(start, max);

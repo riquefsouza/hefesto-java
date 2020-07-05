@@ -1,4 +1,4 @@
-package br.com.hfs;
+package br.com.hfs.tests;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,9 +17,69 @@ import io.restassured.response.Response;
 
 @TestMethodOrder(OrderAnnotation.class)
 public class AdmProfileTests extends BaseTests {
-
+	
 	@Test
 	@Order(1)
+	public void insertTest() {
+		Response r = 
+		given()
+			.spec(spec)
+			.accept(ContentType.JSON)
+			.body("{\"administrator\": false,"
+					+ "\"description\": \"OLD_PROFILE\","
+					+ "\"general\": false,"
+					+ "\"admPages\": [],"
+					+ "\"admUsers\": []}")
+		.when()
+			.post("admProfile");
+		
+		AdmProfileDTO dto = r.then()
+			.statusCode(Status.CREATED.getStatusCode())
+			.contentType(ContentType.JSON)
+			.extract().as(AdmProfileDTO.class);
+		
+		String slocation = r.getHeader("Location");
+		id = dto.getId();
+		
+		assertEquals("OLD_PROFILE", dto.getDescription());
+		assertEquals(uriBase + "admProfile/" + id, slocation);
+	}
+	
+	@Test
+	@Order(2)
+	public void updateTest() {
+		AdmProfileDTO dto =
+		given()
+			.spec(spec)
+			.accept(ContentType.JSON)
+			.body("{\"administrator\": false,"
+					+ "\"description\": \"NEW_PROFILE\","
+					+ "\"general\": false,"
+					+ "\"admPages\": [],"
+					+ "\"admUsers\": []}")
+		.when()
+			.put("admProfile/" + id)
+		.then()
+			.statusCode(Status.OK.getStatusCode())
+			.contentType(ContentType.JSON)
+			.extract().as(AdmProfileDTO.class);
+		
+		assertEquals("NEW_PROFILE", dto.getDescription());
+	}
+	
+	@Test
+	@Order(3)
+	public void deleteTest() {
+		given()
+			.spec(spec)
+		.when()
+			.delete("admProfile/" + id)
+		.then()
+			.statusCode(Status.OK.getStatusCode());
+	}
+
+	@Test
+	@Order(4)
 	void findAllTest() {
 		AdmProfileDTO[] dtos =
 		given()
@@ -35,7 +95,7 @@ public class AdmProfileTests extends BaseTests {
 	}
 
 	@Test
-	@Order(2)
+	@Order(5)
 	public void findByIdTest() {
 		AdmProfileDTO dto = 
 		given()
@@ -56,65 +116,6 @@ public class AdmProfileTests extends BaseTests {
 		
 		assertEquals("USER", dto.getDescription());
 		assertThat("USER").isEqualTo(dto.getDescription());
-	}
-
-	@Test
-	@Order(3)
-	public void insertTest() {
-		Response r = 
-		given()
-			.spec(spec)
-			.accept(ContentType.JSON)
-			.body("{\"administrator\": false,"
-					+ "\"description\": \"OLD_PROFILE\","
-					+ "\"general\": false,"
-					+ "\"admPages\": [],"
-					+ "\"admUsers\": []}")
-		.when()
-			.post("admProfile");
-		
-		AdmProfileDTO dto = r.then()
-			.statusCode(Status.CREATED.getStatusCode())
-			.contentType(ContentType.JSON)
-			.extract().as(AdmProfileDTO.class);
-		
-		String slocation = r.getHeader("Location");
-		
-		assertEquals("OLD_PROFILE", dto.getDescription());
-		assertEquals(uriBase + "admProfile/3", slocation);
-	}
-	
-	@Test
-	@Order(4)
-	public void updateTest() {
-		AdmProfileDTO dto =
-		given()
-			.spec(spec)
-			.accept(ContentType.JSON)
-			.body("{\"administrator\": false,"
-					+ "\"description\": \"NEW_PROFILE\","
-					+ "\"general\": false,"
-					+ "\"admPages\": [],"
-					+ "\"admUsers\": []}")
-		.when()
-			.put("admProfile/3")
-		.then()
-			.statusCode(Status.OK.getStatusCode())
-			.contentType(ContentType.JSON)
-			.extract().as(AdmProfileDTO.class);
-		
-		assertEquals("NEW_PROFILE", dto.getDescription());
-	}
-	
-	@Test
-	@Order(5)
-	public void deleteTest() {
-		given()
-			.spec(spec)
-		.when()
-			.delete("admProfile/3")
-		.then()
-			.statusCode(Status.OK.getStatusCode());
 	}
 	
 }

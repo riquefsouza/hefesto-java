@@ -34,6 +34,8 @@ public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 	
 	void deleteById(I id) throws TransactionException;
 	
+	int directDeleteById(Long id) throws TransactionException;
+	
 	List<T> findAll(int start, int max);
 	
 	Long count();
