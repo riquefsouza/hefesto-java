@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import br.com.hfs.controller.form.AdmUserForm;
 import br.com.hfs.vo.UserVO;
 
 @Entity
@@ -109,7 +110,15 @@ public class AdmUser implements Serializable {
 		this.name = vo.getName();
 		//this.password = vo.ge;
 	}
-
+	
+	public AdmUser(AdmUserForm vo) {
+		this.id = vo.getId();
+		this.email = vo.getEmail();
+		this.login = vo.getLogin();
+		this.name = vo.getName();
+		this.password = vo.getPassword();
+	}
+	
 	public void clean() {
 		this.id = 0L;
 		this.email = "";

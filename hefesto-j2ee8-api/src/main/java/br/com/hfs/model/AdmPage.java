@@ -29,6 +29,7 @@ import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.hfs.controller.form.AdmPageForm;
 import br.com.hfs.vo.PageVO;
 
 @Entity
@@ -114,6 +115,14 @@ public class AdmPage implements Serializable {
 		this.url = p.getUrl();
 	}
 
+	public AdmPage(AdmPageForm p) {
+		this();
+		
+		this.id = p.getId();
+		this.description = p.getDescription();
+		this.url = p.getUrl();
+	}
+	
 	/**
 	 * Limpar.
 	 */

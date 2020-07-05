@@ -21,6 +21,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import br.com.hfs.controller.form.AdmParameterForm;
+
 @Entity
 @Table(name="ADM_PARAMETER")
 @NamedQueries({
@@ -91,7 +93,14 @@ public class AdmParameter implements Serializable {
 		this.idAdmParameterCategory = idAdmParameterCategory;
 	}
 
-
+	public AdmParameter(AdmParameterForm p) {
+		this();
+		this.id = p.getId();
+		this.code = p.getCode();
+		this.description = p.getDescription();
+		this.value = p.getValue();
+		this.idAdmParameterCategory = p.getAdmParameterCategory().getId();
+	}
 
 	/**
 	 * Limpar.

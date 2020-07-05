@@ -118,7 +118,7 @@ public class AdmProfile implements Serializable {
 	}
 		
 	public AdmProfile(String description, Boolean administrator, Boolean general) {
-		super();
+		this();
 		this.administrator = administrator;
 		this.description = description;
 		this.general = general;

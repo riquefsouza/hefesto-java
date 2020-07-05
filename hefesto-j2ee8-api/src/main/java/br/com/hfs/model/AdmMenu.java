@@ -29,6 +29,7 @@ import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.hfs.controller.form.AdmMenuForm;
 import br.com.hfs.vo.MenuVO;
 
 // TODO: Auto-generated Javadoc
@@ -122,6 +123,24 @@ public class AdmMenu implements Serializable, Comparable<AdmMenu> {
 		this.order = order;
 		this.idPage = idPage;
 		this.idMenuParent = idMenuParent;
+	}
+	
+	public AdmMenu(MenuVO m) {
+		this();
+		this.id = m.getId();
+		this.description = m.getDescription();
+		this.order = m.getOrder();
+		this.idPage = m.getIdPage();
+		this.idMenuParent = m.getMenuParent().getId();
+	}
+	
+	public AdmMenu(AdmMenuForm m) {
+		this();
+		this.id = m.getId();
+		this.description = m.getDescription();
+		this.order = m.getOrder();
+		this.idPage = m.getAdmPage().getId();
+		this.idMenuParent = m.getIdMenuParent();
 	}
 
 	/**

@@ -27,6 +27,8 @@ import org.hibernate.annotations.Parameter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.hfs.controller.form.AdmParameterCategoryForm;
+
 @Entity
 @Table(name="ADM_PARAMETER_CATEGORY")
 @NamedQueries({
@@ -87,6 +89,13 @@ public class AdmParameterCategory implements Serializable {
 		//this.id = id;
 		this.description = description;
 		this.order = order;
+	}
+	
+	public AdmParameterCategory(AdmParameterCategoryForm p) {
+		this();
+		this.id = p.getId();
+		this.description = p.getDescription();
+		this.order = p.getOrder();
 	}
 
 	/**

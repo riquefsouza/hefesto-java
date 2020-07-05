@@ -91,7 +91,7 @@ public class HefestoJ2ee8ApiApplication {
 		Set<AdmPage> pages = new HashSet<AdmPage>(listaAdmPage);
 		
 		profile1.setAdmPages(pages);
-		profileService.saveById(profile1, profile1.getId());
+		profileService.update(profile1);
 		
 		//============ USER ================
 		
@@ -104,7 +104,7 @@ public class HefestoJ2ee8ApiApplication {
 		users.add(user1);
 
 		profile1.setAdmUsers(users);
-		profileService.saveById(profile1, profile1.getId());
+		profileService.update(profile1);
 		
 		//============ PARAMETER CATEGORY ================
 		
