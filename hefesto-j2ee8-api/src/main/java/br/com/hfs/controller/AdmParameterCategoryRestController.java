@@ -26,12 +26,12 @@ import br.com.hfs.service.AdmParameterCategoryService;
 public class AdmParameterCategoryRestController {
 
 	@Inject
-	private AdmParameterCategoryService parameterCategoryService;
+	private AdmParameterCategoryService admParameterCategoryService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
-		List<AdmParameterCategory> objList = parameterCategoryService.findAll();
+		List<AdmParameterCategory> objList = admParameterCategoryService.findAll();
 		return Response.ok(AdmParameterCategoryDTO.convert(objList)).build();
 	}
 
@@ -39,7 +39,7 @@ public class AdmParameterCategoryRestController {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long id) {
-		Optional<AdmParameterCategory> obj = parameterCategoryService.findById(id);
+		Optional<AdmParameterCategory> obj = admParameterCategoryService.findById(id);
 		if (obj.isPresent()) {
 			return Response.ok(new AdmParameterCategoryDTO(obj.get())).build();
 		}
@@ -51,7 +51,7 @@ public class AdmParameterCategoryRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(AdmParameterCategoryForm form) {
 		AdmParameterCategory obj = form.convert();
-		obj = parameterCategoryService.insert(obj);
+		obj = admParameterCategoryService.insert(obj);
 		
 		return Response.ok(new AdmParameterCategoryDTO(obj))
 				.location(URI.create("admParameterCategory/" + obj.getId()))
@@ -63,10 +63,10 @@ public class AdmParameterCategoryRestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") Long id, AdmParameterCategoryForm form) {
-		Optional<AdmParameterCategory> obj = parameterCategoryService.findById(id);
+		Optional<AdmParameterCategory> obj = admParameterCategoryService.findById(id);
 		if (obj.isPresent()) {
-			AdmParameterCategory bean = form.update(id, parameterCategoryService);
-			bean = parameterCategoryService.update(bean);
+			AdmParameterCategory bean = form.update(id, admParameterCategoryService);
+			bean = admParameterCategoryService.update(bean);
 			return Response.ok(new AdmParameterCategoryDTO(bean)).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
@@ -75,9 +75,9 @@ public class AdmParameterCategoryRestController {
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id") Long id) {
-		Optional<AdmParameterCategory> obj = parameterCategoryService.findById(id);
+		Optional<AdmParameterCategory> obj = admParameterCategoryService.findById(id);
 		if (obj.isPresent()) {
-			parameterCategoryService.deleteById(id);
+			admParameterCategoryService.deleteById(id);
 			return Response.ok().build();
 		}
 		return Response.status(Status.NOT_FOUND).build();

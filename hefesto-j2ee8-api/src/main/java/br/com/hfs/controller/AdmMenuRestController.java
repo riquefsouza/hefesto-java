@@ -26,12 +26,12 @@ import br.com.hfs.service.AdmMenuService;
 public class AdmMenuRestController {
 
 	@Inject
-	private AdmMenuService menuService;
+	private AdmMenuService admMenuService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
-		List<AdmMenu> objList = menuService.findAll();
+		List<AdmMenu> objList = admMenuService.findAll();
 		return Response.ok(AdmMenuDTO.convert(objList)).build();
 	}
 
@@ -39,7 +39,7 @@ public class AdmMenuRestController {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long id) {
-		Optional<AdmMenu> obj = menuService.findById(id);
+		Optional<AdmMenu> obj = admMenuService.findById(id);
 		if (obj.isPresent()) {
 			return Response.ok(new AdmMenuDTO(obj.get())).build();
 		}
@@ -51,8 +51,8 @@ public class AdmMenuRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(AdmMenuForm form) {
 		AdmMenu obj = form.convert();
-		obj = menuService.insert(obj);
-		obj = menuService.findById(obj.getId()).get();
+		obj = admMenuService.insert(obj);
+		obj = admMenuService.findById(obj.getId()).get();
 		
 		return Response.ok(new AdmMenuDTO(obj))
 				.location(URI.create("admMenu/" + obj.getId()))
@@ -64,10 +64,10 @@ public class AdmMenuRestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") Long id, AdmMenuForm form) {
-		Optional<AdmMenu> obj = menuService.findById(id);
+		Optional<AdmMenu> obj = admMenuService.findById(id);
 		if (obj.isPresent()) {
-			AdmMenu bean = form.update(id, menuService);
-			bean = menuService.update(bean);
+			AdmMenu bean = form.update(id, admMenuService);
+			bean = admMenuService.update(bean);
 			return Response.ok(new AdmMenuDTO(bean)).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
@@ -76,9 +76,9 @@ public class AdmMenuRestController {
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id") Long id) {
-		Optional<AdmMenu> obj = menuService.findById(id);
+		Optional<AdmMenu> obj = admMenuService.findById(id);
 		if (obj.isPresent()) {
-			menuService.directDeleteById(id);
+			admMenuService.directDeleteById(id);
 			return Response.ok().build();
 		}
 		return Response.status(Status.NOT_FOUND).build();

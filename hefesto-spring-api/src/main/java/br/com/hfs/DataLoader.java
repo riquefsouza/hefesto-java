@@ -5,15 +5,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Destroyed;
-import javax.enterprise.context.Initialized;
-import javax.enterprise.event.Observes;
-import javax.faces.event.PostConstructApplicationEvent;
-import javax.inject.Inject;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
 
 import br.com.hfs.model.AdmMenu;
 import br.com.hfs.model.AdmPage;
@@ -28,30 +25,32 @@ import br.com.hfs.service.AdmParameterService;
 import br.com.hfs.service.AdmProfileService;
 import br.com.hfs.service.AdmUserService;
 
-@ApplicationScoped
-public class HefestoJ2ee8ApiApplication {
+@Component
+public class DataLoader implements ApplicationRunner {
 
-	private static final Logger log = LogManager.getLogger(HefestoJ2ee8ApiApplication.class);
-
-	@Inject
+	private static final Logger log = LogManager.getLogger(DataLoader.class);
+	
+	@Autowired
 	private AdmPageService pageService;
 	
-	@Inject
+	@Autowired
 	private AdmParameterCategoryService parameterCategoryService;
 
-	@Inject
+	@Autowired
 	private AdmParameterService parameterService;
 	
-	@Inject
+	@Autowired
 	private AdmProfileService profileService;
 	
-	@Inject
+	@Autowired
 	private AdmUserService userService;
 	
-	@Inject
+	@Autowired
 	private AdmMenuService menuService;
 	
-	public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
+	@Override
+	public void run(ApplicationArguments args) throws Exception {
+		
 		log.info("Init " + this.getClass().getName());
 		
 		//============ PROFILE ================
@@ -157,15 +156,6 @@ public class HefestoJ2ee8ApiApplication {
 				
 		menuService.insert(listaAdmMenu);
 		
-		
 	}
-	
-	public void postConstruct(@Observes PostConstructApplicationEvent event){ 
-		log.info("PostConstruct " + this.getClass().getName());
-	}
-	
-	public void destroy(@Observes @Destroyed(ApplicationScoped.class) Object init) {
-		log.info("Destroy " + this.getClass().getName());
-	}
-	
+
 }

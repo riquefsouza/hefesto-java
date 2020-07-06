@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.hfs.base.BaseService;
@@ -31,6 +33,14 @@ public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileR
 
 	public AdmProfileService() {
 		super(AdmProfile.class);
+	}
+	
+	public Page<AdmProfile> findByDescriptionLike(String description, Pageable pagination){
+		return repository.findByDescriptionLike(description, pagination);
+	}
+	
+	public List<AdmProfile> findByDescriptionLike(String description){
+		return repository.findByDescriptionLike(description);
 	}
 	
 	public List<AdmProfile> findPaginated(int pageNumber, int pageSize) {

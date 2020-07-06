@@ -9,9 +9,8 @@ import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.TransactionException;
 
-import br.com.hfs.util.ExceptionUtil;
+import br.com.hfs.util.TransactionException;
 
 public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T, I>>
 		implements IBaseCrud<T, I> {
@@ -44,9 +43,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			return repository.insert(bean);
 		} catch (Exception e) {
-			String msg = ERRO_INSERT + e.getMessage();
-			ExceptionUtil.getErrors(log, e, msg, true);
-			throw new TransactionException(msg, e);
+			throw new TransactionException(log, ERRO_INSERT + e.getMessage(), e);
 		}
 	}
 
@@ -55,20 +52,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			return repository.update(bean);
 		} catch (Exception e) {
-			String msg = ERRO_UPDATE + e.getMessage();
-			ExceptionUtil.getErrors(log, e, msg, true);
-			throw new TransactionException(msg, e);
-		}
-	}
-	
-	@Override
-	public T saveById(T bean, I id) throws TransactionException {
-		try {
-			return repository.saveById(bean, id);
-		} catch (Exception e) {
-			String msg = ERRO_SALVAR + e.getMessage();
-			ExceptionUtil.getErrors(log, e, msg, true);
-			throw new TransactionException(msg, e);
+			throw new TransactionException(log, ERRO_UPDATE + e.getMessage(), e);
 		}
 	}
 	
@@ -77,9 +61,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			repository.delete(bean);
 		} catch (Exception e) {
-			String msg = ERRO_DELETE + e.getMessage();
-			ExceptionUtil.getErrors(log, e, msg, true);
-			throw new TransactionException(msg, e);
+			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
 		}
 	}
 	
@@ -88,9 +70,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
-			String msg = ERRO_DELETE + e.getMessage();
-			ExceptionUtil.getErrors(log, e, msg, true);
-			throw new TransactionException(msg, e);
+			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
 		}
 	}
 	
@@ -99,9 +79,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			return repository.directDeleteById(id);
 		} catch (Exception e) {
-			String msg = ERRO_DELETE + e.getMessage();
-			ExceptionUtil.getErrors(log, e, msg, true);
-			throw new TransactionException(msg, e);
+			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
 		}
 	}
 	
@@ -139,9 +117,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			return repository.insert(listEntity);
 		} catch (Exception e) {
-			String msg = ERRO_INSERT + e.getMessage();
-			ExceptionUtil.getErrors(log, e, msg, true);
-			throw new TransactionException(msg, e);
+			throw new TransactionException(log, ERRO_INSERT + e.getMessage(), e);
 		}
 	}
 
@@ -150,9 +126,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			return repository.update(listEntity);
 		} catch (Exception e) {
-			String msg = ERRO_UPDATE + e.getMessage();
-			ExceptionUtil.getErrors(log, e, msg, true);
-			throw new TransactionException(msg, e);
+			throw new TransactionException(log, ERRO_UPDATE + e.getMessage(), e);
 		}
 	}
 
@@ -161,10 +135,12 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			repository.delete(listEntity);
 		} catch (Exception e) {
-			String msg = ERRO_DELETE + e.getMessage();
-			ExceptionUtil.getErrors(log, e, msg, true);
-			throw new TransactionException(msg, e);
+			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
 		}
+	}
+
+	public C getRepository() {
+		return repository;
 	}
 	
 }

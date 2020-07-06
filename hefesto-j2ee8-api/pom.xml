@@ -13,12 +13,14 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         
         <jakartaee.version>8.0.1</jakartaee.version>
-        <junit.version>5.7.0-M1</junit.version>
-        <junit.platform.version>1.7.0-M1</junit.platform.version>
-        <log4j-core.version>2.13.3</log4j-core.version>
-        <slf4j.version>2.0.0-alpha1</slf4j.version>
         <jackson.version>2.11.1</jackson.version>
         <hibernate-validator.version>7.0.0.Alpha4</hibernate-validator.version>
+
+        <log4j-core.version>2.13.3</log4j-core.version>
+        <slf4j.version>2.0.0-alpha1</slf4j.version>
+
+        <junit.version>5.7.0-M1</junit.version>
+        <junit.platform.version>1.7.0-M1</junit.platform.version>
         <rest-assured.version>4.3.0</rest-assured.version>
     </properties>
     <dependencies>

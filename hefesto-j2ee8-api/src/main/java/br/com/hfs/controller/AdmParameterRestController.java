@@ -26,12 +26,12 @@ import br.com.hfs.service.AdmParameterService;
 public class AdmParameterRestController {
 
 	@Inject
-	private AdmParameterService parameterService;
+	private AdmParameterService admParameterService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
-		List<AdmParameter> objList = parameterService.findAll();
+		List<AdmParameter> objList = admParameterService.findAll();
 		return Response.ok(AdmParameterDTO.convert(objList)).build();
 	}
 
@@ -39,7 +39,7 @@ public class AdmParameterRestController {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long id) {
-		Optional<AdmParameter> obj = parameterService.findById(id);
+		Optional<AdmParameter> obj = admParameterService.findById(id);
 		if (obj.isPresent()) {
 			return Response.ok(new AdmParameterDTO(obj.get())).build();
 		}
@@ -51,8 +51,8 @@ public class AdmParameterRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(AdmParameterForm form) {
 		AdmParameter obj = form.convert();
-		obj = parameterService.insert(obj);
-		obj = parameterService.findById(obj.getId()).get();
+		obj = admParameterService.insert(obj);
+		obj = admParameterService.findById(obj.getId()).get();
 		
 		return Response.ok(new AdmParameterDTO(obj))
 				.location(URI.create("admParameter/" + obj.getId()))
@@ -64,10 +64,10 @@ public class AdmParameterRestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") Long id, AdmParameterForm form) {
-		Optional<AdmParameter> obj = parameterService.findById(id);
+		Optional<AdmParameter> obj = admParameterService.findById(id);
 		if (obj.isPresent()) {
-			AdmParameter bean = form.update(id, parameterService);
-			bean = parameterService.update(bean);
+			AdmParameter bean = form.update(id, admParameterService);
+			bean = admParameterService.update(bean);
 			return Response.ok(new AdmParameterDTO(bean)).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
@@ -76,9 +76,9 @@ public class AdmParameterRestController {
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id") Long id) {
-		Optional<AdmParameter> obj = parameterService.findById(id);
+		Optional<AdmParameter> obj = admParameterService.findById(id);
 		if (obj.isPresent()) {
-			parameterService.deleteById(id);
+			admParameterService.deleteById(id);
 			return Response.ok().build();
 		}
 		return Response.status(Status.NOT_FOUND).build();

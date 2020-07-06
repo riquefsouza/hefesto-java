@@ -2,6 +2,8 @@ package br.com.hfs.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,37 +12,41 @@ import br.com.hfs.model.AdmProfile;
 
 public interface AdmProfileRepository extends JpaRepository<AdmProfile, Long> {
 
-	@Query("AdmProfile.findProfilesByUser")
+	Page<AdmProfile> findByDescriptionLike(String description, Pageable pagination);
+	
+	List<AdmProfile> findByDescriptionLike(String description);
+	
+	@Query(name = "AdmProfile.findProfilesByUser")
 	public List<AdmProfile> findProfilesByUser(Long idUser);
 	
-	@Query("AdmProfile.findByGeneral")
+	@Query(name = "AdmProfile.findByGeneral")
 	public List<AdmProfile> findByGeneral(Boolean geral);
 
-	@Query("AdmProfile.findAdminMenuParentByProfile")
+	@Query(name = "AdmProfile.findAdminMenuParentByProfile")
 	public List<AdmMenu> findAdminMenuParentByProfile(AdmProfile profile);
 
-	@Query("AdmProfile.findAdminMenuByProfile")
+	@Query(name = "AdmProfile.findAdminMenuByProfile")
 	public List<AdmMenu> findAdminMenuByProfile(AdmProfile profile, AdmMenu admMenu);
 
-	@Query("AdmProfile.findMenuParentByProfile")
+	@Query(name = "AdmProfile.findMenuParentByProfile")
 	public List<AdmMenu> findMenuParentByProfile(AdmProfile profile);
 
-	@Query("AdmProfile.findMenuByProfile")
+	@Query(name = "AdmProfile.findMenuByProfile")
 	public List<AdmMenu> findMenuByProfile(AdmProfile profile, AdmMenu admMenu);
 
-	@Query("AdmProfile.findUsersByProfile")
+	@Query(name = "AdmProfile.findUsersByProfile")
 	public List<Long> findUsersByProfile(AdmProfile profile);
 
-	@Query("AdmProfile.findMenuParentByIdPerfis")
+	@Query(name = "AdmProfile.findMenuParentByIdPerfis")
 	public List<AdmMenu> findMenuParentByIdPerfis(List<Long> listaIdProfile);
 
-	@Query("AdmProfile.findMenuByIdPerfis")
+	@Query(name = "AdmProfile.findMenuByIdPerfis")
 	public List<AdmMenu> findMenuByIdPerfis(List<Long> listaIdProfile, AdmMenu admMenu);
 
-	@Query("AdmProfile.findAdminMenuParentByIdPerfis")
+	@Query(name = "AdmProfile.findAdminMenuParentByIdPerfis")
 	public List<AdmMenu> findAdminMenuParentByIdPerfis(List<Long> listaIdProfile);
 
-	@Query("AdmProfile.findAdminMenuByIdPerfis")
+	@Query(name = "AdmProfile.findAdminMenuByIdPerfis")
 	public List<AdmMenu> findAdminMenuByIdPerfis(List<Long> listaIdProfile, AdmMenu admMenu);
 
 }

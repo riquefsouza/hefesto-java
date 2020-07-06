@@ -52,16 +52,6 @@ public abstract class BaseDAO<T, I extends Serializable> implements IBaseCrud<T,
 		em.flush();
 		return entity;
 	}
-
-	@Transactional
-	public T saveById(T entity, I id) {
-		if (id == null) {
-			entity = insert(entity);
-		} else {
-			entity = update(entity);
-		}
-		return entity;
-	}
 	
 	@Transactional
 	public void delete(T entity) {

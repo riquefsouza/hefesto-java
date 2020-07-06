@@ -61,7 +61,7 @@ public class UserRestController {
 		User user = form.convert();
 		userRepository.save(user);
 		
-		URI uri = uriBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri();
+		URI uri = uriBuilder.path("/api/v1/user/{id}").buildAndExpand(user.getId()).toUri();
 		return ResponseEntity.created(uri).body(new UserDTO(user));
 	}
 

@@ -2,6 +2,8 @@ package br.com.hfs.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.hfs.base.BaseService;
@@ -17,6 +19,14 @@ public class AdmPageService extends BaseService<AdmPage, Long, AdmPageRepository
 		super(AdmPage.class);
 	}
 	
+	public Page<AdmPage> findByDescriptionLike(String description, Pageable pagination){
+		return repository.findByDescriptionLike(description, pagination);
+	}
+
+	public List<AdmPage> findByDescriptionLike(String description){
+		return repository.findByDescriptionLike(description);
+	}
+
 	public List<AdmPage> findPaginated(int pageNumber, int pageSize) {
 		return findPaginated("ADM_PAGE", "PAG_SEQ", pageNumber, pageSize);
 	}

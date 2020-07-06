@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.hfs.base.BaseService;
@@ -21,6 +23,14 @@ public class AdmMenuService extends BaseService<AdmMenu, Long, AdmMenuRepository
 
 	public AdmMenuService() {
 		super(AdmMenu.class);
+	}
+	
+	public Page<AdmMenu> findByDescriptionLike(String description, Pageable pagination){
+		return repository.findByDescriptionLike(description, pagination);
+	}
+	
+	public List<AdmMenu> findByDescriptionLike(String description){
+		return repository.findByDescriptionLike(description);
 	}
 	
 	public List<AdmMenu> findPaginated(int pageNumber, int pageSize) {

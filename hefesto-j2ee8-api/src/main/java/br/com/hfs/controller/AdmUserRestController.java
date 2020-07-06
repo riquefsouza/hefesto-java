@@ -26,12 +26,12 @@ import br.com.hfs.service.AdmUserService;
 public class AdmUserRestController {
 
 	@Inject
-	private AdmUserService userService;
+	private AdmUserService admUserService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
-		List<AdmUser> objList = userService.findAll();
+		List<AdmUser> objList = admUserService.findAll();
 		return Response.ok(AdmUserDTO.convert(objList)).build();
 	}
 
@@ -39,7 +39,7 @@ public class AdmUserRestController {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long id) {
-		Optional<AdmUser> obj = userService.findById(id);
+		Optional<AdmUser> obj = admUserService.findById(id);
 		if (obj.isPresent()) {
 			return Response.ok(new AdmUserDTO(obj.get())).build();
 		}
@@ -51,7 +51,7 @@ public class AdmUserRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(AdmUserForm form) {
 		AdmUser obj = form.convert();
-		obj = userService.insert(obj);
+		obj = admUserService.insert(obj);
 		
 		return Response.ok(new AdmUserDTO(obj))
 				.location(URI.create("admUser/" + obj.getId()))
@@ -63,10 +63,10 @@ public class AdmUserRestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") Long id, AdmUserForm form) {
-		Optional<AdmUser> obj = userService.findById(id);
+		Optional<AdmUser> obj = admUserService.findById(id);
 		if (obj.isPresent()) {
-			AdmUser bean = form.update(id, userService);
-			bean = userService.update(bean);
+			AdmUser bean = form.update(id, admUserService);
+			bean = admUserService.update(bean);
 			return Response.ok(new AdmUserDTO(bean)).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
@@ -75,9 +75,9 @@ public class AdmUserRestController {
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id") Long id) {
-		Optional<AdmUser> obj = userService.findById(id);
+		Optional<AdmUser> obj = admUserService.findById(id);
 		if (obj.isPresent()) {
-			userService.deleteById(id);
+			admUserService.deleteById(id);
 			return Response.ok().build();
 		}
 		return Response.status(Status.NOT_FOUND).build();

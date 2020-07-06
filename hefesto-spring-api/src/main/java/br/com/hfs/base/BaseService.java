@@ -12,6 +12,8 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.hfs.util.TransactionException;
@@ -46,7 +48,7 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 	}
 
 	@Override
-	public Optional<T> findById(I id) {
+	public Optional<T> findById(I id) {	
 		return repository.findById(id);
 	}
 
@@ -54,7 +56,12 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 	public List<T> findAll() {
 		return repository.findAll();
 	}
-
+	
+	@Override
+	public Page<T> findAll(Pageable pageable) {
+		return repository.findAll(pageable);
+	}
+	
 	@Override
 	public T insert(T bean) throws TransactionException {
 		try {
@@ -70,18 +77,6 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 			return repository.saveAndFlush(bean);
 		} catch (Exception e) {
 			throw new TransactionException(log, ERRO_UPDATE + e.getMessage(), e);
-		}
-	}
-	
-	@Override
-	public T saveById(T bean, I id) throws TransactionException {
-		try {
-			if (repository.existsById(id)) {
-				return repository.saveAndFlush(bean);
-			} else 
-				return null;
-		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_SALVAR + e.getMessage(), e);
 		}
 	}
 	
@@ -222,6 +217,10 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 		} catch (Exception e) {
 			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
 		}
+	}
+
+	public C getRepository() {
+		return repository;
 	}
 	
 }

@@ -26,12 +26,12 @@ import br.com.hfs.service.AdmProfileService;
 public class AdmProfileRestController {
 
 	@Inject
-	private AdmProfileService profileService;
+	private AdmProfileService admProfileService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
-		List<AdmProfile> objList = profileService.findAll();
+		List<AdmProfile> objList = admProfileService.findAll();
 		return Response.ok(AdmProfileDTO.convert(objList)).build();
 	}
 
@@ -39,7 +39,7 @@ public class AdmProfileRestController {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long id) {
-		Optional<AdmProfile> obj = profileService.findById(id);
+		Optional<AdmProfile> obj = admProfileService.findById(id);
 		if (obj.isPresent()) {
 			return Response.ok(new AdmProfileDTO(obj.get())).build();
 		}
@@ -51,7 +51,7 @@ public class AdmProfileRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(AdmProfileForm form) {
 		AdmProfile obj = form.convert();
-		obj = profileService.insert(obj);
+		obj = admProfileService.insert(obj);
 		
 		return Response.ok(new AdmProfileDTO(obj))
 				.location(URI.create("admProfile/" + obj.getId()))
@@ -63,10 +63,10 @@ public class AdmProfileRestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") Long id, AdmProfileForm form) {
-		Optional<AdmProfile> obj = profileService.findById(id);
+		Optional<AdmProfile> obj = admProfileService.findById(id);
 		if (obj.isPresent()) {
-			AdmProfile bean = form.update(id, profileService);
-			bean = profileService.update(bean);
+			AdmProfile bean = form.update(id, admProfileService);
+			bean = admProfileService.update(bean);
 			return Response.ok(new AdmProfileDTO(bean)).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
@@ -75,9 +75,9 @@ public class AdmProfileRestController {
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id") Long id) {
-		Optional<AdmProfile> obj = profileService.findById(id);
+		Optional<AdmProfile> obj = admProfileService.findById(id);
 		if (obj.isPresent()) {
-			profileService.deleteById(id);
+			admProfileService.deleteById(id);
 			return Response.ok().build();
 		}
 		return Response.status(Status.NOT_FOUND).build();

@@ -9,6 +9,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.TransactionException;
 import org.hibernate.jdbc.ReturningWork;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.hfs.base.BaseService;
@@ -22,6 +24,14 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 
 	public AdmUserService() {
 		super(AdmUser.class);
+	}
+	
+	public Page<AdmUser> findByNameLike(String name, Pageable pagination){
+		return repository.findByNameLike(name, pagination);
+	}
+	
+	public List<AdmUser> findByNameLike(String name){
+		return repository.findByNameLike(name);
 	}
 	
 	public List<AdmUser> findPaginated(int pageNumber, int pageSize) {

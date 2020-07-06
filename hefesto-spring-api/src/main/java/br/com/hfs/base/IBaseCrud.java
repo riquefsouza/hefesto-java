@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.TransactionException;
 
 public interface IBaseCrud <T, I extends Serializable> extends Serializable {
@@ -23,12 +25,12 @@ public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 	Optional<T> findById(I id);	
 
 	List<T> findAll();
+	
+	Page<T> findAll(Pageable pageable);
 
 	T insert(T bean) throws TransactionException;
 
 	T update(T bean) throws TransactionException;
-	
-	T saveById(T entity, I id) throws TransactionException;
 
 	void delete(T bean) throws TransactionException;
 	

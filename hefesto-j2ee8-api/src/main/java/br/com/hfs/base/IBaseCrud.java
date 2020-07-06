@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.TransactionException;
+import br.com.hfs.util.TransactionException;
 
 public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 
@@ -28,8 +28,6 @@ public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 
 	T update(T bean) throws TransactionException;
 	
-	T saveById(T entity, I id) throws TransactionException;
-
 	void delete(T bean) throws TransactionException;
 	
 	void deleteById(I id) throws TransactionException;

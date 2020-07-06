@@ -26,12 +26,12 @@ import br.com.hfs.service.AdmPageService;
 public class AdmPageRestController {
 
 	@Inject
-	private AdmPageService pageService;
+	private AdmPageService admPageService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
-		List<AdmPage> objList = pageService.findAll();
+		List<AdmPage> objList = admPageService.findAll();
 		return Response.ok(AdmPageDTO.convert(objList)).build();
 	}
 
@@ -39,7 +39,7 @@ public class AdmPageRestController {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long id) {
-		Optional<AdmPage> obj = pageService.findById(id);
+		Optional<AdmPage> obj = admPageService.findById(id);
 		if (obj.isPresent()) {
 			return Response.ok(new AdmPageDTO(obj.get())).build();
 		}
@@ -51,7 +51,7 @@ public class AdmPageRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(AdmPageForm form) {
 		AdmPage obj = form.convert();
-		obj = pageService.insert(obj);
+		obj = admPageService.insert(obj);
 		
 		return Response.ok(new AdmPageDTO(obj))
 				.location(URI.create("admPage/" + obj.getId()))
@@ -63,10 +63,10 @@ public class AdmPageRestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") Long id, AdmPageForm form) {
-		Optional<AdmPage> obj = pageService.findById(id);
+		Optional<AdmPage> obj = admPageService.findById(id);
 		if (obj.isPresent()) {
-			AdmPage bean = form.update(id, pageService);
-			bean = pageService.update(bean);
+			AdmPage bean = form.update(id, admPageService);
+			bean = admPageService.update(bean);
 			return Response.ok(new AdmPageDTO(bean)).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
@@ -75,9 +75,9 @@ public class AdmPageRestController {
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id") Long id) {
-		Optional<AdmPage> obj = pageService.findById(id);
+		Optional<AdmPage> obj = admPageService.findById(id);
 		if (obj.isPresent()) {
-			pageService.deleteById(id);
+			admPageService.deleteById(id);
 			return Response.ok().build();
 		}
 		return Response.status(Status.NOT_FOUND).build();

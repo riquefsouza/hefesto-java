@@ -61,7 +61,7 @@ public class RoleRestController {
 		Role role = form.convert();
 		roleRepository.save(role);
 		
-		URI uri = uriBuilder.path("/role/{id}").buildAndExpand(role.getId()).toUri();
+		URI uri = uriBuilder.path("/api/v1/role/{id}").buildAndExpand(role.getId()).toUri();
 		return ResponseEntity.created(uri).body(new RoleDTO(role));
 	}
 
