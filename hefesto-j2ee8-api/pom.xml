@@ -32,6 +32,13 @@
         </dependency>        
 
 		<dependency>
+			<groupId>br.com.hfs</groupId>
+			<artifactId>hefesto-j2ee8-base</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
+		</dependency>
+		
+		<dependency>
 		    <groupId>org.hibernate.orm</groupId>
 		    <artifactId>hibernate-core</artifactId>
 		    <version>6.0.0.Alpha5</version>
