@@ -1,6 +1,7 @@
 package br.com.hfs.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,8 @@ import br.com.hfs.model.AdmUser;
 
 public interface AdmUserRepository extends JpaRepository<AdmUser, Long> {
 
+	Optional<AdmUser> findByLogin(String login);
+	
 	Page<AdmUser> findByNameLike(String name, Pageable pagination);
 	
 	List<AdmUser> findByNameLike(String name);

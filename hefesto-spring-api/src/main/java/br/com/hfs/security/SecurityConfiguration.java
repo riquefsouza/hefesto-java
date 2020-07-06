@@ -15,7 +15,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.com.hfs.repository.UserRepository;
+import br.com.hfs.repository.AdmProfileRepository;
+import br.com.hfs.repository.AdmUserRepository;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
@@ -29,7 +30,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private TokenService tokenService;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private AdmUserRepository userRepository;
+	
+	@Autowired
+	private AdmProfileRepository profileRepository;
 
 	@Override
 	@Bean
@@ -55,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated()
 		.and().csrf().disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().addFilterBefore(new TokenFilter(tokenService, userRepository), UsernamePasswordAuthenticationFilter.class);
+		.and().addFilterBefore(new TokenFilter(tokenService, userRepository, profileRepository), UsernamePasswordAuthenticationFilter.class);
 	}
 
 	//static resources config(js, css, images, etc.)

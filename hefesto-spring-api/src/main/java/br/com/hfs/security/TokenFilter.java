@@ -1,6 +1,9 @@
 package br.com.hfs.security;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -11,18 +14,23 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import br.com.hfs.model.User;
-import br.com.hfs.repository.UserRepository;
+import br.com.hfs.model.AdmProfile;
+import br.com.hfs.model.AdmUser;
+import br.com.hfs.repository.AdmProfileRepository;
+import br.com.hfs.repository.AdmUserRepository;
 
 public class TokenFilter extends OncePerRequestFilter {
 
 	private TokenService tokenService;
 	
-	private UserRepository userRepository;
+	private AdmUserRepository userRepository;
 
-	public TokenFilter(TokenService tokenService, UserRepository userRepository) {
+	private AdmProfileRepository profileRepository;
+	
+	public TokenFilter(TokenService tokenService, AdmUserRepository userRepository, AdmProfileRepository profileRepository) {
 		this.tokenService = tokenService;
 		this.userRepository = userRepository;
+		this.profileRepository = profileRepository;
 	}
 
 	@Override
@@ -42,8 +50,12 @@ public class TokenFilter extends OncePerRequestFilter {
 
 	private void authenticateUser(String token) {
 		Long idUser = tokenService.getIdUser(token);
-		User user = userRepository.findById(idUser).get();
-		HfsUserDetails hfsUserDetails = new HfsUserDetails(user);
+		Optional<AdmUser> user = userRepository.findById(idUser);
+		Set<AdmProfile> roles = new HashSet<AdmProfile>();
+		if (user.isPresent()) {
+			roles = new HashSet<AdmProfile>(profileRepository.findProfilesByUser(user.get().getId()));
+		}
+		HfsUserDetails hfsUserDetails = new HfsUserDetails(user.get(), roles);
 		
 		UsernamePasswordAuthenticationToken authentication = 
 				new UsernamePasswordAuthenticationToken(hfsUserDetails, null, hfsUserDetails.getAuthorities());

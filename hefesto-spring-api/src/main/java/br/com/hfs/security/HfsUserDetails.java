@@ -8,8 +8,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import br.com.hfs.model.Role;
-import br.com.hfs.model.User;
+import br.com.hfs.model.AdmProfile;
+import br.com.hfs.model.AdmUser;
 
 public class HfsUserDetails implements UserDetails {
 
@@ -19,25 +19,25 @@ public class HfsUserDetails implements UserDetails {
 	private String userName;
 	private String password;
 	private boolean active;
-	private Set<Role> roles;
+	private Set<AdmProfile> roles;
 	
 	public HfsUserDetails() {
 		super();
 	}
 
-	public HfsUserDetails(User user) {
+	public HfsUserDetails(AdmUser user, Set<AdmProfile> roles) {
 		this.id = user.getId();
-		this.userName = user.getUserName();
+		this.userName = user.getLogin();
 		this.password = user.getPassword();
-		this.active = user.isActive();
-		this.roles = user.getRoles();
+		this.active = true; //user.isActive();
+		this.roles = roles; //user.getRoles();
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles
                 .stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole()))
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getDescription()))
                 .collect(Collectors.toList());
 	}
 

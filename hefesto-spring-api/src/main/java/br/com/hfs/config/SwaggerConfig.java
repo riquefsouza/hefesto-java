@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import br.com.hfs.model.User;
+import br.com.hfs.model.AdmUser;
 import br.com.hfs.security.HfsUserDetails;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -28,7 +28,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.basePackage("br.com.hfs"))
                 .paths(PathSelectors.ant("/**"))
                 .build()
-                .ignoredParameterTypes(User.class, HfsUserDetails.class)
+                .ignoredParameterTypes(AdmUser.class, HfsUserDetails.class)
                 .globalOperationParameters(
                         Arrays.asList(
                                 new ParameterBuilder()
