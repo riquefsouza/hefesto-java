@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.http.HttpStatus;
 
-import br.com.hfs.controller.dto.AdmParameterCategoryDTO;
+import br.com.hfs.admin.controller.dto.AdmParameterCategoryDTO;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 

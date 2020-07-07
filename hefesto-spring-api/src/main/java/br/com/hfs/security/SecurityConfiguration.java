@@ -15,8 +15,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.com.hfs.repository.AdmProfileRepository;
-import br.com.hfs.repository.AdmUserRepository;
+import br.com.hfs.admin.repository.AdmProfileRepository;
+import br.com.hfs.admin.repository.AdmUserRepository;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity

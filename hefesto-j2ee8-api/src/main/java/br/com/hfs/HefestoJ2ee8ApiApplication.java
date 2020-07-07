@@ -15,18 +15,18 @@ import javax.inject.Inject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import br.com.hfs.model.AdmMenu;
-import br.com.hfs.model.AdmPage;
-import br.com.hfs.model.AdmParameter;
-import br.com.hfs.model.AdmParameterCategory;
-import br.com.hfs.model.AdmProfile;
-import br.com.hfs.model.AdmUser;
-import br.com.hfs.service.AdmMenuService;
-import br.com.hfs.service.AdmPageService;
-import br.com.hfs.service.AdmParameterCategoryService;
-import br.com.hfs.service.AdmParameterService;
-import br.com.hfs.service.AdmProfileService;
-import br.com.hfs.service.AdmUserService;
+import br.com.hfs.admin.model.AdmMenu;
+import br.com.hfs.admin.model.AdmPage;
+import br.com.hfs.admin.model.AdmParameter;
+import br.com.hfs.admin.model.AdmParameterCategory;
+import br.com.hfs.admin.model.AdmProfile;
+import br.com.hfs.admin.model.AdmUser;
+import br.com.hfs.admin.service.AdmMenuService;
+import br.com.hfs.admin.service.AdmPageService;
+import br.com.hfs.admin.service.AdmParameterCategoryService;
+import br.com.hfs.admin.service.AdmParameterService;
+import br.com.hfs.admin.service.AdmProfileService;
+import br.com.hfs.admin.service.AdmUserService;
 
 @ApplicationScoped
 public class HefestoJ2ee8ApiApplication {

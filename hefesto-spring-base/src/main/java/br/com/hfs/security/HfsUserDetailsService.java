@@ -10,10 +10,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import br.com.hfs.model.AdmProfile;
-import br.com.hfs.model.AdmUser;
-import br.com.hfs.repository.AdmProfileRepository;
-import br.com.hfs.repository.AdmUserRepository;
+import br.com.hfs.admin.model.AdmProfile;
+import br.com.hfs.admin.model.AdmUser;
+import br.com.hfs.admin.repository.AdmProfileRepository;
+import br.com.hfs.admin.repository.AdmUserRepository;
 
 @Service
 public class HfsUserDetailsService implements UserDetailsService {

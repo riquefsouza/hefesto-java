@@ -7,11 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import javax.ws.rs.core.Response.Status;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+
+import br.com.hfs.admin.controller.dto.AdmProfileDTO;
+
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import br.com.hfs.controller.dto.AdmProfileDTO;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 

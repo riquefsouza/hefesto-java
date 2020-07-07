@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import br.com.hfs.model.AdmUser;
+import br.com.hfs.admin.model.AdmUser;
 import br.com.hfs.security.HfsUserDetails;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;

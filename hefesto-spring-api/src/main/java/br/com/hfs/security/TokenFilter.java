@@ -14,10 +14,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import br.com.hfs.model.AdmProfile;
-import br.com.hfs.model.AdmUser;
-import br.com.hfs.repository.AdmProfileRepository;
-import br.com.hfs.repository.AdmUserRepository;
+import br.com.hfs.admin.model.AdmProfile;
+import br.com.hfs.admin.model.AdmUser;
+import br.com.hfs.admin.repository.AdmProfileRepository;
+import br.com.hfs.admin.repository.AdmUserRepository;
 
 public class TokenFilter extends OncePerRequestFilter {
 
