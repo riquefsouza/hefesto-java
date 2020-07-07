@@ -35,6 +35,32 @@
 	      <groupId>org.springframework.boot</groupId>
 	      <artifactId>spring-boot-starter-thymeleaf</artifactId>
 	    </dependency>
+	    
+		<dependency>
+			<groupId>br.com.hfs</groupId>
+			<artifactId>hefesto-spring-base</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+		    <groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernate.validator</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		</dependency>				
+		<dependency>
+		    <groupId>org.hibernate.validator</groupId>
+		    <artifactId>hibernate-validator-annotation-processor</artifactId>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		</dependency>
+	    
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>

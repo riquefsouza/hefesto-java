@@ -9,8 +9,14 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
 	
-		<class>br.com.hfs.model.Role</class>
-		<class>br.com.hfs.model.User</class>
+		<class>br.com.hfs.model.AdmMenu</class>
+		<class>br.com.hfs.model.AdmPage</class>
+		<class>br.com.hfs.model.AdmParameter</class>
+		<class>br.com.hfs.model.AdmParameterCategory</class>
+		<class>br.com.hfs.model.AdmProfile</class>
+		<class>br.com.hfs.model.AdmUser</class>
+		<class>br.com.hfs.model.AdmUserProfile</class>
+		<class>br.com.hfs.model.AdmUserProfilePK</class>
 
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />

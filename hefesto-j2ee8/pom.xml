@@ -15,7 +15,16 @@
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<log4j-core>2.11.1</log4j-core>
+				
+        <jakartaee.version>8.0.1</jakartaee.version>
+        <jackson.version>2.11.1</jackson.version>
+        <hibernate-validator.version>7.0.0.Alpha4</hibernate-validator.version>
+
+        <log4j-core.version>2.13.3</log4j-core.version>
+        <slf4j.version>2.0.0-alpha1</slf4j.version>
+
+        <junit.version>5.7.0-M1</junit.version>
+        <junit.platform.version>1.7.0-M1</junit.platform.version>
 	</properties>
 
 	<repositories>
@@ -31,57 +40,74 @@
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
-			<version>8.0</version>
+			<version>${jakartaee.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		
 		<dependency>
-			<groupId>org.eclipse.microprofile</groupId>
-			<artifactId>microprofile</artifactId>
-			<version>3.2</version>
-			<type>pom</type>
-			<scope>provided</scope>
+			<groupId>br.com.hfs</groupId>
+			<artifactId>hefesto-j2ee8-base</artifactId>
+			<version>0.0.1</version>
+			<type>jar</type>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.hibernate.orm</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>6.0.0.Alpha5</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>		
+		<dependency>
+		    <groupId>org.hibernate.validator</groupId>
+		    <artifactId>hibernate-validator-annotation-processor</artifactId>
+		    <version>${hibernate-validator.version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.omnifaces</groupId>
 			<artifactId>omnifaces</artifactId>
-			<version>3.2</version>
+			<version>3.6.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.omnifaces</groupId>
+		    <artifactId>omniutils</artifactId>
+		    <version>0.11</version>
 		</dependency>
 
-		
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>8.0.RC3</version>
+			<version>8.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
 			<artifactId>all-themes</artifactId>
 			<version>1.0.10</version>
 		</dependency>
-		<dependency>
-		    <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
-		    <artifactId>owasp-java-html-sanitizer</artifactId>
-		    <version>20191001.1</version>
-		</dependency>
-		
-		
+		      
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${log4j-core}</version>
-        </dependency>
+            <version>${log4j-core.version}</version>
+        </dependency>      
+		
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
+		    <groupId>org.junit.jupiter</groupId>
+		    <artifactId>junit-jupiter-engine</artifactId>
+		    <version>${junit.version}</version>
+		    <scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>2.23.0</version>
-			<scope>test</scope>
-		</dependency>
+	    <dependency>
+	        <groupId>org.junit.platform</groupId>
+	        <artifactId>junit-platform-runner</artifactId>
+	        <version>${junit.platform.version}</version>
+	        <scope>test</scope>
+	    </dependency>
 	</dependencies>
 
 	<build>

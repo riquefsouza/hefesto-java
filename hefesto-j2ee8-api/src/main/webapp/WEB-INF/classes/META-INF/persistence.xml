@@ -15,8 +15,6 @@
 		<class>br.com.hfs.model.AdmParameterCategory</class>
 		<class>br.com.hfs.model.AdmProfile</class>
 		<class>br.com.hfs.model.AdmUser</class>
-		<class>br.com.hfs.model.AdmUserIp</class>
-		<class>br.com.hfs.model.AdmUserIpPK</class>
 		<class>br.com.hfs.model.AdmUserProfile</class>
 		<class>br.com.hfs.model.AdmUserProfilePK</class>
 		
