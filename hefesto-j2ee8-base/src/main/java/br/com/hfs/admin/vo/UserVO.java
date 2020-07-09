@@ -1,7 +1,6 @@
 package br.com.hfs.admin.vo;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -14,20 +13,17 @@ public class UserVO implements Serializable {
 
 	private Long id;
 
-	/** The ip. */
-	private String ip;
-
-	/** The data. */
-	private LocalDateTime date;
-
 	/** The email. */
 	private String email;
 
 	/** The login. */
 	private String login;
 
-	/** The nome. */
 	private String name;
+	
+	private String ldapDN;
+	
+	private String ip;
 
 	/**
 	 * Instantiates a new adm usuario.
@@ -37,18 +33,18 @@ public class UserVO implements Serializable {
 		clean();
 	}
 
-	public UserVO(Long id, String email, String login, String name) {
+	public UserVO(Long id, String email, String ldapDN, String login, String name) {
 		super();
 		this.id = id;
 		this.email = email;
+		this.ldapDN = ldapDN;
 		this.login = login;
 		this.name = name;
 	}
 
 	public void clean() {
-		this.ip = "";
-		this.date = LocalDateTime.now();
 		this.email = "";
+		this.ldapDN = "";
 		this.login = "";
 		this.name = "";
 	}
@@ -59,22 +55,6 @@ public class UserVO implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getIp() {
-		return ip;
-	}
-
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	public LocalDateTime getDate() {
-		return date;
-	}
-
-	public void setDate(LocalDateTime date) {
-		this.date = date;
 	}
 
 	public String getEmail() {
@@ -109,6 +89,22 @@ public class UserVO implements Serializable {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	public String getLdapDN() {
+		return ldapDN;
+	}
+
+	public void setLdapDN(String ldapDN) {
+		this.ldapDN = ldapDN;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
 	}
 
 }

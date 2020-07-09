@@ -15,6 +15,8 @@
 		<jackson.version>2.11.1</jackson.version>
         <hibernate-validator.version>7.0.0.Alpha4</hibernate-validator.version>
         <log4j-core.version>2.13.3</log4j-core.version>
+        <jasperreports.version>6.13.0</jasperreports.version>
+        <picketlink.version>2.7.1.Final</picketlink.version>
     </properties>
     <dependencies>
         <dependency>
@@ -41,12 +43,56 @@
 		    <version>${hibernate-validator.version}</version>
 		</dependency>
 
+        <dependency>
+            <groupId>org.picketlink</groupId>
+            <artifactId>picketlink-api</artifactId>
+            <scope>compile</scope>
+            <version>${picketlink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.picketlink</groupId>
+            <artifactId>picketlink-impl</artifactId>
+            <scope>compile</scope>
+            <version>${picketlink.version}</version>
+        </dependency>
+        
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>8.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.omnifaces</groupId>
+			<artifactId>omnifaces</artifactId>
+			<version>3.6.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.omnifaces</groupId>
+		    <artifactId>omniutils</artifactId>
+		    <version>0.11</version>
+		</dependency>
+		
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-lang3</artifactId>
 		    <version>3.10</version>
 		</dependency>
-      
+		<dependency>
+		    <groupId>org.apache.directory.api</groupId>
+		    <artifactId>api-all</artifactId>
+		    <version>2.0.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.servicemix.bundles</groupId>
+					<artifactId>
+						org.apache.servicemix.bundles.dom4j
+					</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
  		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-core</artifactId>
@@ -62,7 +108,24 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j-core.version}</version>
-        </dependency>
+	    </dependency>
+	
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>${jasperreports.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-fonts</artifactId>
+			<version>${jasperreports.version}</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.modelmapper</groupId>
+		    <artifactId>modelmapper</artifactId>
+		    <version>2.3.8</version>
+		</dependency>
 
     </dependencies>	
 	

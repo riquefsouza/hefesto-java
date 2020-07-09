@@ -17,9 +17,9 @@
 	<properties>
 		<java.version>14</java.version>
 		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+		<jasperreports.version>6.13.0</jasperreports.version>
 	</properties>
 	
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -104,6 +104,17 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>${jasperreports.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports-fonts</artifactId>
+			<version>${jasperreports.version}</version>
+		</dependency>		
 		
 		<dependency>
 		    <groupId>org.junit.jupiter</groupId>

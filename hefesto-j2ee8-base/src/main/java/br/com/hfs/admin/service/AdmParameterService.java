@@ -2,11 +2,11 @@ package br.com.hfs.admin.service;
 
 import java.util.List;
 
-import br.com.hfs.admin.dao.AdmParameterDAO;
 import br.com.hfs.admin.model.AdmParameter;
+import br.com.hfs.admin.repository.AdmParameterRepository;
 import br.com.hfs.base.BaseService;
 
-public class AdmParameterService extends BaseService<AdmParameter, Long, AdmParameterDAO> {
+public class AdmParameterService extends BaseService<AdmParameter, Long, AdmParameterRepository> {
 
 	private static final long serialVersionUID = 1L;
 

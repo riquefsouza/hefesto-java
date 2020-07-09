@@ -1,4 +1,4 @@
-package br.com.hfs.admin.dao;
+package br.com.hfs.admin.repository;
 
 import java.util.List;
 
@@ -6,13 +6,13 @@ import javax.persistence.TypedQuery;
 
 import br.com.hfs.admin.model.AdmMenu;
 import br.com.hfs.admin.model.AdmProfile;
-import br.com.hfs.base.BaseDAO;
+import br.com.hfs.base.BaseRepository;
 
-public class AdmProfileDAO extends BaseDAO<AdmProfile, Long> {
+public class AdmProfileRepository extends BaseRepository<AdmProfile, Long> {
 
 	private static final long serialVersionUID = 1L;
 
-	public AdmProfileDAO() {
+	public AdmProfileRepository() {
 		super(AdmProfile.class);
 	}
 	

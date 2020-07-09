@@ -12,6 +12,7 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -27,6 +28,7 @@ import br.com.hfs.admin.vo.UserVO;
 
 @NamedQueries({
 	@NamedQuery(name = "AdmUser.findByLogin", query = "SELECT DISTINCT a FROM AdmUser a WHERE a.login=?1"),
+	@NamedQuery(name = "AdmUser.findByLikeEmail", query = "SELECT DISTINCT a FROM AdmUser a WHERE a.email LIKE ?1"),
 	@NamedQuery(name = "AdmUser.login", query = "SELECT a FROM AdmUser a WHERE a.login=?1 AND a.password=?2")
 })
 @NamedNativeQueries({
@@ -88,6 +90,12 @@ public class AdmUser implements Serializable {
 	@Column(name = "USU_PASSWORD", nullable = false, length = 128)
 	private String password;
     
+	@Transient
+	private String ip;
+	
+	@Transient
+	private String ldapDN;
+	
 	/**
 	 * Instantiates a new adm usuario.
 	 */
@@ -270,6 +278,22 @@ public class AdmUser implements Serializable {
 		u.setName(name);
 		
 		return u;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public String getLdapDN() {
+		return ldapDN;
+	}
+
+	public void setLdapDN(String ldapDN) {
+		this.ldapDN = ldapDN;
 	}
 
  }

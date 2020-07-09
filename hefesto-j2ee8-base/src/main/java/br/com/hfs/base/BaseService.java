@@ -10,9 +10,9 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import br.com.hfs.util.TransactionException;
+import br.com.hfs.util.exceptions.TransactionException;
 
-public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T, I>>
+public abstract class BaseService<T, I extends Serializable, C extends BaseRepository<T, I>>
 		implements IBaseCrud<T, I> {
 
 	/** The Constant serialVersionUID. */
@@ -43,7 +43,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			return repository.insert(bean);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_INSERT + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_INSERT + e.getMessage(), e);
 		}
 	}
 
@@ -52,7 +52,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			return repository.update(bean);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_UPDATE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_UPDATE + e.getMessage(), e);
 		}
 	}
 	
@@ -61,7 +61,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			repository.delete(bean);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_DELETE + e.getMessage(), e);
 		}
 	}
 	
@@ -70,7 +70,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			repository.deleteById(id);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_DELETE + e.getMessage(), e);
 		}
 	}
 	
@@ -79,7 +79,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			return repository.directDeleteById(id);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_DELETE + e.getMessage(), e);
 		}
 	}
 	
@@ -93,9 +93,9 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		return repository.count();
 	}
 
-	//abstract public List<T> findPaginated(int pageNumber, int pageSize);
+	abstract public List<T> findPaginated(int pageNumber, int pageSize);
 
-	//abstract public List<T> listByRange(int startInterval, int endInterval);
+	abstract public List<T> listByRange(int startInterval, int endInterval);
 
 	@Override
 	public String getFieldById(String field, I id) {
@@ -117,7 +117,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			return repository.insert(listEntity);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_INSERT + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_INSERT + e.getMessage(), e);
 		}
 	}
 
@@ -126,7 +126,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			return repository.update(listEntity);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_UPDATE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_UPDATE + e.getMessage(), e);
 		}
 	}
 
@@ -135,7 +135,7 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseDAO<T
 		try {
 			repository.delete(listEntity);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_DELETE + e.getMessage(), e);
 		}
 	}
 

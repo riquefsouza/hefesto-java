@@ -5,12 +5,12 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import br.com.hfs.admin.dao.AdmMenuDAO;
 import br.com.hfs.admin.model.AdmMenu;
+import br.com.hfs.admin.repository.AdmMenuRepository;
 import br.com.hfs.admin.vo.MenuVO;
 import br.com.hfs.base.BaseService;
 
-public class AdmMenuService extends BaseService<AdmMenu, Long, AdmMenuDAO> {
+public class AdmMenuService extends BaseService<AdmMenu, Long, AdmMenuRepository> {
 
 	private static final long serialVersionUID = 1L;
 

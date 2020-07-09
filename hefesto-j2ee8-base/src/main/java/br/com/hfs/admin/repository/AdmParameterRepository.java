@@ -1,17 +1,17 @@
-package br.com.hfs.admin.dao;
+package br.com.hfs.admin.repository;
 
 import java.util.List;
 
 import javax.persistence.TypedQuery;
 
 import br.com.hfs.admin.model.AdmParameter;
-import br.com.hfs.base.BaseDAO;
+import br.com.hfs.base.BaseRepository;
 
-public class AdmParameterDAO extends BaseDAO<AdmParameter, Long> {
+public class AdmParameterRepository extends BaseRepository<AdmParameter, Long> {
 
 	private static final long serialVersionUID = 1L;
 
-	public AdmParameterDAO() {
+	public AdmParameterRepository() {
 		super(AdmParameter.class);
 	}
 	

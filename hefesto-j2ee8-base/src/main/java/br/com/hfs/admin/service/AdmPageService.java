@@ -2,11 +2,11 @@ package br.com.hfs.admin.service;
 
 import java.util.List;
 
-import br.com.hfs.admin.dao.AdmPageDAO;
 import br.com.hfs.admin.model.AdmPage;
+import br.com.hfs.admin.repository.AdmPageRepository;
 import br.com.hfs.base.BaseService;
 
-public class AdmPageService extends BaseService<AdmPage, Long, AdmPageDAO> {
+public class AdmPageService extends BaseService<AdmPage, Long, AdmPageRepository> {
 
 	private static final long serialVersionUID = 1L;
 

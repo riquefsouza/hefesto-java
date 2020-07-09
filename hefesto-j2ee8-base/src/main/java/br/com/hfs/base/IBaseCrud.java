@@ -4,21 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.hfs.util.TransactionException;
+import br.com.hfs.util.exceptions.TransactionException;
 
 public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 
-	/** The Constant ERRO_INSERT. */
-	public static final String ERRO_INSERT = "Erro de Transação ao Incluir: ";
+	public static final String ERROR_INSERT = "Transaction error to insert: ";
 	
-	/** The Constant ERRO_UPDATE. */
-	public static final String ERRO_UPDATE = "Erro de Transação ao Alterar: ";
+	public static final String ERROR_UPDATE = "Transaction error to update: ";
 	
-	/** The Constant ERRO_DELETE. */
-	public static final String ERRO_DELETE = "Erro de Transação ao Excluir: ";
+	public static final String ERROR_DELETE = "Transaction error to delete: ";
 	
-	/** The Constant ERRO_SALVAR. */
-	public static final String ERRO_SALVAR = "Erro de Transação ao Salvar: ";
+	public static final String ERROR_SAVE = "Transaction error to save: ";
 	
 	Optional<T> findById(I id);	
 

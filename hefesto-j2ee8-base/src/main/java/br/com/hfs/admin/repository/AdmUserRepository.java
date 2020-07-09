@@ -1,17 +1,17 @@
-package br.com.hfs.admin.dao;
+package br.com.hfs.admin.repository;
 
 import java.util.List;
 
 import javax.persistence.TypedQuery;
 
 import br.com.hfs.admin.model.AdmUser;
-import br.com.hfs.base.BaseDAO;
+import br.com.hfs.base.BaseRepository;
 
-public class AdmUserDAO extends BaseDAO<AdmUser, Long> {
+public class AdmUserRepository extends BaseRepository<AdmUser, Long> {
 
 	private static final long serialVersionUID = 1L;
 
-	public AdmUserDAO() {
+	public AdmUserRepository() {
 		super(AdmUser.class);
 	}
 	
@@ -23,6 +23,13 @@ public class AdmUserDAO extends BaseDAO<AdmUser, Long> {
 		return listByRange("ADM_USER", "USU_SEQ", startInterval, endInterval);
 	}
 
+	
+	public List<AdmUser> findByLikeEmail(String email){
+		TypedQuery<AdmUser> query = em.createNamedQuery("AdmUser.findByLikeEmail", AdmUser.class);
+		query.setParameter(1, email + "%");
+		return query.getResultList();
+	}
+	
 	public List<Object> findIPByOracle() {
 		TypedQuery<Object> query = em.createNamedQuery("AdmUser.findIPByOracle", Object.class);
 		return query.getResultList();

@@ -1,6 +1,8 @@
-package br.com.hfs.util;
+package br.com.hfs.util.exceptions;
 
 import org.apache.logging.log4j.Logger;
+
+import br.com.hfs.util.ExceptionUtil;
 
 // TODO: Auto-generated Javadoc
 /**

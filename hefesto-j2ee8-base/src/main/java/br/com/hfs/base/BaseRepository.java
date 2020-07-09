@@ -11,19 +11,17 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-public abstract class BaseDAO<T, I extends Serializable> implements IBaseCrud<T, I> {
+public abstract class BaseRepository<T, I extends Serializable> implements IBaseCrud<T, I> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
-	// private Logger log = Logger.getLogger(this.getClass().getName());
-
 	@PersistenceContext
 	protected EntityManager em;
 
 	private Class<T> clazz;
 
-	public BaseDAO(Class<T> clazz) {
+	public BaseRepository(Class<T> clazz) {
 		this.clazz = clazz;
 	}
 

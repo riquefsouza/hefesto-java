@@ -4,20 +4,25 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.TransactionException;
 import org.hibernate.jdbc.ReturningWork;
+import org.modelmapper.ModelMapper;
+import org.omnifaces.util.Faces;
 
-import br.com.hfs.admin.dao.AdmUserDAO;
 import br.com.hfs.admin.model.AdmUser;
+import br.com.hfs.admin.repository.AdmUserRepository;
+import br.com.hfs.admin.vo.UserVO;
 import br.com.hfs.base.BaseService;
 
-public class AdmUserService extends BaseService<AdmUser, Long, AdmUserDAO> {
+public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -31,7 +36,23 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserDAO> {
 	public List<AdmUser> listByRange(int startInterval, int endInterval) {
 		return repository.listByRange(startInterval, endInterval);
 	}
+	
+	private List<UserVO> toVO(List<AdmUser> listaOrigem) {
+		ModelMapper modelMapper = new ModelMapper();		
+		UserVO vo; 
+		List<UserVO> lista = new ArrayList<UserVO>(); 
+		for (AdmUser item : listaOrigem) {
+			vo = modelMapper.map(item, UserVO.class);
+			lista.add(vo);
+		}
+		return lista;
+	}
 
+	public List<UserVO> findByLikeEmail(String email){
+		List<AdmUser> listObj = repository.findByLikeEmail(email);
+		return toVO(listObj);
+	}
+	
 	public String findIPByOracle() {
 		List<Object> ip = repository.findIPByOracle();
 		return ip.get(0).toString();
@@ -137,10 +158,8 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserDAO> {
 		return (retorno == 0);
 	}
 	
-	/*
-	
 	@Transactional
-	public AdmUser getUser(String login, String name, String email, boolean auditar) throws TransactionException {
+	public AdmUser getUser(Long id, String login, String name, String email, String ldapDN, boolean auditar) throws TransactionException {
 		AdmUser user = null; //this.load(AdmUserPK);
 		if (user == null) {
 			user = new AdmUser();
@@ -148,7 +167,8 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserDAO> {
 			user.setLogin(login);
 			user.setName(name);
 			user.setEmail(email);
-			//usuario.setIp(Faces.getRemoteAddr()); OmniFaces
+			user.setIp(Faces.getRemoteAddr()); //OmniFaces
+			user.setLdapDN(ldapDN);
 			
 			if (auditar) {
 				this.insert(user);
@@ -168,5 +188,5 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserDAO> {
 
 		return user;
 	}
-	*/
+
 }

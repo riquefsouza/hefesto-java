@@ -6,18 +6,18 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import br.com.hfs.admin.dao.AdmProfileDAO;
 import br.com.hfs.admin.model.AdmMenu;
 import br.com.hfs.admin.model.AdmPage;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
+import br.com.hfs.admin.repository.AdmProfileRepository;
 import br.com.hfs.admin.vo.AuthenticatedUserVO;
 import br.com.hfs.admin.vo.MenuVO;
 import br.com.hfs.admin.vo.PermissionVO;
 import br.com.hfs.admin.vo.ProfileVO;
 import br.com.hfs.base.BaseService;
 
-public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileDAO> {
+public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileRepository> {
 
 	private static final long serialVersionUID = 1L;
 

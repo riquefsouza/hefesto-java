@@ -67,7 +67,7 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 		try {
 			return repository.saveAndFlush(bean);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_INSERT + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_INSERT + e.getMessage(), e);
 		}
 	}
 
@@ -76,7 +76,7 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 		try {
 			return repository.saveAndFlush(bean);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_UPDATE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_UPDATE + e.getMessage(), e);
 		}
 	}
 	
@@ -90,7 +90,7 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 	        repository.flush();
 
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_DELETE + e.getMessage(), e);
 		}
 	}
 	
@@ -108,7 +108,7 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 				repository.flush();
 			}
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_DELETE + e.getMessage(), e);
 		}
 	}
 	
@@ -120,7 +120,7 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 			 
 			return query.executeUpdate(); 
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_DELETE + e.getMessage(), e);
 		}
 	}
 	
@@ -197,7 +197,7 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 		try {
 			return repository.saveAll(listEntity);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_INSERT + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_INSERT + e.getMessage(), e);
 		}
 	}
 
@@ -206,7 +206,7 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 		try {
 			return repository.saveAll(listEntity);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_UPDATE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_UPDATE + e.getMessage(), e);
 		}
 	}
 
@@ -215,7 +215,7 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 		try {
 			repository.deleteAll(listEntity);
 		} catch (Exception e) {
-			throw new TransactionException(log, ERRO_DELETE + e.getMessage(), e);
+			throw new TransactionException(log, ERROR_DELETE + e.getMessage(), e);
 		}
 	}
 

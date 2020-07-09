@@ -1,15 +1,15 @@
-package br.com.hfs.admin.dao;
+package br.com.hfs.admin.repository;
 
 import java.util.List;
 
 import br.com.hfs.admin.model.AdmPage;
-import br.com.hfs.base.BaseDAO;
+import br.com.hfs.base.BaseRepository;
 
-public class AdmPageDAO extends BaseDAO<AdmPage, Long> {
+public class AdmPageRepository extends BaseRepository<AdmPage, Long> {
 
 	private static final long serialVersionUID = 1L;
 
-	public AdmPageDAO() {
+	public AdmPageRepository() {
 		super(AdmPage.class);
 	}
 	
