@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/layout/layout.xhtml">
+
+	<f:view transient="true">
+	</f:view>
+
+	<ui:define name="meta-tags">
+		<meta http-equiv="refresh" content="5" />
+	</ui:define>
+
+	<ui:define name="itens-menu"></ui:define>
+	<ui:define name="informacoes-usuario"></ui:define>
+	<ui:define name="tituloPagina"> - Login</ui:define>
+	<ui:define name="conteudo-maior">
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{hfsAuthenticator.redirectHomePage()}" />
+		</f:metadata>
+
+		<div class="container-fluid" style="margin: 0 auto; width:400px; position: float;">
+			<div id="tela-login">
+				<div class="card" id="tela-login">
+					<div class="card-header" style="font-weight: normal;">Authenticate</div>
+					<div class="card-body">			
+						<p:fragment autoUpdate="true">
+							<h:form id="formAutenticacao" role="form">
+								<div class="form-group">
+									<h:panelGroup>
+										<label for="username">User:</label>
+										<div class="input-group">
+											<img src="#{request.contextPath}/static/bootstrap-icons/person-fill.svg" 
+											alt="" width="32" height="32" title="person-fill"/>									
+											<h:inputText id="username" value="#{loginCredentials.userId}"
+												styleClass="form-control" label="User" />
+											<p:watermark for="username" value="Enter your username" />
+										</div>
+									</h:panelGroup>
+								</div>
+								<div class="form-group">
+									<label for="password">Password:</label>
+									<div class="input-group">
+										<img src="#{request.contextPath}/static/bootstrap-icons/lock-fill.svg" 
+										alt="" width="32" height="32" title="lock-fill"/>	
+										<h:inputSecret id="password" value="#{loginCredentials.password}"
+											styleClass="form-control" label="Password" autocomplete="off" />
+										<p:watermark for="password" value="Inform your password" />
+									</div>
+								</div>
+								<br />
+								<div class="form-group">
+									<div style="margin: 0 auto; width:30%">
+										<p:commandButton type="submit" value="Login"
+											action="#{identity.login()}" id="login-button" ajax="false"
+											styleClass="btn btn-success" style="width: 120px" />	
+									</div>
+								</div>
+								<p:focus for="username"></p:focus>
+							</h:form>
+						</p:fragment>	
+					</div>		
+				</div>
+			</div>	
+		</div>
+
+		<div class="rodape-central hidden-xs">
+			<div class="info-browser">
+				<span>#{messages['main.app.title']}. Version: #{messages['build.version']} (#{messages['build.timestamp']}).</span>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+
+</html>

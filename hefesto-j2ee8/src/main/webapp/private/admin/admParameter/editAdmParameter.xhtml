@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" template="/layout/layout.xhtml">
+
+	<ui:define name="tituloPagina"> - Parâmetros de Configuração do Sistema</ui:define>
+
+	<ui:define name="conteudo-maior">
+		<h:form id="editarAdmParametro">
+			<fieldset id="fieldsetEditarAdmParametro">
+				<div class="panel panel-default">
+					<div class="panel-heading" 
+						style="font-weight: bold;font-size: large;">
+						Parâmetros de Configuração do Sistema
+					</div>
+					<div class="panel-body">
+					
+						<div class="form-actions">
+							<p:commandButton value="Salvar" ajax="false" icon="ui-icon-circle-check"
+								action="#{admParametroMB.salvar()}" id="btnSalvar"
+								styleClass="btn btn-success disableSubmit"
+								title="Salvar a admParametro" />
+
+							<p:commandButton value="Limpar" icon="ui-icon-star" id="btnLimpar"
+								styleClass="btn btn-primary disableSubmit" type="reset"
+								title="Limpar Campos" />
+
+							<p:commandButton value="Cancelar" immediate="true" ajax="false" 
+							    icon="ui-icon-circle-close"
+								action="#{admParametroMB.cancelarEdicao()}" id="btnCancelar"
+								styleClass="btn  btn-primary disableSubmit"
+								title="Cancelar" />
+						</div>
+
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<p:outputLabel for="categoria" value="Categoria do Parâmetro:" />
+								<p:selectOneMenu label="Categoria do Parâmetro" id="categoria"
+									required="true" styleClass="form-control"
+									converter="admParametroCategoriaConverter"
+									value="#{admParametroMB.bean.admParametroCategoria}"
+									filter="true" filterMatchMode="contains">
+									<f:selectItems
+										value="#{admParametroMB.listaAdmParametroCategoria}"
+										var="item" itemValue="#{item}" itemLabel="#{item.descricao}" />
+								</p:selectOneMenu>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<p:outputLabel for="codigo" value="Código:" />
+								<p:inputText id="codigo" styleClass="form-control"
+									value="#{admParametroMB.bean.codigo}"
+									label="Código do Parâmetro" required="true">
+								</p:inputText>
+							</div>
+						</div>	
+						<div class="row">	
+							<div class="col-md-8 form-group">
+								<p:outputLabel for="valor" value="Valor:" />
+								<p:inputTextarea id="valor" label="Valor" rows="6"
+									 value="#{admParametroMB.bean.valor}" maxlength="3000" 
+									counter="displayValor" counterTemplate="{0} caracteres restantes." 
+									autoResize="false" required="true" />
+						    	<h:outputText id="displayValor" />								
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 form-group">
+								<p:outputLabel for="descricao" value="Descrição:" />
+								<p:inputText id="descricao" required="true" label="Descrição"
+									styleClass="form-control"
+									value="#{admParametroMB.bean.descricao}">
+									<f:validateLength maximum="255" />
+								</p:inputText>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+					
+			</fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -147,11 +147,11 @@ public class SystemView extends BaseViewController implements Serializable {
 		}		
 	}
 	
-	public List<MenuVO> getListaMenus() {
+	public List<MenuVO> getListMenus() {
 		return this.authenticatedUser.getListMenus();
 	}
 
-	public List<MenuVO> getListaAdminMenus() {
+	public List<MenuVO> getListAdminMenus() {
 		return this.authenticatedUser.getListAdminMenus();
 	}
 

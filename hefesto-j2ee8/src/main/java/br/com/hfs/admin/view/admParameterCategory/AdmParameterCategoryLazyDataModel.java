@@ -1,4 +1,4 @@
-package br.com.hfs.admin.controller.admParametroCategoria;
+package br.com.hfs.admin.view.admParameterCategory;
 
 import java.util.Collections;
 import java.util.List;

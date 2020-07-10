@@ -83,21 +83,21 @@ public class HfsAuthenticator extends BaseAuthenticator implements Authenticator
 			} else {
 				gerarMensagemInformativa("Invalid Username or Password.");
 				setStatus(Authenticator.AuthenticationStatus.FAILURE);
-				redirecionaPaginaLogin();
+				redirectPageLogin();
 			}
 		} catch (Exception e) {
 			this.log.error("User authentication error", e);
 			//gerarMensagemErro(e, e.getMessage());
 			gerarMensagemInformativa("Invalid Username or Password.");
 			setStatus(Authenticator.AuthenticationStatus.FAILURE);
-			redirecionaPaginaLogin();
+			redirectPageLogin();
 		}
 	}
 
 	/**
 	 * Redireciona pagina login.
 	 */
-	private void redirecionaPaginaLogin() {
+	private void redirectPageLogin() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		NavigationHandler nav = fc.getApplication().getNavigationHandler();
 		nav.handleNavigation(fc, null, "LOGIN_PAGE");
@@ -106,7 +106,7 @@ public class HfsAuthenticator extends BaseAuthenticator implements Authenticator
 	/**
 	 * Redireciona pagina inicial.
 	 */
-	public void redirecionaPaginaInicial() {
+	public void redirectHomePage() {
 		if (this.identity.isLoggedIn()) {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			NavigationHandler nav = fc.getApplication().getNavigationHandler();

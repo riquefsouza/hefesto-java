@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" template="/layout/layout.xhtml">
+
+	<ui:define name="conteudo-maior">
+		<h:form id="editarAdmPerfil">
+			<fieldset id="fieldsetEditarAdmPerfil">
+				<div class="panel panel-default">
+					<div class="panel-heading" 
+						style="font-weight: bold;font-size: large;">
+						Administrar Perfil
+					</div>
+					<div class="panel-body">
+					
+						<div class="form-actions">
+							<p:commandButton value="Salvar" ajax="false" icon="ui-icon-circle-check"
+								action="#{admPerfilMB.salvar()}" id="btnSalvar"
+								styleClass="btn btn-success disableSubmit"
+								title="Salvar a admPerfil" />
+
+							<p:commandButton value="Limpar" icon="ui-icon-star" id="btnLimpar"
+								styleClass="btn btn-primary disableSubmit" type="reset"
+								title="Limpar Campos" />
+
+							<p:commandButton value="Cancelar" immediate="true" ajax="false" 
+							    icon="ui-icon-circle-close"
+								action="#{admPerfilMB.cancelarEdicao()}" id="btnCancelar"
+								styleClass="btn  btn-primary disableSubmit"
+								title="Cancelar" />
+						</div>
+
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<p:outputLabel for="descricao" value="Descrição:" />
+								<p:inputText id="descricao" label="Descrição" required="true"
+									value="#{admPerfilMB.bean.descricao}" maxlength="80">
+								</p:inputText>
+							</div>
+							<div class="col-md-3 form-group">
+								<div class="row">
+									<p:outputLabel for="geral" value="Todos os Funcionários: " />
+									<p:selectBooleanCheckbox id="geral"
+										value="#{admPerfilMB.bean.geral}" />
+								</div>
+								<div class="row">
+									<p:outputLabel for="admin" value="Administradores do Sistema: " />
+									<p:selectBooleanCheckbox id="admin"
+										value="#{admPerfilMB.bean.administrador}" />
+								</div>
+							</div>
+						</div>					
+						
+						<p:tabView>
+							<p:tab title="Setores e Cargos">
+								<div class="row">
+									<div class="col-md-5">
+										<p:outputLabel for="intersecao" value="Somente Funcionários que estão no mesmo Setor e Cargo:" />
+										<p:selectBooleanCheckbox id="intersecao" value="#{admPerfilMB.bean.intersecao}" />
+									</div>	
+								</div>
+								<div class="row">
+									<div class="col-md-5">
+										<p:outputLabel for="pickListSetores" value="Setor(es) do Perfil" />
+										<p:pickList id="pickListSetores"
+											value="#{admPerfilMB.dualListAdmSetor}"
+											converter="admSetorConverter" var="item"
+											itemLabel="#{item.nomeSigla}" itemValue="#{item}"
+											showSourceFilter="true" showTargetFilter="true"
+											filterMatchMode="contains" styleClass="picklistMaior">
+											<f:facet name="sourceCaption">Disponíveis</f:facet>
+											<f:facet name="targetCaption">Associados ao Perfil</f:facet>											
+										</p:pickList>							    
+									</div>	
+									<div class="col-md-5">
+										<p:outputLabel for="pickListCargos" value="Cargo(s) do(s) Funcionário(s) do Perfil" />
+										<p:pickList id="pickListCargos"
+											value="#{admPerfilMB.dualListAdmCargo}"
+											converter="admCargoConverter" var="item"
+											itemLabel="#{item.nomeCargo}" itemValue="#{item}"
+											showSourceFilter="true" showTargetFilter="true"
+											filterMatchMode="contains" styleClass="picklistMaior">
+											<f:facet name="sourceCaption">Disponíveis</f:facet>
+											<f:facet name="targetCaption">Associados ao Perfil</f:facet>
+										</p:pickList>							    
+									</div>
+								</div>
+								
+							</p:tab>
+							<p:tab title="Funcionários">
+								<p:outputLabel for="pickListFuncionarios" value="Funcionário(s) do Perfil" />
+								<p:pickList id="pickListFuncionarios"
+									value="#{admPerfilMB.dualListAdmFuncionario}"
+									converter="admFuncionarioConverter" var="item"
+									itemLabel="#{item.nomeSetorCargo}" itemValue="#{item}"
+									showSourceFilter="true" showTargetFilter="true"
+									filterMatchMode="contains" styleClass="picklistGigante">
+									<f:facet name="sourceCaption">Disponíveis</f:facet>
+									<f:facet name="targetCaption">Associados ao Perfil</f:facet>												
+								</p:pickList>
+							</p:tab>
+							<p:tab title="Páginas">							
+								<p:outputLabel for="pickListPagina" value="Página(s) do Perfil:" />
+								<p:pickList id="pickListPagina"
+									value="#{admPerfilMB.dualListAdmPagina}"
+									converter="admPaginaConverter" var="item"
+									itemLabel="#{item.url}" itemValue="#{item}"
+									showSourceFilter="true" showTargetFilter="true"									
+									filterMatchMode="contains" styleClass="picklistGigante">
+									<f:facet name="sourceCaption">Disponíveis</f:facet>
+									<f:facet name="targetCaption">Autorizadas</f:facet>										
+								</p:pickList>							
+							</p:tab>
+							<p:tab title="Funcionários Excluídos do Perfil">
+								<div class="row">
+									<div class="col-md-4">
+										<p><strong>Todos os funcionários excluídos do perfil NÃO terão acesso a este perfil</strong></p>
+										<p><strong>mesmo sendo marcados como administradores,</strong></p>
+										<p><strong>mesmo que pertençam aos setores incluídos neste perfil,</strong></p>
+										<p><strong>possuam os cargos incluídos neste perfil</strong></p>
+										<p><strong>e/ou estejam incluídos na lista de funcionários deste perfil!</strong></p>
+									</div>	
+									<div class="col-md-6">
+										<p:outputLabel for="pickListExcluidosFuncionarios" value="Funcionário(s) Excluídos do Perfil" />
+										<p:pickList id="pickListExcluidosFuncionarios"
+											value="#{admPerfilMB.dualListExcluidoAdmFuncionario}"
+											converter="admFuncionarioConverter" var="item"
+											itemLabel="#{item.nomeSetorCargo}" itemValue="#{item}"
+											showSourceFilter="true" showTargetFilter="true"
+											filterMatchMode="contains" styleClass="picklistMaior">
+											<f:facet name="sourceCaption">Disponíveis</f:facet>
+											<f:facet name="targetCaption">Excluídos do Perfil</f:facet>												
+										</p:pickList>
+									</div>
+								</div>
+								
+							</p:tab>
+						</p:tabView>
+						
+					</div>
+				</div>
+					
+			</fieldset>
+		</h:form>
+	</ui:define>
+</ui:composition>

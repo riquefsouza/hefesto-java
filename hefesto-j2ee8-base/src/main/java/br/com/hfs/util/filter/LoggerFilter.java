@@ -25,7 +25,7 @@ public class LoggerFilter implements Filter {
 	 */
 	public void init(FilterConfig fc) throws ServletException {
 		this.log = LogManager.getLogger(LoggerFilter.class);
-		this.log.info("Iniciando LoggerFilter");
+		this.log.info("Getting Started LoggerFilter");
 	}
 
 	/* (non-Javadoc)
@@ -38,11 +38,11 @@ public class LoggerFilter implements Filter {
 		boolean ignorar = (url.endsWith(".js")) || (url.endsWith(".css")) || (url.endsWith(".png"))
 				|| (url.endsWith(".jpg"));
 		if (!ignorar) {
-			this.log.info("· IP Cliente: " + request.getRemoteAddr() + " | " + url + "?" + queryString);
+			this.log.info("· IP Client: " + request.getRemoteAddr() + " | " + url + "?" + queryString);
 		}
 		chain.doFilter(request, response);
 		if (!ignorar) {
-			this.log.info("· Completado [" + url + "?" + queryString + "]");
+			this.log.info("· Completed [" + url + "?" + queryString + "]");
 		}
 	}
 

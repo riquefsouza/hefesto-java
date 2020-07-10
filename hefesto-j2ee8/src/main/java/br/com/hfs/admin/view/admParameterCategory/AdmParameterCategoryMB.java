@@ -1,6 +1,7 @@
-package br.com.hfs.admin.controller.admParametroCategoria;
+package br.com.hfs.admin.view.admParameterCategory;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -17,14 +18,14 @@ import br.com.hfs.util.interceptors.HandlingExpectedErrors;
 @Named
 @ViewScoped
 @HandlingExpectedErrors
-public class AdmParameterCategoryView
+public class AdmParameterCategoryMB
 		extends BaseViewRegister<AdmParameterCategory, Long, AdmParameterCategoryService>
 		implements IBaseViewRegister<AdmParameterCategory> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	public AdmParameterCategoryView(String pageList, String pageEdit){
+	public AdmParameterCategoryMB(String pageList, String pageEdit){
 		super("ListAdmParameterCategory", "EditAdmParameterCategory");	
 	}
 	
@@ -46,6 +47,26 @@ public class AdmParameterCategoryView
 	@Override
 	public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
 		super.preProcessPDF(document, "AdmParameterCategory");
+	}
+
+	@Override
+	public AdmParameterCategory getBean() {
+		return super.getEntity();
+	}
+
+	@Override
+	public void setBean(AdmParameterCategory entity) {
+		super.setEntity(entity);
+	}
+
+	@Override
+	public List<AdmParameterCategory> getListBean() {
+		return super.getListEntity();
+	}
+
+	@Override
+	public void setListBean(List<AdmParameterCategory> listEntity) {
+		super.setListEntity(listEntity);
 	}
 
 }

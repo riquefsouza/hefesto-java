@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<title>Hefesto<ui:insert name="tituloPagina"></ui:insert></title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</f:facet>
+
+	<link rel="stylesheet" type="text/css" href="#{request.contextPath}/static/css/system.css" />
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" 
+	integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous" />
+
+	<ui:insert name="head" />
+	
+</h:head>
+
+<h:body>
+
+	<div id="div-principal-sistema">
+	
+		<nav id="menu-principal" class="navbar navbar-inverse">
+			<div class="container-fluid">
+				<div class="navbar-header">
+				
+					<c:if test="#{identity.loggedIn}">
+				
+						<button type="button" class="navbar-toggle" data-toggle="collapse"
+							data-target="#sistema-navbar-collapse">
+							<span class="sr-only">Toggle navigation</span> 
+							<span class="icon-bar" /> 
+							<span class="icon-bar" /> 
+							<span class="icon-bar" />
+						</button>
+					
+					</c:if>
+					
+					<h:outputLink styleClass="navbar-brand" id="nomeSistema"
+						value="#{request.contextPath}/private/desktop.xhtml">
+						<p:graphicImage id="figuraSistema" style="margin-top: -15px;" 
+							name="logo.png" library="img" width="90px" height="60px"  />
+					</h:outputLink>
+					
+					<c:if test="#{not identity.loggedIn}">
+						<a class="navbar-brand"
+							href="#{request.contextPath}/private/desktop.xhtml">Hefesto</a>
+					</c:if>
+					
+					<c:if test="#{identity.loggedIn}">
+						<a style="color: rgb(220, 220, 220); float: left; height: 50px; padding: 5px 5px; font-size: 14px; line-height: 20px;text-decoration:none"
+							href="#{request.contextPath}/private/desktop.xhtml">
+							Hefesto
+						</a>
+					</c:if>
+					
+				</div>
+				
+				<c:if test="#{not identity.loggedIn}">
+					<span id="dialog-countdown-geral" style="display:none;"></span>
+				</c:if>
+				
+				<c:if test="#{identity.loggedIn}">
+				
+					<div class="collapse navbar-collapse" id="sistema-navbar-collapse">
+					
+							<ui:include src="#{'/private/menu.xhtml'}" />
+												
+							<h:form lang="pt">
+								<ul class="nav navbar-nav">
+									<li><h:commandLink action="#{autenticador.logOut()}"
+											immediate="true" rendered="#{identity.loggedIn}">
+											<p:graphicImage name="/img/exit01.png" /> 
+											Exit
+										</h:commandLink></li>
+								</ul>
+							</h:form>
+	
+							<ul class="nav navbar-nav pull-right"
+								style="display: inline-block; padding-top: 15px; font-size: 90%">
+								<li>
+										<small> 
+											<span id="informacoes-usuario" class="lightgray">
+												<h:outputText value="Sessão expira: " /> 
+												<span id="dialog-countdown-geral"></span> 
+												<i class="glyphicon glyphicon-user"></i> 
+												<p:outputLabel value="  #{systemView.authenticatedUser.user.login}" 
+													onclick="PF('infoUsuarioDialog').show()" 
+													style="cursor: pointer; cursor: hand;" />										
+											</span>
+										</small>
+									
+									</li>
+							</ul>
+
+					</div>
+				
+				</c:if>
+								
+				
+			</div>
+		</nav>
+	
+		
+		<div id="conteudo-principal" class="container-fluid">
+			<div>
+				<p:outputPanel id="alert-messages">
+					<p:messages id="messages"
+						styleClass="alert-messages skipModalLoading" escape="false"
+						closable="true" showDetail="true" autoUpdate="true"
+						showSummary="false" infoClass="alert alert-info skipModalLoading"
+						successClass="alert alert-success skipModalLoading"
+						errorClass="alert alert-danger skipModalLoading"
+						warnClass="alert alert-warning skipModalLoading" />
+				</p:outputPanel>
+
+				<div>
+					<ui:insert name="conteudo-maior">
+						<div>														
+							<ui:insert name="conteudo">...</ui:insert>							
+						</div>
+					</ui:insert>
+				</div>
+			</div>
+		</div>
+		
+		<p:ajaxStatus onstart="PF('statusDialog').show()"
+			onsuccess="tempoTotalSessao = maxTempoTotalSessao;PF('statusDialog').hide()"
+			oncomplete="PF('statusDialog').hide()" />
+
+		<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+			id="statusDialog" header="Aguarde" closable="false" resizable="false"
+			style="min-width: 0em; border-style: none; box-shadow: none !important; background-color: transparent;"
+			showHeader="false">
+			<p:graphicImage name="/img/ajax_loader_blue_64.gif"/>
+		</p:dialog>
+		
+	</div>
+
+	<!-- Default ajaxErrorHandler -->
+	<p:ajaxExceptionHandler title="Excuse me. A system error has occurred"
+		body="The server returned the exception {error-name} with description &lt;b&gt;{error-message}&lt;/b&gt;"
+		button="Fechar" widgetVar="myAjaxErrorHandler"
+		buttonOnclick="myAjaxErrorHandler.hide()" />
+
+	<ui:insert name="sessaoSistema">
+		<ui:include src="/sessionTimeOut.xhtml" />
+	</ui:insert>
+
+	<ui:include src="/private/infoUser.xhtml" />
+</h:body>
+</html>
