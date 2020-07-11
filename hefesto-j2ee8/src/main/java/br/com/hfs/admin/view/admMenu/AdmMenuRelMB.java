@@ -1,4 +1,4 @@
-package br.com.hfs.admin.view.admParameterCategory;
+package br.com.hfs.admin.view.admMenu;
 
 import java.util.Map;
 
@@ -6,8 +6,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.hfs.admin.model.AdmParameterCategory;
-import br.com.hfs.admin.service.AdmParameterCategoryService;
+import br.com.hfs.admin.model.AdmMenu;
+import br.com.hfs.admin.service.AdmMenuService;
 import br.com.hfs.base.report.BaseViewReport;
 import br.com.hfs.base.report.IBaseReport;
 import br.com.hfs.base.report.IBaseViewReport;
@@ -17,32 +17,33 @@ import br.com.hfs.util.interceptors.HandlingExpectedErrors;
 @Named
 @ViewScoped
 @HandlingExpectedErrors
-public class AdmParameterCategoryRelMB extends BaseViewReport<AdmParameterCategory, Long, AdmParameterCategoryService>
+public class AdmMenuRelMB 
+	extends BaseViewReport<AdmMenu, Long, AdmMenuService>
 		implements IBaseViewReport {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** The forcar download. */
 	private Boolean forceDownload;
-
+	
+	/** The report. */
 	@Inject
-	@ReportPath("AdmParameterCategory")
+	@ReportPath("AdmMenu")
 	private IBaseReport report;
 
-	public AdmParameterCategoryRelMB() {
+	/**
+	 * Instantiates a new adm menu rel MB.
+	 */
+	public AdmMenuRelMB() {
 		super();
 		this.forceDownload = false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.jus.trt1.hfsframework.base.IBaseViewRelatorio#exportar()
-	 */
 	public void export() {
 		Map<String, Object> params = getParameters();
 		params.put("PARAMETRO1", "");
-
+		
 		super.exportar(report, getService().findAll(), params, forceDownload);
 	}
 
@@ -53,4 +54,5 @@ public class AdmParameterCategoryRelMB extends BaseViewReport<AdmParameterCatego
 	public void setForceDownload(Boolean forceDownload) {
 		this.forceDownload = forceDownload;
 	}
+
 }

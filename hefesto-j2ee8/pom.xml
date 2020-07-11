@@ -18,6 +18,8 @@
 				
         <jakartaee.version>8.0.1</jakartaee.version>
         <jackson.version>2.11.1</jackson.version>
+        
+        <hibernate.version>6.0.0.Alpha5</hibernate.version>
         <hibernate-validator.version>7.0.0.Alpha4</hibernate-validator.version>
 
         <log4j-core.version>2.13.3</log4j-core.version>
@@ -54,9 +56,23 @@
 		<dependency>
 		    <groupId>org.hibernate.orm</groupId>
 		    <artifactId>hibernate-core</artifactId>
-		    <version>6.0.0.Alpha5</version>
+		    <version>${hibernate.version}</version>
 		</dependency>
-		
+		<dependency>
+		    <groupId>org.hibernate.orm</groupId>
+		    <artifactId>hibernate-ehcache</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernate.orm</groupId>
+		    <artifactId>hibernate-hikaricp</artifactId>
+		    <version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.zaxxer</groupId>
+		    <artifactId>HikariCP</artifactId>
+		    <version>3.4.5</version>
+		</dependency>		
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>

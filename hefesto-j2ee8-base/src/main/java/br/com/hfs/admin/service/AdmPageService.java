@@ -3,6 +3,7 @@ package br.com.hfs.admin.service;
 import java.util.List;
 
 import br.com.hfs.admin.model.AdmPage;
+import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.repository.AdmPageRepository;
 import br.com.hfs.base.BaseService;
 
@@ -18,4 +19,7 @@ public class AdmPageService extends BaseService<AdmPage, Long, AdmPageRepository
 		return repository.listByRange(startInterval, endInterval);
 	}
 	
+	public List<AdmProfile> findProfilesByPage(AdmPage page){
+		return repository.findProfilesByPage(page);
+	}
 }

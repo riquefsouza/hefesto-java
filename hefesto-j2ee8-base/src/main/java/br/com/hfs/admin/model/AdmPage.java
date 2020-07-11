@@ -38,7 +38,7 @@ import br.com.hfs.admin.vo.PageVO;
 	@NamedQuery(name = "AdmPage.getDescriptionById", query = "SELECT c.url FROM AdmPage c WHERE c.id = ?1"),
 	@NamedQuery(name = "AdmPage.countNovo", query = "SELECT COUNT(c) FROM AdmPage c WHERE LOWER(c.url) = ?1"),
 	@NamedQuery(name = "AdmPage.countAntigo", query = "SELECT COUNT(c) FROM AdmPage c WHERE LOWER(c.url) <> ?1 AND LOWER(c.url) = ?2"),	
-	@NamedQuery(name = "AdmPage.findPerfisPorPage", query="SELECT distinct p FROM AdmPage pag inner join pag.admProfiles p where pag = ?1")
+	@NamedQuery(name = "AdmPage.findProfilesByPage", query="SELECT distinct p FROM AdmPage pag inner join pag.admProfiles p where pag = ?1")
 })
 public class AdmPage implements Serializable {
 	

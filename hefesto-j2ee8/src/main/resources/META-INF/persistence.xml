@@ -18,11 +18,34 @@
 		<class>br.com.hfs.admin.model.AdmUserProfile</class>
 		<class>br.com.hfs.admin.model.AdmUserProfilePK</class>
 
+		<shared-cache-mode>ALL</shared-cache-mode>
+
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
 			<property name="hibernate.max_fetch_depth" value="3" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />			
+			<property name="hibernate.archive.autodetection" value="class" />
 			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.jdbc.batch_size" value="20" />
+			<property name="hibernate.max_fetch_depth" value="0" />
+			<property name="hibernate.use_sql_comments" value="false" />
+			<property name="hibernate.transaction.flush_before_completion" value="true" />
+			<property name="hibernate.id.new_generator_mappings" value="false" />			
+			<property name="hibernate.generate_statistics" value="false"/>
+			<property name="hibernate.enable_lazy_load_no_trans" value="true" />
+			
+			<property name="hibernate.cache.use_query_cache" value="true" />
+			<property name="hibernate.cache.use_second_level_cache" value="true"/>
+			<property name="hibernate.cache.provider_class" value="net.sf.ehcache.hibernate.SingletonEhCacheProvider" />
+			<property name="net.sf.ehcache.configurationResourceName" value="/ehcache.xml" />
+			
+			<property name="hibernate.hikari.connectionTimeout" value="20000" />
+   			<property name="hibernate.hikari.minimumIdle" value="10" />
+   			<property name="hibernate.hikari.maximumPoolSize" value="20" />
+   			<property name="hibernate.hikari.idleTimeout" value="300000" />
+   			
+   			<property name="jboss.entity.manager.factory.jndi.name"	value="java:/hefestoEMFactory" />
 		</properties>
 
 	</persistence-unit>

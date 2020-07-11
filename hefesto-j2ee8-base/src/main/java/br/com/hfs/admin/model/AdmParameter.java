@@ -194,37 +194,32 @@ public class AdmParameter implements Serializable {
 	 *
 	 * @return o the parameter category
 	 */
-	public AdmParameterCategory getParameterCategory() {
+	public AdmParameterCategory getAdmParameterCategory() {
 		return this.admParameterCategory;
 	}
 
 	/**
 	 * Atribui o the parameter category.
 	 *
-	 * @param parameterCategory
+	 * @param admParameterCategory
 	 *            o novo the parameter category
 	 */
-	public void setParameterCategory(AdmParameterCategory parameterCategory) {
-		this.admParameterCategory = parameterCategory;
+	public void setAdmParameterCategory(AdmParameterCategory admParameterCategory) {
+		this.admParameterCategory = admParameterCategory;
 	}
 
-	/**
-	 * Pega o the id parameter category.
-	 *
-	 * @return o the id parameter category
-	 */
-	public Long getIdParameterCategory() {
+	public Long getIdAdmParameterCategory() {
 		return idAdmParameterCategory;
 	}
 
 	/**
 	 * Atribui o the id parameter category.
 	 *
-	 * @param idParameterCategory
+	 * @param idAdmParameterCategory
 	 *            o novo the id parameter category
 	 */
-	public void setIdParameterCategory(Long idParameterCategory) {
-		this.idAdmParameterCategory = idParameterCategory;
+	public void setIdAdmParameterCategory(Long idAdmParameterCategory) {
+		this.idAdmParameterCategory = idAdmParameterCategory;
 	}
 	
 	/* (non-Javadoc)

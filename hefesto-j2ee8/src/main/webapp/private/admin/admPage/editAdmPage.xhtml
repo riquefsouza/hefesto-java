@@ -20,9 +20,9 @@
 					
 						<div class="form-actions">
 							<p:commandButton value="Salvar" ajax="false" icon="ui-icon-circle-check"
-								action="#{admPaginaMB.salvar()}" id="btnSalvar"
+								action="#{admPageMB.salvar()}" id="btnSalvar"
 								styleClass="btn btn-success disableSubmit"
-								title="Salvar a admPagina" />
+								title="Salvar a admPage" />
 
 							<p:commandButton value="Limpar" icon="ui-icon-star" id="btnLimpar"
 								styleClass="btn btn-primary disableSubmit" type="reset"
@@ -30,7 +30,7 @@
 
 							<p:commandButton value="Cancelar" immediate="true" ajax="false" 
 							    icon="ui-icon-circle-close"
-								action="#{admPaginaMB.cancelarEdicao()}" id="btnCancelar"
+								action="#{admPageMB.cancelarEdicao()}" id="btnCancelar"
 								styleClass="btn  btn-primary disableSubmit"
 								title="Cancelar" />
 						</div>
@@ -39,7 +39,7 @@
 							<div class="col-md-8 form-group">
 								<p:outputLabel for="pagina" value="Página" />
 								<p:inputText id="pagina" label="Página" required="true"
-									value="#{admPaginaMB.bean.url}" maxlength="255">
+									value="#{admPageMB.bean.url}" maxlength="255">
 								</p:inputText>
 							</div>
 						</div>
@@ -47,7 +47,7 @@
 							<div class="col-md-8 form-group">
 								<p:outputLabel for="descricao" value="Descrição:" />
 								<p:inputText id="descricao" label="Descrição" required="true"
-									value="#{admPaginaMB.bean.descricao}" maxlength="255">
+									value="#{admPageMB.bean.descricao}" maxlength="255">
 								</p:inputText>
 							</div>
 						</div>						
@@ -55,7 +55,7 @@
 							<div class="col-md-5">
 								<p:outputLabel for="pickListPerfil" value="Perfil(s) da Página:" />
 								<p:pickList id="pickListPerfil" responsive="true"
-									value="#{admPaginaMB.dualListAdmPerfil}"
+									value="#{admPageMB.dualListAdmPerfil}"
 									converter="admPerfilConverter" var="item"
 									itemLabel="#{item.descricao}" itemValue="#{item}"
 									showSourceFilter="true" showTargetFilter="true"

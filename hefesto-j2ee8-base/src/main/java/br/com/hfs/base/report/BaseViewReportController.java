@@ -72,7 +72,7 @@ public abstract class BaseViewReportController extends BaseViewController implem
 		listTypeReport.add(gOutros);		
 	}
 	
-	public Map<String, Object> getParametros() {
+	public Map<String, Object> getParameters() {
 		Map<String, Object> params = new HashMap<String, Object>();
 
 		ServletContext sc = (ServletContext) context.getExternalContext().getContext();

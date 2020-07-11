@@ -26,7 +26,7 @@ public class AdmParameterDTO {
 		this.code = obj.getCode();
 		this.description = obj.getDescription();
 		this.value = obj.getValue();
-		this.admParameterCategory = new AdmParameterCategoryDTO(obj.getParameterCategory());
+		this.admParameterCategory = new AdmParameterCategoryDTO(obj.getAdmParameterCategory());
 	}
 
 	public static List<AdmParameterDTO> convert(List<AdmParameter> admParameters) {
