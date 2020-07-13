@@ -6,137 +6,80 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui" template="/layout/layout.xhtml">
 
+	<ui:define name="tituloPage"> - Manage Profile</ui:define>
+
 	<ui:define name="conteudo-maior">
-		<h:form id="editarAdmPerfil">
-			<fieldset id="fieldsetEditarAdmPerfil">
-				<div class="panel panel-default">
-					<div class="panel-heading" 
+		<h:form id="editAdmProfile">
+			<fieldset id="fieldsetEditAdmProfile">
+				<div class="card">
+					<div class="card-header" 
 						style="font-weight: bold;font-size: large;">
-						Administrar Perfil
+						Manage Profile
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 					
 						<div class="form-actions">
-							<p:commandButton value="Salvar" ajax="false" icon="ui-icon-circle-check"
-								action="#{admPerfilMB.salvar()}" id="btnSalvar"
+							<p:commandButton value="Save" ajax="false" icon="ui-icon-circle-check"
+								action="#{admProfileMB.save()}" id="btnSave"
 								styleClass="btn btn-success disableSubmit"
-								title="Salvar a admPerfil" />
+								title="Save a admProfile" />
 
-							<p:commandButton value="Limpar" icon="ui-icon-star" id="btnLimpar"
+							<p:commandButton value="Clean" icon="ui-icon-star" id="btnClean"
 								styleClass="btn btn-primary disableSubmit" type="reset"
-								title="Limpar Campos" />
+								title="Clean Fields" />
 
-							<p:commandButton value="Cancelar" immediate="true" ajax="false" 
+							<p:commandButton value="Cancel" immediate="true" ajax="false" 
 							    icon="ui-icon-circle-close"
-								action="#{admPerfilMB.cancelarEdicao()}" id="btnCancelar"
+								action="#{admProfileMB.cancelEdition()}" id="btnCancel"
 								styleClass="btn  btn-primary disableSubmit"
-								title="Cancelar" />
+								title="Cancel" />
 						</div>
 
 						<div class="row">
 							<div class="col-md-4 form-group">
-								<p:outputLabel for="descricao" value="Descrição:" />
-								<p:inputText id="descricao" label="Descrição" required="true"
-									value="#{admPerfilMB.bean.descricao}" maxlength="80">
+								<p:outputLabel for="description" value="Description:" />
+								<p:inputText id="description" label="Description" required="true"
+									value="#{admProfileMB.bean.description}" maxlength="80">
 								</p:inputText>
 							</div>
 							<div class="col-md-3 form-group">
 								<div class="row">
-									<p:outputLabel for="geral" value="Todos os Funcionários: " />
+									<p:outputLabel for="geral" value="All Users: " />
 									<p:selectBooleanCheckbox id="geral"
-										value="#{admPerfilMB.bean.geral}" />
+										value="#{admProfileMB.bean.general}" />
 								</div>
 								<div class="row">
-									<p:outputLabel for="admin" value="Administradores do Sistema: " />
+									<p:outputLabel for="admin" value="System Administrators: " />
 									<p:selectBooleanCheckbox id="admin"
-										value="#{admPerfilMB.bean.administrador}" />
+										value="#{admProfileMB.bean.administrator}" />
 								</div>
 							</div>
 						</div>					
 						
 						<p:tabView>
-							<p:tab title="Setores e Cargos">
-								<div class="row">
-									<div class="col-md-5">
-										<p:outputLabel for="intersecao" value="Somente Funcionários que estão no mesmo Setor e Cargo:" />
-										<p:selectBooleanCheckbox id="intersecao" value="#{admPerfilMB.bean.intersecao}" />
-									</div>	
-								</div>
-								<div class="row">
-									<div class="col-md-5">
-										<p:outputLabel for="pickListSetores" value="Setor(es) do Perfil" />
-										<p:pickList id="pickListSetores"
-											value="#{admPerfilMB.dualListAdmSetor}"
-											converter="admSetorConverter" var="item"
-											itemLabel="#{item.nomeSigla}" itemValue="#{item}"
-											showSourceFilter="true" showTargetFilter="true"
-											filterMatchMode="contains" styleClass="picklistMaior">
-											<f:facet name="sourceCaption">Disponíveis</f:facet>
-											<f:facet name="targetCaption">Associados ao Perfil</f:facet>											
-										</p:pickList>							    
-									</div>	
-									<div class="col-md-5">
-										<p:outputLabel for="pickListCargos" value="Cargo(s) do(s) Funcionário(s) do Perfil" />
-										<p:pickList id="pickListCargos"
-											value="#{admPerfilMB.dualListAdmCargo}"
-											converter="admCargoConverter" var="item"
-											itemLabel="#{item.nomeCargo}" itemValue="#{item}"
-											showSourceFilter="true" showTargetFilter="true"
-											filterMatchMode="contains" styleClass="picklistMaior">
-											<f:facet name="sourceCaption">Disponíveis</f:facet>
-											<f:facet name="targetCaption">Associados ao Perfil</f:facet>
-										</p:pickList>							    
-									</div>
-								</div>
-								
-							</p:tab>
-							<p:tab title="Funcionários">
-								<p:outputLabel for="pickListFuncionarios" value="Funcionário(s) do Perfil" />
-								<p:pickList id="pickListFuncionarios"
-									value="#{admPerfilMB.dualListAdmFuncionario}"
-									converter="admFuncionarioConverter" var="item"
+							<p:tab title="Users">
+								<p:outputLabel for="pickListUsers" value="Profile User(s)" />
+								<p:pickList id="pickListUsers"
+									value="#{admProfileMB.dualListAdmUser}"
+									converter="admUserConverter" var="item"
 									itemLabel="#{item.nomeSetorCargo}" itemValue="#{item}"
 									showSourceFilter="true" showTargetFilter="true"
 									filterMatchMode="contains" styleClass="picklistGigante">
-									<f:facet name="sourceCaption">Disponíveis</f:facet>
-									<f:facet name="targetCaption">Associados ao Perfil</f:facet>												
+									<f:facet name="sourceCaption">Available</f:facet>
+									<f:facet name="targetCaption">Associated with Profile</f:facet>												
 								</p:pickList>
 							</p:tab>
-							<p:tab title="Páginas">							
-								<p:outputLabel for="pickListPagina" value="Página(s) do Perfil:" />
-								<p:pickList id="pickListPagina"
-									value="#{admPerfilMB.dualListAdmPagina}"
-									converter="admPaginaConverter" var="item"
+							<p:tab title="Pages">							
+								<p:outputLabel for="pickListPage" value="Profile Page(s):" />
+								<p:pickList id="pickListPage"
+									value="#{admProfileMB.dualListAdmPage}"
+									converter="admPageConverter" var="item"
 									itemLabel="#{item.url}" itemValue="#{item}"
 									showSourceFilter="true" showTargetFilter="true"									
 									filterMatchMode="contains" styleClass="picklistGigante">
-									<f:facet name="sourceCaption">Disponíveis</f:facet>
-									<f:facet name="targetCaption">Autorizadas</f:facet>										
+									<f:facet name="sourceCaption">Available</f:facet>
+									<f:facet name="targetCaption">Authorized</f:facet>										
 								</p:pickList>							
-							</p:tab>
-							<p:tab title="Funcionários Excluídos do Perfil">
-								<div class="row">
-									<div class="col-md-4">
-										<p><strong>Todos os funcionários excluídos do perfil NÃO terão acesso a este perfil</strong></p>
-										<p><strong>mesmo sendo marcados como administradores,</strong></p>
-										<p><strong>mesmo que pertençam aos setores incluídos neste perfil,</strong></p>
-										<p><strong>possuam os cargos incluídos neste perfil</strong></p>
-										<p><strong>e/ou estejam incluídos na lista de funcionários deste perfil!</strong></p>
-									</div>	
-									<div class="col-md-6">
-										<p:outputLabel for="pickListExcluidosFuncionarios" value="Funcionário(s) Excluídos do Perfil" />
-										<p:pickList id="pickListExcluidosFuncionarios"
-											value="#{admPerfilMB.dualListExcluidoAdmFuncionario}"
-											converter="admFuncionarioConverter" var="item"
-											itemLabel="#{item.nomeSetorCargo}" itemValue="#{item}"
-											showSourceFilter="true" showTargetFilter="true"
-											filterMatchMode="contains" styleClass="picklistMaior">
-											<f:facet name="sourceCaption">Disponíveis</f:facet>
-											<f:facet name="targetCaption">Excluídos do Perfil</f:facet>												
-										</p:pickList>
-									</div>
-								</div>
-								
 							</p:tab>
 						</p:tabView>
 						

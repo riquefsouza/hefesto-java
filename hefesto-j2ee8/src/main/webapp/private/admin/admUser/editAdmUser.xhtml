@@ -6,40 +6,56 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui" template="/layout/layout.xhtml">
 
-	<ui:define name="tituloPagina"> - Configuration Parameter Category</ui:define>
+	<ui:define name="tituloPagina"> - Manage User</ui:define>
 
 	<ui:define name="conteudo-maior">
-		<h:form id="editAdmParameterCategory">
-			<fieldset id="fieldsetEditAdmParameterCategory">
+		<h:form id="editAdmUser">
+			<fieldset id="fieldsetEditAdmUser">
 				<div class="card">
 					<div class="card-header" 
 						style="font-weight: bold;font-size: large;">
-						Configuration Parameter Category
+						Manage User
 					</div>
 					<div class="card-body">
 					
 						<div class="form-actions">
 							<p:commandButton value="Save" ajax="false" icon="ui-icon-circle-check"
-								action="#{admParameterCategoryMB.save()}" id="btnSave"
+								action="#{admUserMB.save()}" id="btnSave"
 								styleClass="btn btn-success disableSubmit"
-								title="Save a admParameterCategory" />
+								title="Save admUser" />
 
 							<p:commandButton value="Clean" icon="ui-icon-star" id="btnClean"
 								styleClass="btn btn-primary disableSubmit" type="reset"
-								title="Clean Fields" />
+								title="Clear Fields" />
 
 							<p:commandButton value="Cancel" immediate="true" ajax="false" 
 							    icon="ui-icon-circle-close"
-								action="#{admParameterCategoryMB.cancelEdition()}" id="btnCancel"
+								action="#{admUserMB.cancelEdition()}" id="btnCancel"
 								styleClass="btn  btn-primary disableSubmit"
 								title="Cancel" />
 						</div>
 
 						<div class="row">
 							<div class="col-md-4 form-group">
-								<p:outputLabel for="description" value="Description:" />
-								<p:inputText id="description" label="Description" required="true"
-									value="#{admParameterCategoryMB.bean.description}" maxlength="80">
+								<p:outputLabel for="login" value="Login:" />
+								<p:inputText id="login" label="Login" required="true"
+									value="#{admUserMB.bean.login}" maxlength="80">
+								</p:inputText>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<p:outputLabel for="name" value="Name:" />
+								<p:inputText id="name" label="Name" required="true"
+									value="#{admUserMB.bean.name}" maxlength="80">
+								</p:inputText>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<p:outputLabel for="email" value="E-mail:" />
+								<p:inputText id="email" label="E-mail" required="true"
+									value="#{admUserMB.bean.email}" maxlength="80">
 								</p:inputText>
 							</div>
 						</div>

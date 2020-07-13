@@ -7,59 +7,59 @@
 	xmlns:p="http://primefaces.org/ui" template="/layout/layout.xhtml">
 
 	<ui:define name="conteudo-maior">
-		<h:form id="listarAdmPerfil">
-			<fieldset id="fieldsetListarAdmPerfil">
-				<div class="panel panel-default">
-					<div class="panel-heading" 
+		<h:form id="listAdmProfile">
+			<fieldset id="fieldsetListAdmProfile">
+				<div class="card">
+					<div class="card-header" 
 						style="font-weight: bold;font-size: large;">
-						Administrar Perfil
+						Manage Profile
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						<div class="row">				
 							<div class="col-md-3 form-group">		
-								<p:outputLabel for="cmbTipoRelatorio" value="Escolha o tipo de relatório:" />																
-							    <p:selectOneMenu id="cmbTipoRelatorio" value="#{admPerfilRelMB.tipoRelatorio}">
-							    	<f:selectItems value="#{admPerfilRelMB.listaTipoRelatorio}" />			    	  	
+								<p:outputLabel for="cmbTypeReport" value="Choose the type of report:" />																
+							    <p:selectOneMenu id="cmbTypeReport" value="#{admProfileRelMB.typeReport}">
+							    	<f:selectItems value="#{admProfileRelMB.listTypeReport}" />			    	  	
 								</p:selectOneMenu>											
 							</div>					
 							
 							<div class="col-md-2 form-group">
-								<p:outputLabel for="forcaDownload" value="Forçar Download:" />
-								<p:selectBooleanCheckbox id="forcaDownload" value="#{admPerfilRelMB.forcarDownload}" />
+								<p:outputLabel for="forceDownload" value="Force Download:" />
+								<p:selectBooleanCheckbox id="forceDownload" value="#{admProfileRelMB.forceDownload}" />
 							</div>
 						</div>					
 					</div>
 				</div>
 
 				<div class="form-actions">
-					<p:commandButton value="Exportar" title="Exportar" onclick="form.target='_blank'" 
-						styleClass="btn btn-primary disableSubmit" id="btnExportar"
-						icon="ui-icon-print" action="#{admPerfilRelMB.exportar()}"
+					<p:commandButton value="Export" title="Export" onclick="form.target='_blank'" 
+						styleClass="btn btn-primary disableSubmit" id="btnExport"
+						icon="ui-icon-print" action="#{admProfileRelMB.export()}"
 						ajax="false" />
 						
 					<p:spacer width="10" height="10" />	
 				
-					<p:commandButton value="Incluir" ajax="false" icon="ui-icon-circle-plus"
-						action="#{admPerfilMB.onIncluir()}" id="btnIncluir"
+					<p:commandButton value="Insert" ajax="false" icon="ui-icon-circle-plus"
+						action="#{admProfileMB.onInsert()}" id="btnInsert"
 						styleClass="btn btn-success disableSubmit"
-						title="Incluir uma nova admPerfil" />
+						title="Insert admProfile" />
 
-					<p:commandButton id="btnEditar" value="Editar" ajax="false" icon="ui-icon-circle-triangle-n"
+					<p:commandButton id="btnEdit" value="Edit" ajax="false" icon="ui-icon-circle-triangle-n"
 						styleClass="btn btn-warning disableSubmit"
-						action="#{admPerfilMB.onEditar(admPerfilMB.bean)}"
-						title="Editar admPerfil">
+						action="#{admProfileMB.onEdit(admProfileMB.bean)}"
+						title="Edit admProfile">
 					</p:commandButton>
 
-					<p:commandButton id="btnExcluir" value="Excluir" icon="ui-icon-circle-minus"
+					<p:commandButton id="btnDelete" value="Delete" icon="ui-icon-circle-minus"
 						styleClass="btn btn-danger disableSubmit"
-						action="#{admPerfilMB.prepararParaExcluir(admPerfilMB.bean)}"
-						title="Excluir admPerfil" update="@form">
+						action="#{admProfileMB.prepareToDelete(admProfileMB.bean)}"
+						title="Delete admProfile" update="@form">
 					</p:commandButton>
 
-					<p:commandButton value="Voltar" immediate="true" ajax="false" 
+					<p:commandButton value="Return" immediate="true" ajax="false" 
 						icon="ui-icon-circle-arrow-w"
-						action="#{admPerfilMB.cancelar()}" id="btnVoltar"
-						styleClass="btn btn-primary disableSubmit" title="Voltar" />
+						action="#{admProfileMB.cancel()}" id="btnReturn"
+						styleClass="btn btn-primary disableSubmit" title="Return" />
 				</div>
 
 				<p:confirmDialog message="#{messages['texto_confirmacao_exclusao']}"
@@ -68,42 +68,43 @@
 					<p:commandButton value="Sim" update="@form"
 						oncomplete="PF('confirmation').hide();PF('tableWidgetVar').filter();"
 						styleClass="btn btn-success disableSubmit"
-						action="#{admPerfilMB.excluir(admPerfilMB.bean)}" />
+						action="#{admProfileMB.delete(admProfileMB.bean)}" />
 					<p:spacer width="10" height="10" />
 					<p:commandButton value="Não" onclick="PF('confirmation').hide()"
 						styleClass="btn btn-danger disableSubmit" type="button" />
 				</p:confirmDialog>
 
 				<p:dataTable var="item" rowKey="#{item.id}" id="table" widgetVar="tableWidgetVar"
-					selection="#{admPerfilMB.bean}" selectionMode="single"
-					value="#{admPerfilMB.listaBean}" rows="#{aplicacaoConfig.dtLinhas}" rowsPerPageTemplate="#{aplicacaoConfig.dtModeloLinhasPorPagina}"
-					paginator="true" paginatorPosition="#{aplicacaoConfig.dtPosicaoPaginador}"					
-					paginatorTemplate="#{aplicacaoConfig.dtModeloPaginador}"
- 					currentPageReportTemplate="#{aplicacaoConfig.dtModeloRelatorioPagina}"					
-					emptyMessage="#{messages['main.nenhum.registro']}">
+					selection="#{admProfileMB.bean}" selectionMode="single"
+					value="#{admProfileMB.listBean}" rows="#{applicationConfig.dtLines}" 
+					rowsPerPageTemplate="#{applicationConfig.dtLinesPerPageTemplate}"
+					paginator="true" paginatorPosition="#{applicationConfig.dtPagerPosition}"					
+					paginatorTemplate="#{applicationConfig.dtPagerModel}"
+ 					currentPageReportTemplate="#{applicationConfig.dtPagerReportModel}"					
+					emptyMessage="#{messages['main.none.register']}">
 
 					<f:facet name="{Exporters}">
 						<h:commandLink style="float: left;">
 							<p:graphicImage value="/resources/img/excel.png" width="24" />
 							<p:dataExporter type="xls" encoding="iso-8859-1" target="table" options="#{exporterUtil.excelOpt}" 
-								 fileName="admPerfils" />
+								 fileName="admProfiles" />
 						</h:commandLink>
 	
 						<h:commandLink style="float: left;">
 							<p:graphicImage value="/resources/img/pdf.png" width="24" />
 							<p:dataExporter type="pdf" encoding="iso-8859-1" target="table" options="#{exporterUtil.pdfOpt}" 
-								preProcessor="#{admPerfilMB.preProcessPDF}" fileName="admPerfils" />
+								preProcessor="#{admProfileMB.preProcessPDF}" fileName="admProfiles" />
 						</h:commandLink>	
 					</f:facet>
 
-					<p:column headerText="Descrição" sortBy="#{item.descricao}"
+					<p:column headerText="Description" sortBy="#{item.description}"
 						style="width:25%"					
-						filterBy="#{item.descricao}" filterMatchMode="contains">
-						<h:outputText value="#{item.descricao}" />
+						filterBy="#{item.description}" filterMatchMode="contains">
+						<h:outputText value="#{item.description}" />
 					</p:column>
-					<p:column headerText="Funcionários" sortBy="#{item.admFuncionarios}"
-						filterBy="#{item.admFuncionarios}" filterMatchMode="contains">
-						<h:outputText value="#{item.admFuncionarios}" />
+					<p:column headerText="Users" sortBy="#{item.admUsers}"
+						filterBy="#{item.admUsers}" filterMatchMode="contains">
+						<h:outputText value="#{item.admUsers}" />
 					</p:column>
 				</p:dataTable>
 			</fieldset>

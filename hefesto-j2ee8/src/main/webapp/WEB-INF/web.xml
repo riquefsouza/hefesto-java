@@ -4,7 +4,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
 
-	<display-name>Imovel - Gestão de Imóveis</display-name>
+	<display-name>Hefesto</display-name>
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
@@ -48,7 +48,6 @@
 	<filter-mapping>
 		<filter-name>AuthenticationFilter</filter-name>
 		<url-pattern>/private/*</url-pattern>
-		<url-pattern>/help.xhtml</url-pattern>
 	</filter-mapping>
 	<filter>
 		<filter-name>NavegationFilter</filter-name>
@@ -96,7 +95,7 @@
 		<location>/sessionExpired.xhtml?nocid=true</location>
 	</error-page>
 	<error-page>
-		<exception-type>org.jboss.weld.context.NonexistentConversationException</exception-type>
+		<exception-type>javax.enterprise.context.NonexistentConversationException</exception-type>
 		<location>/sessionExpired.xhtml?nocid=true</location>
 	</error-page>
 	<error-page>

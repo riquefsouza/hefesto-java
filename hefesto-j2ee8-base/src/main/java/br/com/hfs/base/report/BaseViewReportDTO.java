@@ -13,7 +13,7 @@ import br.com.hfs.util.interceptors.HandlingExpectedErrors;
 @Named
 @ViewScoped
 @HandlingExpectedErrors
-public class BaseViewReportDTO<T, I extends Serializable, B extends IBaseCrud<T, I>> extends BaseViewReportController
+public abstract class BaseViewReportDTO<T, I extends Serializable, B extends IBaseCrud<T, I>> extends BaseViewReportController
 		implements Serializable {
 
 	/** The Constant serialVersionUID. */

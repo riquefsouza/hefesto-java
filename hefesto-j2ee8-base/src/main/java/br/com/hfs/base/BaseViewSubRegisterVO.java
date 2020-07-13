@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,7 +17,7 @@ import com.lowagie.text.DocumentException;
 import br.com.hfs.util.interceptors.HandlingExpectedErrors;
 
 @Named
-@ViewScoped
+//@ViewScoped
 @HandlingExpectedErrors
 public abstract class BaseViewSubRegisterVO<P, T>
 		extends BaseViewController implements Serializable {

@@ -6,46 +6,46 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui" template="/layout/layout.xhtml">
 
-	<ui:define name="tituloPagina"> - Parâmetros de Configuração do Sistema</ui:define>
+	<ui:define name="tituloPagina"> - Configuration Parameter</ui:define>
 
 	<ui:define name="conteudo-maior">
-		<h:form id="editarAdmParametro">
-			<fieldset id="fieldsetEditarAdmParametro">
-				<div class="panel panel-default">
-					<div class="panel-heading" 
+		<h:form id="editAdmParameter">
+			<fieldset id="fieldsetEditAdmParameter">
+				<div class="card">
+					<div class="card-header" 
 						style="font-weight: bold;font-size: large;">
-						Parâmetros de Configuração do Sistema
+						Configuration Parameter
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 					
 						<div class="form-actions">
-							<p:commandButton value="Salvar" ajax="false" icon="ui-icon-circle-check"
-								action="#{admParametroMB.salvar()}" id="btnSalvar"
+							<p:commandButton value="Save" ajax="false" icon="ui-icon-circle-check"
+								action="#{admParameterMB.save()}" id="btnSave"
 								styleClass="btn btn-success disableSubmit"
-								title="Salvar a admParametro" />
+								title="Save a admParameter" />
 
-							<p:commandButton value="Limpar" icon="ui-icon-star" id="btnLimpar"
+							<p:commandButton value="Clean" icon="ui-icon-star" id="btnClean"
 								styleClass="btn btn-primary disableSubmit" type="reset"
-								title="Limpar Campos" />
+								title="Clean Fields" />
 
-							<p:commandButton value="Cancelar" immediate="true" ajax="false" 
+							<p:commandButton value="Cancel" immediate="true" ajax="false" 
 							    icon="ui-icon-circle-close"
-								action="#{admParametroMB.cancelarEdicao()}" id="btnCancelar"
+								action="#{admParameterMB.cancelEdition()}" id="btnCancel"
 								styleClass="btn  btn-primary disableSubmit"
-								title="Cancelar" />
+								title="Cancel" />
 						</div>
 
 						<div class="row">
 							<div class="col-md-4 form-group">
-								<p:outputLabel for="categoria" value="Categoria do Parâmetro:" />
-								<p:selectOneMenu label="Categoria do Parâmetro" id="categoria"
+								<p:outputLabel for="categoria" value="Parameter Category:" />
+								<p:selectOneMenu label="Parameter Category" id="categoria"
 									required="true" styleClass="form-control"
-									converter="admParametroCategoriaConverter"
-									value="#{admParametroMB.bean.admParametroCategoria}"
+									converter="admParameterCategoryConverter"
+									value="#{admParameterMB.bean.admParameterCategory}"
 									filter="true" filterMatchMode="contains">
 									<f:selectItems
-										value="#{admParametroMB.listaAdmParametroCategoria}"
-										var="item" itemValue="#{item}" itemLabel="#{item.descricao}" />
+										value="#{admParameterMB.listaAdmParameterCategory}"
+										var="item" itemValue="#{item}" itemLabel="#{item.description}" />
 								</p:selectOneMenu>
 							</div>
 						</div>
@@ -53,27 +53,27 @@
 							<div class="col-md-4 form-group">
 								<p:outputLabel for="codigo" value="Código:" />
 								<p:inputText id="codigo" styleClass="form-control"
-									value="#{admParametroMB.bean.codigo}"
+									value="#{admParameterMB.bean.code}"
 									label="Código do Parâmetro" required="true">
 								</p:inputText>
 							</div>
 						</div>	
 						<div class="row">	
 							<div class="col-md-8 form-group">
-								<p:outputLabel for="valor" value="Valor:" />
-								<p:inputTextarea id="valor" label="Valor" rows="6"
-									 value="#{admParametroMB.bean.valor}" maxlength="3000" 
-									counter="displayValor" counterTemplate="{0} caracteres restantes." 
+								<p:outputLabel for="value" value="Value:" />
+								<p:inputTextarea id="value" label="Value" rows="6"
+									 value="#{admParameterMB.bean.value}" maxlength="3000" 
+									counter="displayValue" counterTemplate="{0} characters remaining." 
 									autoResize="false" required="true" />
-						    	<h:outputText id="displayValor" />								
+						    	<h:outputText id="displayValue" />								
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12 form-group">
-								<p:outputLabel for="descricao" value="Descrição:" />
-								<p:inputText id="descricao" required="true" label="Descrição"
+								<p:outputLabel for="description" value="Description:" />
+								<p:inputText id="description" required="true" label="Description"
 									styleClass="form-control"
-									value="#{admParametroMB.bean.descricao}">
+									value="#{admParameterMB.bean.description}">
 									<f:validateLength maximum="255" />
 								</p:inputText>
 							</div>

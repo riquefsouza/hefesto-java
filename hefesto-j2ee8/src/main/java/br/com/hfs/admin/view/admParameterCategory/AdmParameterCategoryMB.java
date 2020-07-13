@@ -25,7 +25,7 @@ public class AdmParameterCategoryMB
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	public AdmParameterCategoryMB(String pageList, String pageEdit){
+	public AdmParameterCategoryMB(){
 		super("ListAdmParameterCategory", "EditAdmParameterCategory");	
 	}
 	

@@ -14,7 +14,7 @@ import br.com.hfs.util.interceptors.HandlingExpectedErrors;
 @Named
 @ViewScoped
 @HandlingExpectedErrors
-public class BaseViewReport<T, I extends Serializable, B extends BaseService<T, I, ? extends BaseRepository<T, I>>>
+public abstract class BaseViewReport<T, I extends Serializable, B extends BaseService<T, I, ? extends BaseRepository<T, I>>>
 		extends BaseViewReportController implements Serializable {
 
 	/** The Constant serialVersionUID. */

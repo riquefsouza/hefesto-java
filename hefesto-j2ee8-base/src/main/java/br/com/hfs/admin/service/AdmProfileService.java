@@ -106,7 +106,7 @@ public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileR
 		return admMenuService.toListMenuVO(listaMenuParent);		
 	}
 	
-	public List<AdmUser> findUsersPorProfile(AdmProfile profile){
+	public List<AdmUser> findUsersByProfile(AdmProfile profile){
 		List<AdmUser> lista = new ArrayList<AdmUser>();
 		List<Long> listaCod = repository.findUsersByProfile(profile);
 		
@@ -143,4 +143,7 @@ public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileR
 		return admMenuService.toListMenuVO(listaAdminMenuParent);
 	}
 
+	public List<AdmPage> findPagesByProfile(AdmProfile profile){
+		return repository.findPagesByProfile(profile);
+	}
 }

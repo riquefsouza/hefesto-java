@@ -35,28 +35,19 @@ public class AdmMenuMB
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** The adm pagina Service. */
 	@Inject
 	private AdmPageService admPaginaService;
 
-	/** The menu root. */
 	private TreeNode menuRoot;
 
-	/** The menu selecionado. */
 	private TreeNode menuSelected;
 
-	/** The novo item menu. */
-	private AdmMenu novoItemMenu;
+	private AdmMenu newItemMenu;
 	
-	/** The lista adm pagina. */
 	private List<AdmPage> listAdmPage;
 
-	/** The lista menus pai. */
 	private List<AdmMenu> listMenusParent;
 	
-	/**
-	 * Instantiates a new adm menu MB.
-	 */
 	public AdmMenuMB() {
 		super("ListAdmMenu");
 	}
@@ -68,13 +59,13 @@ public class AdmMenuMB
 	 */
 	@PostConstruct
 	public void init() {
-		atualizarArvoreMenus();
-		initListaPagina();
-		initListaMenusPai();
-		this.novoItemMenu = new AdmMenu();
+		updateTreeMenus();
+		initListPage();
+		initListMenusParent();
+		this.newItemMenu = new AdmMenu();
 	}
 
-	public void excluir(AdmMenu entity) {
+	public void delete(AdmMenu entity) {
 		// super.excluir(entity);
 		if (this.menuSelected == null) {
 			generateErrorMessage("Please select a menu item to continue.");
@@ -82,7 +73,7 @@ public class AdmMenuMB
 		}
 		AdmMenu m = (AdmMenu) this.menuSelected.getData();
 		this.getService().delete(m);
-		atualizarArvoreMenus();
+		updateTreeMenus();
 	}
 
 	/*
@@ -178,40 +169,18 @@ public class AdmMenuMB
 		this.menuSelected = menuSelected;
 	}
 
-	/**
-	 * Pega o the novo item menu.
-	 *
-	 * @return o the novo item menu
-	 */
-	public AdmMenu getNovoItemMenu() {
-		return novoItemMenu;
+	public AdmMenu getNewItemMenu() {
+		return newItemMenu;
 	}
 
-	/**
-	 * Atribui o the novo item menu.
-	 *
-	 * @param novoItemMenu
-	 *            o novo the novo item menu
-	 */
-	public void setNovoItemMenu(AdmMenu novoItemMenu) {
-		this.novoItemMenu = novoItemMenu;
+	public void setNewItemMenu(AdmMenu newItemMenu) {
+		this.newItemMenu = newItemMenu;
 	}
 
-	/**
-	 * Pega o the lista adm pagina.
-	 *
-	 * @return o the lista adm pagina
-	 */
 	public List<AdmPage> getListAdmPage() {
 		return listAdmPage;
 	}
 
-	/**
-	 * Atribui o the lista adm pagina.
-	 *
-	 * @param listaAdmPage
-	 *            o novo the lista adm pagina
-	 */
 	public void setListAdmPage(List<AdmPage> listAdmPage) {
 		this.listAdmPage = listAdmPage;
 	}
@@ -225,20 +194,11 @@ public class AdmMenuMB
 		return listMenusParent;
 	}
 
-	/**
-	 * Atribui o the lista menus pai.
-	 *
-	 * @param listMenusParent
-	 *            o novo the lista menus pai
-	 */
 	public void setListMenusParent(List<AdmMenu> listMenusParent) {
 		this.listMenusParent = listMenusParent;
 	}
 
-	/**
-	 * Inicia o lista menus pai.
-	 */
-	private void initListaMenusPai() {
+	private void initListMenusParent() {
 		this.listMenusParent = new ArrayList<AdmMenu>();
 		List<AdmMenu> registrosCadastrados = this.getService().findAll();
 		for (AdmMenu menu : registrosCadastrados) {
@@ -248,17 +208,11 @@ public class AdmMenuMB
 		}
 	}
 
-	/**
-	 * Inicia o lista pagina.
-	 */
-	private void initListaPagina() {
+	private void initListPage() {
 		this.listAdmPage = admPaginaService.findAll();
 	}
 
-	/**
-	 * Atualizar arvore menus.
-	 */
-	public void atualizarArvoreMenus() {
+	public void updateTreeMenus() {
 		List<AdmMenu> listaMenus = this.getService().getRepository().findMenuRoot();
 
 		AdmMenu menu = new AdmMenu();
@@ -266,26 +220,17 @@ public class AdmMenuMB
 		this.menuRoot = new DefaultTreeNode(menu, null);
 		for (AdmMenu itemMenu : listaMenus) {
 			TreeNode m = new DefaultTreeNode(itemMenu, this.menuRoot);
-			montaSubMenu(itemMenu, m);
+			mountSubMenu(itemMenu, m);
 		}
 	}
 
-	/**
-	 * Monta sub menu.
-	 *
-	 * @param menu
-	 *            the menu
-	 * @param pMenu
-	 *            the menu
-	 * @return the list
-	 */
-	private List<TreeNode> montaSubMenu(AdmMenu menu, TreeNode pMenu) {
+	private List<TreeNode> mountSubMenu(AdmMenu menu, TreeNode pMenu) {
 		List<TreeNode> lstSubMenu = new ArrayList<TreeNode>();
 		if (menu.getAdmSubMenus() != null) {
 			for (AdmMenu subMenu : menu.getAdmSubMenus()) {
 				if (subMenu.isSubMenu()) {
 					TreeNode m = new DefaultTreeNode(subMenu, pMenu);
-					montaSubMenu(subMenu, m);
+					mountSubMenu(subMenu, m);
 				} else {
 					new DefaultTreeNode(subMenu, pMenu);
 				}
@@ -294,12 +239,9 @@ public class AdmMenuMB
 		return lstSubMenu;
 	}
 
-	/**
-	 * Sugerir nome item menu.
-	 */
-	public void sugerirNomeItemMenu() {
-		if ((getNovoItemMenu().getAdmPage() != null) && (getNovoItemMenu().getDescription() == null)) {
-			getNovoItemMenu().setDescription(getNovoItemMenu().getAdmPage().getDescription());
+	public void suggestNameItemMenu() {
+		if ((getNewItemMenu().getAdmPage() != null) && (getNewItemMenu().getDescription() == null)) {
+			getNewItemMenu().setDescription(getNewItemMenu().getAdmPage().getDescription());
 		}
 	}
 
@@ -336,65 +278,41 @@ public class AdmMenuMB
 		}
 		this.getService().saveOrUpdateDragReordering(menuMover.getAdmMenuParent(), menuPai, menuMover);
 
-		atualizarArvoreMenus();
+		updateTreeMenus();
 	}
 
-	/**
-	 * Gets the nome recursivo.
-	 *
-	 * @param m
-	 *            the m
-	 * @return the nome recursivo
-	 */
-	public static String getNomeRecursivo(AdmMenu m) {
+	public static String getRecursiveName(AdmMenu m) {
 		return m.getAdmPage() == null ? m.getDescription()
-				: m.getAdmMenuParent() != null ? getNomeRecursivo(m.getAdmMenuParent()) + " -> " + m.getDescription() : "";
+				: m.getAdmMenuParent() != null ? getRecursiveName(m.getAdmMenuParent()) + " -> " + m.getDescription() : "";
 	}
 
-	/**
-	 * Listener menu selecionado.
-	 *
-	 * @param event
-	 *            the event
-	 */
 	public void listenerMenuSelected(NodeSelectEvent event) {
 		this.menuSelected = event.getTreeNode();
 	}
 	
-	/**
-	 * On incluir item menu.
-	 */
-	public void onIncluirItemMenu() {
+	public void onInsertItemMenu() {
 		this.menuSelected = null;
-		this.novoItemMenu = new AdmMenu();
-		atualizarArvoreMenus();
-		initListaMenusPai();
+		this.newItemMenu = new AdmMenu();
+		updateTreeMenus();
+		initListMenusParent();
 	}
 
-	/**
-	 * On editar item menu.
-	 */
-	public void onEditarItemMenu() {
-		atualizarArvoreMenus();
-		initListaMenusPai();
+	public void onEditItemMenu() {
+		updateTreeMenus();
+		initListMenusParent();
 		if (this.menuSelected == null) {
 			generateErrorMessage("Please select a menu item to proceed with this action.");
 			context.validationFailed();
 		} else {
-			this.novoItemMenu = ((AdmMenu) this.getService()
+			this.newItemMenu = ((AdmMenu) this.getService()
 					.findById(((AdmMenu) this.menuSelected.getData()).getId().longValue()).get());
 		}
 	}
 
-	/**
-	 * Salvar item menu.
-	 *
-	 * @return the string
-	 */
-	public String salvarItemMenu() {
+	public String saveItemMenu() {
 		//int ordem;
 		
-		if ((this.novoItemMenu.getDescription() == null) || (this.novoItemMenu.getDescription().trim().isEmpty())) {
+		if ((this.newItemMenu.getDescription() == null) || (this.newItemMenu.getDescription().trim().isEmpty())) {
 			generateErrorMessage("Error. Name of the Menu Item. Required field.");
 			context.validationFailed();
 		} else {
@@ -411,14 +329,14 @@ public class AdmMenuMB
 //					ordem = 1;
 //				
 //				this.novoItemMenu.setOrdem(ordem);
-				if (this.novoItemMenu.getAdmPage()!=null){
-					this.novoItemMenu.setIdPage(this.novoItemMenu.getAdmPage().getId());
+				if (this.newItemMenu.getAdmPage()!=null){
+					this.newItemMenu.setIdPage(this.newItemMenu.getAdmPage().getId());
 				} else {
-					this.novoItemMenu.setIdPage(null);
+					this.newItemMenu.setIdPage(null);
 				}
-				this.getService().saveOrUpdate(this.novoItemMenu);
-				this.novoItemMenu = new AdmMenu();
-				atualizarArvoreMenus();
+				this.getService().saveOrUpdate(this.newItemMenu);
+				this.newItemMenu = new AdmMenu();
+				updateTreeMenus();
 			} catch (Exception e) {
 				generateErrorMessage(e, ERROR_SAVE);
 				return null;
@@ -427,10 +345,7 @@ public class AdmMenuMB
 		return getPageList();
 	}
 
-	/**
-	 * Excluir item menu.
-	 */
-	public void excluirItemMenu() {
+	public void deleteItemMenu() {
 		if (this.menuSelected == null) {
 			generateErrorMessage("Please select a menu item to proceed with this action.");
 			return;
@@ -438,7 +353,7 @@ public class AdmMenuMB
 		try {
 			AdmMenu m = (AdmMenu) this.menuSelected.getData();
 			this.getService().delete(m);
-			atualizarArvoreMenus();
+			updateTreeMenus();
 		} catch (Exception e) {
 			generateErrorMessage(e, ERROR_DELETE);
 			return;

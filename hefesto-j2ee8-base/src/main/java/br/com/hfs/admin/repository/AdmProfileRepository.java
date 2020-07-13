@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import br.com.hfs.admin.model.AdmMenu;
+import br.com.hfs.admin.model.AdmPage;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.base.BaseRepository;
 
@@ -94,4 +95,9 @@ public class AdmProfileRepository extends BaseRepository<AdmProfile, Long> {
 		return query.getResultList();
 	}
 
+	public List<AdmPage> findPagesByProfile(AdmProfile profile){
+		TypedQuery<AdmPage> query = em.createNamedQuery("AdmProfile.findPagesByProfile", AdmPage.class);
+		query.setParameter(1, profile);
+		return query.getResultList();
+	}
 }

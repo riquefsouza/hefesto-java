@@ -4,10 +4,6 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	version="2.2">
 
-	<factory>
-		<exception-handler-factory>
-			br.com.hfs.util.exceptions.SystemExceptionHandlerFactory</exception-handler-factory>
-	</factory>
 
 	<navigation-rule>
 		<from-view-id>/login.xhtml</from-view-id>

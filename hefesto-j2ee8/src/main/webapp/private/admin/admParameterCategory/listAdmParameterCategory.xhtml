@@ -19,49 +19,49 @@
 					<div class="card-body">				
 						<div class="row">					
 							<div class="col-md-3 form-group">		
-								<p:outputLabel for="cmbTipoRelatorio" value="Choose the type of report:" />																
-							    <p:selectOneMenu id="cmbTipoRelatorio" value="#{admParameterCategoryRelMB.tipoRelatorio}">
-							    	<f:selectItems value="#{admParameterCategoryRelMB.listaTipoRelatorio}" />			    	  	
+								<p:outputLabel for="cmbTypeReport" value="Choose the type of report:" />																
+							    <p:selectOneMenu id="cmbTypeReport" value="#{admParameterCategoryRelMB.typeReport}">
+							    	<f:selectItems value="#{admParameterCategoryRelMB.listTypeReport}" />			    	  	
 								</p:selectOneMenu>											
 							</div>					
 							
 							<div class="col-md-2 form-group">
-								<p:outputLabel for="forcaDownload" value="Force Download:" />
-								<p:selectBooleanCheckbox id="forcaDownload" value="#{admParameterCategoryRelMB.forcarDownload}" />
+								<p:outputLabel for="forceDownload" value="Force Download:" />
+								<p:selectBooleanCheckbox id="forceDownload" value="#{admParameterCategoryRelMB.forceDownload}" />
 							</div>
 						</div>
 					</div>					
 				</div>
 
 				<div class="form-actions">
-					<p:commandButton value="Exportar" title="Exportar" onclick="form.target='_blank'" 
-						styleClass="btn btn-primary disableSubmit" id="btnExportar"
-						icon="ui-icon-print" action="#{admParameterCategoryRelMB.exportar()}"
+					<p:commandButton value="Export" title="Export" onclick="form.target='_blank'" 
+						styleClass="btn btn-primary disableSubmit" id="btnExport"
+						icon="ui-icon-print" action="#{admParameterCategoryRelMB.export()}"
 						ajax="false" />
 						
 					<p:spacer width="10" height="10" />	
 				
-					<p:commandButton value="Incluir" ajax="false" icon="ui-icon-circle-plus"
-						action="#{admParameterCategoryMB.onInsert()}" id="btnIncluir"
+					<p:commandButton value="Insert" ajax="false" icon="ui-icon-circle-plus"
+						action="#{admParameterCategoryMB.onInsert()}" id="btnInsert"
 						styleClass="btn btn-success disableSubmit"
-						title="Incluir uma nova admParameterCategory" />
+						title="Insert uma nova admParameterCategory" />
 
-					<p:commandButton id="btnEditar" value="Editar" ajax="false" icon="ui-icon-circle-triangle-n"
+					<p:commandButton id="btnEdit" value="Edit" ajax="false" icon="ui-icon-circle-triangle-n"
 						styleClass="btn btn-warning disableSubmit"
 						action="#{admParameterCategoryMB.onEdit(admParameterCategoryMB.bean)}"
-						title="Editar admParameterCategory">
+						title="Edit admParameterCategory">
 					</p:commandButton>
 
-					<p:commandButton id="btnExcluir" value="Excluir" icon="ui-icon-circle-minus"
+					<p:commandButton id="btnDelete" value="Delete" icon="ui-icon-circle-minus"
 						styleClass="btn btn-danger disableSubmit"
 						action="#{admParameterCategoryMB.prepareToDelete(admParameterCategoryMB.bean)}"
-						title="Excluir admParameterCategory" update="@form">
+						title="Delete admParameterCategory" update="@form">
 					</p:commandButton>
 
-					<p:commandButton value="Voltar" immediate="true" ajax="false" 
+					<p:commandButton value="Return" immediate="true" ajax="false" 
 						icon="ui-icon-circle-arrow-w"
-						action="#{admParameterCategoryMB.cancel()}" id="btnVoltar"
-						styleClass="btn btn-primary disableSubmit" title="Voltar" />
+						action="#{admParameterCategoryMB.cancel()}" id="btnReturn"
+						styleClass="btn btn-primary disableSubmit" title="Return" />
 				</div>
 
 				<p:confirmDialog message="#{messages['texto_confirmacao_exclusao']}"
@@ -79,11 +79,12 @@
 				<p:dataTable var="item" rowKey="#{item.id}" id="table" reflow="true"
 					selection="#{admParameterCategoryMB.bean}" selectionMode="single"
 					value="#{admParameterCategoryMB.listBean}" paginator="true"
-					rows="#{aplicacaoConfig.dtLinhas}" rowsPerPageTemplate="#{aplicacaoConfig.dtModeloLinhasPorPagina}"	
-					paginatorPosition="#{aplicacaoConfig.dtPosicaoPaginador}"					
-					paginatorTemplate="#{aplicacaoConfig.dtModeloPaginador}"
- 					currentPageReportTemplate="#{aplicacaoConfig.dtModeloRelatorioPagina}"					
-					emptyMessage="#{messages['main.nenhum.registro']}">
+					rows="#{applicationConfig.dtLines}" 
+					rowsPerPageTemplate="#{applicationConfig.dtLinesPerPageTemplate}"	
+					paginatorPosition="#{applicationConfig.dtPagerPosition}"					
+					paginatorTemplate="#{applicationConfig.dtPagerModel}"
+ 					currentPageReportTemplate="#{applicationConfig.dtPagerReportModel}"					
+					emptyMessage="#{messages['main.none.register']}">
 
 					<f:facet name="{Exporters}">
 						<h:commandLink style="float: left;">
@@ -100,9 +101,9 @@
 						</h:commandLink>	
 					</f:facet>
 
-					<p:column headerText="Descrição" sortBy="#{item.descricao}"
-						filterBy="#{item.descricao}" filterMatchMode="contains">
-						<h:outputText value="#{item.descricao}" />
+					<p:column headerText="Description" sortBy="#{item.description}"
+						filterBy="#{item.description}" filterMatchMode="contains">
+						<h:outputText value="#{item.description}" />
 					</p:column>
 				</p:dataTable>
 			</fieldset>

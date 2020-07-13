@@ -6,63 +6,63 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:p="http://primefaces.org/ui" template="/layout/layout.xhtml">
 
-	<ui:define name="tituloPagina"> - Administrar Menu</ui:define>
+	<ui:define name="tituloPagina"> - Manage Menu</ui:define>
 
 	<ui:define name="conteudo-maior">
 		<h:form id="listarAdmMenu">
 			<fieldset id="fieldsetListarAdmMenu">
-				<div class="panel panel-default">
-					<div class="panel-heading" 
+				<div class="card">
+					<div class="card-header" 
 						style="font-weight: bold;font-size: large;">
-						Administrar Menu
+						Manage Menu
 					</div>
-					<div class="panel-body">
+					<div class="card-body">
 						<div class="row">
 							<div class="col-md-3 form-group">		
-								<p:outputLabel for="cmbTipoRelatorio" value="Escolha o tipo de relatório:" />																
-							    <p:selectOneMenu id="cmbTipoRelatorio" value="#{admMenuRelMB.tipoRelatorio}">
-							    	<f:selectItems value="#{admMenuRelMB.listaTipoRelatorio}" />			    	  	
+								<p:outputLabel for="cmbTypeReport" value="Choose the type of report:" />																
+							    <p:selectOneMenu id="cmbTypeReport" value="#{admMenuRelMB.typeReport}">
+							    	<f:selectItems value="#{admMenuRelMB.listTypeReport}" />			    	  	
 								</p:selectOneMenu>											
 							</div>					
 							
 							<div class="col-md-2 form-group">
-								<p:outputLabel for="forcaDownload" value="Forçar Download:" />
-								<p:selectBooleanCheckbox id="forcaDownload" value="#{admMenuRelMB.forcarDownload}" />
+								<p:outputLabel for="forceDownload" value="Force Download:" />
+								<p:selectBooleanCheckbox id="forceDownload" value="#{admMenuRelMB.forceDownload}" />
 							</div>
 						</div>					
 					</div>					
 				</div>
 
 				<div class="form-actions">
-					<p:commandButton value="Exportar" title="Exportar" onclick="form.target='_blank'" 
-						styleClass="btn btn-primary disableSubmit" id="btnExportar"
-						icon="ui-icon-print" action="#{admMenuRelMB.exportar()}"
+					<p:commandButton value="Export" title="Export" onclick="form.target='_blank'" 
+						styleClass="btn btn-primary disableSubmit" id="btnExport"
+						icon="ui-icon-print" action="#{admMenuRelMB.export()}"
 						ajax="false" />
 
 					<p:spacer width="10" height="10" />			
 				
-					<p:commandButton id="btnNovoMenu" value="Incluir"
+					<p:commandButton id="btnNovoMenu" value="Insert"
 						styleClass="btn btn-success disable-submit" icon="ui-icon-circle-plus"
-						action="#{admMenuMB.onIncluirItemMenu()}"
+						action="#{admMenuMB.onInsertItemMenu()}"
 						update="itemMenuForm" oncomplete="PF('itemMenuDlg').show()"
-						title="Incluir um novo item de menu" />
+						title="Insert um novo item de menu" />
 
-					<p:commandButton id="btnEditarMenu" value="Editar"
+					<p:commandButton id="btnEditMenu" value="Edit"
 						styleClass="btn btn-warning disable-submit" icon="ui-icon-circle-triangle-n"
-						action="#{admMenuMB.onEditarItemMenu()}"
+						action="#{admMenuMB.onEditItemMenu()}"
 						update="itemMenuForm"
 						oncomplete="if (!args.validationFailed) { PF('itemMenuDlg').show(); }"
-						title="Editar item de menu" />
+						title="Edit item de menu" />
 
-					<p:commandButton id="btnExcluirMenu" value="Excluir"
+					<p:commandButton id="btnDeleteMenu" value="Delete"
 						styleClass="btn btn-danger disable-submit" icon="ui-icon-circle-minus"
-						action="#{admMenuMB.excluirItemMenu()}" ajax="false"
-						title="Editar item de menu" />
+						action="#{admMenuMB.deleteItemMenu()}" ajax="false"
+						title="Edit item de menu" />
 				
-					<p:commandButton value="Voltar" immediate="true" ajax="false" 
+					<p:commandButton value="Return" immediate="true" ajax="false" 
 						icon="ui-icon-circle-arrow-w"
-						action="#{admMenuMB.cancelar()}" id="btnVoltar"
-						styleClass="btn btn-primary disableSubmit" title="Voltar" />
+						action="#{admMenuMB.cancel()}" id="btnReturn"
+						styleClass="btn btn-primary disableSubmit" title="Return" />
 				</div>
 
 				<p:confirmDialog message="#{messages['texto_confirmacao_exclusao']}"
@@ -71,33 +71,33 @@
 					<p:commandButton value="Sim" update="@form"
 						oncomplete="PF('confirmation').hide()"
 						styleClass="btn btn-success disableSubmit"
-						action="#{admMenuMB.excluir(admMenuMB.menu)}" />
+						action="#{admMenuMB.delete(admMenuMB.menu)}" />
 					<p:spacer width="10" height="10" />
 					<p:commandButton value="Não" onclick="PF('confirmation').hide()"
 						styleClass="btn btn-danger disableSubmit" type="button" />
 				</p:confirmDialog>
 
-				<h4><h:outputText value="Menu Superior do Sistema:"/></h4>
+				<h4><h:outputText value="Top System Menu:"/></h4>
 				<p:tree value="#{admMenuMB.menuRoot}" var="m" id="arvoreMenu"
 					draggable="true" droppable="true" dropRestrict="sibling" 
 					selectionMode="single"
 					style="width:100%" dynamic="true" cache="false"
-					nodeSelectListener="#{admMenuMB.listenerMenuSelecionado}"
-					selection="#{admMenuMB.menuSelecionado}">
+					nodeSelectListener="#{admMenuMB.listenerMenuSelected}"
+					selection="#{admMenuMB.menuSelected}">
 					<p:treeNode>
-						<h:outputText value="#{m.descricao}" />
+						<h:outputText value="#{m.description}" />
 					</p:treeNode>
 					<p:ajax event="dragdrop" listener="#{admMenuMB.onDragDrop}" />
 				</p:tree>
 
 
 				<p:dialog widgetVar="itemMenuDlg" resizable="false" modal="true"
-					header="Incluir Novo Item de Menu" showEffect="fade"
+					header="Insert Novo Item de Menu" showEffect="fade"
 					hideEffect="fade" width="50%" id="itemMenuForm">
 					<div style="width: 99%">
 						<div class="col-md-12 form-actions">
 							<p:commandButton id="btnSalvar" value="Salvar"
-								action="#{admMenuMB.salvarItemMenu()}"
+								action="#{admMenuMB.saveItemMenu()}"
 								styleClass="btn btn-primary disableSubmit btn-primary disableSubmit"
 								ajax="false" title="Salvar o item de menu" />
 
@@ -112,26 +112,26 @@
 
 						<div class="row">
 							<div class="col-md-12 form-group">
-								<p:outputLabel for="pagina" value="Página:" />
+								<p:outputLabel for="pagina" value="Page:" />
 								<p:selectOneMenu
-									value="#{admMenuMB.novoItemMenu.admPagina}"
+									value="#{admMenuMB.newItemMenu.admPage}"
 									converter="admPaginaConverter"
 									id="pagina" label="Página" filter="true" filterMatchMode="contains">
 									<f:selectItem value="#{null}" itemLabel="" />
-									<f:selectItems value="#{admMenuMB.listaAdmPagina}"
-										var="item" itemValue="#{item}" itemLabel="#{item.descricao}" />
-									<p:ajax listener="#{admMenuMB.sugerirNomeItemMenu()}"
-										update="descricao" />
+									<f:selectItems value="#{admMenuMB.listAdmPage}"
+										var="item" itemValue="#{item}" itemLabel="#{item.description}" />
+									<p:ajax listener="#{admMenuMB.suggestNameItemMenu()}"
+										update="description" />
 								</p:selectOneMenu>
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="col-md-12 form-group">
-								<p:outputLabel for="descricao" value="Nome do Item de Menu:" />
-								<p:inputText id="descricao" label="Nome do Item de Menu"
+								<p:outputLabel for="description" value="Nome do Item de Menu:" />
+								<p:inputText id="description" label="Nome do Item de Menu"
 									styleClass="form-control"
-									value="#{admMenuMB.novoItemMenu.descricao}">
+									value="#{admMenuMB.newItemMenu.description}">
 									<f:validateLength maximum="250" />
 								</p:inputText>
 							</div>
@@ -141,11 +141,11 @@
 							<div class="col-md-12 form-group">
 								<p:outputLabel for="menuPai" value="Menu Pai:" />
 								<p:selectOneMenu
-									value="#{admMenuMB.novoItemMenu.admMenuPai}"
+									value="#{admMenuMB.newItemMenu.admMenuParent}"
 									converter="admMenuConverter"
 									id="menuPai" label="Menu Pai">
 									<f:selectItem value="#{null}" itemLabel="" />
-									<f:selectItems value="#{admMenuMB.listaMenusPai}"
+									<f:selectItems value="#{admMenuMB.listMenusParent}"
 										var="item" itemValue="#{item}"
 										itemLabel="#{AdmMenuMB.getNomeRecursivo(item)}" />
 								</p:selectOneMenu>
@@ -155,7 +155,7 @@
 						<div class="row">
 							<div class="col-md-12 form-group">
 								<p:outputLabel for="ordem" value="Ordem:" />
-								<p:spinner id="ordem" value="#{admMenuMB.novoItemMenu.ordem}" />
+								<p:spinner id="ordem" value="#{admMenuMB.newItemMenu.order}" />
 							</div>
 						</div>
 						

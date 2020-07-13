@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -13,7 +12,7 @@ import org.primefaces.PrimeFaces;
 import br.com.hfs.util.interceptors.HandlingExpectedErrors;
 
 @Named
-@ViewScoped
+//@ViewScoped
 @HandlingExpectedErrors
 public class BaseViewRegister<T, I extends Serializable, 
 		B extends BaseService<T, I, ? extends BaseRepository<T, I>>>

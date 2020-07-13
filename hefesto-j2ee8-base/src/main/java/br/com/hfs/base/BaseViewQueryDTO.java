@@ -3,14 +3,13 @@ package br.com.hfs.base;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.hfs.util.interceptors.HandlingExpectedErrors;
 
 @Named
-@ViewScoped
+//@ViewScoped
 @HandlingExpectedErrors
 public abstract class BaseViewQueryDTO<T, I extends Serializable, B extends IBaseCrud<T, I>> 
 	extends BaseViewController implements Serializable {

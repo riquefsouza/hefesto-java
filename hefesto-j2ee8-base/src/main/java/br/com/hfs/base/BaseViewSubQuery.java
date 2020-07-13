@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,7 +18,7 @@ import com.lowagie.text.DocumentException;
 import br.com.hfs.util.interceptors.HandlingExpectedErrors;
 
 @Named
-@ViewScoped
+//@ViewScoped
 @HandlingExpectedErrors
 public abstract class BaseViewSubQuery<P, T, I extends Serializable, 
 		B extends BaseService<T, I, ? extends BaseRepository<T, I>>>
