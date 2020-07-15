@@ -5,27 +5,27 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<h:form rendered="#{identity.loggedIn}">
-	    <ul class="nav navbar-nav">
-	      <ui:repeat var="itemMenu" value="#{systemView.listMenus}">
-	      <li class="dropdown">
-	      	<a class="dropdown-toggle" data-toggle="dropdown" href="#">#{itemMenu.descricao}<span class="caret"></span></a>
-	        <ul class="dropdown-menu">
-			  <ui:repeat var="submenu" value="#{itemMenu.subMenus}">	        
-	          <li><a href="#{request.contextPath}/private/#{submenu.url}?id=#{submenu.id}">#{submenu.descricao}</a></li>
-	          </ui:repeat>
-	        </ul>
-	      </li>
+	    <ul class="navbar-nav mr-auto">
+			<ui:repeat var="itemMenu" value="#{systemMB.listMenus}">
+		      <li class="nav-item dropdown">
+		      	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">#{itemMenu.description}</a>
+		        <div class="dropdown-menu">
+				  <ui:repeat var="submenu" value="#{itemMenu.subMenus}">	        
+		          	<a class="dropdown-item" href="#{request.contextPath}/private/#{submenu.url}?id=#{submenu.id}">#{submenu.description}</a>
+		          </ui:repeat>
+		        </div>
+		      </li>
 	      </ui:repeat>
 
-	      <ui:repeat var="itemMenu" value="#{systemView.listAdminMenus}">
-	      <li class="dropdown" style="#{applicationConfig.showAdministrativeMenu ? '' : 'display:none;'}">
-	      	<a class="dropdown-toggle" data-toggle="dropdown" href="#">#{itemMenu.descricao}<span class="caret"></span></a>
-	        <ul class="dropdown-menu">
-			  <ui:repeat var="submenu" value="#{itemMenu.subMenus}">	        
-	          <li><a href="#{request.contextPath}/private/#{submenu.url}?id=#{submenu.id}">#{submenu.descricao}</a></li>
-	          </ui:repeat>
-	        </ul>
-	      </li>
+	      <ui:repeat var="itemMenu" value="#{systemMB.listAdminMenus}">
+		      <li class="nav-item dropdown" style="#{applicationConfig.showAdministrativeMenu ? '' : 'display:none;'}">
+		      	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">#{itemMenu.description}</a>
+		        <div class="dropdown-menu">
+				  <ui:repeat var="submenu" value="#{itemMenu.subMenus}">	        
+		          	<a class="dropdown-item" href="#{request.contextPath}/private/#{submenu.url}?id=#{submenu.id}">#{submenu.description}</a>
+		          </ui:repeat>
+		        </div>
+		      </li>
 	      </ui:repeat>
 	      
 	    </ul>

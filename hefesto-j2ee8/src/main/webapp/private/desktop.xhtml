@@ -11,7 +11,7 @@
 	<ui:define name="conteudo">
 		#{messages['main.app.welcome']}
 		
-		<c:if test="#{systemView.authenticatedUser.modeTest}">
+		<c:if test="#{systemMB.authenticatedUser.modeTest}">
 			
 			<br></br>
 			<br></br>
@@ -22,10 +22,10 @@
 			
 			<p:panelGrid columns="2">
 				<h:outputText value="Login:" />
-				<h:outputText value="#{systemView.authenticatedUser.modeTestLogin}" />
+				<h:outputText value="#{systemMB.authenticatedUser.modeTestLogin}" />
 
 				<h:outputText value="Login Virtual:" />
-				<h:outputText value="#{systemView.authenticatedUser.modeTestLoginVirtual}" />				
+				<h:outputText value="#{systemMB.authenticatedUser.modeTestLoginVirtual}" />				
 			</p:panelGrid>
 		</c:if>
 

@@ -8,8 +8,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.picketlink.idm.credential.util.BCrypt;
+
 import br.com.hfs.ApplicationConfig;
 import br.com.hfs.ApplicationUtil;
+import br.com.hfs.admin.model.AdmUser;
 import br.com.hfs.admin.service.AdmUserService;
 import br.com.hfs.admin.service.TestModeService;
 import br.com.hfs.admin.vo.AuthenticatedUserVO;
@@ -25,7 +28,7 @@ import br.com.hfs.util.ldap.LdapUtil;
 @Named
 @ViewScoped
 @HandlingExpectedErrors
-public class SystemView extends BaseViewController implements Serializable {
+public class SystemMB extends BaseViewController implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -48,16 +51,16 @@ public class SystemView extends BaseViewController implements Serializable {
 	@Inject
 	private TestModeService testModeService;
 	
-	public void seguraSessao() {
+	public void secureSession() {
 		this.log.warn(this.authenticatedUser.getDisplayName() + " remains connected in the session");
 	}
 	
-	public boolean authenticate(String login, String senha) throws Exception {
+	public boolean authenticate(String login, String password) throws Exception {
 		UserVO userVO;
 		Optional<UserVO> func;
 		
 		if (testModeService.habilitarSenhaTeste()){
-			func = testModeService.autenticarViaSenhaTeste(login, senha);
+			func = testModeService.autenticarViaSenhaTeste(login, password);
 			
 			if (func.isPresent()){
 				//String ldapDN = "CN="+login+",OU="+func.get().getSetor()+",OU=TRT,DC=trtrio,DC=gov,DC=br";
@@ -69,11 +72,21 @@ public class SystemView extends BaseViewController implements Serializable {
 			}
 		}
 		
-		if (autenticarViaLDAP(login, senha)) {
+		/*
+		if (autenticarViaLDAP(login, password)) {
 			userVO = new UserVO(ldapUtil.getMatricula(), ldapUtil.getEmail(), 
 					ldapUtil.getLdapDN(), ldapUtil.getLogin(), ldapUtil.getNome());
 			setProperties(login, userVO);
 			return true;
+		}
+		*/
+		String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+		if (BCrypt.checkpw(password, hashed)) {
+			Optional<AdmUser> user = admUserService.findByLogin(login);
+			if (user.isPresent()) {
+				setProperties(login, user.get().toUserVO());
+				return true;
+			}
 		}
 		
 		return false;

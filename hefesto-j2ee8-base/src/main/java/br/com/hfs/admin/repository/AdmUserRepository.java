@@ -1,6 +1,7 @@
 package br.com.hfs.admin.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.TypedQuery;
 
@@ -23,6 +24,15 @@ public class AdmUserRepository extends BaseRepository<AdmUser, Long> {
 		return listByRange("ADM_USER", "USU_SEQ", startInterval, endInterval);
 	}
 
+	public Optional<AdmUser> findByLogin(String login) {
+		try {
+			TypedQuery<AdmUser> query = em.createNamedQuery("AdmUser.findByLogin", AdmUser.class);
+			query.setParameter(1, login);
+			return Optional.of(query.getSingleResult());
+		} catch (Exception e) {
+			return Optional.empty();
+		}		
+	}
 	
 	public List<AdmUser> findByLikeEmail(String email){
 		TypedQuery<AdmUser> query = em.createNamedQuery("AdmUser.findByLikeEmail", AdmUser.class);

@@ -39,7 +39,7 @@ public class HfsAuthenticator extends BaseAuthenticator implements Authenticator
 	private ApplicationUtil applicationUtil;
 	
 	@Inject
-	private SystemView systemView;
+	private SystemMB systemMB;
 	
 	@Inject
 	protected transient Logger log;
@@ -75,7 +75,7 @@ public class HfsAuthenticator extends BaseAuthenticator implements Authenticator
 		String usuario = this.credentials.getUserId();
 		String senha = this.credentials.getPassword();
 		try {
-			boolean autenticacao = systemView.authenticate(usuario, senha);
+			boolean autenticacao = systemMB.authenticate(usuario, senha);
 			//boolean autenticacao = true;
 			if (autenticacao) {
 				setStatus(Authenticator.AuthenticationStatus.SUCCESS);

@@ -7,7 +7,7 @@
 
 <ui:composition>
 	<h:form prependId="false">
-		<p:dialog id="timeoutSession" header="Aviso de tempo de sessão."
+		<p:dialog id="timeoutSession" header="Session time notice."
 			widgetVar="timeoutDialog" showEffect="fade" hideEffect="fade"
 			modal="true" width="400" height="140" closable="false"
 			draggable="false" resizable="false" appendToBody="true"
@@ -15,23 +15,23 @@
 
 			<p:panel>
 				<span class="ui-icon ui-icon-alert" style="display: inline-block;" />
-           Sua sessão irá expirar em 
+           Your session will expire on
            <span id="dialog-countdown" style="font-weight: bold"></span>
-           segundos.
+           seconds.
         </p:panel>
 			<div align="center">
 				<br />
-				<p:commandButton value="Continuar conectado"
+				<p:commandButton value="Stay connected"
 					styleClass="btn btn-primary"
 					oncomplete="stopCount();" />
-				<p:commandButton value="Sair" styleClass="btn" action="#{autenticador.logOut()}"
+				<p:commandButton value="Sair" styleClass="btn" action="#{hfsAuthenticator.logOut()}"
 					oncomplete="PF('timeoutDialog').hide();" />
 			</div>
 		</p:dialog>
 
 		<p:remoteCommand name="keepAlive"
 			oncomplete="tempoTotalSessao = maxTempoTotalSessao;"
-			actionListener="#{sistemaMB.seguraSessao()}" />
+			actionListener="#{systemMB.secureSession()}" />
 	</h:form>
 
 	<script type="text/javascript">
@@ -43,7 +43,7 @@
       var countTimer;
       var processTimer;
       var timer_is_on = 0;
-      var redirectPage = "#{request.contextPath}/sessaoExpirada.xhtml";
+      var redirectPage = "#{request.contextPath}/sessionExpired.xhtml";
 	  
       var countDownDiv = "dialog-countdown";
       var txtCountDown = null;

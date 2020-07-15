@@ -28,8 +28,7 @@ import br.com.hfs.admin.vo.UserVO;
 
 @NamedQueries({
 	@NamedQuery(name = "AdmUser.findByLogin", query = "SELECT DISTINCT a FROM AdmUser a WHERE a.login=?1"),
-	@NamedQuery(name = "AdmUser.findByLikeEmail", query = "SELECT DISTINCT a FROM AdmUser a WHERE a.email LIKE ?1"),
-	@NamedQuery(name = "AdmUser.login", query = "SELECT a FROM AdmUser a WHERE a.login=?1 AND a.password=?2")
+	@NamedQuery(name = "AdmUser.findByLikeEmail", query = "SELECT DISTINCT a FROM AdmUser a WHERE a.email LIKE ?1")
 })
 @NamedNativeQueries({
 	@NamedNativeQuery(name = "AdmUser.findIPByOracle", query = "SELECT SYS_CONTEXT('USERENV', 'IP_ADDRESS', 15) FROM DUAL"),
@@ -85,8 +84,8 @@ public class AdmUser implements Serializable {
 
 	/** The password. */
 	//@JsonIgnore
-	@NotEmpty
-	@Size(min=4, max=128)
+	//@NotEmpty
+	//@Size(min=4, max=128)
 	@Column(name = "USU_PASSWORD", nullable = false, length = 128)
 	private String password;
     

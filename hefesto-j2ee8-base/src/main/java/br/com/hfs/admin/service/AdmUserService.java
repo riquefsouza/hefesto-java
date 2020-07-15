@@ -6,6 +6,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,6 +47,10 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 			lista.add(vo);
 		}
 		return lista;
+	}
+	
+	public Optional<AdmUser> findByLogin(String login) {
+		return repository.findByLogin(login);
 	}
 
 	public List<UserVO> findByLikeEmail(String email){
@@ -160,8 +165,9 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 	
 	@Transactional
 	public AdmUser getUser(Long id, String login, String name, String email, String ldapDN, boolean auditar) throws TransactionException {
-		AdmUser user = null; //this.load(AdmUserPK);
-		if (user == null) {
+		AdmUser user;
+		Optional<AdmUser> ouser = this.findById(id);
+		if (ouser.isEmpty()) {
 			user = new AdmUser();
 			user.setId(null);
 			user.setLogin(login);
@@ -173,6 +179,8 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 			if (auditar) {
 				this.insert(user);
 			}
+		} else {
+			user = ouser.get();
 		}
 		
 		if (auditar) {

@@ -8,9 +8,6 @@
 
 <ui:composition template="/layout/layout.xhtml">
 
-	<f:view transient="true">
-	</f:view>
-
 	<ui:define name="meta-tags">
 		<meta http-equiv="refresh" content="5" />
 	</ui:define>
@@ -35,7 +32,7 @@
 									<h:panelGroup>
 										<label for="username">User:</label>
 										<div class="input-group">
-											<img src="#{request.contextPath}/static/bootstrap-icons/person-fill.svg" 
+											<img src="#{request.contextPath}/resources/bootstrap-icons/person-fill.svg" 
 											alt="" width="32" height="32" title="person-fill"/>									
 											<h:inputText id="username" value="#{loginCredentials.userId}"
 												styleClass="form-control" label="User" />
@@ -46,7 +43,7 @@
 								<div class="form-group">
 									<label for="password">Password:</label>
 									<div class="input-group">
-										<img src="#{request.contextPath}/static/bootstrap-icons/lock-fill.svg" 
+										<img src="#{request.contextPath}/resources/bootstrap-icons/lock-fill.svg" 
 										alt="" width="32" height="32" title="lock-fill"/>	
 										<h:inputSecret id="password" value="#{loginCredentials.password}"
 											styleClass="form-control" label="Password" autocomplete="off" />

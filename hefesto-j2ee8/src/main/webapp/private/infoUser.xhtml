@@ -9,16 +9,16 @@
 			 modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="infoUsuarioDetalhe">
 				<p:panelGrid  columns="2" >
 					<h:outputText value="Nome:" />
-					<h:outputText value="#{systemView.authenticatedUser.user.name}" />
+					<h:outputText value="#{systemMB.authenticatedUser.user.name}" />
 
 					<h:outputText value="IP:" />
-					<h:outputText value="#{systemView.authenticatedUser.user.ip}" />
+					<h:outputText value="#{systemMB.authenticatedUser.user.ip}" />
 				
 					<h:outputText value="Login:" />
-					<h:outputText value="#{systemView.authenticatedUser.user.login}" />
+					<h:outputText value="#{systemMB.authenticatedUser.user.login}" />
 
 					<h:outputText value="E-mail:" />
-					<h:outputText value="#{systemView.authenticatedUser.user.email}" />					
+					<h:outputText value="#{systemMB.authenticatedUser.user.email}" />					
 				</p:panelGrid>
 		    </p:dialog>	
 	</h:form>

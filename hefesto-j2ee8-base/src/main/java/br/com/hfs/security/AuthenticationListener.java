@@ -17,7 +17,7 @@ public class AuthenticationListener {
 	 */
 	public void handleLoggedIn(@Observes LoggedInEvent event) {
 		//this.viewNavigationHandler.navigateTo(loggedInAccessDecisionVoter.getDeniedPage());
-		Faces.redirect("/private/desktop.xhtml");
+		Faces.redirect(Faces.getRequestBaseURL() + "private/desktop.xhtml");
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class AuthenticationListener {
 	 */
 	public void handleFailed(@Observes LoginFailedEvent event) {
 		//this.viewNavigationHandler.navigateTo(Pages.Login.class);
-		Faces.redirect("login.xhtml");
+		Faces.redirect(Faces.getRequestBaseURL() + "login.xhtml");
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class AuthenticationListener {
 	 */
 	public void handleLogout(@Observes PostLoggedOutEvent event) {
 		//this.viewNavigationHandler.navigateTo(Pages.Login.class);
-		Faces.redirect("login.xhtml");
+		Faces.redirect(Faces.getRequestBaseURL() + "login.xhtml");
 	}
 	
 }

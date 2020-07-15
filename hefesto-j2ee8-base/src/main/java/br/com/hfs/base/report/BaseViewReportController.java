@@ -78,7 +78,7 @@ public abstract class BaseViewReportController extends BaseViewController implem
 		ServletContext sc = (ServletContext) context.getExternalContext().getContext();
 		String caminho = sc.getRealPath(File.separator);
 
-		params.put("IMAGEM", caminho + "/static/img/logo.png");
+		params.put("IMAGEM", caminho + "/resources/img/logo.png");
 		return params;
 	}
 
