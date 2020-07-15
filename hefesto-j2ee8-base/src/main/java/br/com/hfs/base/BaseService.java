@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import br.com.hfs.ApplicationUtil;
 import br.com.hfs.util.exceptions.TransactionException;
 
 public abstract class BaseService<T, I extends Serializable, C extends BaseRepository<T, I>>
@@ -25,8 +26,8 @@ public abstract class BaseService<T, I extends Serializable, C extends BaseRepos
 	@Inject
 	protected C repository;
 
-	//@Inject
-	//protected AplicacaoUtil aplicacaoUtil;
+	@Inject
+	protected ApplicationUtil applicationUtil;
 
 	@Override
 	public Optional<T> findById(I id) {

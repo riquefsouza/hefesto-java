@@ -3,6 +3,7 @@ package br.com.hfs.admin.view.admParameterCategory;
 import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -26,19 +27,27 @@ public class AdmParameterCategoryMB
 	private static final long serialVersionUID = 1L;
 
 	public AdmParameterCategoryMB(){
-		super("ListAdmParameterCategory", "EditAdmParameterCategory");	
+		super("admin/admParameterCategory/listAdmParameterCategory", "admin/admParameterCategory/editAdmParameterCategory");
 	}
 	
-	@Override
+	@PostConstruct
 	public void init() {
 		updateDataTableList();
+		beanInSession();
 	}
 
 	@Override
 	public String onInsert() {
+	
 		return super.onInsert(new AdmParameterCategory());
 	}
 
+	@Override
+	public String onEdit(AdmParameterCategory entity) {
+		
+		return super.onEdit(entity);
+	}
+	
 	@Override
 	public String save() {
 		return super.save(getEntity().getId(), getEntity().getDescription());

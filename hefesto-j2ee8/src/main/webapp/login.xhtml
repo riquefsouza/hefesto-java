@@ -23,19 +23,20 @@
 
 		<div class="container-fluid" style="margin: 0 auto; width:400px; position: float;">
 			<div id="tela-login">
-				<div class="card" id="tela-login">
-					<div class="card-header" style="font-weight: normal;">Authenticate</div>
-					<div class="card-body">			
-						<p:fragment autoUpdate="true">
+				<div class="panel panel-default" id="tela-login">
+					<div class="panel-heading" style="font-weight: normal;">Authenticate</div>
+					<div class="panel-body">			
+						<p:fragment>
+							<p:autoUpdate />
+							
 							<h:form id="formAutenticacao" role="form">
 								<div class="form-group">
 									<h:panelGroup>
 										<label for="username">User:</label>
 										<div class="input-group">
-											<img src="#{request.contextPath}/resources/bootstrap-icons/person-fill.svg" 
-											alt="" width="32" height="32" title="person-fill"/>									
+											<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 											<h:inputText id="username" value="#{loginCredentials.userId}"
-												styleClass="form-control" label="User" />
+												styleClass="form-control" label="Usuário" />
 											<p:watermark for="username" value="Enter your username" />
 										</div>
 									</h:panelGroup>
@@ -43,10 +44,9 @@
 								<div class="form-group">
 									<label for="password">Password:</label>
 									<div class="input-group">
-										<img src="#{request.contextPath}/resources/bootstrap-icons/lock-fill.svg" 
-										alt="" width="32" height="32" title="lock-fill"/>	
+										<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 										<h:inputSecret id="password" value="#{loginCredentials.password}"
-											styleClass="form-control" label="Password" autocomplete="off" />
+											styleClass="form-control" label="Senha" autocomplete="off" />
 										<p:watermark for="password" value="Inform your password" />
 									</div>
 								</div>

@@ -55,8 +55,8 @@ public class BaseViewRegister<T, I extends Serializable,
 		this.saveMode = false;
 		this.viewMode = false;
 		
-		this.pageList = pageList + ".xhtml?faces-redirect=true";
-		this.pageEdit = pageEdit + ".xhtml?faces-redirect=true";
+		this.pageList = "/private/" + pageList + ".xhtml?faces-redirect=true";
+		this.pageEdit = "/private/" + pageEdit + ".xhtml?faces-redirect=true";
 			
 		this.showBtnInsert = true;
 		this.showBtnDelete = true;
@@ -69,6 +69,14 @@ public class BaseViewRegister<T, I extends Serializable,
 		this.listEntity = service.findAll();
 	}
 
+	@SuppressWarnings("unchecked")
+	protected void beanInSession() {
+		T bean = (T) getSession().getAttribute("bean");
+		if (bean!=null) {
+			setEntity(bean);
+		}
+	}
+	
 	public String getPageList() {
 		return pageList;
 	}
@@ -80,6 +88,8 @@ public class BaseViewRegister<T, I extends Serializable,
 	protected String onInsert(T entity) {
 		this.insertMode = true;
 		this.viewMode = false;
+		
+		getSession().removeAttribute("bean");
 		
 		setEntity(entity);
 
@@ -94,6 +104,9 @@ public class BaseViewRegister<T, I extends Serializable,
 			generateErrorMessage(SELECT_RECORD);
 			return "";
 		}
+		
+		getSession().setAttribute("bean", entity);
+		
 		setEntity(entity);
 		return getPageEdit();
 	}
