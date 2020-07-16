@@ -26,7 +26,7 @@
 			<property name="hibernate.hbm2ddl.auto" value="update" />			
 			<property name="hibernate.archive.autodetection" value="class" />
 			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
 			<property name="hibernate.jdbc.batch_size" value="20" />
 			<property name="hibernate.max_fetch_depth" value="0" />
 			<property name="hibernate.use_sql_comments" value="false" />

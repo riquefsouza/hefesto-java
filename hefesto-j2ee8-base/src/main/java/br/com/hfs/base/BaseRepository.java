@@ -117,17 +117,21 @@ public abstract class BaseRepository<T, I extends Serializable> implements IBase
 
 	@Override
 	public String getFieldById(String field, I id) {
-		TypedQuery<T> q = em.createQuery("SELECT x." + field + " FROM " + clazz.getName() + " x WHERE x.id = ?1", clazz);
-		q.setParameter(1, id);
-		
-		return (String) q.getSingleResult();
+		try {
+			TypedQuery<String> q = em.createQuery("SELECT x." + field + " FROM " + clazz.getName() + " x WHERE x.id = ?1", String.class);
+			q.setParameter(1, id);
+			
+			return (String) q.getSingleResult();
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 	@Override
 	public boolean thereIsFieldNew(String field, String isNew) {
-		TypedQuery<T> q = em.createQuery("SELECT COUNT(x) FROM " + clazz.getName() + " x WHERE LOWER(x." + field + ") = ?1", clazz);
+		TypedQuery<Long> q = em.createQuery("SELECT COUNT(x) FROM " + clazz.getName() + " x WHERE LOWER(x." + field + ") = ?1", Long.class);
 		q.setParameter(1, isNew.toLowerCase());
-		Long existe = (Long) q.getSingleResult();
+		Long existe = q.getSingleResult();
 		return (existe > 0);
 	}
 
@@ -135,10 +139,10 @@ public abstract class BaseRepository<T, I extends Serializable> implements IBase
 	public boolean thereIsFieldOld(String field, I id, String isNew) {
 		String old = getFieldById(field, id);
 		
-		TypedQuery<T> q = em.createQuery("SELECT COUNT(x) FROM " + clazz.getName() + " x WHERE LOWER(x." + field + ") <> ?1 AND LOWER(x." + field + ") = ?2", clazz);
+		TypedQuery<Long> q = em.createQuery("SELECT COUNT(x) FROM " + clazz.getName() + " x WHERE LOWER(x." + field + ") <> ?1 AND LOWER(x." + field + ") = ?2", Long.class);
 		q.setParameter(1, old.toLowerCase());
 		q.setParameter(2, isNew.toLowerCase());
-		Long existe = (Long) q.getSingleResult();
+		Long existe = q.getSingleResult();
 		return (existe > 0);
 	}
 	
