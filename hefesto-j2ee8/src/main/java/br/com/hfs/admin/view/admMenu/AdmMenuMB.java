@@ -49,14 +49,9 @@ public class AdmMenuMB
 	private List<AdmMenu> listMenusParent;
 	
 	public AdmMenuMB() {
-		super("ListAdmMenu");
+		super("admin/admMenu/listAdmMenu");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.jus.trt1.hfsframework.base.IBaseViewCadastro#init()
-	 */
 	@PostConstruct
 	public void init() {
 		updateTreeMenus();

@@ -50,12 +50,19 @@ public class AdmProfileMB extends
 	private List<AdmPage> listAdmPage;
 
 	public AdmProfileMB() {
-		super("ListAdmProfile", "EditAdmProfile");
+		super(AdmProfile.class, 
+				"admin/admProfile/listAdmProfile", 
+				"admin/admProfile/editAdmProfile");
 	}
 
 	@PostConstruct
 	public void init() {
 		updateDataTableList();
+
+		if (beanInSession()) 
+			onEditMode();
+		else 
+			onInserMode();
 	}
 	
 	private void loadAdmPages() {
@@ -76,25 +83,26 @@ public class AdmProfileMB extends
 
 	@Override
 	public String onInsert() {
-		this.listAdmPage = admPageService.findAll();
-	    this.dualListAdmPage = new DualListModel<AdmPage>(this.listAdmPage, new ArrayList<AdmPage>());
-
-		this.listAdmUser = admUserService.findAll();
-	    this.dualListAdmUser = new DualListModel<AdmUser>(this.listAdmUser, new ArrayList<AdmUser>());
-	    
 		return super.onInsert(new AdmProfile());
 	}
-
-	@Override
-	public String onEdit(AdmProfile entity) {
-		String retorno = super.onEdit(entity);
-		if (entity != null) {
+	
+	private void onInserMode() {
+		if (getState().isInsertMode()) {
+			this.listAdmPage = admPageService.findAll();
+		    this.dualListAdmPage = new DualListModel<AdmPage>(this.listAdmPage, new ArrayList<AdmPage>());
+	
+			this.listAdmUser = admUserService.findAll();
+		    this.dualListAdmUser = new DualListModel<AdmUser>(this.listAdmUser, new ArrayList<AdmUser>());
+		}
+	}
+	
+	private void onEditMode() {
+		if (getState().isEditMode()) {
 			loadAdmPages();
 			loadAdmUsers();
 		}
-		return retorno;
 	}
-	
+
 	@Override
 	public String save() {	
 		getBean().setAdmPages(new HashSet<AdmPage>(this.dualListAdmPage.getTarget()));

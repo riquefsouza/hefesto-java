@@ -9,25 +9,25 @@
 	<ui:define name="tituloPagina"> - Configuration Parameter</ui:define>
 
 	<ui:define name="conteudo-maior">
-		<h:form id="listarAdmParametro">
-			<fieldset id="fieldsetListarAdmParametro">
-				<div class="card">
-					<div class="card-header" 
+		<h:form id="listAdmParameter">
+			<fieldset id="fieldsetListAdmParameter">
+				<div class="panel panel-default">
+					<div class="panel-heading" 
 						style="font-weight: bold;font-size: large;">
 						Configuration Parameter
 					</div>
-					<div class="card-body">
+					<div class="panel-body">
 						<div class="row">									
 							<div class="col-md-3 form-group">		
 								<p:outputLabel for="cmbTypeReport" value="Choose the type of report:" />																
-							    <p:selectOneMenu id="cmbTypeReport" value="#{admParametroRelMB.typeReport}">
-							    	<f:selectItems value="#{admParametroRelMB.listTypeReport}" />			    	  	
+							    <p:selectOneMenu id="cmbTypeReport" value="#{admParameterRelMB.typeReport}">
+							    	<f:selectItems value="#{admParameterRelMB.listTypeReport}" />			    	  	
 								</p:selectOneMenu>											
 							</div>					
 							
 							<div class="col-md-2 form-group">
 								<p:outputLabel for="forceDownload" value="Force Download:" />
-								<p:selectBooleanCheckbox id="forceDownload" value="#{admParametroRelMB.forceDownload}" />
+								<p:selectBooleanCheckbox id="forceDownload" value="#{admParameterRelMB.forceDownload}" />
 							</div>
 						</div>					
 					</div>					
@@ -36,31 +36,31 @@
 				<div class="form-actions">
 					<p:commandButton value="Export" title="Export" onclick="form.target='_blank'" 
 						styleClass="btn btn-primary disableSubmit" id="btnExport"
-						icon="ui-icon-print" action="#{admParametroRelMB.export()}"
+						icon="ui-icon-print" action="#{admParameterRelMB.export()}"
 						ajax="false" />
 				
 					<p:spacer width="10" height="10" />
 				
 					<p:commandButton value="Insert" ajax="false" icon="ui-icon-circle-plus"
-						action="#{admParametroMB.onInsert()}" id="btnInsert"
+						action="#{admParameterMB.onInsert()}" id="btnInsert"
 						styleClass="btn btn-success disableSubmit"
-						title="Insert uma nova admParametro" />
+						title="Insert uma nova admParameter" />
 
 					<p:commandButton id="btnEdit" value="Edit" ajax="false" icon="ui-icon-circle-triangle-n"
 						styleClass="btn btn-warning disableSubmit"
-						action="#{admParametroMB.onEdit(admParametroMB.bean)}"
-						title="Edit admParametro">
+						action="#{admParameterMB.onEdit(admParameterMB.bean)}"
+						title="Edit admParameter">
 					</p:commandButton>
 
 					<p:commandButton id="btnDelete" value="Delete" icon="ui-icon-circle-minus"
 						styleClass="btn btn-danger disableSubmit"
-						action="#{admParametroMB.prepareToDelete(admParametroMB.bean)}"
-						title="Delete admParametro" update="@form">
+						action="#{admParameterMB.prepareToDelete(admParameterMB.bean)}"
+						title="Delete admParameter" update="@form">
 					</p:commandButton>
 
 					<p:commandButton value="Return" immediate="true" ajax="false" 
 						icon="ui-icon-circle-arrow-w"
-						action="#{admParametroMB.cancel()}" id="btnReturn"
+						action="#{admParameterMB.cancel()}" id="btnReturn"
 						styleClass="btn btn-primary disableSubmit" title="Return" />
 				</div>
 
@@ -70,15 +70,15 @@
 					<p:commandButton value="Sim" update="@form"
 						oncomplete="PF('confirmation').hide()"
 						styleClass="btn btn-success disableSubmit"
-						action="#{admParametroMB.delete(admParametroMB.bean)}" />
+						action="#{admParameterMB.delete(admParameterMB.bean)}" />
 					<p:spacer width="10" height="10" />
 					<p:commandButton value="Não" onclick="PF('confirmation').hide()"
 						styleClass="btn btn-danger disableSubmit" type="button" />
 				</p:confirmDialog>
 
 				<p:dataTable var="item" rowKey="#{item.id}" id="table" reflow="true"
-					selection="#{admParametroMB.bean}" selectionMode="single"
-					value="#{admParametroMB.listBean}" rows="#{applicationConfig.dtLines}" 
+					selection="#{admParameterMB.bean}" selectionMode="single"
+					value="#{admParameterMB.listBean}" rows="#{applicationConfig.dtLines}" 
 					rowsPerPageTemplate="#{applicationConfig.dtLinesPerPageTemplate}"
 					paginator="true" paginatorPosition="#{applicationConfig.dtPagerPosition}"					
 					paginatorTemplate="#{applicationConfig.dtPagerModel}"
@@ -89,30 +89,30 @@
 						<h:commandLink style="float: left;">
 							<p:graphicImage value="/resources/img/excel.png" width="24" />
 							<p:dataExporter type="xls" encoding="iso-8859-1" target="table" options="#{exporterUtil.excelOpt}" 
-								 fileName="admParametros" />
+								 fileName="admParameters" />
 						</h:commandLink>
 	
 						<h:commandLink style="float: left;">
 							<p:graphicImage value="/resources/img/pdf.png" width="24" />
 							<p:dataExporter type="pdf" encoding="iso-8859-1" target="table" options="#{exporterUtil.pdfOpt}" 
-								preProcessor="#{admParametroMB.preProcessPDF}" fileName="admParametros" />
+								preProcessor="#{admParameterMB.preProcessPDF}" fileName="admParameters" />
 						</h:commandLink>	
 					</f:facet>
 
-					<p:column headerText="Categoria do Parâmetro" sortBy="#{item.admParametroCategoria.description}"
-						style="width:25%" filterBy="#{item.admParametroCategoria.description}"
+					<p:column headerText="Parameter Category" sortBy="#{item.admParameterCategory.description}"
+						style="width:25%" filterBy="#{item.admParameterCategory.description}"
 						filterMatchMode="contains">
-						<h:outputText value="#{item.admParametroCategoria.description}" />
+						<h:outputText value="#{item.admParameterCategory.description}" />
 					</p:column>
-					<p:column headerText="Parâmetro" sortBy="#{item.codigo}"
-						style="width:15%" filterBy="#{item.codigo}"
+					<p:column headerText="Parameter" sortBy="#{item.code}"
+						style="width:15%" filterBy="#{item.code}"
 						filterMatchMode="contains">
-						<h:outputText value="#{item.codigo}" />
+						<h:outputText value="#{item.code}" />
 					</p:column>
-					<p:column headerText="Valor" sortBy="#{item.valor}"
-						style="width:35%" filterBy="#{item.valor}"
+					<p:column headerText="Value" sortBy="#{item.value}"
+						style="width:35%" filterBy="#{item.value}"
 						filterMatchMode="contains">
-						<h:outputText value="#{item.valor}" />
+						<h:outputText value="#{item.value}" />
 					</p:column>
 					<p:column headerText="Description" sortBy="#{item.description}"
 						style="width:36%" filterBy="#{item.description}"

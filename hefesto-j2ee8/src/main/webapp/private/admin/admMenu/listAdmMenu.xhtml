@@ -9,14 +9,14 @@
 	<ui:define name="tituloPagina"> - Manage Menu</ui:define>
 
 	<ui:define name="conteudo-maior">
-		<h:form id="listarAdmMenu">
-			<fieldset id="fieldsetListarAdmMenu">
-				<div class="card">
-					<div class="card-header" 
+		<h:form id="listAdmMenu">
+			<fieldset id="fieldsetListAdmMenu">
+				<div class="panel panel-default">
+					<div class="panel-heading" 
 						style="font-weight: bold;font-size: large;">
 						Manage Menu
 					</div>
-					<div class="card-body">
+					<div class="panel-body">
 						<div class="row">
 							<div class="col-md-3 form-group">		
 								<p:outputLabel for="cmbTypeReport" value="Choose the type of report:" />																
@@ -92,17 +92,17 @@
 
 
 				<p:dialog widgetVar="itemMenuDlg" resizable="false" modal="true"
-					header="Insert Novo Item de Menu" showEffect="fade"
+					header="Insert New Menu Item" showEffect="fade"
 					hideEffect="fade" width="50%" id="itemMenuForm">
 					<div style="width: 99%">
 						<div class="col-md-12 form-actions">
-							<p:commandButton id="btnSalvar" value="Salvar"
+							<p:commandButton id="btnSalvar" value="Save"
 								action="#{admMenuMB.saveItemMenu()}"
 								styleClass="btn btn-primary disableSubmit btn-primary disableSubmit"
 								ajax="false" title="Salvar o item de menu" />
 
-							<p:commandButton value="Cancelar"
-								title="Cancelar inclusão do item de menu"
+							<p:commandButton value="Cancel"
+								title="Cancel inclusion of menu item"
 								styleClass="btn  btn-primary disableSubmit disableSubmit"
 								onclick="PF('itemMenuDlg').hide()" id="btnCancelar"
 								immediate="true" />
@@ -112,11 +112,11 @@
 
 						<div class="row">
 							<div class="col-md-12 form-group">
-								<p:outputLabel for="pagina" value="Page:" />
+								<p:outputLabel for="page" value="Page:" />
 								<p:selectOneMenu
 									value="#{admMenuMB.newItemMenu.admPage}"
-									converter="admPaginaConverter"
-									id="pagina" label="Página" filter="true" filterMatchMode="contains">
+									converter="admPageConverter"
+									id="page" label="Page" filter="true" filterMatchMode="contains">
 									<f:selectItem value="#{null}" itemLabel="" />
 									<f:selectItems value="#{admMenuMB.listAdmPage}"
 										var="item" itemValue="#{item}" itemLabel="#{item.description}" />
@@ -128,8 +128,8 @@
 
 						<div class="row">
 							<div class="col-md-12 form-group">
-								<p:outputLabel for="description" value="Nome do Item de Menu:" />
-								<p:inputText id="description" label="Nome do Item de Menu"
+								<p:outputLabel for="description" value="Menu Item Name:" />
+								<p:inputText id="description" label="Menu Item Name"
 									styleClass="form-control"
 									value="#{admMenuMB.newItemMenu.description}">
 									<f:validateLength maximum="250" />
@@ -139,23 +139,23 @@
 
 						<div class="row">
 							<div class="col-md-12 form-group">
-								<p:outputLabel for="menuPai" value="Menu Pai:" />
+								<p:outputLabel for="menuParent" value="Menu Parent:" />
 								<p:selectOneMenu
 									value="#{admMenuMB.newItemMenu.admMenuParent}"
 									converter="admMenuConverter"
-									id="menuPai" label="Menu Pai">
+									id="menuParent" label="Menu Parent">
 									<f:selectItem value="#{null}" itemLabel="" />
 									<f:selectItems value="#{admMenuMB.listMenusParent}"
 										var="item" itemValue="#{item}"
-										itemLabel="#{AdmMenuMB.getNomeRecursivo(item)}" />
+										itemLabel="#{AdmMenuMB.getRecursiveName(item)}" />
 								</p:selectOneMenu>
 							</div>
 						</div>
 						
 						<div class="row">
 							<div class="col-md-12 form-group">
-								<p:outputLabel for="ordem" value="Ordem:" />
-								<p:spinner id="ordem" value="#{admMenuMB.newItemMenu.order}" />
+								<p:outputLabel for="order" value="Order:" />
+								<p:spinner id="order" value="#{admMenuMB.newItemMenu.order}" />
 							</div>
 						</div>
 						

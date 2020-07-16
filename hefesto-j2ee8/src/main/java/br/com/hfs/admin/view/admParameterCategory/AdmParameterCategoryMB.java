@@ -27,7 +27,9 @@ public class AdmParameterCategoryMB
 	private static final long serialVersionUID = 1L;
 
 	public AdmParameterCategoryMB(){
-		super("admin/admParameterCategory/listAdmParameterCategory", "admin/admParameterCategory/editAdmParameterCategory");
+		super(AdmParameterCategory.class,
+				"admin/admParameterCategory/listAdmParameterCategory", 
+				"admin/admParameterCategory/editAdmParameterCategory");
 	}
 	
 	@PostConstruct
@@ -38,14 +40,7 @@ public class AdmParameterCategoryMB
 
 	@Override
 	public String onInsert() {
-	
 		return super.onInsert(new AdmParameterCategory());
-	}
-
-	@Override
-	public String onEdit(AdmParameterCategory entity) {
-		
-		return super.onEdit(entity);
 	}
 	
 	@Override

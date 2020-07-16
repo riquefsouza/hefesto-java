@@ -45,23 +45,23 @@ BaseViewRegister<AdmParameter, Long, AdmParameterService>
 	 * Instantiates a new adm parametro MB.
 	 */
 	public AdmParameterMB() {
-		super("ListAdmParameter", "EditAdmParameter");
+		super(AdmParameter.class, 
+				"admin/admParameter/listAdmParameter", 
+				"admin/admParameter/editAdmParameter");
 
 		listAdmParameterCategory = new ArrayList<AdmParameterCategory>();
 	}
 
-	/* (non-Javadoc)
-	 * @see br.jus.trt1.hfsframework.base.IBaseViewCadastro#init()
-	 */
 	@PostConstruct
 	public void init() {
 		listAdmParameterCategory = admParameterCategoryService.findAll();
 		updateDataTableList();
-
 		if (getBean().getAdmParameterCategory() != null && listAdmParameterCategory.size() > 0) {
 			getBean().getAdmParameterCategory().setId(listAdmParameterCategory.get(0).getId());
 			selectAdmParameterCategory();
 		}
+		
+		beanInSession();
 	}
 
 	/**

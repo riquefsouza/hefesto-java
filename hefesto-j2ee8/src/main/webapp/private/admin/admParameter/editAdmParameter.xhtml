@@ -11,12 +11,12 @@
 	<ui:define name="conteudo-maior">
 		<h:form id="editAdmParameter">
 			<fieldset id="fieldsetEditAdmParameter">
-				<div class="card">
-					<div class="card-header" 
+				<div class="panel panel-default">
+					<div class="panel-heading" 
 						style="font-weight: bold;font-size: large;">
 						Configuration Parameter
 					</div>
-					<div class="card-body">
+					<div class="panel-body">
 					
 						<div class="form-actions">
 							<p:commandButton value="Save" ajax="false" icon="ui-icon-circle-check"
@@ -37,24 +37,24 @@
 
 						<div class="row">
 							<div class="col-md-4 form-group">
-								<p:outputLabel for="categoria" value="Parameter Category:" />
-								<p:selectOneMenu label="Parameter Category" id="categoria"
+								<p:outputLabel for="category" value="Parameter Category:" />
+								<p:selectOneMenu label="Parameter Category" id="category"
 									required="true" styleClass="form-control"
 									converter="admParameterCategoryConverter"
 									value="#{admParameterMB.bean.admParameterCategory}"
 									filter="true" filterMatchMode="contains">
 									<f:selectItems
-										value="#{admParameterMB.listaAdmParameterCategory}"
+										value="#{admParameterMB.listAdmParameterCategory}"
 										var="item" itemValue="#{item}" itemLabel="#{item.description}" />
 								</p:selectOneMenu>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-4 form-group">
-								<p:outputLabel for="codigo" value="Código:" />
-								<p:inputText id="codigo" styleClass="form-control"
+								<p:outputLabel for="code" value="Code:" />
+								<p:inputText id="code" styleClass="form-control"
 									value="#{admParameterMB.bean.code}"
-									label="Código do Parâmetro" required="true">
+									label="Parameter Code" required="true">
 								</p:inputText>
 							</div>
 						</div>	

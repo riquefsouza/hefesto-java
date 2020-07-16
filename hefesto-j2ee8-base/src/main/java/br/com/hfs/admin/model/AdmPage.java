@@ -257,12 +257,7 @@ public class AdmPage implements Serializable {
 		return this.url;
 	}
 
-	/**
-	 * Gets the perfis pagina.
-	 *
-	 * @return the perfis pagina
-	 */
-	public String getPerfisPage() {
+	public String getProfilesPage() {
 		String ret = "";
 		for (AdmProfile item : getAdmProfiles()) {
 			ret = ret.concat(item.getDescription()).concat(", ");

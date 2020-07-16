@@ -27,12 +27,15 @@ public class AdmUserMB extends
 	private static final long serialVersionUID = 1L;
 
 	public AdmUserMB() {
-		super("ListAdmUser", "EditAdmUser");
+		super(AdmUser.class,
+				"admin/admUser/listAdmUser", 
+				"admin/admUser/editAdmUser");
 	}
 
 	@PostConstruct
 	public void init() {
 		updateDataTableList();
+		beanInSession();
 	}
 	
 	@Override

@@ -10,10 +10,6 @@ import com.lowagie.text.DocumentException;
 public interface IBaseViewRegister <T> extends Serializable {
 
 	void init();
-	
-	boolean isInsertMode();
-	
-	boolean isSaveMode();
 
 	String onInsert();
 

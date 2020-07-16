@@ -33,36 +33,17 @@ public class BaseViewRegister<T, I extends Serializable,
 	@Inject
 	private T entity;
 	
-	private boolean insertMode;
+	private Class<T> clazz;
 	
-	private boolean saveMode;
-		
-	private boolean viewMode;
+	@Inject
+	private BaseViewState state;
 	
-	private boolean showBtnInsert;
-	
-	private boolean showBtnDelete;
-	
-	private boolean showBtnUpdate;
-	
-	private boolean showBtnSave;
-	
-	private boolean showBtnClean;
-	
-	public BaseViewRegister(String pageList, String pageEdit){
+	public BaseViewRegister(Class<T> clazz, String pageList, String pageEdit){
 		super();
-		this.insertMode = false;
-		this.saveMode = false;
-		this.viewMode = false;
+		this.clazz = clazz;
 		
 		this.pageList = "/private/" + pageList + ".xhtml?faces-redirect=true";
 		this.pageEdit = "/private/" + pageEdit + ".xhtml?faces-redirect=true";
-			
-		this.showBtnInsert = true;
-		this.showBtnDelete = true;
-		this.showBtnUpdate = true;
-		this.showBtnSave = true;
-		this.showBtnClean = true;
 	}
 	
 	protected void updateDataTableList() {
@@ -70,11 +51,15 @@ public class BaseViewRegister<T, I extends Serializable,
 	}
 
 	@SuppressWarnings("unchecked")
-	protected void beanInSession() {
-		T bean = (T) getSession().getAttribute("bean");
+	protected boolean beanInSession() {
+		state = BaseViewState.getState(getSession());
+		
+		T bean = (T) getSession().getAttribute(clazz.getSimpleName() + "_bean");
 		if (bean!=null) {
 			setEntity(bean);
+			return true;
 		}
+		return false;
 	}
 	
 	public String getPageList() {
@@ -86,10 +71,9 @@ public class BaseViewRegister<T, I extends Serializable,
 	}
 	
 	protected String onInsert(T entity) {
-		this.insertMode = true;
-		this.viewMode = false;
+		this.state.insertMode(getSession());
 		
-		getSession().removeAttribute("bean");
+		getSession().removeAttribute(clazz.getSimpleName() + "_bean");
 		
 		setEntity(entity);
 
@@ -97,24 +81,21 @@ public class BaseViewRegister<T, I extends Serializable,
 	}
 
 	public String onEdit(T entity) {
-		this.insertMode = false;
-		this.viewMode = false;
+		this.state.editMode(getSession());
 		
 		if (entity == null) {
 			generateErrorMessage(SELECT_RECORD);
 			return "";
 		}
 		
-		getSession().setAttribute("bean", entity);
+		getSession().setAttribute(clazz.getSimpleName() + "_bean", entity);
 		
 		setEntity(entity);
 		return getPageEdit();
 	}
 	
 	public String onVisualize(T entity) {
-		this.insertMode = false;
-		this.saveMode = false;
-		this.viewMode = true;
+		this.state.viewMode(getSession());
 		
 		if (entity == null) {
 			generateErrorMessage(SELECT_RECORD);
@@ -173,7 +154,7 @@ public class BaseViewRegister<T, I extends Serializable,
 				return null;
 			}
 			
-			if (insertMode){
+			if (state.isInsertMode()){
 				if (this.service.thereIsFieldNew("description", description)){
 					generateErrorMessage("Field '"+ fieldName +"' already exists.");
 					return null;					
@@ -198,10 +179,10 @@ public class BaseViewRegister<T, I extends Serializable,
 				fnc.call();
 			}
 			
-			this.saveMode = true;
+			this.state.saveMode(getSession(), true);
 			
 		} catch (Exception e) {
-			this.saveMode = false;
+			this.state.saveMode(getSession(), false);
 			
 			if (e.getMessage().contains(hasError)) {
 				generateErrorMessage(e, ERROR_SAVE + errorMessage);
@@ -234,6 +215,10 @@ public class BaseViewRegister<T, I extends Serializable,
 	public String cancel() {
 		return getDesktopPage();
 	}
+
+	public B getService() {
+		return service;
+	}
 	
 	public List<T> getListEntity() {
 		return listEntity;
@@ -251,60 +236,8 @@ public class BaseViewRegister<T, I extends Serializable,
 		this.entity = entity;
 	}
 
-	public boolean isShowBtnInsert() {
-		return showBtnInsert;
-	}
-
-	public void setShowBtnInsert(boolean showBtnInsert) {
-		this.showBtnInsert = showBtnInsert;
-	}
-
-	public boolean isShowBtnDelete() {
-		return showBtnDelete;
-	}
-
-	public void setShowBtnDelete(boolean showBtnDelete) {
-		this.showBtnDelete = showBtnDelete;
-	}
-
-	public boolean isShowBtnUpdate() {
-		return showBtnUpdate;
-	}
-
-	public void setShowBtnUpdate(boolean showBtnUpdate) {
-		this.showBtnUpdate = showBtnUpdate;
-	}
-
-	public boolean isShowBtnSave() {
-		return showBtnSave;
-	}
-
-	public void setShowBtnSave(boolean showBtnSave) {
-		this.showBtnSave = showBtnSave;
-	}
-
-	public boolean isShowBtnClean() {
-		return showBtnClean;
-	}
-
-	public void setShowBtnClean(boolean showBtnClean) {
-		this.showBtnClean = showBtnClean;
-	}
-
-	public B getService() {
-		return service;
-	}
-
-	public boolean isInsertMode() {
-		return insertMode;
-	}
-
-	public boolean isSaveMode() {
-		return saveMode;
-	}
-
-	public boolean isViewMode() {
-		return viewMode;
+	public BaseViewState getState() {
+		return state;
 	}
 	
 }

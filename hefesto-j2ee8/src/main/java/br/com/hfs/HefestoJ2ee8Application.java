@@ -79,7 +79,8 @@ public class HefestoJ2ee8Application {
 		listaAdmPage.add(new AdmPage("admin/admPage/editAdmPage.xhtml", "Edit Administer Page"));
 		listaAdmPage.add(new AdmPage("admin/admMenu/listAdmMenu.xhtml", "Administer Menu"));
 		listaAdmPage.add(new AdmPage("admin/admMenu/editAdmMenu.xhtml", "Edit Administer Menu"));
-		listaAdmPage.add(new AdmPage("admin/admUser/listAdmUser.xhtml", "Visualize Users"));
+		listaAdmPage.add(new AdmPage("admin/admUser/listAdmUser.xhtml", "Administer User"));
+		listaAdmPage.add(new AdmPage("admin/admUser/editAdmUser.xhtml", "Edit Administer User"));
 
 		listaAdmPage.forEach(p -> p.setAdmProfiles(profiles1));
 		
@@ -94,6 +95,8 @@ public class HefestoJ2ee8Application {
 		
 		//senha = 123456
 		AdmUser user0 = new AdmUser("admin", "$2a$10$nhU38YCtaWpLzTIeG/uAIeGnu7GItrvGsQAQrgsjM9hN19cGp25N6");
+		user0.setName("Henrique");
+		user0.setEmail("nao_responda@gmail.com");
 				
 		AdmUser user1 = userService.insert(user0);
 		
@@ -152,8 +155,9 @@ public class HefestoJ2ee8Application {
 		listaAdmMenu.add(new AdmMenu("Category of Configuration Parameters", 1L, 1L, 2));
 		listaAdmMenu.add(new AdmMenu("Configuration Parameters", 1L, 3L, 3));
 		listaAdmMenu.add(new AdmMenu("Administer Profile", 1L, 5L, 4));
-		listaAdmMenu.add(new AdmMenu("Administer Page", 1L, 9L, 6));
-		listaAdmMenu.add(new AdmMenu("Administer Menu", 1L, 11L, 7));
+		listaAdmMenu.add(new AdmMenu("Administer Page", 1L, 7L, 6));
+		listaAdmMenu.add(new AdmMenu("Administer Menu", 1L, 9L, 7));
+		listaAdmMenu.add(new AdmMenu("Administer User", 1L, 11L, 6));
 				
 		menuService.insert(listaAdmMenu);
 		

@@ -9,14 +9,14 @@
 	<ui:define name="tituloPagina"> - Manage Page</ui:define>
 
 	<ui:define name="conteudo-maior">
-		<h:form id="listarAdmPagina">
-			<fieldset id="fieldsetListarAdmPagina">
-				<div class="card">
-					<div class="card-header" 
+		<h:form id="listAdmPage">
+			<fieldset id="fieldsetListAdmPage">
+				<div class="panel panel-default">
+					<div class="panel-heading" 
 						style="font-weight: bold;font-size: large;">
 						Manage Page
 					</div>
-					<div class="card-body">
+					<div class="panel-body">
 						<div class="row">										
 							<div class="col-md-3 form-group">		
 								<p:outputLabel for="cmbTypeReport" value="Choose the type of report:" />																
@@ -44,7 +44,7 @@
 					<p:commandButton value="Insert" ajax="false" icon="ui-icon-circle-plus"
 						action="#{admPageMB.onInsert()}" id="btnInsert"
 						styleClass="btn btn-success disableSubmit"
-						title="Insert uma nova admPage" />
+						title="Insert a new admPage" />
 
 					<p:commandButton id="btnEdit" value="Edit" ajax="false" icon="ui-icon-circle-triangle-n"
 						styleClass="btn btn-warning disableSubmit"
@@ -99,7 +99,7 @@
 						</h:commandLink>	
 					</f:facet>
 
-					<p:column headerText="Página" sortBy="#{item.url}"
+					<p:column headerText="Page" sortBy="#{item.url}"
 						filterBy="#{item.url}"
 						filterMatchMode="contains">
 						<h:outputText value="#{item.url}" />
@@ -108,11 +108,11 @@
 						filterBy="#{item.description}" filterMatchMode="contains">
 						<h:outputText value="#{item.description}" />
 					</p:column>										
-					<p:column headerText="Perfil(s) da Página"
-						sortBy="#{item.perfisPagina}" 
-						filterBy="#{item.perfisPagina}"
+					<p:column headerText="Page Profile(s)"
+						sortBy="#{item.profilesPage}" 
+						filterBy="#{item.profilesPage}"
 						filterMatchMode="contains">
-						<h:outputText value="#{item.perfisPagina}" />
+						<h:outputText value="#{item.profilesPage}" />
 					</p:column>
 					
 				</p:dataTable>

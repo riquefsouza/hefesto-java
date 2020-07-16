@@ -32,9 +32,7 @@ import br.com.hfs.util.interceptors.HandlingExpectedErrors;
 @Named
 @ViewScoped
 @HandlingExpectedErrors
-public class AdmPageMB extends
-BaseViewRegister<AdmPage, Long, AdmPageService>
-		implements IBaseViewRegister<AdmPage> {
+public class AdmPageMB extends BaseViewRegister<AdmPage, Long, AdmPageService> implements IBaseViewRegister<AdmPage> {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -48,24 +46,23 @@ BaseViewRegister<AdmPage, Long, AdmPageService>
 	/** The lista adm perfil. */
 	private List<AdmProfile> listaAdmProfile;
 	
-	/**
-	 * Instantiates a new adm pagina MB.
-	 */
 	public AdmPageMB() {
-		super("ListAdmPage", "EditAdmPage");
+		super(AdmPage.class, 
+				"admin/admPage/listAdmPage", 
+				"admin/admPage/editAdmPage");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.jus.trt1.hfsframework.base.IBaseViewCadastro#init()
-	 */
 	@PostConstruct
 	public void init() {
 		updateDataTableList();
+		
+		if (beanInSession()) 
+			onEditMode();
+		else 
+			onInserMode();
 	}
 
-	private void carregarAdmPerfis() {
+	private void loadAdmPerfis() {
 		List<AdmProfile> listaAdmProfileSelecionado = this.getBean().getId() == null ? new ArrayList<AdmProfile>()
 				: this.getService().findProfilesByPage(this.getBean());
 		this.listaAdmProfile = admProfileService.findAll();
@@ -75,18 +72,18 @@ BaseViewRegister<AdmPage, Long, AdmPageService>
 
 	@Override
 	public String onInsert() {
-		this.listaAdmProfile = admProfileService.findAll();
-	    this.dualListAdmProfile = new DualListModel<AdmProfile>(this.listaAdmProfile, new ArrayList<AdmProfile>());
 		return super.onInsert(new AdmPage());
 	}
-
-	@Override
-	public String onEdit(AdmPage entity) {
-		String retorno = super.onEdit(entity);
-		if (entity != null) {
-			carregarAdmPerfis();
+	
+	private void onInserMode() {
+		this.listaAdmProfile = admProfileService.findAll();
+	    this.dualListAdmProfile = new DualListModel<AdmProfile>(this.listaAdmProfile, new ArrayList<AdmProfile>());		
+	}
+	
+	private void onEditMode() {
+		if (getState().isEditMode()) {
+			loadAdmPerfis();
 		}
-		return retorno;
 	}
 	
 	/*

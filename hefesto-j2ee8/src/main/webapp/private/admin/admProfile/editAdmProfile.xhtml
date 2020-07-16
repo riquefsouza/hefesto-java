@@ -11,12 +11,12 @@
 	<ui:define name="conteudo-maior">
 		<h:form id="editAdmProfile">
 			<fieldset id="fieldsetEditAdmProfile">
-				<div class="card">
-					<div class="card-header" 
+				<div class="panel panel-default">
+					<div class="panel-heading" 
 						style="font-weight: bold;font-size: large;">
 						Manage Profile
 					</div>
-					<div class="card-body">
+					<div class="panel-body">
 					
 						<div class="form-actions">
 							<p:commandButton value="Save" ajax="false" icon="ui-icon-circle-check"
@@ -62,9 +62,9 @@
 								<p:pickList id="pickListUsers"
 									value="#{admProfileMB.dualListAdmUser}"
 									converter="admUserConverter" var="item"
-									itemLabel="#{item.nomeSetorCargo}" itemValue="#{item}"
+									itemLabel="#{item.name}" itemValue="#{item}"
 									showSourceFilter="true" showTargetFilter="true"
-									filterMatchMode="contains" styleClass="picklistGigante">
+									filterMatchMode="contains" styleClass="picklistMaior">
 									<f:facet name="sourceCaption">Available</f:facet>
 									<f:facet name="targetCaption">Associated with Profile</f:facet>												
 								</p:pickList>
@@ -76,7 +76,7 @@
 									converter="admPageConverter" var="item"
 									itemLabel="#{item.url}" itemValue="#{item}"
 									showSourceFilter="true" showTargetFilter="true"									
-									filterMatchMode="contains" styleClass="picklistGigante">
+									filterMatchMode="contains" styleClass="picklistMaior">
 									<f:facet name="sourceCaption">Available</f:facet>
 									<f:facet name="targetCaption">Authorized</f:facet>										
 								</p:pickList>							
