@@ -93,7 +93,7 @@ public class AdmPageTests extends BaseTests {
 			.contentType(ContentType.JSON)
 			.extract().as(AdmPageDTO[].class);
 		
-		assertEquals(11, dtos.length);
+		assertEquals(12, dtos.length);
 	}
 
 	@Test
@@ -130,8 +130,8 @@ public class AdmPageTests extends BaseTests {
 				.extract().asString();
 		
 		List<Map<String, String>> lst = from(content).getList("content");
-		assertThat(lst).hasSize(11);
-		assertEquals(lst.size(), 11);
+		assertThat(lst).hasSize(12);
+		assertEquals(lst.size(), 12);
 		assertNotNull(lst.get(1));
 		assertNotNull(lst.get(1).get("id"));
 		assertEquals("admin/admParameterCategory/editAdmParameterCategory.xhtml", lst.get(1).get("url"));

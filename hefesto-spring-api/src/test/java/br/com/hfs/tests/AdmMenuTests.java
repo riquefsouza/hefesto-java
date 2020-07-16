@@ -97,7 +97,7 @@ public class AdmMenuTests extends BaseTests {
 			.contentType(ContentType.JSON)
 			.extract().as(AdmMenuDTO[].class);
 		
-		assertEquals(6, dtos.length);
+		assertEquals(7, dtos.length);
 	}
 
 	@Test
@@ -134,8 +134,8 @@ public class AdmMenuTests extends BaseTests {
 				.extract().asString();
 		
 		List<Map<String, String>> lst = from(content).getList("content");
-		assertThat(lst).hasSize(6);
-		assertEquals(lst.size(), 6);
+		assertThat(lst).hasSize(7);
+		assertEquals(lst.size(), 7);
 		assertNotNull(lst.get(1));
 		assertNotNull(lst.get(1).get("id"));
 		assertEquals("Category of Configuration Parameters", lst.get(1).get("description"));

@@ -87,7 +87,7 @@ public class AdmPageTests extends BaseTests {
 			.contentType(ContentType.JSON)
 			.extract().as(AdmPageDTO[].class);
 		
-		assertEquals(11, dtos.length);
+		assertEquals(12, dtos.length);
 	}
 
 	@Test

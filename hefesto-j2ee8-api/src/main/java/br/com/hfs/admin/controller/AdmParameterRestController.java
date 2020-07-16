@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response.Status;
 import br.com.hfs.admin.controller.dto.AdmParameterDTO;
 import br.com.hfs.admin.controller.form.AdmParameterForm;
 import br.com.hfs.admin.model.AdmParameter;
+import br.com.hfs.admin.service.AdmParameterCategoryService;
 import br.com.hfs.admin.service.AdmParameterService;
 
 @Path("/admParameter")
@@ -27,6 +28,9 @@ public class AdmParameterRestController {
 
 	@Inject
 	private AdmParameterService admParameterService;
+	
+	@Inject
+	private AdmParameterCategoryService admParameterCategoryService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -41,6 +45,9 @@ public class AdmParameterRestController {
 	public Response get(@PathParam("id") Long id) {
 		Optional<AdmParameter> obj = admParameterService.findById(id);
 		if (obj.isPresent()) {
+			obj.get().setAdmParameterCategory(
+					admParameterCategoryService.findById(obj.get().getIdAdmParameterCategory())
+					.get());
 			return Response.ok(new AdmParameterDTO(obj.get())).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
@@ -51,8 +58,8 @@ public class AdmParameterRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(AdmParameterForm form) {
 		AdmParameter obj = form.convert();
+		obj.setAdmParameterCategory(admParameterCategoryService.findById(obj.getIdAdmParameterCategory()).get());
 		obj = admParameterService.insert(obj);
-		obj = admParameterService.findById(obj.getId()).get();
 		
 		return Response.ok(new AdmParameterDTO(obj))
 				.location(URI.create("admParameter/" + obj.getId()))

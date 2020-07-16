@@ -91,7 +91,7 @@ public class AdmMenuTests extends BaseTests {
 			.contentType(ContentType.JSON)
 			.extract().as(AdmMenuDTO[].class);
 		
-		assertEquals(6, dtos.length);
+		assertEquals(7, dtos.length);
 	}
 
 	@Test
