@@ -42,7 +42,7 @@ public class AdmMenuRelMB
 
 	public void export() {
 		Map<String, Object> params = getParameters();
-		params.put("PARAMETRO1", "");
+		params.put("PARAMETER1", "");
 		
 		super.exportar(report, getService().findAll(), params, forceDownload);
 	}
