@@ -20,7 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import br.com.hfs.admin.controller.form.AdmUserForm;
-import br.com.hfs.vo.UserVO;
+import br.com.hfs.admin.vo.UserVO;
 
 @Entity
 @Table(name = "ADM_USER")

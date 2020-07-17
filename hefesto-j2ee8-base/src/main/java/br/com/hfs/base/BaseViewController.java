@@ -24,8 +24,8 @@ import com.lowagie.text.DocumentException;
 
 import br.com.hfs.admin.vo.AuthenticatedUserVO;
 import br.com.hfs.admin.vo.MenuVO;
-import br.com.hfs.util.ExceptionUtil;
 import br.com.hfs.util.ExporterUtil;
+import br.com.hfs.util.exceptions.ExceptionUtil;
 import br.com.hfs.util.filter.NavegationFilter;
 
 @Named

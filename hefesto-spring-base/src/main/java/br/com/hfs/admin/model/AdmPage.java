@@ -30,7 +30,7 @@ import org.hibernate.annotations.Parameter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.hfs.admin.controller.form.AdmPageForm;
-import br.com.hfs.vo.PageVO;
+import br.com.hfs.admin.vo.PageVO;
 
 @Entity
 @Table(name="ADM_PAGE")

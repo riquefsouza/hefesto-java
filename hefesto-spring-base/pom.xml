@@ -18,12 +18,19 @@
 		<java.version>14</java.version>
 		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
 		<jasperreports.version>6.13.0</jasperreports.version>
+		
+		<poi-ooxml.version>4.1.2</poi-ooxml.version>
+		<pdfbox.version>2.0.20</pdfbox.version>
 	</properties>
 	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -47,9 +54,60 @@
 		    <artifactId>hibernate-validator-annotation-processor</artifactId>
 		</dependency>
 		
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- #################### APACHE #################### -->
+		
+ 		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi-ooxml.version}</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.apache.pdfbox</groupId>
+		    <artifactId>pdfbox</artifactId>
+		    <version>${pdfbox.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox-tools</artifactId>
+			<version>${pdfbox.version}</version>
+		</dependency>
+	
+		<dependency>
+		    <groupId>org.apache.pdfbox</groupId>
+		    <artifactId>xmpbox</artifactId>
+		    <version>${pdfbox.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.4</version>
+		</dependency>
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.directory.api</groupId>
+		    <artifactId>api-all</artifactId>
+		    <version>2.0.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.servicemix.bundles</groupId>
+					<artifactId>
+						org.apache.servicemix.bundles.dom4j
+					</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>		
 		
 		<dependency>

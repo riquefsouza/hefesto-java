@@ -14,11 +14,11 @@ import br.com.hfs.admin.model.AdmPage;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
 import br.com.hfs.admin.repository.AdmProfileRepository;
+import br.com.hfs.admin.vo.AuthenticatedUserVO;
+import br.com.hfs.admin.vo.MenuVO;
+import br.com.hfs.admin.vo.PermissionVO;
+import br.com.hfs.admin.vo.ProfileVO;
 import br.com.hfs.base.BaseService;
-import br.com.hfs.vo.AuthenticatedUserVO;
-import br.com.hfs.vo.MenuVO;
-import br.com.hfs.vo.PermissionVO;
-import br.com.hfs.vo.ProfileVO;
 
 @Service
 public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileRepository> {

@@ -30,7 +30,7 @@ import org.hibernate.annotations.Parameter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.hfs.admin.controller.form.AdmMenuForm;
-import br.com.hfs.vo.MenuVO;
+import br.com.hfs.admin.vo.MenuVO;
 
 // TODO: Auto-generated Javadoc
 /**

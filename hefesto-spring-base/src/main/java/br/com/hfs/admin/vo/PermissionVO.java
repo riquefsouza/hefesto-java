@@ -1,4 +1,4 @@
-package br.com.hfs.vo;
+package br.com.hfs.admin.vo;
 
 import java.io.Serializable;
 import java.util.ArrayList;

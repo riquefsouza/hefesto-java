@@ -18,7 +18,7 @@ import org.picketlink.idm.credential.Credentials;
 import org.picketlink.idm.model.basic.User;
 
 import br.com.hfs.ApplicationUtil;
-import br.com.hfs.util.ExceptionUtil;
+import br.com.hfs.util.exceptions.ExceptionUtil;
 
 @Named
 @PicketLink

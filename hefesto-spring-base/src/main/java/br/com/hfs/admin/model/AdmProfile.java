@@ -27,10 +27,10 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
+import br.com.hfs.admin.vo.PageVO;
+import br.com.hfs.admin.vo.ProfileVO;
+import br.com.hfs.admin.vo.UserVO;
 import br.com.hfs.converter.BooleanToStringConverter;
-import br.com.hfs.vo.PageVO;
-import br.com.hfs.vo.ProfileVO;
-import br.com.hfs.vo.UserVO;
 
 @Entity
 @Table(name = "ADM_PROFILE")

@@ -2,7 +2,7 @@ package br.com.hfs.base.report;
 
 import org.apache.logging.log4j.Logger;
 
-import br.com.hfs.util.ExceptionUtil;
+import br.com.hfs.util.exceptions.ExceptionUtil;
 
 public class ReportException extends RuntimeException {
 

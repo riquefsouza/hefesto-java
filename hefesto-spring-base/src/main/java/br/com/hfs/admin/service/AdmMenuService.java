@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.hfs.admin.model.AdmMenu;
 import br.com.hfs.admin.repository.AdmMenuRepository;
+import br.com.hfs.admin.vo.MenuVO;
 import br.com.hfs.base.BaseService;
-import br.com.hfs.vo.MenuVO;
 
 @Service
 public class AdmMenuService extends BaseService<AdmMenu, Long, AdmMenuRepository> {

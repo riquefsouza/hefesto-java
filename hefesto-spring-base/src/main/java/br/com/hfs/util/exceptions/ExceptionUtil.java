@@ -1,4 +1,4 @@
-package br.com.hfs.util;
+package br.com.hfs.util.exceptions;
 
 import java.io.Serializable;
 import org.apache.logging.log4j.Logger;

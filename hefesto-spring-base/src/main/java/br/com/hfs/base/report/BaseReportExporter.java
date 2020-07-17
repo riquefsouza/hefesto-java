@@ -2,7 +2,7 @@
  * <p><b>HFS Framework</b></p>
  * @author Henrique Figueiredo de Souza
  * @version 1.0
- * @since 2019
+ * @since 2017
  */
 package br.com.hfs.base.report;
 
@@ -12,13 +12,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import br.com.hfs.util.VisitDirectoryUtil;
 import br.com.hfs.util.zip.ZipException;
@@ -42,23 +43,21 @@ import net.sf.jasperreports.export.SimpleTextReportConfiguration;
 import net.sf.jasperreports.export.SimpleWriterExporterOutput;
 import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class BaseRelatorioExporter.
+ */
 public class BaseReportExporter { 
 
 	/** The log. */
 	private static Logger log;
 
+	/**
+	 * Instantiates a new base relatorio exporter.
+	 */
 	public BaseReportExporter() {		
 	}
 
-	/**
-	 * Export.
-	 *
-	 * @param type
-	 *            the type
-	 * @param print
-	 *            the print
-	 * @return the byte array output stream
-	 */
 	public static synchronized ByteArrayOutputStream export(ReportTypeEnum type, JasperPrint print) {
 		if (log == null) {
 			log = LogManager.getLogger(BaseReportExporter.class);
@@ -76,16 +75,18 @@ public class BaseReportExporter {
 				exporterCSV.exportReport();
 				break;
 			case HTML:
-				FacesContext context = FacesContext.getCurrentInstance();
-				ExternalContext ec = context.getExternalContext();
-				String sDiretorio = ec.getRealPath("WEB-INF");
-				//String sDiretorio = System.getProperty("user.dir");
+				//String sDiretorio = new ClassPathResource("WEB-INF").getPath();
+				
+			    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+			    ServletContext sc = (ServletContext) attr.getRequest().getServletContext();
+				String sHTMLDir = sc.getRealPath(File.separator) + "/WEB-INF";
+				
 				String sArquivo = RandomStringUtils.randomAlphanumeric(32).toUpperCase() + ".html";
-				File arquivo = new File(sDiretorio, sArquivo);
+				File arquivo = new File(sHTMLDir, sArquivo);
 				log.info(ReportBundle.getString("exportando-relatorio", "html"));
 				JasperExportManager.exportReportToHtmlFile(print, arquivo.getPath());
 				byte[] conteudo = FileUtils.readFileToByteArray(arquivo);
-				conteudo = compactarHTML(type, sDiretorio, sArquivo, conteudo);				
+				conteudo = compactarHTML(type, sHTMLDir, sArquivo, conteudo);				
 				outputStream.write(conteudo, 0, conteudo.length);
 				outputStream.flush();
 				arquivo.delete();
@@ -113,8 +114,8 @@ public class BaseReportExporter {
 				exporterTXT.setExporterInput(new SimpleExporterInput(print));
 				exporterTXT.setExporterOutput(new SimpleWriterExporterOutput(outputStream));
 				SimpleTextReportConfiguration txtReportConfiguration = new SimpleTextReportConfiguration();
-				txtReportConfiguration.setCharWidth(Float.valueOf(7.238F));
-				txtReportConfiguration.setCharHeight(Float.valueOf(13.948F));
+				txtReportConfiguration.setCharWidth(7.238F);
+				txtReportConfiguration.setCharHeight(13.948F);
 				txtReportConfiguration.setPageWidthInChars(80);
 				txtReportConfiguration.setPageHeightInChars(40);
 				exporterTXT.setConfiguration(txtReportConfiguration);
@@ -129,7 +130,7 @@ public class BaseReportExporter {
 				break;
 			/*	
 			case XLS:
-				log.info(ReportBundle.getString("exportando-relatorio", "xls"));
+				log.info(RelatorioBundle.getString("exportando-relatorio", "xls"));
 				JRXlsExporter exporterXLS = new JRXlsExporter();
 				exporterXLS.setExporterInput(new SimpleExporterInput(print));
 				exporterXLS.setExporterOutput(new SimpleOutputStreamExporterOutput(outputStream));

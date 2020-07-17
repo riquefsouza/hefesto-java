@@ -1,11 +1,12 @@
-package br.com.hfs.vo;
+package br.com.hfs.admin.vo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Named("authenticatedUser")
-//@SessionScoped
+import org.springframework.stereotype.Component;
+
+@Component
 public class AuthenticatedUserVO implements Serializable {
 
 	/** The Constant serialVersionUID. */

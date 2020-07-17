@@ -16,7 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.hfs.util.TransactionException;
+import br.com.hfs.util.exceptions.TransactionException;
 
 public abstract class BaseService<T, I extends Serializable, C extends JpaRepository<T, I>>
 		implements IBaseCrud<T, I> {
