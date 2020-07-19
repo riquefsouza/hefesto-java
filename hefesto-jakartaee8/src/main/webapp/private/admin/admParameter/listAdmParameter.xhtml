@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" template="/layout/layout.xhtml">
+
+	<ui:define name="tituloPagina"> - Configuration Parameter</ui:define>
+
+	<ui:define name="conteudo-maior">
+		<h:form id="listAdmParameter">
+			<p:panel id="panelBasic" header="Configuration Parameter"
+				style="margin-bottom:5px">
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:outputLabel for="cmbTypeReport"
+							value="Choose the type of report:" />
+						<br></br>	
+						<p:selectOneMenu id="cmbTypeReport"
+							value="#{admParameterRelMB.typeReport}">
+							<f:selectItems
+								value="#{admParameterRelMB.listTypeReport}" />
+						</p:selectOneMenu>
+					</div>
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:outputLabel for="forceDownload" value="Force Download:" />
+						<p:spacer width="10" height="10" />	
+						<p:selectBooleanCheckbox id="forceDownload"
+							value="#{admParameterRelMB.forceDownload}" />
+					</div>
+				</div>
+			</p:panel>
+
+			<div class="ui-g">
+			    <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">
+					<p:commandButton value="Export" title="Export" onclick="form.target='_blank'" 
+						styleClass="btn btn-primary" id="btnExport"
+						icon="pi pi-print" action="#{admParameterRelMB.export()}"
+						ajax="false" />
+
+					<p:spacer width="10" height="10" />			
+				
+					<p:commandButton id="btnInsert" value="Insert"
+						styleClass="btn btn-success" icon="pi pi-plus-circle"
+						action="#{admParameterMB.onInsert()}"
+						title="Insert a new admParameter" />
+
+					<p:commandButton id="btnEdit" value="Edit" ajax="false"
+						styleClass="btn btn-warning" icon="pi pi-chevron-circle-up"
+						action="#{admParameterMB.onEdit(admParameterMB.bean)}"
+						title="Edit item de menu" />
+
+					<p:commandButton id="btnDelete" value="Delete"
+						styleClass="btn btn-danger" icon="pi pi-minus-circle"
+						action="#{admParameterMB.prepareToDelete(admParameterMB.bean)}"
+						title="Edit item de menu" update="@form" />
+				
+					<p:commandButton value="Return" immediate="true" ajax="false" 
+						icon="pi pi-arrow-circle-left"
+						action="#{admParameterMB.cancel()}" id="btnReturn"
+						styleClass="btn btn-primary" title="Return" />    
+			    </div>
+			</div>
+
+			<p:confirmDialog message="#{messages['texto_confirmacao_exclusao']}"
+				header="#{messages['titulo_confirmacao']}" severity="alert"
+				widgetVar="confirmation">
+				<p:commandButton value="Sim" update="@form"
+					oncomplete="PF('confirmation').hide()"
+					styleClass="btn btn-success disableSubmit"
+					action="#{admParameterMB.delete(admParameterMB.bean)}" />
+				<p:spacer width="10" height="10" />
+				<p:commandButton value="Não" onclick="PF('confirmation').hide()"
+					styleClass="btn btn-danger disableSubmit" type="button" />
+			</p:confirmDialog>
+
+			<p:dataTable var="item" rowKey="#{item.id}" id="table" reflow="true"
+				selection="#{admParameterMB.bean}" selectionMode="single"
+				value="#{admParameterMB.listBean}" rows="#{applicationConfig.dtLines}" 
+				rowsPerPageTemplate="#{applicationConfig.dtLinesPerPageTemplate}"
+				paginator="true" paginatorPosition="#{applicationConfig.dtPagerPosition}"					
+				paginatorTemplate="#{applicationConfig.dtPagerModel}"
+					currentPageReportTemplate="#{applicationConfig.dtPagerReportModel}"					
+				emptyMessage="#{messages['main.none.register']}">
+
+				<f:facet name="{Exporters}">
+					<h:commandLink style="float: left;">
+						<p:graphicImage value="/resources/img/excel.png" width="24" />
+						<p:dataExporter type="xls" encoding="iso-8859-1" target="table" options="#{exporterUtil.excelOpt}" 
+							 fileName="admParameters" />
+					</h:commandLink>
+
+					<h:commandLink style="float: left;">
+						<p:graphicImage value="/resources/img/pdf.png" width="24" />
+						<p:dataExporter type="pdf" encoding="iso-8859-1" target="table" options="#{exporterUtil.pdfOpt}" 
+							preProcessor="#{admParameterMB.preProcessPDF}" fileName="admParameters" />
+					</h:commandLink>	
+				</f:facet>
+
+				<p:column headerText="Parameter Category" sortBy="#{item.admParameterCategory.description}"
+					style="width:25%" filterBy="#{item.admParameterCategory.description}"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.admParameterCategory.description}" />
+				</p:column>
+				<p:column headerText="Parameter" sortBy="#{item.code}"
+					style="width:15%" filterBy="#{item.code}"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.code}" />
+				</p:column>
+				<p:column headerText="Value" sortBy="#{item.value}"
+					style="width:35%" filterBy="#{item.value}"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.value}" />
+				</p:column>
+				<p:column headerText="Description" sortBy="#{item.description}"
+					style="width:36%" filterBy="#{item.description}"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.description}" />
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

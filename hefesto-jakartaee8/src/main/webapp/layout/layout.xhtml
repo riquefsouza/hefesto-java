@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<title>Hefesto<ui:insert name="tituloPagina"></ui:insert></title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</f:facet>
+
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+		
+	<link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/system.css" />
+
+	<h:outputScript name="js/jquery.js" />
+	<h:outputScript name="js/system.js" />
+	<h:outputScript name="js/jquery.meio.mask.min.js" />
+	<h:outputScript name="js/jquery.numeric.js" />
+	
+	<script type='text/javascript'>  
+ 		var $jq = jQuery.noConflict(true);  
+ 	</script>
+ 	
+	<ui:insert name="head" />
+	
+</h:head>
+
+<h:body>
+	<c:if test="#{not identity.loggedIn}">	
+		<div style="background-color: lightgray; margin-bottom:5px; height: 30px">
+			<h:outputLink value="#{request.contextPath}/private/desktop.xhtml">
+				<p:graphicImage style="margin-bottom: -10px;"
+					name="logo.png" library="img" width="40px" height="30px" />
+			</h:outputLink>
+	
+			<h:outputText value="Hefesto" style="font-weight: bold;"></h:outputText>	
+		</div>
+	</c:if>
+
+	<c:if test="#{not identity.loggedIn}">
+		<span id="dialog-countdown-geral" style="display:none;"></span>
+	</c:if>	
+
+	<c:if test="#{identity.loggedIn}">
+
+		<ui:include src="#{'/private/menu.xhtml'}" />
+
+		<div style="background-color: lightgray; margin-bottom:5px">
+			<p:commandButton icon="pi pi-bars" oncomplete="PF('sidebar1').show()" />
+
+			<h:outputLink value="#{request.contextPath}/private/desktop.xhtml">
+				<p:graphicImage style="margin-top: -15px; margin-bottom: -10px;"
+					name="logo.png" library="img" width="40px" height="30px" />
+			</h:outputLink>
+
+			<h:outputText value="Hefesto" style="font-weight: bold;"></h:outputText>
+					
+			<div style="display: inline-block; padding-top: 10px; font-weight: bold; font-size: 90%; float: right !important; margin-right: 10px;">
+				<small> 
+					<span id="informacoes-usuario">
+						<h:outputText value="Session expires: " /> 
+						<span id="dialog-countdown-geral"></span> 
+						<i class="pi pi-user"></i> 
+						<p:outputLabel value="  #{systemMB.authenticatedUser.user.login}" 
+							onclick="PF('infoUsuarioDialog').show()" 
+							style="cursor: pointer; cursor: hand;" />										
+					</span>
+				</small>
+			</div>
+			
+		</div>
+	</c:if>
+		
+	<div id="conteudo-principal" class="container-fluid">
+		<div>
+			<p:outputPanel id="alert-messages">
+				<p:messages id="messages"
+					styleClass="alert-messages skipModalLoading" escape="false"
+					closable="true" showDetail="true"
+					showSummary="false" infoClass="alert alert-info skipModalLoading"
+					successClass="alert alert-success skipModalLoading"
+					errorClass="alert alert-danger skipModalLoading"
+					warnClass="alert alert-warning skipModalLoading" >
+					<p:autoUpdate />
+				</p:messages>
+			</p:outputPanel>
+
+			<div>
+				<ui:insert name="conteudo-maior">
+					<div>														
+						<ui:insert name="conteudo">...</ui:insert>							
+					</div>
+				</ui:insert>
+			</div>
+		</div>
+	</div>
+	
+	<p:ajaxStatus onstart="PF('statusDialog').show()"
+		onsuccess="tempoTotalSessao = maxTempoTotalSessao;PF('statusDialog').hide()"
+		oncomplete="PF('statusDialog').hide()" />
+
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+		id="statusDialog" header="Aguarde" closable="false" resizable="false"
+		style="min-width: 0em; border-style: none; box-shadow: none !important; background-color: transparent;"
+		showHeader="false">
+		<p:graphicImage name="/img/ajax_loader_blue_64.gif"/>
+	</p:dialog>
+
+	<!-- Default ajaxErrorHandler -->
+	<p:ajaxExceptionHandler title="Excuse me. A system error has occurred"
+		body="The server returned the exception {error-name} with description &lt;b&gt;{error-message}&lt;/b&gt;"
+		button="Fechar" widgetVar="myAjaxErrorHandler"
+		buttonOnclick="myAjaxErrorHandler.hide()" />
+	
+	<ui:insert name="sessaoSistema">
+		<ui:include src="/sessionTimeOut.xhtml" />
+	</ui:insert>
+
+	<ui:include src="/private/infoUser.xhtml" />
+	
+</h:body>
+</html>

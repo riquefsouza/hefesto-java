@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" template="/layout/layout.xhtml">
+
+	<ui:define name="tituloPagina"> - Configuration Parameter</ui:define>
+
+	<ui:define name="conteudo-maior">
+		<h:form id="editAdmParameter">
+		
+			<p:panel id="panelBasic" header="Configuration Parameter Category"
+				style="margin-bottom:5px">
+
+				<div class="ui-g">
+				    <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">	
+					
+						<p:commandButton id="btnSave" value="Save" ajax="false"
+							styleClass="btn btn-success" icon="pi pi-check-circle"
+							action="#{admParameterMB.save()}"
+							title="Save a admParameterCategory" />
+						
+						<p:commandButton value="Clean" icon="pi pi-star" id="btnClean"
+							styleClass="btn btn-primary" type="reset"
+							title="Clean Fields" />							
+					
+						<p:commandButton value="Cancel" immediate="true" ajax="false" 
+							icon="pi pi-arrow-circle-left"
+							action="#{admParameterMB.cancelEdition()}" id="btnCancel"
+							styleClass="btn btn-primary" title="Cancel" />    
+				    </div>
+				</div>	
+
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:outputLabel for="category" value="Parameter Category:" />
+						<br></br>
+						<p:selectOneMenu label="Parameter Category" id="category"
+							required="true" styleClass="form-control" style="width: 100%"
+							converter="admParameterCategoryConverter"
+							value="#{admParameterMB.bean.admParameterCategory}"
+							filter="true" filterMatchMode="contains">
+							<f:selectItems
+								value="#{admParameterMB.listAdmParameterCategory}"
+								var="item" itemValue="#{item}" itemLabel="#{item.description}" />
+						</p:selectOneMenu>
+					</div>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:outputLabel for="code" value="Code:" />
+						<br></br>
+						<p:inputText id="code" styleClass="form-control"
+							value="#{admParameterMB.bean.code}" style="width: 100%"
+							label="Parameter Code" required="true">
+						</p:inputText>
+					</div>
+				</div>	
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-8 ui-lg-6">
+						<p:outputLabel for="value" value="Value:" />
+						<br></br>
+						<p:inputTextarea id="value" label="Value" rows="6" style="width: 100%"
+							 value="#{admParameterMB.bean.value}" maxlength="3000" 
+							counter="displayValue" counterTemplate="{0} characters remaining." 
+							autoResize="false" required="true" />
+				    	<h:outputText id="displayValue" />								
+					</div>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-8 ui-lg-6">
+						<p:outputLabel for="description" value="Description:" />
+						<br></br>
+						<p:inputText id="description" required="true" label="Description"
+							styleClass="form-control" style="width: 100%"
+							value="#{admParameterMB.bean.description}">
+							<f:validateLength maximum="255" />
+						</p:inputText>
+					</div>
+				</div>
+				
+			</p:panel>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
