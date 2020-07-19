@@ -57,13 +57,15 @@
 			    <option value="en_US" th:text="#{lang.en_US}"></option>
 			    <option value="pt_BR" th:text="#{lang.pt_BR}"></option>
 			</select>	
-		 
+		 <!-- 
 			<span id="infos-user" style="color: lightgray"> 				
 				<i class="fas fa-user fa-sm"></i> 
 				<a data-toggle="modal" data-target="#infoUserDialog" style="cursor: pointer; cursor: hand; text-decoration: none;">
 					<span sec:authentication="name" th:remove="tag"></span>
 				</a>
 			</span>
+		 -->	
+			
 		</small>
 
 	</div>
@@ -72,8 +74,11 @@
 </nav>
 
 <div class="web-content" style="margin:5px 0;" th:replace="fragments/alertMessages :: alertMessages"></div> 
-<div th:replace="fragments/infoUser :: infoUser"></div>
 
+<!-- 
+<div th:replace="fragments/infoUser :: infoUser"></div>
+ -->
+ 
 </div>
 </body>
 </html>
