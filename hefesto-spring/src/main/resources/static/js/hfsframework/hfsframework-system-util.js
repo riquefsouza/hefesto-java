@@ -2,9 +2,6 @@ class HFSSystemUtil {
 	constructor()
 	{
 		this._url = window.location.href;
-		this._urlAuthServer = $("meta[name='URL-AUTH-SERVER']").attr("content");
-		this._urlResourceServer = $("meta[name='URL-RESOURCE-SERVER']").attr("content");
-		this._authToken = $("meta[name='X-AUTH-TOKEN']").attr("content");
 		
 		this._anchorHomePage = $('#anchorHomePage');
 
@@ -38,8 +35,7 @@ class HFSSystemUtil {
 		
 		this._dlgAlertMessage = $('#dlgAlertMessage');
 		this._dlgAlertMessageText = $('#dlgAlertMessage-text');
-			
-		this.buildDialogAlertMessage(this._dlgAlertMessage);
+
 	}
 	
 	getSystemPage() {
@@ -159,7 +155,7 @@ class HFSSystemUtil {
 	  return "";
 	}
 
-	removeCookie(cname,cvalue) {
+	removeCookie(cname) {
 		var d = new Date();
 		d.setTime(d.getTime());
 		var expires = "expires=" + d.toGMTString();
@@ -189,175 +185,7 @@ class HFSSystemUtil {
 			removeCookie(key, value);
 		}
 	}
-	
-	buildDialogDelete(urlApiServer, authToken, tableList, 
-			dlgDeleteConfirmation, messageButtonYes, messageButtonNo, fieldJsonText){
-		this._dlgDeleteConfirmation.puidialog({
-		    minimizable: false,
-		    maximizable: false,
-		    resizable: false,
-		    responsive: true,
-		    minWidth: 200,
-		    modal: true,
-		    buttons: [{
-		            text: messageButtonYes,
-		            icon: 'fa-check',
-		            click: function() {
-		            	var dataRowSelected = tableList.puidatatable('getSelection');
-		            	
-		            	if (dataRowSelected.length > 0) {
-		        			$.ajax({
-		        				method: "DELETE",
-		        				url: urlApiServer + "/" + dataRowSelected[0].id,
-		        				dataType: "json",
-		        			    contentType: "application/json; charset=utf-8",								
-		        		        context: this,
-		        		        beforeSend: function (xhr) {
-		        		            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-		        		        }
-		        			})
-		        			.done(function(data) {
-		        				fieldJsonText.val("");
-		        				
-		        				tableList.puidatatable('reload');
-		        				dlgDeleteConfirmation.puidialog('hide');
-			            	})
-			    			.fail(function(xhr){
-	        		            //alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
-			    				this.dangerShow("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
-	        		        });
-
-		            	}
-		            	
-		            }
-		        },
-		        {
-		            text: messageButtonNo,
-		            icon: 'fa-close',
-		            click: function() {
-		                dlgDeleteConfirmation.puidialog('hide');
-		            }
-		        }
-		    ]
-		});	
-	}
-	
-	buildTable(urlApiServer, authToken, formTitle, responsePage, fieldJsonText, tableColumns) {
-		this._tableList.puidatatable({
-			caption: formTitle.text(),
-			lazy: true,
-			responsive: true,	           
-			selectionMode: 'single',
-			paginator: {
-				rows: responsePage.size,
-				totalRecords: (responsePage.totalElements-responsePage.size)
-			},
-			columns: tableColumns,
-			datasource: function(callback, ui) {
-				//ui.first = Index of the first record
-				//ui.rows = Number of rows to load
-				//ui.sortField = Field name of the sorted column
-				//ui.sortOrder = Sort order of the sorted column
-				//ui.sortMeta = Array of field names and sort orders of the sorted columns 
-				//ui.filters = Filtering information with field-value pairs like ui.filters['fieldname'] = 'filtervalue'
-				var uri = '';
-				var ascDesc = 'asc';
-				var fieldSort = 'id';
-				
-				//console.log(ui);
-				//if (ui.filters){
-				  // if (ui.filters.length > 0){
-				   	//	console.log(ui.filters[0].field);
-				   		//console.log(ui.filters[0].value);
-				   //}	        	   		
-				//}					           
-				
-				ui.sortField ? fieldSort = ui.sortField : fieldSort = 'id'; 	            
-				ui.sortOrder == 1 ? ascDesc='asc' : ascDesc='desc';
-				
-				if (ui.first==0)
-					uri = urlApiServer+'?page=0&size='+responsePage.size+'&sort='+fieldSort+','+ascDesc;
-				else
-					uri = urlApiServer+'?page='+((ui.first/ui.rows)+1)+'&size='+responsePage.size+'&sort='+fieldSort+','+ascDesc;
-				
-				$.ajax({
-					method: "GET",
-					url: uri,
-					dataType: "json",
-				    contentType: "application/json; charset=utf-8",								
-			        context: this,
-			        beforeSend: function (xhr) {
-			            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-			        }
-				}).done(function(data) {
-		        	callback.call(this, data.content);
-				}).fail(function(xhr){
-					this.dangerShow("An error occured on buildTable: " + xhr.status + " " + xhr.statusText);
-			    });
-			},	           
-			rowSelect: function(event, data) {
-				fieldJsonText.val(JSON.stringify(data));
-			}
-		});
 		
-	}
-	
-	
-	buildGetPages(urlApiServer, authToken, formTitle, tableList, dlgDeleteConfirmation, 
-			messageButtonYes, messageButtonNo, fieldJsonText, tableColumns) {
-		
-		$.get({
-			url: urlApiServer + "/pages",
-			dataType: "json",
-		    contentType: "application/json; charset=utf-8",								
-	        context: this,
-	        beforeSend: function (xhr) {
-	            xhr.setRequestHeader("Authorization", "Bearer " + authToken);
-	        }
-		})
-		.done(function(data) {
-    		this.buildTable(urlApiServer + "/pages", authToken, formTitle, data,
-    				fieldJsonText, tableColumns);
-    		this.buildDialogDelete(urlApiServer, authToken, tableList,
-    				dlgDeleteConfirmation, messageButtonYes, messageButtonNo,
-    				fieldJsonText);	        
-		})
-		.fail(function(xhr, textStatus, msg){
-			this.dangerShow("An error occured on List: " + xhr.status + " " + xhr.statusText);
-	    	/*
-	    	setTimeout(function() {
-	    		//this.dangerHide();
-			}, 1500);
-			*/
-	    })
-	    .always(function(){
-	    	//$('#spinner').toggle();
-	    });
-		
-	}
-	
-	buildDialogAlertMessage(dlgAlertMessage) {
-		this._dlgAlertMessage.puidialog({
-		    minimizable: false,
-		    maximizable: false,
-		    resizable: false,
-		    responsive: true,
-		    minWidth: 200,
-		    modal: true,
-		    buttons: [{
-		            text: 'Ok',
-		            icon: 'fa-check',
-		            click: function() {
-		            	dlgAlertMessage.puidialog('hide');
-		            }
-		        }
-		    ],
-		    beforeShow: function(event) {
-		    	//console.log(event.target);		    	
-		    }
-		});
-	}
-	
 	showDialogAlertMessage(title, message) {
 		this.hideDialogAlertMessage();
 		

@@ -5,12 +5,12 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.BindingResult;
@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.hfs.admin.vo.AuthenticatedUserVO;
 import br.com.hfs.admin.vo.MenuVO;
+import br.com.hfs.util.AuthenticationUtil;
 
 public abstract class BaseViewController {
 
@@ -35,9 +36,6 @@ public abstract class BaseViewController {
 	protected String authServerURL;
 	
 	protected String accesToken;
-	
-	@Value("${resource-server}")
-	protected String resourceServer;
 	
 	@Autowired
 	protected MessageSource messageSource;
@@ -204,34 +202,12 @@ public abstract class BaseViewController {
 			return null;
 	}
 	
-/*	
-	public Optional<BaseOAuth2RestUser> getPrincipal() {
-		Optional<BaseOAuth2RestUser> userLogged = AuthenticationUtil.getPrincipal();
-		if (userLogged.isPresent()) {		
-			
-			this.authServerURL = userLogged.get().getUrlAuthorizationServer();
-			this.accesToken = userLogged.get().getAccessToken().getValue();
-			
-			return userLogged;
-		}
-		return Optional.empty();
-	}
-	
 	public Optional<ModelAndView> getPage(String pagina) {		
-		if (getPrincipal().isPresent()) {
+		if (AuthenticationUtil.getPrincipal().isPresent()) {
 			ModelAndView mv = new ModelAndView(pagina);
 			
 			//mv.getModelMap().get(key)
 			
-			//if (!mv.getModel().containsKey("urlAuthServer")) {			
-				//mv.addObject("urlAuthServer", authServerURL);
-			//}
-			if (!mv.getModel().containsKey("urlResourceServer")) {
-				mv.addObject("urlResourceServer", resourceServer);
-			}
-			//if (!mv.getModel().containsKey("authToken")) {
-				//mv.addObject("authToken", accesToken);
-			//}
 			//if (!mv.getModel().containsKey("userLogged")) {		
 				//mv.addObject("userLogged", getPrincipal().get());
 			//}
@@ -240,5 +216,5 @@ public abstract class BaseViewController {
 		}		
 		return Optional.empty();
 	}	
-	*/
+	
 }

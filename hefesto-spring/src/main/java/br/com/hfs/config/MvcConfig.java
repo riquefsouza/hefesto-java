@@ -36,7 +36,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	public MvcConfig() {
 		super();
 	}
-	
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 	    registry.addInterceptor(localeChangeInterceptor());
@@ -81,7 +81,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.addAll(HttpMessageConverterUtil.getMessageConverters());
 	}
-	
+
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/login.html");
 		registry.addViewController("/index.html");
