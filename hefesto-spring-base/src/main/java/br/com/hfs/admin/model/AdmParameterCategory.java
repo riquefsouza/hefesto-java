@@ -192,7 +192,7 @@ public class AdmParameterCategory implements Serializable {
 	 */
 	public AdmParameter addParameter(AdmParameter parameter) {
 		getAdmParameters().add(parameter);
-		parameter.setParameterCategory(this);
+		parameter.setAdmParameterCategory(this);
 
 		return parameter;
 	}
@@ -206,7 +206,7 @@ public class AdmParameterCategory implements Serializable {
 	 */
 	public AdmParameter removeAdmParameter(AdmParameter parameter) {
 		getAdmParameters().remove(parameter);
-		parameter.setParameterCategory(null);
+		parameter.setAdmParameterCategory(null);
 
 		return parameter;
 	}

@@ -1,20 +1,20 @@
-class ListAdmParameterCategory extends HFSSystemUtil {
+class ListAdmParameter extends HFSSystemUtil {
 	constructor()
 	{
 		super();
 		
 		this.hideQueryString();
 		
-		this._form = $('#formListAdmParameterCategory');
+		this._form = $('#formListAdmParameter');
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmParameterCategory').DataTable({
-			select: true, 
+		this._tableList = $('#tableAdmParameter').DataTable( {
+			select: true,
 			responsive: true
-		} );			
+		} );
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
-		this._formListAdmParameterCategory = $('#formListAdmParameterCategory');
+		this._formListAdmParameter = $('#formListAdmParameter');
 
 	}
 	
@@ -43,7 +43,7 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		if (dataRowSelected.length > 0) {		
 			this._form[0].action+= '/' + dataRowSelected[0];
 			
-			this._formListAdmParameterCategory.submit();	
+			this._formListAdmParameter.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
@@ -86,13 +86,13 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 }
 
 $(function() {
-	const listAdmParameterCategory = new ListAdmParameterCategory();
+	const listAdmParameter = new ListAdmParameter();
 	
-	$('#btnExport').click(listAdmParameterCategory.btnExportClick.bind(listAdmParameterCategory));
-	$('#btnAdd').click(listAdmParameterCategory.btnAddClick.bind(listAdmParameterCategory));
-	$('#btnEdit').click(listAdmParameterCategory.btnEditClick.bind(listAdmParameterCategory));
-	$('#btnDelete').click(listAdmParameterCategory.btnDeleteClick.bind(listAdmParameterCategory));
-	$('#btnBack').click(listAdmParameterCategory.btnBackClick.bind(listAdmParameterCategory));
+	$('#btnExport').click(listAdmParameter.btnExportClick.bind(listAdmParameter));
+	$('#btnAdd').click(listAdmParameter.btnAddClick.bind(listAdmParameter));
+	$('#btnEdit').click(listAdmParameter.btnEditClick.bind(listAdmParameter));
+	$('#btnDelete').click(listAdmParameter.btnDeleteClick.bind(listAdmParameter));
+	$('#btnBack').click(listAdmParameter.btnBackClick.bind(listAdmParameter));
 	
 	
 });

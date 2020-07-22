@@ -40,7 +40,7 @@ public abstract class BaseViewRegister<T,
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
-	private B service;
+	protected B service;
 
 	private String listPage;
 

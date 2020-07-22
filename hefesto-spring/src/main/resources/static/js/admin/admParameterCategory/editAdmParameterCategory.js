@@ -6,9 +6,6 @@ class EditAdmParameterCategory extends HFSSystemUtil {
 		this.hideQueryString();
 		
 		this._page = $('#admParameterCategoryView');
-		
-		//this._saveMethod = this.getPersistedItem("saveMethod");
-				
 	}
 	
 	btnCancelClick(event) {

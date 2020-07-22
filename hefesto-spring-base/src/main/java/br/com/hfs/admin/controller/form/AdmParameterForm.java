@@ -28,7 +28,7 @@ public class AdmParameterForm {
 		this.code = obj.getCode();
 		this.description = obj.getDescription();
 		this.value = obj.getValue();
-		this.admParameterCategory = new AdmParameterCategoryForm(obj.getParameterCategory());
+		this.admParameterCategory = new AdmParameterCategoryForm(obj.getAdmParameterCategory());
 	}
 
 	public AdmParameter convert() {
@@ -41,7 +41,7 @@ public class AdmParameterForm {
 			bean.get().setValue(this.value);
 			bean.get().setDescription(this.description);
 			bean.get().setCode(this.code);
-			bean.get().setIdParameterCategory(admParameterCategory.getId());
+			bean.get().setIdAdmParameterCategory(admParameterCategory.getId());
 			return bean.get();	
 		}
 		return null;

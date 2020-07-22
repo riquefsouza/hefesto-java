@@ -80,9 +80,9 @@ public class AdmParameterRestController {
 		obj = admParameterService.insert(obj);
 		//AdmParameter obj2 = admParameterService.findById(obj.getId()).get();
 		
-		Optional<AdmParameterCategory> opt = admParameterCategoryService.findById(obj.getIdParameterCategory());
+		Optional<AdmParameterCategory> opt = admParameterCategoryService.findById(obj.getIdAdmParameterCategory());
 		if (opt.isPresent()) {
-			obj.setParameterCategory(opt.get());
+			obj.setAdmParameterCategory(opt.get());
 		}
 		
 		
