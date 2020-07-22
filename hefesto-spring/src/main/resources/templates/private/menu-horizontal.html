@@ -26,12 +26,12 @@
 	  <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
 		<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"><span th:text="#{menu.administrative}" th:remove="tag"></span></a>
 		<div class="dropdown-menu">
-			<a class="dropdown-item" th:href="@{/private/admParameterCategoryView}"><span th:text="#{menu.admParameterCategory}" th:remove="tag"></span></a>
-			<a class="dropdown-item" th:href="@{/private/admParameterView}"><span th:text="#{menu.admParameter}" th:remove="tag"></span></a>
-			<a class="dropdown-item" th:href="@{/private/admPageView}"><span th:text="#{menu.admPage}" th:remove="tag"></span></a>
-			<a class="dropdown-item" th:href="@{/private/admMenuView}"><span th:text="#{menu.admMenu}" th:remove="tag"></span></a>
-			<a class="dropdown-item" th:href="@{/private/admProfileView}"><span th:text="#{menu.admProfile}" th:remove="tag"></span></a>
-			<a class="dropdown-item" th:href="@{/private/admUserView}"><span th:text="#{menu.admUser}" th:remove="tag"></span></a>		
+			<a class="dropdown-item" id="admParameterCategoryView" th:href="@{/private/admParameterCategoryView}"><span th:text="#{menu.admParameterCategory}" th:remove="tag"></span></a>
+			<a class="dropdown-item" id="admParameterView" th:href="@{/private/admParameterView}"><span th:text="#{menu.admParameter}" th:remove="tag"></span></a>
+			<a class="dropdown-item" id="admPageView" th:href="@{/private/admPageView}"><span th:text="#{menu.admPage}" th:remove="tag"></span></a>
+			<a class="dropdown-item" id="admMenuView" th:href="@{/private/admMenuView}"><span th:text="#{menu.admMenu}" th:remove="tag"></span></a>
+			<a class="dropdown-item" id="admProfileView" th:href="@{/private/admProfileView}"><span th:text="#{menu.admProfile}" th:remove="tag"></span></a>
+			<a class="dropdown-item" id="admUserView" th:href="@{/private/admUserView}"><span th:text="#{menu.admUser}" th:remove="tag"></span></a>		
 		</div>
 	  </li>
 	  

@@ -33,10 +33,6 @@ public abstract class BaseViewController {
 	
 	protected static final String ERRO_DELETE = "Error Transaction When Excluding: ";
 	
-	protected String authServerURL;
-	
-	protected String accesToken;
-	
 	@Autowired
 	protected MessageSource messageSource;
 	
@@ -208,6 +204,9 @@ public abstract class BaseViewController {
 			
 			//mv.getModelMap().get(key)
 			
+			//if (!mv.getModel().containsKey("urlServer")) {			
+				//mv.addObject("urlServer", authServerURL);
+		    //}
 			//if (!mv.getModel().containsKey("userLogged")) {		
 				//mv.addObject("userLogged", getPrincipal().get());
 			//}

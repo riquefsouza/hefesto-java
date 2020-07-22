@@ -86,12 +86,14 @@
 		      <tr>
 		      	<th style="display: none" >Id</th>
 		        <th>Description</th>
+		        <th>Order</th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		      <tr th:each="item : ${listBean}">
 		      	<td style="display: none" th:text="${item.id}"></td>
 		        <td th:text="${item.description}"></td>
+		        <td th:text="${item.order}"></td>
 		      </tr>
 		    </tbody>
 		  </table>		

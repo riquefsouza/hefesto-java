@@ -7,6 +7,9 @@
 package br.com.hfs.base.report;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -63,11 +67,19 @@ public abstract class BaseViewReportController
 	public Map<String, Object> getParametros() {
 		Map<String, Object> params = new HashMap<String, Object>();
 
-	    ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-	    ServletContext sc = (ServletContext) attr.getRequest().getServletContext();
-		String caminho = sc.getRealPath(File.separator);
+	    //ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+	    //ServletContext sc = (ServletContext) attr.getRequest().getServletContext();
+		//String caminho = sc.getRealPath(File.separator);
 		
-		params.put("IMAGE", caminho + "/WEB-INF/static/img/logo.png");
+		try {
+			File file = ResourceUtils.getFile("classpath:static/img/logo.png");
+			InputStream inputStream = new FileInputStream(file);
+			
+			params.put("IMAGE", inputStream);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		return params;
 	}
 

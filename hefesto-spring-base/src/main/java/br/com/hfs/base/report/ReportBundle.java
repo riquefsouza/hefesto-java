@@ -31,7 +31,7 @@ public class ReportBundle implements Serializable {
 	public static ResourceBundle getBundle() {
 		if (bundle == null) {			
 			Locale locale = new Locale("pt", "BR");
-			bundle = ResourceBundle.getBundle("relatorio", locale);
+			bundle = ResourceBundle.getBundle("report", locale);
 		}
 		return bundle;
 	}

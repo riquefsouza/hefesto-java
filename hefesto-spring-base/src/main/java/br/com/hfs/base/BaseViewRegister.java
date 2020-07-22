@@ -12,9 +12,12 @@ import javax.validation.Valid;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -84,11 +87,13 @@ public abstract class BaseViewRegister<T,
 		
 		return mv.get();
 	}
-
-	@GetMapping("/edit")
-	public ModelAndView edit(T bean) {
+	
+	@GetMapping("/edit/{id}")
+	public ModelAndView edit(@PathVariable I id) {
 		Optional<ModelAndView> mv = getPage(getEditPage());
-		mv.get().addObject("bean", bean);
+		
+		Optional<T> obj = service.findById(id);
+		mv.get().addObject("bean", obj.get());
 		
 		return mv.get();
 	}
@@ -111,6 +116,9 @@ public abstract class BaseViewRegister<T,
 				this.service.update(bean);
 			
 			mv.get().addObject("bean", bean);
+			
+			List<T> lista = service.findAll();
+			mv.get().addObject("listBean", lista);
 			
 		} catch (RestClientException e) {
 			this.showDangerMessage(mv.get(), e);
@@ -150,9 +158,21 @@ public abstract class BaseViewRegister<T,
 		return mv.get();
 	}
 	
-	@GetMapping("/delete")
-	public String delete() {
-		return getListPage();
+	@DeleteMapping("/{id}")
+	public ResponseEntity<T> delete(@PathVariable I id) {
+		
+		Optional<T> obj = service.findById(id);
+
+		if (!obj.isPresent()) {
+			log.info("DELETE NOT FOUND: " + id);
+			return ResponseEntity.notFound().build();
+		}
+
+		service.delete(obj.get());
+
+		return ResponseEntity.ok(obj.get());
+		
+		//return getListPage();
 	}
 
 	@ResponseBody

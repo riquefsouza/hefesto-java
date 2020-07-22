@@ -2,6 +2,7 @@ class HFSSystemUtil {
 	constructor()
 	{
 		this._url = window.location.href;
+		//this._urlServer = $("meta[name='URL-SERVER']").attr("content");
 		
 		this._anchorHomePage = $('#anchorHomePage');
 
