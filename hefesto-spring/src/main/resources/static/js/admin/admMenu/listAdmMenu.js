@@ -1,21 +1,21 @@
-class ListAdmParameterCategory extends HFSSystemUtil {
+class ListAdmMenu extends HFSSystemUtil {
 	constructor()
 	{
 		super();
 		
 		this.hideQueryString();
 		
-		this._form = $('#formListAdmParameterCategory');
+		this._form = $('#formListAdmMenu');
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmParameterCategory').DataTable({
+		this._tableList = $('#tableAdmMenu').DataTable({
 			select: true, 
 			responsive: true
-		} );			
+		} );
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
-		this._formListAdmParameterCategory = $('#formListAdmParameterCategory');
-
+		this._formListAdmMenu = $('#formListAdmMenu');
+			
 	}
 	
 	btnExportClick(event) {
@@ -42,8 +42,7 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		
 		if (dataRowSelected.length > 0) {		
 			this._form[0].action+= '/' + dataRowSelected[0];
-			
-			this._formListAdmParameterCategory.submit();	
+			this._formListAdmMenu.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
@@ -52,7 +51,7 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 	btnDeleteClick(event) {
 		event.preventDefault();
 		this.dangerHide();
-
+		
 		var dataRowSelected = this._tableList.row('.selected').data();
 		
 		if (dataRowSelected.length > 0) {
@@ -70,7 +69,7 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 			.fail(function(xhr){
 	            //alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
 				this.dangerShow("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
-	        });			
+	        });	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
@@ -84,13 +83,13 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 }
 
 $(function() {
-	const listAdmParameterCategory = new ListAdmParameterCategory();
+	const listAdmMenu = new ListAdmMenu();
 	
-	$('#btnExport').click(listAdmParameterCategory.btnExportClick.bind(listAdmParameterCategory));
-	$('#btnAdd').click(listAdmParameterCategory.btnAddClick.bind(listAdmParameterCategory));
-	$('#btnEdit').click(listAdmParameterCategory.btnEditClick.bind(listAdmParameterCategory));
-	$('#btnDelete').click(listAdmParameterCategory.btnDeleteClick.bind(listAdmParameterCategory));
-	$('#btnBack').click(listAdmParameterCategory.btnBackClick.bind(listAdmParameterCategory));
+	$('#btnExport').click(listAdmMenu.btnExportClick.bind(listAdmMenu));
+	$('#btnAdd').click(listAdmMenu.btnAddClick.bind(listAdmMenu));
+	$('#btnEdit').click(listAdmMenu.btnEditClick.bind(listAdmMenu));
+	$('#btnDelete').click(listAdmMenu.btnDeleteClick.bind(listAdmMenu));
+	$('#btnBack').click(listAdmMenu.btnBackClick.bind(listAdmMenu));
 	
 	
 });
