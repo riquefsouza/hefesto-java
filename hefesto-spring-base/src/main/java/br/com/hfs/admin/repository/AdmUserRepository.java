@@ -18,6 +18,10 @@ public interface AdmUserRepository extends JpaRepository<AdmUser, Long> {
 	
 	List<AdmUser> findByNameLike(String name);
 	
+	Optional<AdmUser> findByName(String name);
+
+	Optional<AdmUser> findByEmail(String email);
+	
 	@Query(name = "AdmUser.findIPByOracle", nativeQuery = true)
 	public List<Object> findIPByOracle();
 

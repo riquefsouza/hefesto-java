@@ -4,55 +4,58 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
 
-<div th:fragment="becomeMember" id="dlgBecomeMember" th:title="#{dlgBecomeMember.title}" style="display: none;" >
-	    
-    <div class="container-fluid" style="margin: 0 auto; width:350px; position: float;">
-		
+<div class="modal fade" th:fragment="becomeMember" id="dlgBecomeMember" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel"><span th:text="#{dlgBecomeMember.title}"></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		       
 		<div class="form-group">
 			<label for="dlgBecomeMember_username">
 				<span id="dlgBecomeMember_label_username" th:text="#{login.username}"></span>
 			</label>
 			<input type="text" class="form-control" id="dlgBecomeMember_username" th:placeholder="#{login.username.placeholder}">
 		</div>
-		
-	
 		<div class="form-group">
 			<label for="dlgBecomeMember_email">
 				<span id="dlgBecomeMember_label_email" th:text="#{dlgBecomeMember.email}"></span>
 			</label>
 			<input type="email" class="form-control" id="dlgBecomeMember_email">
-		</div>
-	
+		</div>		
 		<div class="form-group">
 			<label for="dlgBecomeMember_newPassword">
 				<span id="dlgBecomeMember_label_newPassword" th:text="#{login.password}"></span>
 			</label>
 			<input type="password" class="form-control" id="dlgBecomeMember_newPassword" th:placeholder="#{login.password.placeholder}" autocomplete="off">
 		</div>
-	
 		<div class="form-group">
 			<label for="dlgBecomeMember_confirmNewPassword">
 				<span id="dlgBecomeMember_label_confirmNewPassword" th:text="#{changePassword.confirmNewPassword}"></span>
 			</label>
 			<input type="password" class="form-control" id="dlgBecomeMember_confirmNewPassword">
 		</div>
-	
-		<div class="form-group">
-			<div style="margin: 0 auto; width:40%">
-				<button type="button" class="btn btn-primary btn-icon-split" id="dlgBecomeMember_btnSignUp">
-					<span class="icon text-white-50">
-						<i class="fa fa-sign-in" aria-hidden="true"></i>
-					</span>
-					<span class="text" th:text="#{login.becomeMember}"></span>
-				</button>
-			</div>
-		</div>
-					
+       
+      </div>
+      <div class="modal-footer">
+      		        
+		<button type="button" class="btn btn-primary btn-icon-split" data-dismiss="modal" id="dlgBecomeMember_btnSignUp">
+			<span class="icon text-white-50">
+				<i class="fa fa-sign-in" aria-hidden="true"></i>
+			</span>
+			<span class="text" th:text="#{login.becomeMember}"></span>
+		</button>		        
+        
+      </div>
     </div>
+  </div>
+</div>	
 
-	<script th:src="@{/js/hfsframework/hfsframework-becomeMember.js}"></script>
-    
-</div>
+<script th:src="@{/js/hfsframework/hfsframework-becomeMember.js}"></script>
 
 </body>
 </html>

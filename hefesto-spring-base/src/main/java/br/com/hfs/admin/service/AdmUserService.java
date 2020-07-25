@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.Session;
 import org.hibernate.TransactionException;
@@ -32,6 +33,14 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 	
 	public List<AdmUser> findByNameLike(String name){
 		return repository.findByNameLike(name);
+	}
+	
+	public Optional<AdmUser> findByName(String name) {
+		return repository.findByName(name);
+	}
+
+	public Optional<AdmUser> findByEmail(String email){
+		return repository.findByEmail(email);
 	}
 	
 	public List<AdmUser> findPaginated(int pageNumber, int pageSize) {

@@ -12,6 +12,7 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -87,6 +88,18 @@ public class AdmUser implements Serializable {
 	@Size(min=4, max=128)
 	@Column(name = "USU_PASSWORD", nullable = false, length = 128)
 	private String password;
+	
+	@Size(min=4, max=64)
+	@Transient
+	private String currentPassword;
+	
+	@Size(min=4, max=64)
+	@Transient
+	private String newPassword;
+	
+	@Size(min=4, max=64)
+	@Transient
+	private String confirmNewPassword;
     
 	/**
 	 * Instantiates a new adm usuario.
@@ -270,6 +283,30 @@ public class AdmUser implements Serializable {
 		u.setName(name);
 		
 		return u;
+	}
+
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getConfirmNewPassword() {
+		return confirmNewPassword;
+	}
+
+	public void setConfirmNewPassword(String confirmNewPassword) {
+		this.confirmNewPassword = confirmNewPassword;
 	}
 
  }
