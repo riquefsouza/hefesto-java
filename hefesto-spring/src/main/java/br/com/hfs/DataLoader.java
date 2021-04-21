@@ -18,11 +18,13 @@ import br.com.hfs.admin.model.AdmParameter;
 import br.com.hfs.admin.model.AdmParameterCategory;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
+import br.com.hfs.admin.model.AdmUserProfile;
 import br.com.hfs.admin.service.AdmMenuService;
 import br.com.hfs.admin.service.AdmPageService;
 import br.com.hfs.admin.service.AdmParameterCategoryService;
 import br.com.hfs.admin.service.AdmParameterService;
 import br.com.hfs.admin.service.AdmProfileService;
+import br.com.hfs.admin.service.AdmUserProfileService;
 import br.com.hfs.admin.service.AdmUserService;
 
 @Component
@@ -47,6 +49,9 @@ public class DataLoader implements ApplicationRunner {
 	
 	@Autowired
 	private AdmMenuService menuService;
+	
+	@Autowired
+	private AdmUserProfileService userProfileService;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -102,8 +107,12 @@ public class DataLoader implements ApplicationRunner {
 		Set<AdmUser> users = new HashSet<AdmUser>();
 		users.add(user1);
 
-		profile1.setAdmUsers(users);
-		profileService.update(profile1);
+		AdmUserProfile userProfile = new AdmUserProfile(user1.getId(), profile1.getId());
+		
+		userProfileService.insert(userProfile);
+		
+		//profile1.setAdmUsers(users);
+		//profileService.update(profile1);
 		
 		//============ PARAMETER CATEGORY ================
 		

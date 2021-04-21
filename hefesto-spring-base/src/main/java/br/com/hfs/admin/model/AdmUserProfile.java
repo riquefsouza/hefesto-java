@@ -2,20 +2,29 @@ package br.com.hfs.admin.model;
 
 import java.io.Serializable;
 
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "ADM_USER_PROFILE")
+@Table(name = "ADM_USER_PROFILE", 
+	uniqueConstraints = 
+		@UniqueConstraint(columnNames={"USP_USE_SEQ", "USP_PRF_SEQ"}))
 @NamedQueries({
-	@NamedQuery(name = "AdmUserProfile.deleteByProfile", query = "DELETE FROM AdmUserProfile fp WHERE fp.id.profileSeq = ?1"),
-	@NamedQuery(name = "AdmUserProfile.deleteByCodUser", query = "DELETE FROM AdmUserProfile fp WHERE fp.id.userSeq = ?1")
+	@NamedQuery(name = "AdmUserProfile.deleteByProfile", query = "DELETE FROM AdmUserProfile fp WHERE fp.profileSeq = ?1"),
+	@NamedQuery(name = "AdmUserProfile.deleteByCodUser", query = "DELETE FROM AdmUserProfile fp WHERE fp.userSeq = ?1")
 })	
 public class AdmUserProfile implements Serializable {
 	
@@ -23,8 +32,25 @@ public class AdmUserProfile implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
-	@EmbeddedId
-	private AdmUserProfilePK id;
+	@Id	
+	@GenericGenerator(name = "ADM_USER_PROFILE_ID_GENERATOR",
+	strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+    parameters = {
+    	@Parameter(name = "sequence_name", value = "ADM_USER_PROFILE_SEQ"),
+        @Parameter(name = "initial_value", value = "1"),
+        @Parameter(name = "increment_size", value = "1")
+	})		
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_USER_PROFILE_ID_GENERATOR")	
+	@Column(name = "USP_SEQ")
+	private Long id;
+	
+	/** The cod usuario. */
+	@Column(name = "USP_USE_SEQ", nullable=false)
+	private Long userSeq;
+
+	/** The profile seq. */
+	@Column(name = "USP_PRF_SEQ", nullable=false)
+	private Long profileSeq;	
 
 	/* The adm profile. */
 	// bi-directional many-to-one association to AdmProfile
@@ -39,12 +65,18 @@ public class AdmUserProfile implements Serializable {
 		clean();
 	}
 	
+	public AdmUserProfile(Long userSeq, Long profileSeq) {
+		super();
+		this.userSeq = userSeq;
+		this.profileSeq = profileSeq;
+	}
+
 	/**
 	 * Limpar.
 	 */
 	public void clean(){
-		this.id = new AdmUserProfilePK();
-		//this.admProfile = new AdmProfile();
+		this.userSeq = 0L;
+		this.profileSeq = 0L;
 	}
 
 	/**
@@ -52,7 +84,7 @@ public class AdmUserProfile implements Serializable {
 	 *
 	 * @return o the id
 	 */
-	public AdmUserProfilePK getId() {
+	public Long getId() {
 		return this.id;
 	}
 
@@ -62,8 +94,45 @@ public class AdmUserProfile implements Serializable {
 	 * @param id
 	 *            o novo the id
 	 */
-	public void setId(AdmUserProfilePK id) {
+	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * Gets the user seq.
+	 *
+	 * @return the user seq
+	 */
+	public Long getUserSeq() {
+		return userSeq;
+	}
+
+	/**
+	 * Sets the user seq.
+	 *
+	 * @param userSeq the new user seq
+	 */
+	public void setUserSeq(Long userSeq) {
+		this.userSeq = userSeq;
+	}
+
+	/**
+	 * Pega o the profile seq.
+	 *
+	 * @return o the profile seq
+	 */
+	public Long getProfileSeq() {
+		return profileSeq;
+	}
+
+	/**
+	 * Atribui o the profile seq.
+	 *
+	 * @param profileSeq
+	 *            o novo the profile seq
+	 */
+	public void setProfileSeq(Long profileSeq) {
+		this.profileSeq = profileSeq;
 	}
 
 	/*
