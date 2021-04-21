@@ -60,7 +60,7 @@ public class DataLoader implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		
+		/*
 		log.info("Init " + this.getClass().getName());
 		
 		//============ PROFILE ================
@@ -169,7 +169,7 @@ public class DataLoader implements ApplicationRunner {
 		listaAdmMenu.add(new AdmMenu("Administer User", 1L, 11L, 6));
 				
 		menuService.insert(listaAdmMenu);
-		
+		*/
 	}
 
 }
