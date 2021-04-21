@@ -96,6 +96,7 @@ public class DataLoader implements ApplicationRunner {
 		AdmUser user0 = new AdmUser("admin", "$2a$10$nhU38YCtaWpLzTIeG/uAIeGnu7GItrvGsQAQrgsjM9hN19cGp25N6");
 		user0.setName("Henrique");
 		user0.setEmail("nao_responda@gmail.com");
+		user0.setActive(true);
 		
 		AdmUser user1 = userService.insert(user0);
 		

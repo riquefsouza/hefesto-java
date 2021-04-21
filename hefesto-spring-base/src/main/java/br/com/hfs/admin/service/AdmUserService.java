@@ -4,16 +4,20 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.hibernate.Session;
 import org.hibernate.TransactionException;
 import org.hibernate.jdbc.ReturningWork;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
 import br.com.hfs.admin.repository.AdmUserRepository;
 import br.com.hfs.base.BaseService;
@@ -23,10 +27,56 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 
 	private static final long serialVersionUID = 1L;
 
+	@Autowired
+	private AdmProfileService admProfileService;
+	
 	public AdmUserService() {
 		super(AdmUser.class);
 	}
 	
+	private AdmUser setTransient(AdmUser item) {
+		List<Long> admIdProfiles = new ArrayList<Long>();
+		List<AdmProfile> admProfiles = admProfileService.findProfilesByUser(item.getId());
+		
+		admProfiles.forEach(profile -> admIdProfiles.add(profile.getId()));
+		item.setAdmIdProfiles(admIdProfiles);
+		
+		List<String> listUserProfiles = new ArrayList<String>();
+		admProfiles.forEach(profile -> listUserProfiles.add(profile.getDescription()));
+		item.setUserProfiles(listUserProfiles.stream().collect(Collectors.joining(",")));	
+		
+		return item;
+	}
+	
+	@Override
+	public Optional<AdmUser> findById(Long id) {
+		Optional<AdmUser> item = repository.findById(id);
+		AdmUser newItem = setTransient(item.get());
+		return Optional.of(newItem);
+	}
+	
+	private List<AdmUser> setTransient(List<AdmUser> lista) {
+		lista.stream().forEach(item -> setTransient(item));
+		return lista;
+	}
+
+	@Override
+	public List<AdmUser> findAll() {
+		List<AdmUser> lista = repository.findAll();		
+		return setTransient(lista);
+	}
+	
+	private Page<AdmUser> setTransient(Page<AdmUser> lista) {
+		lista.stream().forEach(item -> setTransient(item));
+		return lista;
+	}
+
+	@Override
+	public Page<AdmUser> findAll(Pageable pageable) {
+		Page<AdmUser> lista = repository.findAll(pageable);
+		return setTransient(lista);
+	}
+
 	public Page<AdmUser> findByNameLike(String name, Pageable pagination){
 		return repository.findByNameLike(name, pagination);
 	}

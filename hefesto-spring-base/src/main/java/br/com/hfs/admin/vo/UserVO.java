@@ -2,6 +2,8 @@ package br.com.hfs.admin.vo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -31,6 +33,12 @@ public class UserVO implements Serializable {
 	
 	private String password;
 	
+	private Boolean active;
+	
+	private List<Long> admIdProfiles;
+	
+	private String userProfiles;
+	
 	private String currentPassword;
 	
 	private String newPassword;
@@ -45,12 +53,13 @@ public class UserVO implements Serializable {
 		clean();
 	}
 
-	public UserVO(Long id, String email, String login, String name) {
+	public UserVO(Long id, String email, String login, String name, Boolean active) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.login = login;
 		this.name = name;
+		this.active = active;
 	}
 
 	public void clean() {
@@ -60,6 +69,9 @@ public class UserVO implements Serializable {
 		this.login = "";
 		this.name = "";
 		this.password = "";
+		this.active = false;
+		this.admIdProfiles = new ArrayList<Long>();
+		this.userProfiles = "";
 		this.currentPassword = "";
 		this.newPassword = "";
 		this.confirmNewPassword = "";
@@ -153,6 +165,30 @@ public class UserVO implements Serializable {
 
 	public void setConfirmNewPassword(String confirmNewPassword) {
 		this.confirmNewPassword = confirmNewPassword;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public List<Long> getAdmIdProfiles() {
+		return admIdProfiles;
+	}
+
+	public void setAdmIdProfiles(List<Long> admIdProfiles) {
+		this.admIdProfiles = admIdProfiles;
+	}
+
+	public String getUserProfiles() {
+		return userProfiles;
+	}
+
+	public void setUserProfiles(String userProfiles) {
+		this.userProfiles = userProfiles;
 	}
 
 }

@@ -18,6 +18,10 @@ public class AdmMenuDTO {
 	private Long idPage;
 	
 	private Long idMenuParent;
+	
+	private AdmPageDTO admPage;
+	
+	private AdmMenuDTO admMenuParent;	
 		
 	public AdmMenuDTO() {
 		super();
@@ -27,14 +31,19 @@ public class AdmMenuDTO {
 		this.id = obj.getId();
 		this.description = obj.getDescription();
 		this.order = obj.getOrder();
-		/*
+		this.idPage = obj.getIdPage();
+		this.idMenuParent = obj.getIdMenuParent();
+		
 		if (obj.getAdmPage()!=null)
 			this.admPage = new AdmPageDTO(obj.getAdmPage());
 		else
 			this.admPage = new AdmPageDTO();
-		*/
-		this.idPage = obj.getIdPage();
-		this.idMenuParent = obj.getIdMenuParent();
+		
+		if (obj.getAdmMenuParent()!=null)
+			this.admMenuParent = new AdmMenuDTO(obj.getAdmMenuParent());
+		else
+			this.admMenuParent = new AdmMenuDTO();
+		
 	}
 
 	public static List<AdmMenuDTO> convert(List<AdmMenu> admMenus) {
@@ -63,5 +72,13 @@ public class AdmMenuDTO {
 
 	public Long getIdPage() {
 		return idPage;
+	}
+
+	public AdmPageDTO getAdmPage() {
+		return admPage;
+	}
+
+	public AdmMenuDTO getAdmMenuParent() {
+		return admMenuParent;
 	}
 }
