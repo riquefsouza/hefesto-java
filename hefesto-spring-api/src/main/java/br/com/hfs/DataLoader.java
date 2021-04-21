@@ -14,12 +14,14 @@ import org.springframework.stereotype.Component;
 
 import br.com.hfs.admin.model.AdmMenu;
 import br.com.hfs.admin.model.AdmPage;
+import br.com.hfs.admin.model.AdmPageProfile;
 import br.com.hfs.admin.model.AdmParameter;
 import br.com.hfs.admin.model.AdmParameterCategory;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
 import br.com.hfs.admin.model.AdmUserProfile;
 import br.com.hfs.admin.service.AdmMenuService;
+import br.com.hfs.admin.service.AdmPageProfileService;
 import br.com.hfs.admin.service.AdmPageService;
 import br.com.hfs.admin.service.AdmParameterCategoryService;
 import br.com.hfs.admin.service.AdmParameterService;
@@ -53,6 +55,9 @@ public class DataLoader implements ApplicationRunner {
 	@Autowired
 	private AdmUserProfileService userProfileService;
 	
+	@Autowired
+	private AdmPageProfileService pageProfileService;
+
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		
@@ -86,15 +91,13 @@ public class DataLoader implements ApplicationRunner {
 		listaAdmPage.add(new AdmPage("admin/admUser/listAdmUser.xhtml", "Administer User"));
 		listaAdmPage.add(new AdmPage("admin/admUser/editAdmUser.xhtml", "Edit Administer User"));
 
-		listaAdmPage.forEach(p -> p.setAdmProfiles(profiles1));
-		
 		pageService.insert(listaAdmPage);
 		
-		Set<AdmPage> pages = new HashSet<AdmPage>(listaAdmPage);
-		
-		profile1.setAdmPages(pages);
-		profileService.update(profile1);
-		
+		listaAdmPage.forEach(page1 -> {
+			AdmPageProfile pageProfile = new AdmPageProfile(page1.getId(), profile1.getId());		
+			pageProfileService.insert(pageProfile);			
+		});
+
 		//============ USER ================
 		
 		//senha = 123456
@@ -111,9 +114,6 @@ public class DataLoader implements ApplicationRunner {
 		AdmUserProfile userProfile = new AdmUserProfile(user1.getId(), profile1.getId());
 		
 		userProfileService.insert(userProfile);
-		
-		//profile1.setAdmUsers(users);
-		//profileService.update(profile1);
 		
 		//============ PARAMETER CATEGORY ================
 		
