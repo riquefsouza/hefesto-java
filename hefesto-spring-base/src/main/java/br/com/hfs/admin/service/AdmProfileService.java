@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.hfs.admin.controller.dto.MenuItemDTO;
 import br.com.hfs.admin.model.AdmMenu;
 import br.com.hfs.admin.model.AdmPage;
 import br.com.hfs.admin.model.AdmProfile;
@@ -161,6 +162,36 @@ public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileR
 	public List<MenuVO> findAdminMenuParentByProfile(List<Long> listaIdProfile){
 		List<AdmMenu> listaAdminMenuParent = this.findAdminMenuParentByIdPerfis(listaIdProfile);						
 		return admMenuService.toListMenuVO(listaAdminMenuParent);
+	}
+
+	public List<MenuItemDTO> mountMenuItem(List<Long> listaIdProfile) {
+		List<MenuItemDTO> lista = new ArrayList<MenuItemDTO>();
+				
+		this.findMenuParentByProfile(listaIdProfile).forEach(menu -> {			
+			List<MenuItemDTO> item = new ArrayList<MenuItemDTO>();
+			
+			menu.getSubMenus().forEach(submenu -> {
+				MenuItemDTO submenuVO = new MenuItemDTO(submenu.getDescription(), submenu.getUrl());
+				item.add(submenuVO);
+			});
+			
+			MenuItemDTO vo = new MenuItemDTO(menu.getDescription(), menu.getUrl(), item);
+			lista.add(vo);
+		});
+		
+		this.findAdminMenuParentByProfile(listaIdProfile).forEach(menu -> {			
+			List<MenuItemDTO> item = new ArrayList<MenuItemDTO>();
+			
+			menu.getSubMenus().forEach(submenu -> {
+				MenuItemDTO submenuVO = new MenuItemDTO(submenu.getDescription(), submenu.getUrl());
+				item.add(submenuVO);
+			});
+			
+			MenuItemDTO vo = new MenuItemDTO(menu.getDescription(), menu.getUrl(), item);
+			lista.add(vo);
+		});
+		
+		return lista;
 	}
 
 }

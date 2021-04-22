@@ -78,18 +78,18 @@ public class DataLoader implements ApplicationRunner {
 		
 		List<AdmPage> listaAdmPage = new ArrayList<AdmPage>();
 		
-		listaAdmPage.add(new AdmPage("admin/admParameterCategory/listAdmParameterCategory.xhtml", "Category of Configuration Parameters"));
-		listaAdmPage.add(new AdmPage("admin/admParameterCategory/editAdmParameterCategory.xhtml", "Edit Category of Configuration Parameters"));
-		listaAdmPage.add(new AdmPage("admin/admParameter/listAdmParameter.xhtml", "Configuration Parameters"));
-		listaAdmPage.add(new AdmPage("admin/admParameter/editAdmParameter.xhtml", "Edit Configuration Parameters"));
-		listaAdmPage.add(new AdmPage("admin/admProfile/listAdmProfile.xhtml", "Administer Profile"));
-		listaAdmPage.add(new AdmPage("admin/admProfile/editAdmProfile.xhtml", "Edit Administer Profile"));
-		listaAdmPage.add(new AdmPage("admin/admPage/listAdmPage.xhtml", "Administer Page"));
-		listaAdmPage.add(new AdmPage("admin/admPage/editAdmPage.xhtml", "Edit Administer Page"));
-		listaAdmPage.add(new AdmPage("admin/admMenu/listAdmMenu.xhtml", "Administer Menu"));
-		listaAdmPage.add(new AdmPage("admin/admMenu/editAdmMenu.xhtml", "Edit Administer Menu"));
-		listaAdmPage.add(new AdmPage("admin/admUser/listAdmUser.xhtml", "Administer User"));
-		listaAdmPage.add(new AdmPage("admin/admUser/editAdmUser.xhtml", "Edit Administer User"));
+		listaAdmPage.add(new AdmPage("/admin/admParameterCategory", "Category of Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admParameterCategoryEdit", "Edit Category of Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admParameter", "Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admParameterEdit", "Edit Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admProfile", "Administer Profile"));
+		listaAdmPage.add(new AdmPage("/admin/admProfileEdit", "Edit Administer Profile"));
+		listaAdmPage.add(new AdmPage("/admin/admPage", "Administer Page"));
+		listaAdmPage.add(new AdmPage("/admin/admPageEdit", "Edit Administer Page"));
+		listaAdmPage.add(new AdmPage("/admin/admMenu", "Administer Menu"));
+		listaAdmPage.add(new AdmPage("/admin/admUser", "Administer User"));
+		listaAdmPage.add(new AdmPage("/admin/admUserEdit", "Edit Administer User"));
+		listaAdmPage.add(new AdmPage("/admin/changePasswordEdit", "Change Password"));
 
 		pageService.insert(listaAdmPage);
 		
@@ -164,9 +164,10 @@ public class DataLoader implements ApplicationRunner {
 		listaAdmMenu.add(new AdmMenu("Category of Configuration Parameters", 1L, 1L, 2));
 		listaAdmMenu.add(new AdmMenu("Configuration Parameters", 1L, 3L, 3));
 		listaAdmMenu.add(new AdmMenu("Administer Profile", 1L, 5L, 4));
-		listaAdmMenu.add(new AdmMenu("Administer Page", 1L, 7L, 6));
-		listaAdmMenu.add(new AdmMenu("Administer Menu", 1L, 9L, 7));
-		listaAdmMenu.add(new AdmMenu("Administer User", 1L, 11L, 6));
+		listaAdmMenu.add(new AdmMenu("Administer Page", 1L, 7L, 5));
+		listaAdmMenu.add(new AdmMenu("Administer Menu", 1L, 9L, 6));
+		listaAdmMenu.add(new AdmMenu("Administer User", 1L, 10L, 7));
+		listaAdmMenu.add(new AdmMenu("Change Password", 1L, 12L, 8));
 				
 		menuService.insert(listaAdmMenu);
 		*/

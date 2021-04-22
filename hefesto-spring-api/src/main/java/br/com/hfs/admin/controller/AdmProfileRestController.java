@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.hfs.admin.controller.dto.AdmProfileDTO;
+import br.com.hfs.admin.controller.dto.MenuItemDTO;
 import br.com.hfs.admin.controller.form.AdmProfileForm;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.service.AdmProfileService;
@@ -110,4 +111,10 @@ public class AdmProfileRestController {
 		}
 		return ResponseEntity.notFound().build();
 	}
+	
+	@GetMapping("/mountMenu")
+	public List<MenuItemDTO> mountMenu(@RequestBody List<Long> listaIdProfile){
+		return admProfileService.mountMenuItem(listaIdProfile);
+	}
+	
 }
