@@ -51,8 +51,12 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 	@Override
 	public Optional<AdmUser> findById(Long id) {
 		Optional<AdmUser> item = repository.findById(id);
-		AdmUser newItem = setTransient(item.get());
-		return Optional.of(newItem);
+		if (item.isPresent()) {
+			AdmUser newItem = setTransient(item.get());
+			return Optional.of(newItem);
+		} else {
+			return Optional.empty();
+		}
 	}
 	
 	private List<AdmUser> setTransient(List<AdmUser> lista) {

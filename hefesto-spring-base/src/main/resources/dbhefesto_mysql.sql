@@ -54,7 +54,11 @@ create table adm_user (
 	usu_login varchar(64) not null,
 	usu_name varchar(64),
 	usu_password varchar(128) not null,
-	constraint adm_user_pkey primary key (usu_seq)
+	constraint adm_user_pkey primary key (usu_seq),
+	constraint adm_user_name_uk unique (usu_name),
+	constraint adm_user_email_uk unique (usu_email),
+	constraint adm_user_login_uk unique (usu_login),
+	constraint adm_user_password_uk unique (usu_password)	
 );
 
 create table adm_page_profile (
