@@ -1,42 +1,19 @@
 package br.com.hfs;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
 import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
 import javax.faces.event.PostConstructApplicationEvent;
-import javax.inject.Inject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import br.com.hfs.admin.model.AdmMenu;
-import br.com.hfs.admin.model.AdmPage;
-import br.com.hfs.admin.model.AdmPageProfile;
-import br.com.hfs.admin.model.AdmParameter;
-import br.com.hfs.admin.model.AdmParameterCategory;
-import br.com.hfs.admin.model.AdmProfile;
-import br.com.hfs.admin.model.AdmUser;
-import br.com.hfs.admin.model.AdmUserProfile;
-import br.com.hfs.admin.service.AdmMenuService;
-import br.com.hfs.admin.service.AdmPageProfileService;
-import br.com.hfs.admin.service.AdmPageService;
-import br.com.hfs.admin.service.AdmParameterCategoryService;
-import br.com.hfs.admin.service.AdmParameterService;
-import br.com.hfs.admin.service.AdmProfileService;
-import br.com.hfs.admin.service.AdmUserProfileService;
-import br.com.hfs.admin.service.AdmUserService;
 
 @ApplicationScoped
 public class HefestoJ2ee8ApiApplication {
 
 	private static final Logger log = LogManager.getLogger(HefestoJ2ee8ApiApplication.class);
-
+/*
 	@Inject
 	private AdmPageService pageService;
 	
@@ -60,10 +37,10 @@ public class HefestoJ2ee8ApiApplication {
 	
 	@Inject
 	private AdmPageProfileService pageProfileService;
-		
+*/		
 	public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
 		log.info("Init " + this.getClass().getName());
-		
+/*		
 		//============ PROFILE ================
 		
 		AdmProfile profile1 = profileService.insert(new AdmProfile("ADMIN", true, false));
@@ -93,6 +70,7 @@ public class HefestoJ2ee8ApiApplication {
 		listaAdmPage.add(new AdmPage("admin/admUser/listAdmUser.xhtml", "Administer User"));
 		listaAdmPage.add(new AdmPage("admin/admUser/editAdmUser.xhtml", "Edit Administer User"));
 		*/
+/*		
 		listaAdmPage.add(new AdmPage("/admin/admParameterCategory", "Category of Configuration Parameters"));
 		listaAdmPage.add(new AdmPage("/admin/admParameterCategoryEdit", "Edit Category of Configuration Parameters"));
 		listaAdmPage.add(new AdmPage("/admin/admParameter", "Configuration Parameters"));
@@ -184,7 +162,7 @@ public class HefestoJ2ee8ApiApplication {
 		listaAdmMenu.add(new AdmMenu("Change Password", 1L, 12L, 8));
 				
 		menuService.insert(listaAdmMenu);
-		
+*/		
 		
 	}
 	
