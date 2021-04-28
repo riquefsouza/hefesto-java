@@ -16,7 +16,7 @@
 		<class>br.com.hfs.admin.model.AdmProfile</class>
 		<class>br.com.hfs.admin.model.AdmUser</class>
 		<class>br.com.hfs.admin.model.AdmUserProfile</class>
-		<class>br.com.hfs.admin.model.AdmUserProfilePK</class>
+		<class>br.com.hfs.admin.model.AdmPageProfile</class>
 
 		<shared-cache-mode>ALL</shared-cache-mode>
 

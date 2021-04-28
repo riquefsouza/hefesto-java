@@ -8,8 +8,8 @@
     <name>hefesto-j2ee8-api</name>
 
     <properties>
-        <maven.compiler.source>14</maven.compiler.source>
-        <maven.compiler.target>14</maven.compiler.target>
+        <maven.compiler.source>16</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         
         <jakartaee.version>8.0.1</jakartaee.version>

@@ -19,55 +19,55 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "ADM_USER_PROFILE", 
+@Table(name = "ADM_PAGE_PROFILE", 
 	uniqueConstraints = 
-		@UniqueConstraint(columnNames={"USP_USE_SEQ", "USP_PRF_SEQ"}))
+		@UniqueConstraint(columnNames={"PGL_PAG_SEQ", "PGL_PRF_SEQ"}))
 @NamedQueries({
-	@NamedQuery(name = "AdmUserProfile.deleteByProfile", query = "DELETE FROM AdmUserProfile fp WHERE fp.profileSeq = ?1"),
-	@NamedQuery(name = "AdmUserProfile.deleteByCodUser", query = "DELETE FROM AdmUserProfile fp WHERE fp.userSeq = ?1")
+	@NamedQuery(name = "AdmPageProfile.deleteByProfile", query = "DELETE FROM AdmPageProfile fp WHERE fp.profileSeq = ?1"),
+	@NamedQuery(name = "AdmPageProfile.deleteByCodPage", query = "DELETE FROM AdmPageProfile fp WHERE fp.pageSeq = ?1")
 })	
-public class AdmUserProfile implements Serializable {
+public class AdmPageProfile implements Serializable {
 	
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	@Id	
-	@GenericGenerator(name = "ADM_USER_PROFILE_ID_GENERATOR",
+	@GenericGenerator(name = "ADM_PAGE_PROFILE_ID_GENERATOR",
 	strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
     parameters = {
-    	@Parameter(name = "sequence_name", value = "ADM_USER_PROFILE_SEQ"),
+    	@Parameter(name = "sequence_name", value = "ADM_PAGE_PROFILE_SEQ"),
         @Parameter(name = "initial_value", value = "1"),
         @Parameter(name = "increment_size", value = "1")
 	})		
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_USER_PROFILE_ID_GENERATOR")	
-	@Column(name = "USP_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADM_PAGE_PROFILE_ID_GENERATOR")	
+	@Column(name = "PGL_SEQ")
 	private Long id;
 	
 	/** The cod usuario. */
-	@Column(name = "USP_USE_SEQ", nullable=false)
-	private Long userSeq;
+	@Column(name = "PGL_PAG_SEQ", nullable=false)
+	private Long pageSeq;
 
 	/** The profile seq. */
-	@Column(name = "USP_PRF_SEQ", nullable=false)
+	@Column(name = "PGL_PRF_SEQ", nullable=false)
 	private Long profileSeq;	
 
 	/* The adm profile. */
 	// bi-directional many-to-one association to AdmProfile
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "USP_PRF_SEQ", nullable=false, insertable = false, updatable = false)
+	@JoinColumn(name = "PGL_PRF_SEQ", nullable=false, insertable = false, updatable = false)
 	private AdmProfile admProfile;
 
 	/**
 	 * Instantiates a new adm cargo profile.
 	 */
-	public AdmUserProfile() {
+	public AdmPageProfile() {
 		clean();
 	}
 	
-	public AdmUserProfile(Long userSeq, Long profileSeq) {
+	public AdmPageProfile(Long pageSeq, Long profileSeq) {
 		super();
-		this.userSeq = userSeq;
+		this.pageSeq = pageSeq;
 		this.profileSeq = profileSeq;
 	}
 
@@ -75,7 +75,7 @@ public class AdmUserProfile implements Serializable {
 	 * Limpar.
 	 */
 	public void clean(){
-		this.userSeq = 0L;
+		this.pageSeq = 0L;
 		this.profileSeq = 0L;
 	}
 
@@ -99,21 +99,21 @@ public class AdmUserProfile implements Serializable {
 	}
 
 	/**
-	 * Gets the user seq.
+	 * Gets the page seq.
 	 *
-	 * @return the user seq
+	 * @return the page seq
 	 */
-	public Long getUserSeq() {
-		return userSeq;
+	public Long getPageSeq() {
+		return pageSeq;
 	}
 
 	/**
-	 * Sets the user seq.
+	 * Sets the page seq.
 	 *
-	 * @param userSeq the new user seq
+	 * @param pageSeq the new page seq
 	 */
-	public void setUserSeq(Long userSeq) {
-		this.userSeq = userSeq;
+	public void setPageSeq(Long pageSeq) {
+		this.pageSeq = pageSeq;
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class AdmUserProfile implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AdmUserProfile other = (AdmUserProfile) obj;
+		AdmPageProfile other = (AdmPageProfile) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

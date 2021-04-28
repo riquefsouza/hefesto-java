@@ -17,15 +17,19 @@ import org.apache.logging.log4j.Logger;
 
 import br.com.hfs.admin.model.AdmMenu;
 import br.com.hfs.admin.model.AdmPage;
+import br.com.hfs.admin.model.AdmPageProfile;
 import br.com.hfs.admin.model.AdmParameter;
 import br.com.hfs.admin.model.AdmParameterCategory;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
+import br.com.hfs.admin.model.AdmUserProfile;
 import br.com.hfs.admin.service.AdmMenuService;
+import br.com.hfs.admin.service.AdmPageProfileService;
 import br.com.hfs.admin.service.AdmPageService;
 import br.com.hfs.admin.service.AdmParameterCategoryService;
 import br.com.hfs.admin.service.AdmParameterService;
 import br.com.hfs.admin.service.AdmProfileService;
+import br.com.hfs.admin.service.AdmUserProfileService;
 import br.com.hfs.admin.service.AdmUserService;
 
 @ApplicationScoped
@@ -51,6 +55,12 @@ public class HefestoJ2ee8Application {
 	@Inject
 	private AdmMenuService menuService;
 	
+	@Inject	
+	private AdmUserProfileService userProfileService;
+	
+	@Inject
+	private AdmPageProfileService pageProfileService;	
+	
 	public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
 		log.info("Init " + this.getClass().getName());
 		
@@ -69,6 +79,7 @@ public class HefestoJ2ee8Application {
 		
 		List<AdmPage> listaAdmPage = new ArrayList<AdmPage>();
 		
+		/*
 		listaAdmPage.add(new AdmPage("admin/admParameterCategory/listAdmParameterCategory.xhtml", "Category of Configuration Parameters"));
 		listaAdmPage.add(new AdmPage("admin/admParameterCategory/editAdmParameterCategory.xhtml", "Edit Category of Configuration Parameters"));
 		listaAdmPage.add(new AdmPage("admin/admParameter/listAdmParameter.xhtml", "Configuration Parameters"));
@@ -81,15 +92,26 @@ public class HefestoJ2ee8Application {
 		listaAdmPage.add(new AdmPage("admin/admMenu/editAdmMenu.xhtml", "Edit Administer Menu"));
 		listaAdmPage.add(new AdmPage("admin/admUser/listAdmUser.xhtml", "Administer User"));
 		listaAdmPage.add(new AdmPage("admin/admUser/editAdmUser.xhtml", "Edit Administer User"));
-
-		listaAdmPage.forEach(p -> p.setAdmProfiles(profiles1));
+		*/
+		listaAdmPage.add(new AdmPage("/admin/admParameterCategory", "Category of Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admParameterCategoryEdit", "Edit Category of Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admParameter", "Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admParameterEdit", "Edit Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admProfile", "Administer Profile"));
+		listaAdmPage.add(new AdmPage("/admin/admProfileEdit", "Edit Administer Profile"));
+		listaAdmPage.add(new AdmPage("/admin/admPage", "Administer Page"));
+		listaAdmPage.add(new AdmPage("/admin/admPageEdit", "Edit Administer Page"));
+		listaAdmPage.add(new AdmPage("/admin/admMenu", "Administer Menu"));
+		listaAdmPage.add(new AdmPage("/admin/admUser", "Administer User"));
+		listaAdmPage.add(new AdmPage("/admin/admUserEdit", "Edit Administer User"));
+		listaAdmPage.add(new AdmPage("/admin/changePasswordEdit", "Change Password"));
 		
 		pageService.insert(listaAdmPage);
 		
-		Set<AdmPage> pages = new HashSet<AdmPage>(listaAdmPage);
-		
-		profile1.setAdmPages(pages);
-		profileService.update(profile1);
+		listaAdmPage.forEach(page1 -> {
+			AdmPageProfile pageProfile = new AdmPageProfile(page1.getId(), profile1.getId());		
+			pageProfileService.insert(pageProfile);			
+		});
 		
 		//============ USER ================
 		
@@ -103,8 +125,9 @@ public class HefestoJ2ee8Application {
 		Set<AdmUser> users = new HashSet<AdmUser>();
 		users.add(user1);
 
-		profile1.setAdmUsers(users);
-		profileService.update(profile1);
+		AdmUserProfile userProfile = new AdmUserProfile(user1.getId(), profile1.getId());
+		
+		userProfileService.insert(userProfile);
 		
 		//============ PARAMETER CATEGORY ================
 		
@@ -155,9 +178,10 @@ public class HefestoJ2ee8Application {
 		listaAdmMenu.add(new AdmMenu("Category of Configuration Parameters", 1L, 1L, 2));
 		listaAdmMenu.add(new AdmMenu("Configuration Parameters", 1L, 3L, 3));
 		listaAdmMenu.add(new AdmMenu("Administer Profile", 1L, 5L, 4));
-		listaAdmMenu.add(new AdmMenu("Administer Page", 1L, 7L, 6));
-		listaAdmMenu.add(new AdmMenu("Administer Menu", 1L, 9L, 7));
-		listaAdmMenu.add(new AdmMenu("Administer User", 1L, 11L, 6));
+		listaAdmMenu.add(new AdmMenu("Administer Page", 1L, 7L, 5));
+		listaAdmMenu.add(new AdmMenu("Administer Menu", 1L, 9L, 6));
+		listaAdmMenu.add(new AdmMenu("Administer User", 1L, 10L, 7));
+		listaAdmMenu.add(new AdmMenu("Change Password", 1L, 12L, 8));
 				
 		menuService.insert(listaAdmMenu);
 		

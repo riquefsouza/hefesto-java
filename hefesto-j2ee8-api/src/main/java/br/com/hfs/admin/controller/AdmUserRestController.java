@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response.Status;
 import br.com.hfs.admin.controller.dto.AdmUserDTO;
 import br.com.hfs.admin.controller.form.AdmUserForm;
 import br.com.hfs.admin.model.AdmUser;
+import br.com.hfs.admin.service.AdmProfileService;
 import br.com.hfs.admin.service.AdmUserService;
 
 @Path("/admUser")
@@ -27,10 +28,14 @@ public class AdmUserRestController {
 
 	@Inject
 	private AdmUserService admUserService;
+	
+	@Inject
+	private AdmProfileService admProfileService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response list() {
+		admUserService.setAdmProfileService(admProfileService);
 		List<AdmUser> objList = admUserService.findAll();
 		return Response.ok(AdmUserDTO.convert(objList)).build();
 	}
@@ -39,6 +44,7 @@ public class AdmUserRestController {
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@PathParam("id") Long id) {
+		admUserService.setAdmProfileService(admProfileService);
 		Optional<AdmUser> obj = admUserService.findById(id);
 		if (obj.isPresent()) {
 			return Response.ok(new AdmUserDTO(obj.get())).build();
@@ -51,6 +57,7 @@ public class AdmUserRestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(AdmUserForm form) {
 		AdmUser obj = form.convert();
+		admUserService.setAdmProfileService(admProfileService);
 		obj = admUserService.insert(obj);
 		
 		return Response.ok(new AdmUserDTO(obj))
@@ -63,6 +70,7 @@ public class AdmUserRestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response update(@PathParam("id") Long id, AdmUserForm form) {
+		admUserService.setAdmProfileService(admProfileService);
 		Optional<AdmUser> obj = admUserService.findById(id);
 		if (obj.isPresent()) {
 			AdmUser bean = form.update(id, admUserService);
@@ -75,6 +83,7 @@ public class AdmUserRestController {
 	@DELETE
 	@Path("/{id}")
 	public Response delete(@PathParam("id") Long id) {
+		admUserService.setAdmProfileService(admProfileService);
 		Optional<AdmUser> obj = admUserService.findById(id);
 		if (obj.isPresent()) {
 			admUserService.deleteById(id);

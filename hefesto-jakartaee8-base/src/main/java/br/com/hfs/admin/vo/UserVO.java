@@ -1,6 +1,8 @@
 package br.com.hfs.admin.vo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -21,6 +23,20 @@ public class UserVO implements Serializable {
 
 	private String name;
 	
+	private String password;
+	
+	private Boolean active;
+	
+	private List<Long> admIdProfiles;
+	
+	private String userProfiles;
+	
+	private String currentPassword;
+	
+	private String newPassword;
+	
+	private String confirmNewPassword;
+	
 	private String ldapDN;
 	
 	private String ip;
@@ -33,13 +49,14 @@ public class UserVO implements Serializable {
 		clean();
 	}
 
-	public UserVO(Long id, String email, String ldapDN, String login, String name) {
+	public UserVO(Long id, String email, String ldapDN, String login, String name, Boolean active) {
 		super();
 		this.id = id;
 		this.email = email;
 		this.ldapDN = ldapDN;
 		this.login = login;
 		this.name = name;
+		this.active = active;
 	}
 
 	public void clean() {
@@ -47,6 +64,13 @@ public class UserVO implements Serializable {
 		this.ldapDN = "";
 		this.login = "";
 		this.name = "";
+		this.password = "";
+		this.active = false;
+		this.admIdProfiles = new ArrayList<Long>();
+		this.userProfiles = "";
+		this.currentPassword = "";
+		this.newPassword = "";
+		this.confirmNewPassword = "";		
 	}
 	
 	public Long getId() {
@@ -90,6 +114,62 @@ public class UserVO implements Serializable {
 	public String toString() {
 		return name;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getConfirmNewPassword() {
+		return confirmNewPassword;
+	}
+
+	public void setConfirmNewPassword(String confirmNewPassword) {
+		this.confirmNewPassword = confirmNewPassword;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public List<Long> getAdmIdProfiles() {
+		return admIdProfiles;
+	}
+
+	public void setAdmIdProfiles(List<Long> admIdProfiles) {
+		this.admIdProfiles = admIdProfiles;
+	}
+
+	public String getUserProfiles() {
+		return userProfiles;
+	}
+
+	public void setUserProfiles(String userProfiles) {
+		this.userProfiles = userProfiles;
+	}	
 
 	public String getLdapDN() {
 		return ldapDN;

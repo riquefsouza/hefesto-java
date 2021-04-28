@@ -66,7 +66,7 @@ public class SystemMB extends BaseViewController implements Serializable {
 				//String ldapDN = "CN="+login+",OU="+func.get().getSetor()+",OU=TRT,DC=trtrio,DC=gov,DC=br";
 				String ldapDN = "CN="+login+",OU=DISAD,OU=TRT,DC=trtrio,DC=gov,DC=br";
 				userVO = new UserVO(func.get().getId(), func.get().getEmail(),
-						ldapDN, login, func.get().getName());
+						ldapDN, login, func.get().getName(), true);
 				setProperties(login, userVO);
 				return true;
 			}

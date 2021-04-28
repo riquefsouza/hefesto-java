@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +19,7 @@ import org.hibernate.jdbc.ReturningWork;
 import org.modelmapper.ModelMapper;
 import org.omnifaces.util.Faces;
 
+import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
 import br.com.hfs.admin.repository.AdmUserRepository;
 import br.com.hfs.admin.vo.UserVO;
@@ -30,6 +32,49 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 	@PersistenceContext
 	protected EntityManager em;
 
+	//@Inject
+	private AdmProfileService admProfileService;
+	
+	public void setAdmProfileService(AdmProfileService admProfileService) {
+		this.admProfileService = admProfileService;
+	}
+	
+	private AdmUser setTransient(AdmUser item) {
+		List<Long> admIdProfiles = new ArrayList<Long>();
+		List<AdmProfile> admProfiles = admProfileService.findProfilesByUser(item.getId());
+		
+		admProfiles.forEach(profile -> admIdProfiles.add(profile.getId()));
+		item.setAdmIdProfiles(admIdProfiles);
+		
+		List<String> listUserProfiles = new ArrayList<String>();
+		admProfiles.forEach(profile -> listUserProfiles.add(profile.getDescription()));
+		item.setUserProfiles(listUserProfiles.stream().collect(Collectors.joining(",")));	
+		
+		return item;
+	}
+	
+	@Override
+	public Optional<AdmUser> findById(Long id) {
+		Optional<AdmUser> item = repository.findById(id);
+		if (item.isPresent()) {
+			AdmUser newItem = setTransient(item.get());
+			return Optional.of(newItem);
+		} else {
+			return Optional.empty();
+		}
+	}
+	
+	private List<AdmUser> setTransient(List<AdmUser> lista) {
+		lista.stream().forEach(item -> setTransient(item));
+		return lista;
+	}
+
+	@Override
+	public List<AdmUser> findAll() {
+		List<AdmUser> lista = repository.findAll();		
+		return setTransient(lista);
+	}
+	
 	public List<AdmUser> findPaginated(int pageNumber, int pageSize) {
 		return repository.findPaginated(pageNumber, pageSize);
 	}

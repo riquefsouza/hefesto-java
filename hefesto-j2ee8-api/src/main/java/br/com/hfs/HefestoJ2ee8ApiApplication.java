@@ -17,15 +17,19 @@ import org.apache.logging.log4j.Logger;
 
 import br.com.hfs.admin.model.AdmMenu;
 import br.com.hfs.admin.model.AdmPage;
+import br.com.hfs.admin.model.AdmPageProfile;
 import br.com.hfs.admin.model.AdmParameter;
 import br.com.hfs.admin.model.AdmParameterCategory;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
+import br.com.hfs.admin.model.AdmUserProfile;
 import br.com.hfs.admin.service.AdmMenuService;
+import br.com.hfs.admin.service.AdmPageProfileService;
 import br.com.hfs.admin.service.AdmPageService;
 import br.com.hfs.admin.service.AdmParameterCategoryService;
 import br.com.hfs.admin.service.AdmParameterService;
 import br.com.hfs.admin.service.AdmProfileService;
+import br.com.hfs.admin.service.AdmUserProfileService;
 import br.com.hfs.admin.service.AdmUserService;
 
 @ApplicationScoped
@@ -51,6 +55,12 @@ public class HefestoJ2ee8ApiApplication {
 	@Inject
 	private AdmMenuService menuService;
 	
+	@Inject	
+	private AdmUserProfileService userProfileService;
+	
+	@Inject
+	private AdmPageProfileService pageProfileService;
+		
 	public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
 		log.info("Init " + this.getClass().getName());
 		
@@ -69,6 +79,7 @@ public class HefestoJ2ee8ApiApplication {
 		
 		List<AdmPage> listaAdmPage = new ArrayList<AdmPage>();
 		
+		/*
 		listaAdmPage.add(new AdmPage("admin/admParameterCategory/listAdmParameterCategory.xhtml", "Category of Configuration Parameters"));
 		listaAdmPage.add(new AdmPage("admin/admParameterCategory/editAdmParameterCategory.xhtml", "Edit Category of Configuration Parameters"));
 		listaAdmPage.add(new AdmPage("admin/admParameter/listAdmParameter.xhtml", "Configuration Parameters"));
@@ -81,15 +92,26 @@ public class HefestoJ2ee8ApiApplication {
 		listaAdmPage.add(new AdmPage("admin/admMenu/editAdmMenu.xhtml", "Edit Administer Menu"));
 		listaAdmPage.add(new AdmPage("admin/admUser/listAdmUser.xhtml", "Administer User"));
 		listaAdmPage.add(new AdmPage("admin/admUser/editAdmUser.xhtml", "Edit Administer User"));
-
-		listaAdmPage.forEach(p -> p.setAdmProfiles(profiles1));
-		
+		*/
+		listaAdmPage.add(new AdmPage("/admin/admParameterCategory", "Category of Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admParameterCategoryEdit", "Edit Category of Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admParameter", "Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admParameterEdit", "Edit Configuration Parameters"));
+		listaAdmPage.add(new AdmPage("/admin/admProfile", "Administer Profile"));
+		listaAdmPage.add(new AdmPage("/admin/admProfileEdit", "Edit Administer Profile"));
+		listaAdmPage.add(new AdmPage("/admin/admPage", "Administer Page"));
+		listaAdmPage.add(new AdmPage("/admin/admPageEdit", "Edit Administer Page"));
+		listaAdmPage.add(new AdmPage("/admin/admMenu", "Administer Menu"));
+		listaAdmPage.add(new AdmPage("/admin/admUser", "Administer User"));
+		listaAdmPage.add(new AdmPage("/admin/admUserEdit", "Edit Administer User"));
+		listaAdmPage.add(new AdmPage("/admin/changePasswordEdit", "Change Password"));
+			
 		pageService.insert(listaAdmPage);
 		
-		Set<AdmPage> pages = new HashSet<AdmPage>(listaAdmPage);
-		
-		profile1.setAdmPages(pages);
-		profileService.update(profile1);
+		listaAdmPage.forEach(page1 -> {
+			AdmPageProfile pageProfile = new AdmPageProfile(page1.getId(), profile1.getId());		
+			pageProfileService.insert(pageProfile);			
+		});
 		
 		//============ USER ================
 		
@@ -103,8 +125,9 @@ public class HefestoJ2ee8ApiApplication {
 		Set<AdmUser> users = new HashSet<AdmUser>();
 		users.add(user1);
 
-		profile1.setAdmUsers(users);
-		profileService.update(profile1);
+		AdmUserProfile userProfile = new AdmUserProfile(user1.getId(), profile1.getId());
+		
+		userProfileService.insert(userProfile);
 		
 		//============ PARAMETER CATEGORY ================
 		
@@ -122,20 +145,20 @@ public class HefestoJ2ee8ApiApplication {
 		
 		List<AdmParameter> listaAdmParameter = new ArrayList<AdmParameter>();
 		
-		listaAdmParameter.add(new AdmParameter("Tribunal Regional do Trabalho da 1a. Regi√£o", "Nome do tribunal onde o sistema est√° instalado.", "NOME_TRIBUNAL", 1L));
-		listaAdmParameter.add(new AdmParameter("TRT1", "Sigla do tribunal onde o sistema est√° instalado.", "SIGLA_TRIBUNAL", 1L));
-		listaAdmParameter.add(new AdmParameter("080009", "C√≥digo n√∫m√©rico de 6 d√≠gitos que identifica o √≥rg√£o no SIAFI.", "CODIGO_UNIDADE_GESTORA", 1L));
-		listaAdmParameter.add(new AdmParameter("102", "C√≥digo n√∫m√©rico de 3 d√≠gitos da UG no c√≥digo de barras da GRU.", "APELIDO_UNIDADE_GESTORA", 1L));
-		listaAdmParameter.add(new AdmParameter("false", "Bloquear o sistema para que os usu√°rios, exceto do administador, n√£o fa√ßam login", "BLOQUEAR_LOGIN", 2L));
-		listaAdmParameter.add(new AdmParameter("NOME_USUARIO", "Define o atributo usado para efetuar login no sistema. Este par√¢metro pode ser preenchido com: NOME_USUARIO ou CPF", "ATRIBUTO_LOGIN", 2L));
+		listaAdmParameter.add(new AdmParameter("Tribunal Regional do Trabalho da 1a. Regi„o", "Nome do tribunal onde o sistema est· instalado.", "NOME_TRIBUNAL", 1L));
+		listaAdmParameter.add(new AdmParameter("TRT1", "Sigla do tribunal onde o sistema est· instalado.", "SIGLA_TRIBUNAL", 1L));
+		listaAdmParameter.add(new AdmParameter("080009", "CÛdigo n˙mÈrico de 6 dÌgitos que identifica o Ûrg„o no SIAFI.", "CODIGO_UNIDADE_GESTORA", 1L));
+		listaAdmParameter.add(new AdmParameter("102", "CÛdigo n˙mÈrico de 3 dÌgitos da UG no cÛdigo de barras da GRU.", "APELIDO_UNIDADE_GESTORA", 1L));
+		listaAdmParameter.add(new AdmParameter("false", "Bloquear o sistema para que os usu·rios, exceto do administador, n„o faÁam login", "BLOQUEAR_LOGIN", 2L));
+		listaAdmParameter.add(new AdmParameter("NOME_USUARIO", "Define o atributo usado para efetuar login no sistema. Este par‚metro pode ser preenchido com: NOME_USUARIO ou CPF", "ATRIBUTO_LOGIN", 2L));
 		listaAdmParameter.add(new AdmParameter("smtp.trt1.jus.br", "Servidor SMTP para que o sistema envie e-mail.", "SMTP_SERVIDOR", 3L));
 		listaAdmParameter.add(new AdmParameter("25", "Porta do servidor SMTP para que o sistema envie e-mail.", "SMTP_PORTA", 3L));
-		listaAdmParameter.add(new AdmParameter(null, "Usu√°rio para login no servidor SMTP.", "SMTP_USERNAME", 3L));
+		listaAdmParameter.add(new AdmParameter(null, "Usu·rio para login no servidor SMTP.", "SMTP_USERNAME", 3L));
 		listaAdmParameter.add(new AdmParameter(null, "Senha para login no servidor SMTP.", "SMTP_PASSWORD", 3L));
 		listaAdmParameter.add(new AdmParameter("sistema@trt1.jus.br", "E-mail do sistema.", "SMTP_EMAIL_FROM", 3L));
 		listaAdmParameter.add(new AdmParameter("bravo.trtrio.gov.br", "Servidor do Proxy.", "PROXY_SERVIDOR", 4L));
 		listaAdmParameter.add(new AdmParameter("8080", "Porta do Proxy.", "PROXY_PORTA", 4L));
-		listaAdmParameter.add(new AdmParameter("Produ√ß√£o", "Define o ambiente onde o sistema est√° instalado. Este par√¢metro pode ser preenchido com: desenvolvimento, homologa√ß√£o ou produ√ß√£o", "AMBIENTE_SISTEMA", 2L));
+		listaAdmParameter.add(new AdmParameter("ProduÁ„o", "Define o ambiente onde o sistema est· instalado. Este par‚metro pode ser preenchido com: desenvolvimento, homologaÁ„o ou produÁ„o", "AMBIENTE_SISTEMA", 2L));
 		
 		String json = "[ { \"ativo\": \"false\", \"login\" : \"rafael.remiro\", \"setor\" : \"ESACS RJ\", \"cargo\": \"15426\", \"loginVirtual\": \"\" }, "
 				+ "{ \"ativo\": \"false\", \"login\" : \"fabricio.peres\", \"setor\" : \"CSEG\", \"cargo\": \"15426\", \"loginVirtual\": \"\" }, "
@@ -155,9 +178,10 @@ public class HefestoJ2ee8ApiApplication {
 		listaAdmMenu.add(new AdmMenu("Category of Configuration Parameters", 1L, 1L, 2));
 		listaAdmMenu.add(new AdmMenu("Configuration Parameters", 1L, 3L, 3));
 		listaAdmMenu.add(new AdmMenu("Administer Profile", 1L, 5L, 4));
-		listaAdmMenu.add(new AdmMenu("Administer Page", 1L, 7L, 6));
-		listaAdmMenu.add(new AdmMenu("Administer Menu", 1L, 9L, 7));
-		listaAdmMenu.add(new AdmMenu("Administer User", 1L, 11L, 6));
+		listaAdmMenu.add(new AdmMenu("Administer Page", 1L, 7L, 5));
+		listaAdmMenu.add(new AdmMenu("Administer Menu", 1L, 9L, 6));
+		listaAdmMenu.add(new AdmMenu("Administer User", 1L, 10L, 7));
+		listaAdmMenu.add(new AdmMenu("Change Password", 1L, 12L, 8));
 				
 		menuService.insert(listaAdmMenu);
 		

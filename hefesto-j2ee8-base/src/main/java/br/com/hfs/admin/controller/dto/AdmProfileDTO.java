@@ -22,8 +22,14 @@ public class AdmProfileDTO {
 	
 	private List<AdmUserDTO> admUsers;
 
+	private String profilePages;
+
+	private String profileUsers;
+
 	public AdmProfileDTO() {
 		super();
+		this.admPages = new ArrayList<AdmPageDTO>();
+		this.admUsers = new ArrayList<AdmUserDTO>();
 	}
 	
 	public AdmProfileDTO(AdmProfile obj) {
@@ -35,6 +41,14 @@ public class AdmProfileDTO {
 		this.admPages = AdmPageDTO.convert(listPages);
 		List<AdmUser> listUsers = new ArrayList<AdmUser>(obj.getAdmUsers()); 
 		this.admUsers = AdmUserDTO.convert(listUsers);
+		
+		List<String> listProfilePages = new ArrayList<String>();
+		listPages.forEach(page -> listProfilePages.add(page.getDescription()));
+		this.profilePages = listProfilePages.stream().collect(Collectors.joining(","));
+		
+		List<String> listProfileUsers = new ArrayList<String>();
+		listUsers.forEach(user -> listProfileUsers.add(user.getName()));
+		this.profileUsers = listProfileUsers.stream().collect(Collectors.joining(","));		
 	}
 
 	public static List<AdmProfileDTO> convert(List<AdmProfile> admProfiles) {
@@ -65,4 +79,12 @@ public class AdmProfileDTO {
 		return id;
 	}
 
+	public String getProfilePages() {
+		return profilePages;
+	}
+
+	public String getProfileUsers() {
+		return profileUsers;
+	}
+	
 }

@@ -32,6 +32,7 @@ import br.com.hfs.converter.BooleanToStringConverter;
 
 @NamedQueries({
 	@NamedQuery(name = "AdmUser.findByLogin", query = "SELECT DISTINCT a FROM AdmUser a WHERE a.login=?1"),
+	@NamedQuery(name = "AdmUser.findByLikeEmail", query = "SELECT DISTINCT a FROM AdmUser a WHERE a.email LIKE ?1"),
 	@NamedQuery(name = "AdmUser.login", query = "SELECT a FROM AdmUser a WHERE a.login=?1 AND a.password=?2")
 })
 @NamedNativeQueries({
@@ -291,7 +292,7 @@ public class AdmUser implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return name;
+		return name == null ? "": name;
 	}
 
 	public UserVO toUserVO() {

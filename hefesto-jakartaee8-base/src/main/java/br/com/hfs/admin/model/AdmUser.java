@@ -1,8 +1,11 @@
 package br.com.hfs.admin.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,13 +25,15 @@ import org.hibernate.annotations.Parameter;
 
 import br.com.hfs.admin.controller.form.AdmUserForm;
 import br.com.hfs.admin.vo.UserVO;
+import br.com.hfs.converter.BooleanToStringConverter;
 
 @Entity
 @Table(name = "ADM_USER")
 
 @NamedQueries({
 	@NamedQuery(name = "AdmUser.findByLogin", query = "SELECT DISTINCT a FROM AdmUser a WHERE a.login=?1"),
-	@NamedQuery(name = "AdmUser.findByLikeEmail", query = "SELECT DISTINCT a FROM AdmUser a WHERE a.email LIKE ?1")
+	@NamedQuery(name = "AdmUser.findByLikeEmail", query = "SELECT DISTINCT a FROM AdmUser a WHERE a.email LIKE ?1"),
+	@NamedQuery(name = "AdmUser.login", query = "SELECT a FROM AdmUser a WHERE a.login=?1 AND a.password=?2")
 })
 @NamedNativeQueries({
 	@NamedNativeQuery(name = "AdmUser.findIPByOracle", query = "SELECT SYS_CONTEXT('USERENV', 'IP_ADDRESS', 15) FROM DUAL"),
@@ -89,6 +94,28 @@ public class AdmUser implements Serializable {
 	@Column(name = "USU_PASSWORD", nullable = false, length = 128)
 	private String password;
     
+	@Convert(converter = BooleanToStringConverter.class)
+	@Column(name="USU_ACTIVE")
+	private Boolean active;
+
+	@Transient
+	private List<Long> admIdProfiles;
+	
+	@Transient
+	private String userProfiles;
+	
+	@Size(min=4, max=64)
+	@Transient
+	private String currentPassword;
+	
+	@Size(min=4, max=64)
+	@Transient
+	private String newPassword;
+	
+	@Size(min=4, max=64)
+	@Transient
+	private String confirmNewPassword;
+	
 	@Transient
 	private String ip;
 	
@@ -116,6 +143,9 @@ public class AdmUser implements Serializable {
 		this.login = vo.getLogin();
 		this.name = vo.getName();
 		//this.password = vo.ge;
+		this.active = vo.getActive();
+		this.admIdProfiles = vo.getAdmIdProfiles();
+		this.userProfiles = vo.getUserProfiles();		
 	}
 	
 	public AdmUser(AdmUserForm vo) {
@@ -124,6 +154,8 @@ public class AdmUser implements Serializable {
 		this.login = vo.getLogin();
 		this.name = vo.getName();
 		this.password = vo.getPassword();
+		this.active = vo.getActive();
+		this.admIdProfiles = vo.getAdmIdProfiles();		
 	}
 	
 	public void clean() {
@@ -132,6 +164,8 @@ public class AdmUser implements Serializable {
 		this.login = "";
 		this.name = "";
 		this.password = "";
+		this.active = false;
+		this.admIdProfiles = new ArrayList<Long>();		
 	}
 
 	/**
@@ -278,6 +312,54 @@ public class AdmUser implements Serializable {
 		
 		return u;
 	}
+	
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getConfirmNewPassword() {
+		return confirmNewPassword;
+	}
+
+	public void setConfirmNewPassword(String confirmNewPassword) {
+		this.confirmNewPassword = confirmNewPassword;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public List<Long> getAdmIdProfiles() {
+		return admIdProfiles;
+	}
+
+	public void setAdmIdProfiles(List<Long> admIdProfiles) {
+		this.admIdProfiles = admIdProfiles;
+	}
+
+	public String getUserProfiles() {
+		return userProfiles;
+	}
+
+	public void setUserProfiles(String userProfiles) {
+		this.userProfiles = userProfiles;
+	}	
 
 	public String getIp() {
 		return ip;

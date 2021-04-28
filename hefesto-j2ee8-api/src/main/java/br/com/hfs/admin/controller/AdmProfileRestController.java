@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import br.com.hfs.admin.controller.dto.AdmProfileDTO;
+import br.com.hfs.admin.controller.dto.MenuItemDTO;
 import br.com.hfs.admin.controller.form.AdmProfileForm;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.service.AdmProfileService;
@@ -82,4 +83,14 @@ public class AdmProfileRestController {
 		}
 		return Response.status(Status.NOT_FOUND).build();
 	}
+	
+	@GET
+	@Path("/mountMenu")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)	
+	public Response mountMenu(List<Long> listaIdProfile){
+		List<MenuItemDTO> objList = admProfileService.mountMenuItem(listaIdProfile);
+		return Response.ok(MenuItemDTO.convert(objList)).build();
+	}
+	
 }

@@ -23,6 +23,10 @@ public class AdmUserForm {
 
 	private String email;
 	
+	private Boolean active;
+	
+	private List<Long> admIdProfiles;
+	
 	public AdmUserForm() {
 		super();
 	}
@@ -33,6 +37,8 @@ public class AdmUserForm {
 		this.login = obj.getLogin();
 		this.name = obj.getName();
 		this.password = obj.getPassword();
+		this.active = obj.getActive();
+		this.admIdProfiles = obj.getAdmIdProfiles();		
 	}
 	
 	public AdmUser convert() {
@@ -46,6 +52,8 @@ public class AdmUserForm {
 			bean.get().setPassword(this.password);
 			bean.get().setName(this.name);
 			bean.get().setEmail(this.email);
+			bean.get().setActive(this.active);
+			bean.get().setAdmIdProfiles(this.admIdProfiles);			
 			return bean.get();	
 		}
 		return null;
@@ -98,4 +106,20 @@ public class AdmUserForm {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public List<Long> getAdmIdProfiles() {
+		return admIdProfiles;
+	}
+
+	public void setAdmIdProfiles(List<Long> admIdProfiles) {
+		this.admIdProfiles = admIdProfiles;
+	}	
 }
