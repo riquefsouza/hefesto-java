@@ -1,5 +1,7 @@
 package br.com.hfs.security;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import br.com.hfs.admin.repository.AdmProfileRepository;
 import br.com.hfs.admin.repository.AdmUserRepository;
@@ -51,13 +56,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	// authorization config
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
+		http.cors().configurationSource(corsConfigurationSource()).and()
+		.authorizeRequests()
 		//.antMatchers(HttpMethod.GET, "/api/v1").permitAll()
 		//.antMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
 		.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
 		.anyRequest().authenticated()
-		.and().csrf().disable()
+		.and().csrf()
+		.disable()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().addFilterBefore(new TokenFilter(tokenService, userRepository, profileRepository), UsernamePasswordAuthenticationFilter.class);
 	}
@@ -68,5 +75,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		web.ignoring()
         .antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
 	}
-
+	
+	private CorsConfigurationSource corsConfigurationSource() {
+	    CorsConfiguration configuration = new CorsConfiguration();
+	    configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:*"));
+	    configuration.setAllowedMethods(Arrays.asList("*"));
+	    configuration.setAllowedHeaders(Arrays.asList("*"));
+	    //in case authentication is enabled this flag MUST be set, otherwise CORS requests will fail
+	    configuration.setAllowCredentials(true);
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    source.registerCorsConfiguration("/**", configuration);
+	    return source;
+	}	
 }
