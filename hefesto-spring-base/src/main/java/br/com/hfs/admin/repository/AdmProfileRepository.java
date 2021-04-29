@@ -18,7 +18,10 @@ public interface AdmProfileRepository extends JpaRepository<AdmProfile, Long> {
 	
 	@Query(name = "AdmProfile.findProfilesByUser")
 	public List<AdmProfile> findProfilesByUser(Long idUser);
-	
+
+	@Query(name = "AdmProfile.findProfilesByPage")
+	public List<AdmProfile> findProfilesByPage(Long idPage);
+
 	@Query(name = "AdmProfile.findByGeneral")
 	public List<AdmProfile> findByGeneral(Boolean geral);
 

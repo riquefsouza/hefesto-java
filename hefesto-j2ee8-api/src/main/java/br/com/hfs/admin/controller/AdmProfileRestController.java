@@ -93,4 +93,20 @@ public class AdmProfileRestController {
 		return Response.ok(MenuItemDTO.convert(objList)).build();
 	}
 	
+	@GET
+	@Path("/findProfilesByPage/{pageId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findProfilesByPage(@PathParam("pageId") Long pageId) {
+		List<AdmProfile> objList = admProfileService.findProfilesByPage(pageId);
+		return Response.ok(AdmProfileDTO.convert(objList)).build();
+	}
+	
+	@GET
+	@Path("/findProfilesByUser/{userId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response findProfilesByUser(@PathParam("userId") Long userId) {
+		List<AdmProfile> objList = admProfileService.findProfilesByUser(userId);
+		return Response.ok(AdmProfileDTO.convert(objList)).build();
+	}
+	
 }

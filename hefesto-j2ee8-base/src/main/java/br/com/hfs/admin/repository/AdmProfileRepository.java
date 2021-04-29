@@ -31,6 +31,12 @@ public class AdmProfileRepository extends BaseRepository<AdmProfile, Long> {
 		return query.getResultList();
 	}
 
+	public List<AdmProfile> findProfilesByPage(Long idPage) {
+		TypedQuery<AdmProfile> query = em.createNamedQuery("AdmProfile.findProfilesByPage", AdmProfile.class);
+		query.setParameter(1, idPage);
+		return query.getResultList();
+	}
+
 	public List<AdmProfile> findByGeneral(Boolean geral) {
 		TypedQuery<AdmProfile> query = em.createNamedQuery("AdmProfile.findByGeneral", AdmProfile.class);
 		query.setParameter(1, geral);

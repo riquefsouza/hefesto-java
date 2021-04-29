@@ -122,6 +122,10 @@ public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileR
 	public List<AdmProfile> findProfilesByUser(Long idUser) {
 		return repository.findProfilesByUser(idUser);
 	}
+
+	public List<AdmProfile> findProfilesByPage(Long idPage) {
+		return repository.findProfilesByPage(idPage);
+	}
 	
 	public List<AdmMenu> findMenuParentByIdPerfis(List<Long> listaIdProfile){
 		List<AdmMenu> lista = repository.findMenuParentByIdPerfis(listaIdProfile);

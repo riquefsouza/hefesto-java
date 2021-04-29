@@ -116,5 +116,18 @@ public class AdmProfileRestController {
 	public List<MenuItemDTO> mountMenu(@RequestBody List<Long> listaIdProfile){
 		return admProfileService.mountMenuItem(listaIdProfile);
 	}
+
+	@GetMapping("/findProfilesByPage/{pageId}")
+	@Cacheable(value = "admProfileControllerList")
+	public List<AdmProfileDTO> findProfilesByPage(@PathVariable Long pageId) {		
+		List<AdmProfile> objList = admProfileService.findProfilesByPage(pageId);
+		return AdmProfileDTO.convert(objList);
+	}
 	
+	@GetMapping("/findProfilesByUser/{userId}")
+	@Cacheable(value = "admProfileControllerList")
+	public List<AdmProfileDTO> findProfilesByUser(@PathVariable Long userId) {		
+		List<AdmProfile> objList = admProfileService.findProfilesByUser(userId);
+		return AdmProfileDTO.convert(objList);
+	}
 }
