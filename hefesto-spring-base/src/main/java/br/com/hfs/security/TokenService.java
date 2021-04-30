@@ -30,6 +30,8 @@ public class TokenService {
 				.setIssuedAt(today)
 				.setExpiration(expirationDate)
 				.signWith(SignatureAlgorithm.HS256, secret)
+				//.setPayload(user.getPayload())
+				.setClaims(user.getClaims())
 				.compact();
 	}
 
@@ -44,7 +46,8 @@ public class TokenService {
 
 	public Long getIdUser(String token) {
 		Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
-		return Long.parseLong(claims.getSubject());
+		//return Long.parseLong(claims.getSubject());
+		return Long.parseLong(claims.get("id").toString());
 	}
 
 }

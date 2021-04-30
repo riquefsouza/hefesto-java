@@ -1,6 +1,8 @@
 package br.com.hfs.security;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,7 @@ public class HfsUserDetails implements UserDetails {
 
 	private Long id;
 	private String userName;
+	private String email;
 	private String password;
 	private boolean active;
 	private Set<AdmProfile> roles;
@@ -28,8 +31,9 @@ public class HfsUserDetails implements UserDetails {
 	public HfsUserDetails(AdmUser user, Set<AdmProfile> roles) {
 		this.id = user.getId();
 		this.userName = user.getLogin();
+		this.email = user.getEmail();
 		this.password = user.getPassword();
-		this.active = true; //user.isActive();
+		this.active = user.getActive();
 		this.roles = roles; //user.getRoles();
 	}
 
@@ -77,6 +81,22 @@ public class HfsUserDetails implements UserDetails {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+	
+	public String getPayload() {
+		return "{'id': '"+ this.id+ "','name': '" + this.userName +"', 'email': '" + this.email + "'}";
+	}
+
+	public Map<String, Object> getClaims() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", this.id);
+		map.put("name", this.userName);
+		map.put("email", this.email);
+		return map;
 	}
 
 }
