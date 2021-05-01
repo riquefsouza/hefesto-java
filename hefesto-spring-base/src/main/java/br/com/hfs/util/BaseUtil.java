@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.inject.Named;
 import javax.swing.text.MaskFormatter;
@@ -282,6 +283,43 @@ public class BaseUtil implements Serializable {
 		nf.setParseIntegerOnly(true);
 		nf.setMaximumFractionDigits(0);		
 		return nf.format(numero).replace(nf.getCurrency().getSymbol(), "").trim();
+	}
+	
+	public static boolean containsNumericSequences(int min, int max, String stexto) {
+		List<String> lista = new ArrayList<String>();
+		String sValorMin = "";
+		int vnum[] = new int[]{0,1,2,3,4,5,6,7,8,9};
+		
+		for (int n = 0; n < 7; n++) {
+			for (int qtd = min-1; qtd <= max; qtd++) {
+				sValorMin = "";
+				for (int i = n; i <= (qtd+n); i++) {
+					if (i <= max) {
+						sValorMin += String.valueOf(vnum[i]);
+					}
+				}
+				lista.add(sValorMin);
+			}			
+		}
+		lista = lista.stream().distinct().collect(Collectors.toList());
+		return lista.contains(stexto);
+	}
+
+	public static boolean containsConsecutiveIdenticalCharacters(int min, int max, String stexto) {
+		List<String> lista = new ArrayList<String>();
+		String sAlfaMin = "";
+		
+		for (char c = 'a'; c <= 'z'; c++) {
+			for (int qtd = min; qtd <= max; qtd++) {
+				sAlfaMin = "";
+				for (int i = 1; i <= qtd; i++) {
+					sAlfaMin += Character.toString(c);
+				}
+				lista.add(sAlfaMin);
+				lista.add(sAlfaMin.toUpperCase());
+			}
+		}
+		return lista.contains(stexto);
 	}
 	
 }
