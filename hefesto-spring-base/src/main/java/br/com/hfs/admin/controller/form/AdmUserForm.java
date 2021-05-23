@@ -31,6 +31,11 @@ public class AdmUserForm {
 		super();
 	}
 	
+	public AdmUserForm(Long id) {
+		super();
+		this.id = id;
+	}
+	
 	public AdmUserForm(String login, String password, String name, String email,
 			Boolean active, List<Long> admIdProfiles) {
 		super();
@@ -77,6 +82,10 @@ public class AdmUserForm {
 	
 	public static List<AdmUser> convertFromForm(List<AdmUserForm> admUsers) {
 		return admUsers.stream().map(AdmUser::new).collect(Collectors.toList());
+	}
+	
+	public static List<AdmUserForm> convertFromListIds(List<Long> admUsers) {
+		return admUsers.stream().map(id -> new AdmUserForm(id)).collect(Collectors.toList());
 	}
 	
 	public String getLogin() {

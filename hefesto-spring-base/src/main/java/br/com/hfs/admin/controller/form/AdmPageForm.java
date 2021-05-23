@@ -19,6 +19,18 @@ public class AdmPageForm {
 		super();
 	}
 	
+	public AdmPageForm(Long id) {
+		super();
+		this.id = id;
+	}
+
+	public AdmPageForm(String description, String url) {
+		super();
+		this.id = null;
+		this.description = description;
+		this.url = url;
+	}
+
 	public AdmPageForm(AdmPage obj) {
 		this.id = obj.getId();
 		this.description = obj.getDescription();
@@ -45,6 +57,10 @@ public class AdmPageForm {
 
 	public static List<AdmPage> convertFromForm(List<AdmPageForm> admPages) {
 		return admPages.stream().map(AdmPage::new).collect(Collectors.toList());
+	}
+
+	public static List<AdmPageForm> convertFromListIds(List<Long> admPages) {
+		return admPages.stream().map(id -> new AdmPageForm(id)).collect(Collectors.toList());
 	}
 
 	public String getDescription() {

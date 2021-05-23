@@ -18,6 +18,11 @@ public class AdmParameterCategoryForm {
 	public AdmParameterCategoryForm() {
 		super();
 	}
+	
+	public AdmParameterCategoryForm(Long id) {
+		super();
+		this.id = id;
+	}
 
 	public AdmParameterCategoryForm(String description, Long order) {
 		super();

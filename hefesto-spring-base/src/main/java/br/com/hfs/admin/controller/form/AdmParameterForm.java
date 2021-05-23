@@ -31,6 +31,15 @@ public class AdmParameterForm {
 		this.admParameterCategory = new AdmParameterCategoryForm(obj.getAdmParameterCategory());
 	}
 
+	public AdmParameterForm(String code, String description, String value,
+			Long idAdmParameterCategory) {
+		super();
+		this.code = code;
+		this.description = description;
+		this.value = value;
+		this.admParameterCategory = new AdmParameterCategoryForm(idAdmParameterCategory);
+	}
+
 	public AdmParameter convert() {
 		return new AdmParameter(value, description, code, admParameterCategory.getId());
 	}

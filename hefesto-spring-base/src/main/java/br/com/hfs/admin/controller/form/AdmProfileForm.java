@@ -28,6 +28,17 @@ public class AdmProfileForm {
 		super();
 	}
 
+	public AdmProfileForm(String description, Boolean administrator, Boolean general,
+			List<Long> idAdmPages, List<Long> idAdmUsers) {
+		super();
+		this.id = null;
+		this.administrator = administrator;
+		this.description = description;
+		this.general = general;
+		this.admPages = AdmPageForm.convertFromListIds(idAdmPages);
+		this.admUsers = AdmUserForm.convertFromListIds(idAdmUsers);
+	}
+
 	public AdmProfileForm(AdmProfile obj) {
 		super();
 		this.id = obj.getId();

@@ -17,20 +17,24 @@ public class AdmParameterCategoryMutationResolver implements GraphQLMutationReso
 	@Autowired
 	private AdmParameterCategoryService admParameterCategoryService;
 
-	/*
-	public AdmParameterCategoryMutationResolver(AdmParameterCategoryService admParameterCategoryService) {
-		this.admParameterCategoryService = admParameterCategoryService;
-	}
-	*/
-
 	public AdmParameterCategoryDTO admParameterCategoryInsert(final String description, Long order) {
 		AdmParameterCategoryForm form = new AdmParameterCategoryForm(description, order);
 		AdmParameterCategory obj = form.convert();
 		admParameterCategoryService.insert(obj);
 		return new AdmParameterCategoryDTO(obj);
 	}
+	
+	public AdmParameterCategoryDTO admParameterCategoryUpdate(final Long id, final String description, Long order) {
+		Optional<AdmParameterCategory> bean = admParameterCategoryService.findById(id);
+		if (bean.isPresent()) {
+			AdmParameterCategoryForm form = new AdmParameterCategoryForm(description, order);
+			AdmParameterCategory parameterCategory = form.update(id, admParameterCategoryService);
+			return new AdmParameterCategoryDTO(parameterCategory);
+		}
+		return null;		
+	}
 
-	public boolean admParameterCategoryDelete(Long id) {
+	public boolean admParameterCategoryDelete(final Long id) {
 		Optional<AdmParameterCategory> bean = admParameterCategoryService.findById(id);
 		if (bean.isPresent()) {
 			admParameterCategoryService.deleteById(id);

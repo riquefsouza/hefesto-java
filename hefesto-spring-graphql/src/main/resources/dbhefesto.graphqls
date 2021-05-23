@@ -1,36 +1,110 @@
 scalar Long
 
 type Query {
-  admParameterCategoryFindAll: [AdmParameterCategoryDTO]!
-  admParameterCategoryFindById(id: Long!): AdmParameterCategoryDTO
+	admParameterCategoryListPaged(page: Int!, size: Int!): [AdmParameterCategoryDTO]!
+	admParameterCategoryListAll: [AdmParameterCategoryDTO]!
+	admParameterCategoryFindById(id: Long!): AdmParameterCategoryDTO
 
-  admUserFindAll: [AdmUserDTO]!
-  admUserFindById(id: Long!): AdmUserDTO
+	admParameterListPaged(page: Int!, size: Int!): [AdmParameterDTO]!
+	admParameterListAll: [AdmParameterDTO]!
+	admParameterFindById(id: Long!): AdmParameterDTO
+
+	admPageListPaged(page: Int!, size: Int!): [AdmPageDTO]!
+	admPageListAll: [AdmPageDTO]!
+	admPageFindById(id: Long!): AdmPageDTO
+
+	admProfileListPaged(page: Int!, size: Int!): [AdmProfileDTO]!
+	admProfileListAll: [AdmProfileDTO]!
+	admProfileFindById(id: Long!): AdmProfileDTO
+
+	admMenuListPaged(page: Int!, size: Int!): [AdmMenuDTO]!
+	admMenuListAll: [AdmMenuDTO]!
+	admMenuFindById(id: Long!): AdmMenuDTO
+
+	admUserListPaged(page: Int!, size: Int!): [AdmUserDTO]!
+	admUserListAll: [AdmUserDTO]!
+	admUserFindById(id: Long!): AdmUserDTO
 }
 
 type Mutation {
-  admParameterCategoryInsert(description: String!, order: Long): AdmParameterCategoryDTO! 
-  admParameterCategoryDelete(id: Long): Boolean
+	admParameterCategoryInsert(description: String!, order: Long): AdmParameterCategoryDTO!
+	admParameterCategoryUpdate(id: Long!, description: String!, order: Long): AdmParameterCategoryDTO!
+	admParameterCategoryDelete(id: Long!): Boolean
+
+	admParameterInsert(code: String!, description: String!, value: String, idAdmParameterCategory: Long!): AdmParameterDTO!
+	admParameterUpdate(id: Long!, code: String!, description: String!, value: String, idAdmParameterCategory: Long!): AdmParameterDTO!
+	admParameterDelete(id: Long!): Boolean
   
-  admUserInsert(login: String!, password: String!, name: String, email: String, active: Boolean!, admIdProfiles: [Long]): AdmUserDTO!  
+	admPageInsert(description: String!, url: String!): AdmPageDTO!
+	admPageUpdate(id: Long!, description: String!, url: String!): AdmPageDTO!
+	admPageDelete(id: Long!): Boolean
+
+	admProfileInsert(description: String!, administrator: Boolean!, general: Boolean!, idAdmPages: [Long]!, idAdmUsers: [Long]!): AdmProfileDTO!
+	admProfileUpdate(id: Long!, description: String!, administrator: Boolean!, general: Boolean!, idAdmPages: [Long]!, idAdmUsers: [Long]!): AdmProfileDTO!
+	admProfileDelete(id: Long!): Boolean
+
+	admMenuInsert(description: String!, order: Int, idPage: Long, idMenuParent: Long): AdmMenuDTO!
+	admMenuUpdate(id: Long!, description: String!, order: Int, idPage: Long, idMenuParent: Long): AdmMenuDTO!
+	admMenuDelete(id: Long!): Boolean
+	
+	admUserInsert(login: String!, password: String!, name: String, email: String, active: Boolean!, admIdProfiles: [Long]): AdmUserDTO!
+	admUserUpdate(id: Long!, login: String!, password: String!, name: String, email: String, active: Boolean!, admIdProfiles: [Long]): AdmUserDTO!
+	admUserDelete(id: Long!): Boolean  
 }
 
 type AdmParameterCategoryDTO {
-  id: Long!
-  description: String!
-  order: Long
+	id: Long!
+	description: String!
+	order: Long
+}
+
+type AdmParameterDTO {
+	id: Long!
+	code: String!
+	description: String!
+	value: String
+	admParameterCategory: AdmParameterCategoryDTO!
+}
+
+type AdmPageDTO {
+	id: Long!
+	description: String!
+	url: String!
+	admIdProfiles: [Long]
+	pageProfiles: String	
+}
+
+type AdmMenuDTO {
+	id: Long!
+	description: String!
+	order: Int
+	idPage: Long
+	idMenuParent: Long
+	admPage: AdmPageDTO
+	admMenuParent: AdmMenuDTO
 }
 
 type AdmUserDTO {
-  id: Long!
-  email: String
-  login: String!
-  name: String
-  password: String!
-  admIdProfiles: [Long]
-  active: Boolean!
-  userProfiles: String
-  currentPassword: String
-  newPassword: String
-  confirmNewPassword: String
+	id: Long!
+	email: String
+	login: String!
+	name: String
+	password: String!
+	admIdProfiles: [Long]
+	active: Boolean!
+	userProfiles: String
+	currentPassword: String
+	newPassword: String
+	confirmNewPassword: String
+}
+
+type AdmProfileDTO {
+	id: Long!
+	description: String!
+	administrator: Boolean!
+	general: Boolean!
+	admPages: [AdmPageDTO]
+	admUsers: [AdmUserDTO]
+	profilePages: String
+	profileUsers: String
 }

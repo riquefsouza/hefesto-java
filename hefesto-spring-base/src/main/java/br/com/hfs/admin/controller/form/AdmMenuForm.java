@@ -23,6 +23,14 @@ public class AdmMenuForm {
 		super();
 	}
 	
+	public AdmMenuForm(String description, Integer order, Long idPage, Long idMenuParent) {
+		super();
+		this.description = description;
+		this.order = order;
+		this.idPage = idPage;
+		this.idMenuParent = idMenuParent;
+	}
+
 	public AdmMenuForm(AdmMenu obj) {
 		this.id = obj.getId();
 		this.description = obj.getDescription();

@@ -1,0 +1,70 @@
+query{
+	admParameterCategoryListAll{
+		id
+		description
+		order
+	}
+}
+
+query{
+	admParameterCategoryListPaged(page: 0, size: 20) {
+		id
+		description
+		order
+	}
+}
+
+mutation {
+	admParameterCategoryInsert(description: "NOVA PARAMETRO DE TESTE", order: null) {
+		id
+		description
+		order
+	}
+}
+
+mutation {
+	admParameterCategoryDelete(id: 9)
+}
+
+query{
+	admParameterListAll{
+		id
+		code
+		description
+		value
+		admParameterCategory{
+			id
+			description
+			order		
+		}
+	}
+}
+
+query{
+	admUserListAll{
+		id
+		email
+		login
+		name
+		password
+		admIdProfiles
+		active
+		userProfiles
+		currentPassword
+		newPassword
+		confirmNewPassword
+	}
+}
+
+query{
+	admProfileListAll{
+		id
+		description
+		administrator
+		general
+		admPages
+		admUsers
+		profilePages
+		profileUsers
+	}
+}
