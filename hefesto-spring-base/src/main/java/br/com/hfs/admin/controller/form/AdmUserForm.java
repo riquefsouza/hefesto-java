@@ -30,6 +30,18 @@ public class AdmUserForm {
 	public AdmUserForm() {
 		super();
 	}
+	
+	public AdmUserForm(String login, String password, String name, String email,
+			Boolean active, List<Long> admIdProfiles) {
+		super();
+		this.id = null;
+		this.login = login;
+		this.password = password;
+		this.name = name;
+		this.email = email;
+		this.active = active;
+		this.admIdProfiles = admIdProfiles;
+	}
 
 	public AdmUserForm(AdmUser obj) {
 		this.id = obj.getId();

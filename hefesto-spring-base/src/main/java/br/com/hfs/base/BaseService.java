@@ -99,11 +99,11 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 		try {
 			Optional<T> obean = repository.findById(id);
 			if (obean.isPresent()) {
-				T bean = obean.get();
+				//T bean = obean.get();
 				
-		        if (!em.contains(bean)){
-		            bean = em.merge(bean);
-		        }
+		        //if (!em.contains(bean)){
+		        //    bean = em.merge(bean);
+		        //}
 				repository.deleteById(id);
 				repository.flush();
 			}

@@ -1,0 +1,36 @@
+scalar Long
+
+type Query {
+  admParameterCategoryFindAll: [AdmParameterCategoryDTO]!
+  admParameterCategoryFindById(id: Long!): AdmParameterCategoryDTO
+
+  admUserFindAll: [AdmUserDTO]!
+  admUserFindById(id: Long!): AdmUserDTO
+}
+
+type Mutation {
+  admParameterCategoryInsert(description: String!, order: Long): AdmParameterCategoryDTO! 
+  admParameterCategoryDelete(id: Long): Boolean
+  
+  admUserInsert(login: String!, password: String!, name: String, email: String, active: Boolean!, admIdProfiles: [Long]): AdmUserDTO!  
+}
+
+type AdmParameterCategoryDTO {
+  id: Long!
+  description: String!
+  order: Long
+}
+
+type AdmUserDTO {
+  id: Long!
+  email: String
+  login: String!
+  name: String
+  password: String!
+  admIdProfiles: [Long]
+  active: Boolean!
+  userProfiles: String
+  currentPassword: String
+  newPassword: String
+  confirmNewPassword: String
+}

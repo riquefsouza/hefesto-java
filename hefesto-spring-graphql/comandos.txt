@@ -1,0 +1,35 @@
+query{
+	admParameterCategoryFindAll{
+		id
+		description
+		order
+	}
+}
+
+mutation {
+	admParameterCategoryInsert(description: "NOVA PARAMETRO DE TESTE", order: null) {
+		id
+		description
+		order
+	}
+}
+
+mutation {
+	admParameterCategoryDelete(id: 9)
+}
+
+query{
+	admUserFindAll{
+		id
+		email
+		login
+		name
+		password
+		admIdProfiles
+		active
+		userProfiles
+		currentPassword
+		newPassword
+		confirmNewPassword
+	}
+}

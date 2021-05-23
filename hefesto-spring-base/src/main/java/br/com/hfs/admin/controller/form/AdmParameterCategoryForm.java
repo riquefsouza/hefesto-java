@@ -19,6 +19,13 @@ public class AdmParameterCategoryForm {
 		super();
 	}
 
+	public AdmParameterCategoryForm(String description, Long order) {
+		super();
+		this.id = null;
+		this.description = description;
+		this.order = order;
+	}
+
 	public AdmParameterCategoryForm(AdmParameterCategory obj) {
 		this.id = obj.getId();
 		this.description = obj.getDescription();
