@@ -57,14 +57,119 @@ query{
 }
 
 query{
+	admPageListAll{
+		id
+		description			
+		url
+		admIdProfiles
+		pageProfiles		
+	}
+}
+
+query{
 	admProfileListAll{
 		id
 		description
 		administrator
 		general
-		admPages
-		admUsers
+		admPages{
+			id
+			description			
+			url
+			admIdProfiles
+			pageProfiles		
+		}
+		admUsers{
+			id
+			email
+			login
+			name
+			password
+			admIdProfiles
+			active
+			userProfiles
+			currentPassword
+			newPassword
+			confirmNewPassword
+		}
 		profilePages
 		profileUsers
+	}
+}
+
+query{
+	admMenuListAll{
+		id
+		description			
+		order
+		idPage
+		idMenuParent
+		admPage{
+			id
+			description			
+			url
+			admIdProfiles
+			pageProfiles		
+		}
+		admMenuParent{
+			id
+			description			
+			order
+			idPage
+			idMenuParent
+			admPage{
+				id
+				description			
+				url
+				admIdProfiles
+				pageProfiles		
+			}		
+		}
+	}
+}
+
+query{
+	mountMenu(listaIdProfile: [1,2]){
+		label
+		routerLink	
+		url
+		to
+		item{
+			label
+			routerLink	
+			url
+			to		
+		}
+	}
+}
+
+query{
+	admProfileFindProfilesByUser(userId: 1){
+		id
+		description
+		administrator
+		general
+		admPages{
+			id
+			description			
+			url
+			admIdProfiles
+			pageProfiles		
+		}
+		admUsers{
+			id
+			email
+			login
+			name
+			password
+			admIdProfiles
+			active
+			userProfiles
+			currentPassword
+			newPassword
+			confirmNewPassword
+		}
+		profilePages
+		profileUsers	
 	}
 }

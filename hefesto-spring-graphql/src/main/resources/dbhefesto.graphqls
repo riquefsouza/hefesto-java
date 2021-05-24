@@ -16,6 +16,11 @@ type Query {
 	admProfileListPaged(page: Int!, size: Int!): [AdmProfileDTO]!
 	admProfileListAll: [AdmProfileDTO]!
 	admProfileFindById(id: Long!): AdmProfileDTO
+	
+	mountMenu(listaIdProfile: [Long]!): [MenuItemDTO]!
+	
+	admProfileFindProfilesByPage(pageId: Long!): [AdmProfileDTO]
+	admProfileFindProfilesByUser(userId: Long!): [AdmProfileDTO]
 
 	admMenuListPaged(page: Int!, size: Int!): [AdmMenuDTO]!
 	admMenuListAll: [AdmMenuDTO]!
@@ -67,16 +72,16 @@ type AdmParameterDTO {
 }
 
 type AdmPageDTO {
-	id: Long!
-	description: String!
-	url: String!
+	id: Long
+	description: String
+	url: String
 	admIdProfiles: [Long]
 	pageProfiles: String	
 }
 
 type AdmMenuDTO {
-	id: Long!
-	description: String!
+	id: Long
+	description: String
 	order: Int
 	idPage: Long
 	idMenuParent: Long
@@ -108,3 +113,12 @@ type AdmProfileDTO {
 	profilePages: String
 	profileUsers: String
 }
+
+type MenuItemDTO {
+	label: String!
+	routerLink: String	
+	url: String
+	to: String
+	item: [MenuItemDTO]
+}
+

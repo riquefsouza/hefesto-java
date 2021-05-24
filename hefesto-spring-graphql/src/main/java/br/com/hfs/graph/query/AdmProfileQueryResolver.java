@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.hfs.admin.controller.dto.AdmProfileDTO;
+import br.com.hfs.admin.controller.dto.MenuItemDTO;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.service.AdmProfileService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
@@ -39,4 +40,19 @@ public class AdmProfileQueryResolver implements GraphQLQueryResolver {
 		}		
 		return null;
 	}
+	
+	public List<MenuItemDTO> mountMenu(final List<Long> listaIdProfile){
+		return admProfileService.mountMenuItem(listaIdProfile);
+	}
+	
+	public List<AdmProfileDTO> admProfileFindProfilesByPage(final Long pageId) {		
+		List<AdmProfile> objList = admProfileService.findProfilesByPage(pageId);
+		return AdmProfileDTO.convert(objList);
+	}
+	
+	public List<AdmProfileDTO> admProfileFindProfilesByUser(final Long userId) {		
+		List<AdmProfile> objList = admProfileService.findProfilesByUser(userId);
+		return AdmProfileDTO.convert(objList);
+	}
+	
 }
