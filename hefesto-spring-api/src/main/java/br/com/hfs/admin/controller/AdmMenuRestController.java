@@ -4,15 +4,18 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,13 +30,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.hfs.admin.controller.dto.AdmMenuDTO;
+import br.com.hfs.admin.controller.dto.ParamDTO;
 import br.com.hfs.admin.controller.form.AdmMenuForm;
 import br.com.hfs.admin.model.AdmMenu;
 import br.com.hfs.admin.service.AdmMenuService;
+import br.com.hfs.base.report.BaseViewReportController;
+import br.com.hfs.base.report.ReportParamsDTO;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/v1/admMenu")
-public class AdmMenuRestController {
+public class AdmMenuRestController extends BaseViewReportController {
+	
+	private static final long serialVersionUID = 1L;
 
 	@Autowired
 	private AdmMenuService admMenuService;
@@ -111,4 +120,13 @@ public class AdmMenuRestController {
 		}
 		return ResponseEntity.notFound().build();
 	}
+	
+	@ApiOperation("Export Report")
+	@PostMapping(value = "/report", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ByteArrayResource> report(HttpServletRequest request, @RequestBody ReportParamsDTO reportParamsDTO) {
+		reportParamsDTO.getParams().add(new ParamDTO("PARAMETER1", ""));
+		reportParamsDTO.setReportName("AdmMenu");
+		return exportReport(reportParamsDTO, admMenuService.findAll());
+	}
+	
 }

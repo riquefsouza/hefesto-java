@@ -26,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -193,4 +196,39 @@ public abstract class BaseViewReportController
 		return getDesktopPage();
 	}
 
+	/*
+		{
+		    "reportType": "PDF",
+		    "forceDownload": true,
+		    "params": [
+		        {
+		            "key": "PARAMETER1",
+		            "value": ""
+		        }
+		    ]
+		}	 
+	 */
+	public ResponseEntity<ByteArrayResource> exportReport(ReportParamsDTO reportParamsDTO, Collection<?> colecao) {
+		Map<String, Object> params = this.getParametros();		
+		reportParamsDTO.getParams().forEach(param -> {
+			params.put(param.getKey(), param.getValue());
+		});
+
+		IBaseReport report = new BaseReportImpl(reportParamsDTO.getReportName());
+		this.setReportType(reportParamsDTO.getReportType());
+		
+		ReportTypeEnum reportType = ReportTypeEnum.valueOf(reportParamsDTO.getReportType());
+		
+		byte[] data = this.export(report, colecao, 
+				params, Boolean.parseBoolean(reportParamsDTO.getForceDownload()), false);
+		
+		ByteArrayResource resource = new ByteArrayResource(data);
+
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + 
+						reportParamsDTO.getReportName() + "." + reportType.getFileExtension())
+				.contentType(reportType.getMediaType())
+				.contentLength(data.length)
+				.body(resource);		
+	}
 }

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
+import br.com.hfs.admin.controller.dto.ParamDTO;
+
 public class ReportParamsDTO {
 
 	@NotBlank
@@ -13,14 +15,14 @@ public class ReportParamsDTO {
 	@NotBlank
 	private String forceDownload;
 
-	@NotBlank
+	//@NotBlank
 	private String reportName;
 	
-	private List<String> params;
+	private List<ParamDTO> params;
 
 	public ReportParamsDTO() {
 		super();
-		this.params = new ArrayList<String>();
+		this.params = new ArrayList<ParamDTO>();
 	}
 	
 	public String getReportType() {
@@ -47,11 +49,11 @@ public class ReportParamsDTO {
 		this.reportName = reportName;
 	}
 
-	public List<String> getParams() {
+	public List<ParamDTO> getParams() {
 		return params;
 	}
 
-	public void setParams(List<String> params) {
+	public void setParams(List<ParamDTO> params) {
 		this.params = params;
 	}
 
