@@ -209,6 +209,16 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 
 		return (retorno == 0);
 	}
+
+	public Optional<AdmUser> findByLogin(String login) {
+		Optional<AdmUser> item = repository.findByLogin(login);
+		if (item.isPresent()) {
+			AdmUser newItem = setTransient(item.get());
+			return Optional.of(newItem);
+		} else {
+			return Optional.empty();
+		}
+	}
 	
 	/*
 	

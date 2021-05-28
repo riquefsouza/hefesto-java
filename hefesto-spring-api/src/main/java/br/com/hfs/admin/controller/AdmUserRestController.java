@@ -126,5 +126,14 @@ public class AdmUserRestController extends BaseViewReportController {
 		reportParamsDTO.getParams().add(new ParamDTO("PARAMETER1", ""));
 		reportParamsDTO.setReportName("AdmUser");
 		return exportReport(reportParamsDTO, admUserService.findAll());
-	}	
+	}
+	
+	@GetMapping("/findByLogin/{login}")
+	public ResponseEntity<AdmUserDTO> findByLogin(@PathVariable String login) {
+		Optional<AdmUser> bean = admUserService.findByLogin(login);
+		if (bean.isPresent()) {
+			return ResponseEntity.ok(new AdmUserDTO(bean.get()));
+		}
+		return ResponseEntity.notFound().build();
+	}
 }

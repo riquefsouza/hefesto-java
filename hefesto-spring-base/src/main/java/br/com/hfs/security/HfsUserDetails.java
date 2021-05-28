@@ -1,7 +1,9 @@
 package br.com.hfs.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -92,10 +94,16 @@ public class HfsUserDetails implements UserDetails {
 	}
 
 	public Map<String, Object> getClaims() {
+		List<String> idProfiles = new ArrayList<String>();
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", this.id);
 		map.put("name", this.userName);
 		map.put("email", this.email);
+		this.roles.forEach(profile -> {
+			idProfiles.add(profile.getId().toString());			
+		});
+		map.put("idProfiles", String.join(",", idProfiles));
 		return map;
 	}
 

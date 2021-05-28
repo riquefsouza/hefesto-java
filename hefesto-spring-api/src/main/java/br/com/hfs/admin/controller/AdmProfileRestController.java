@@ -121,7 +121,7 @@ public class AdmProfileRestController extends BaseViewReportController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@GetMapping("/mountMenu")
+	@PostMapping("/mountMenu")
 	public List<MenuItemDTO> mountMenu(@RequestBody List<Long> listaIdProfile){
 		return admProfileService.mountMenuItem(listaIdProfile);
 	}
