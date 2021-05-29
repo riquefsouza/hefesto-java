@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AdmProfile" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ee09ecb8-cc34-4941-9f1d-1fc8f1dc6da4">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="IMAGE" class="java.io.InputStream"/>
+	<parameter name="PARAMETER1" class="java.lang.String"/>
+	<field name="administrator" class="java.lang.Boolean"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="general" class="java.lang.Boolean"/>
+	<field name="admUsers" class="java.util.List"/>
+	<field name="admPages" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy HH:mm" isBlankWhenNull="false">
+				<reportElement key="textField" x="706" y="0" width="96" height="12" uuid="3b61a835-61af-4019-9776-5ff447165f8f"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="678" y="0" width="28" height="12" uuid="40cd5b2a-de8c-467a-a334-962baea9eae8"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<image>
+				<reportElement key="image" x="0" y="0" width="51" height="39" uuid="125a6c92-568b-49f2-a52b-890713395f51"/>
+				<imageExpression><![CDATA[$P{IMAGE}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement key="textField" x="79" y="35" width="645" height="14" isRemoveLineWhenBlank="true" uuid="cc47ef18-2313-47e8-88cc-369843b191cd"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PARAMETER1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText" x="79" y="12" width="645" height="21" uuid="52085f04-d8b8-4ead-8b1c-b896816c132b"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Manage Profile Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText" x="0" y="0" width="558" height="13" uuid="2023b525-10f5-4c42-a3b5-2510f51c4205"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profile]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="570" y="0" width="113" height="13" uuid="7b182dc7-b4af-4ea9-982d-c7b4af6ea9cc"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[System Administrators]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" x="690" y="0" width="100" height="13" uuid="0e834547-a96f-4ca8-8345-47a96f5ca8b6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[All the staff]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="16" width="800" height="1" uuid="4d0e3239-c018-40e4-a640-fb2401b7a851"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="0" y="0" width="558" height="13" uuid="2023b525-10f5-4c42-a3b5-2510f51c4205"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="570" y="0" width="113" height="13" uuid="7b182dc7-b4af-4ea9-982d-c7b4af6ea9cc"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{administrator}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="690" y="0" width="100" height="13" uuid="0e834547-a96f-4ca8-8345-47a96f5ca8b6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{general}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<staticText>
+				<reportElement key="staticText" x="1" y="0" width="121" height="13" uuid="91fd3074-fdbd-4259-bd30-74fdbd9259fa"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profile page(s):]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="122" y="0" width="679" height="13" uuid="91fd3074-fdbd-4259-bd30-74fdbd9259fa"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{admPages}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="13">
+			<staticText>
+				<reportElement key="staticText" x="0" y="0" width="122" height="13" uuid="da2e82e3-6ac0-4c42-ae82-e36ac0dc42f9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profile User(s):]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="122" y="0" width="680" height="13" uuid="da2e82e3-6ac0-4c42-ae82-e36ac0dc42f9"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{admUsers}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="17" splitType="Stretch">
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="628" y="4" width="147" height="10" uuid="87bb0dc6-392d-4e69-aaa7-eae05465de63"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" isBlankWhenNull="false">
+				<reportElement key="textField" x="775" y="4" width="20" height="10" uuid="b86be732-0722-4475-83aa-2b2a59f06180"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

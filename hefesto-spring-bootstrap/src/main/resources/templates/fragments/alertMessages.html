@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="alertMessages">
+
+	<span id="message-select-table" th:text="#{message.select.table}" style="display: none"></span>
+	
+	<span id="message-alert-success" th:text="#{alert.success}" style="display: none"></span>
+	<span id="message-alert-danger" th:text="#{alert.danger}" style="display: none"></span>
+	<span id="message-alert-warning" th:text="#{alert.warning}" style="display: none"></span>
+	<span id="message-alert-info" th:text="#{alert.info}" style="display: none"></span>
+	
+	<span id="message-button-yes" th:text="#{button.yes}" style="display: none"></span>
+	<span id="message-button-no" th:text="#{button.no}" style="display: none"></span>
+	<span id="validator-emptyStringValidator" th:text="#{validator.EmptyStringValidator}" style="display: none"></span>
+	
+	
+	<div class="alert alert-primary alert-dismissible fade show" id="alert-primary" style="display: none" role="alert">		
+		<strong><span id="text-alert-primary"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-secondary alert-dismissible fade show" id="alert-secondary" style="display: none" role="alert">
+		<strong><span id="text-alert-secondary"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-success alert-dismissible fade show" id="alert-success" style="display: none" role="alert">
+		<strong><span id="text-alert-success"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-danger alert-dismissible fade show" id="alert-danger" style="display: none" role="alert">
+		<strong><span id="text-alert-danger"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-warning alert-dismissible fade show" id="alert-warning" style="display: none" role="alert">
+		<strong><span id="text-alert-warning"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-info alert-dismissible fade show" id="alert-info" style="display: none" role="alert">
+		<strong><span id="text-alert-info"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-light alert-dismissible fade show" id="alert-light" style="display: none" role="alert">
+		<strong><span id="text-alert-light"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-dark alert-dismissible fade show" id="alert-dark" style="display: none" role="alert">
+		<strong><span id="text-alert-dark"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	
+	
+	<div class="alert alert-primary alert-dismissible" role="alert" th:if="${not #strings.isEmpty(primaryMessage)}">
+		<strong><span th:text="${primaryMessage}"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>	
+	<div class="alert alert-secondary alert-dismissible" role="alert" th:if="${not #strings.isEmpty(secondaryMessage)}">
+		<strong><span th:text="${secondaryMessage}"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>	
+	<div class="alert alert-success alert-dismissible" role="alert" th:if="${not #strings.isEmpty(successMessage)}">
+		<strong><span th:text="${successMessage}"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-danger alert-dismissible" role="alert" th:if="${not #strings.isEmpty(dangerMessage)}">
+		<strong><span th:text="${dangerMessage}"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-warning alert-dismissible" role="alert" th:if="${not #strings.isEmpty(warningMessage)}">
+		<strong><span th:text="${warningMessage}"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-info alert-dismissible" role="alert" th:if="${not #strings.isEmpty(infoMessage)}">
+		<strong><span th:text="${infoMessage}"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-light alert-dismissible" role="alert" th:if="${not #strings.isEmpty(lightMessage)}">
+		<strong><span th:text="${lightMessage}"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	<div class="alert alert-dark alert-dismissible" role="alert" th:if="${not #strings.isEmpty(darkMessage)}">
+		<strong><span th:text="${darkMessage}"></span></strong>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	
+	
+	<div class="modal fade" id="dlgAlertMessage" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="staticBackdropLabel"><span th:text="#{dlgAlertMessage.title}"></span></h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <p><span id="dlgAlertMessage-text" th:text="#{dlgAlertMessage.text}"></span></p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+	
+</div>
+
+</body>
+</html>

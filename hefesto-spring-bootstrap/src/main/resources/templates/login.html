@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	lang="pt-BR">
+<head th:replace="fragments/header :: header">
+</head>	
+<body>
+
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  		<a class="navbar-brand" id="anchorHomePage" th:href="@{'/login.html'}">
+  			<span th:text="#{main.framework}"></span>&nbsp;
+  			<span th:text="#{main.app.title}"></span>
+  		</a>
+	</nav>
+
+	<div th:if="${loginError}" class="alert alert-danger alert-dismissible" role="alert">  			  	
+	  	<span th:text="#{login.wrongUser}" th:remove="tag"></span>
+	  	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	
+	<div th:replace="fragments/alertMessages :: alertMessages"></div>
+	
+	<div class="container-fluid" style="margin: 0 auto; width:400px; position: float;">
+		<div id="tela-login" style="margin-top: 20px;">
+			<div class="card" id="tela-login">
+				<div class="card-header" style="font-weight: normal;"><span th:text="#{login.title}" th:remove="tag"></span></div>
+				<div class="card-body">
+				
+					<form name="formLogin" th:action="@{/login.html}" method="POST">
+								
+						<div class="form-group">
+							<label for="username"><span th:text="#{login.username}" th:remove="tag"></span></label>
+							<div class="input-group mb-3">
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="button" disabled="disabled">
+										<i class="fas fa-user fa-sm"></i>
+									</button>
+								</div>	
+								<input type="text" class="form-control" name="username" id="username" autofocus required="required" 
+									th:placeholder="#{login.username.placeholder}" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="password"><span th:text="#{login.password}" th:remove="tag"></span></label>
+							<div class="input-group mb-3">
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="button" disabled="disabled">
+										<i class="fas fa-lock fa-sm"></i>
+									</button>	
+								</div>	
+								<input type="password" class="form-control" name="password" id="password" required="required"
+									th:placeholder="#{login.password.placeholder}" autocomplete="off" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div style="margin: 0 auto; width:25%">
+								<button type="submit" class="btn btn-success btn-icon-split" id="btnLogin">
+									<span class="icon text-white-50">
+										<i class="fa fa-sign-in" aria-hidden="true"></i>
+									</span>
+									<span class="text" th:text="#{login.button}"></span>
+								</button>
+							</div>
+						</div>
+					
+					</form>	
+					
+				</div>
+							    			     						
+			</div>
+		</div>	
+	</div>
+
+	<div th:replace="fragments/footer :: footer"></div>
+	
+</body>
+</html>
