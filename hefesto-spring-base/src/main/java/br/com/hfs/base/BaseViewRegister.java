@@ -171,7 +171,10 @@ public abstract class BaseViewRegister<T,
 				this.service.update(bean);
 			
 			mv.get().addObject("bean", bean);
-			
+
+			List<T> lista = service.findAll();
+			mv.get().addObject("listBean", lista);
+
 		} catch (Exception e) {
 			this.showDangerMessage(mv.get(), e);
 			return mv.get();

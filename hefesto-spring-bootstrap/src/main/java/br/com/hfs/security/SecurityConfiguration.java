@@ -43,7 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
 		.authorizeRequests()
 		.antMatchers("/bootstrap-5.0.1/**", "/popper-2.9.2/**", 
-				"/fontawesome-free/**", "/jquery-3.6.0/**", "/css/**", "/img/**", "/js/**").permitAll()       
+				"/fontawesome-free/**", "/jquery-3.6.0/**", "/dataTables-1.10.24/**", 
+				"/css/**", "/img/**", "/js/**").permitAll()       
 		.antMatchers("/public/**").permitAll()
 		.antMatchers("/private/**").access("hasRole('USER') or hasRole('ADMIN')")
 		//.antMatchers("/anonymous*").anonymous()
@@ -69,7 +70,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) {
 		web.ignoring().antMatchers("/bootstrap-5.0.1/**", "/popper-2.9.2/**", 
-				"/fontawesome-free/**", "/jquery-3.6.0/**", "/css/**", "/img/**", "/js/**");
+				"/fontawesome-free/**", "/jquery-3.6.0/**", "/dataTables-1.10.24/**", 
+				"/css/**", "/img/**", "/js/**");
 	}
 
     @Bean

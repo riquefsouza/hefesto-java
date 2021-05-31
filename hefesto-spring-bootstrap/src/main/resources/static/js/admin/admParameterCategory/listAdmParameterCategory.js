@@ -53,22 +53,14 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		event.preventDefault();
 		window.location.href=this._url.replace("View", "View/add");
 	}
-	
-	/*
-	getSystemObj(){
-		var obj = this.getPersistedObj(this.systemObjKEY);
-		this.systemObj.setJSON(obj);
-		return this.systemObj; 
-	}
-	*/
-	
+		
 	btnEditClick(event) {
 		event.preventDefault();		
 		this.dangerHide();
 			
 		var rowId = this.systemObj.getRowId();
 		
-		if (rowId >= 0) {		
+		if (rowId && rowId > 0) {		
 			this._form[0].action+= '/' + rowId;
 			
 			this._formListAdmParameterCategory.submit();	
@@ -84,7 +76,7 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		var rowId = this.systemObj.getRowId();
 		var tableRow = this.systemObj.getTableRowIndex();
 		
-		if (rowId >= 0) {
+		if (rowId && rowId > 0) {
 			
 			$.ajax({
 				method: "DELETE",
@@ -93,7 +85,7 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 			    contentType: "application/json; charset=utf-8",								
 		        context: this
 			})
-			.done(function(data) {
+			.done(function() {
 				this._tableList[0].deleteRow(tableRow);
 				location.reload();
         	})

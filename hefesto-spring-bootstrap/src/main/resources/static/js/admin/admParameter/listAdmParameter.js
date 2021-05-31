@@ -7,14 +7,23 @@ class ListAdmParameter extends HFSSystemUtil {
 		
 		this._form = $('#formListAdmParameter');
 		this._cmbReportType = $('#cmbReportType');
-		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmParameter').DataTable( {
-			select: true,
-			responsive: true
-		} );
+		this._forceDownload = $('#forceDownload');		
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
 		this._formListAdmParameter = $('#formListAdmParameter');
+		
+		this._tableList = $('#tableAdmParameter');
+		
+		this._tableList.DataTable();		
+		
+		this._admParameterTableRowIndex = $('#admParameter_tableRowIndex');
+		this._admParameterRowId = $('#admParameter_rowId');
+		
+		$('#btnExport').click(this.btnExportClick.bind(this));
+		$('#btnAdd').click(this.btnAddClick.bind(this));
+		$('#btnEdit').click(this.btnEditClick.bind(this));
+		$('#btnDelete').click(this.btnDeleteClick.bind(this));
+		$('#btnBack').click(this.btnBackClick.bind(this));		
 
 	}
 	
@@ -38,34 +47,38 @@ class ListAdmParameter extends HFSSystemUtil {
 		event.preventDefault();		
 		this.dangerHide();
 		
-		var dataRowSelected = this._tableList.row('.selected').data();
+		var rowId = this._admParameterRowId[0].value;
 		
-		if (dataRowSelected.length > 0) {		
-			this._form[0].action+= '/' + dataRowSelected[0];
+		if (rowId > 0) {		
+			this._form[0].action+= '/' + rowId;
 			
 			this._formListAdmParameter.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
+
 	}
 
 	btnDeleteClick(event) {
 		event.preventDefault();
 		this.dangerHide();
 
-		var dataRowSelected = this._tableList.row('.selected').data();
+		var rowId = this._admParameterRowId[0].value;
+		var tableRow = this._admParameterTableRowIndex[0].value;
 		
-		if (dataRowSelected.length > 0) {
+		if (rowId && rowId > 0) {
 			
 			$.ajax({
 				method: "DELETE",
-				url: window.location.href + "/" + dataRowSelected[0],
+				url: window.location.href + "/" + rowId,
 				dataType: "json",
 			    contentType: "application/json; charset=utf-8",								
 		        context: this
 			})
-			.done(function(data) {
-				this._tableList.row('.selected').remove().draw( false );
+			.done(function() {
+				this._tableList[0].deleteRow(tableRow);
+				location.reload();
+				//this._tableList[0].row(tableRow).remove().draw( false );
         	})
 			.fail(function(xhr){
 	            //alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
@@ -82,17 +95,26 @@ class ListAdmParameter extends HFSSystemUtil {
 		event.preventDefault();
 		this._anchorHomePage[0].click();
 	}
-			
+	
+	tableRowClick(tableRow, rowId) {
+		var oldTableRowIndex = this._admParameterTableRowIndex[0].value;
+		
+		if (oldTableRowIndex && oldTableRowIndex > 0) {
+			this._tableList[0].rows[oldTableRowIndex].style.backgroundColor = "transparent";
+		}
+		
+		this._admParameterTableRowIndex[0].value = tableRow.rowIndex;
+		this._admParameterRowId[0].value = rowId;  		
+  		
+  		if (tableRow.rowIndex > 0){
+	  		this._tableList[0].rows[tableRow.rowIndex].style.backgroundColor = "lightblue";
+  		}
+	}
+	
 }
 
+const listAdmParameter = new ListAdmParameter();
+
 $(function() {
-	const listAdmParameter = new ListAdmParameter();
-	
-	$('#btnExport').click(listAdmParameter.btnExportClick.bind(listAdmParameter));
-	$('#btnAdd').click(listAdmParameter.btnAddClick.bind(listAdmParameter));
-	$('#btnEdit').click(listAdmParameter.btnEditClick.bind(listAdmParameter));
-	$('#btnDelete').click(listAdmParameter.btnDeleteClick.bind(listAdmParameter));
-	$('#btnBack').click(listAdmParameter.btnBackClick.bind(listAdmParameter));
-	
-	
+	//const listAdmParameter = new ListAdmParameter();
 });
