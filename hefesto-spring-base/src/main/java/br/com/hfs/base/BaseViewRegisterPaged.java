@@ -11,8 +11,11 @@ import javax.validation.Valid;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +34,7 @@ import br.com.hfs.base.report.IBaseReport;
 import br.com.hfs.base.report.IBaseViewReport;
 import br.com.hfs.base.report.ReportGroupVO;
 
-public abstract class BaseViewRegister<T, 
+public abstract class BaseViewRegisterPaged<T, 
 	I extends Serializable, 
 	B extends BaseService<T, I, ? extends JpaRepository<T, I>>
 		> extends BaseViewReportController implements IBaseViewReport {
@@ -52,11 +55,11 @@ public abstract class BaseViewRegister<T,
 	
 	private Class<T> clazz;
 	
-	public BaseViewRegister(String listPage, String editPage, String reportName, Class<T> clazz) {
+	public BaseViewRegisterPaged(String listPage, String editPage, String reportName, Class<T> clazz) {
 		super();
 		this.forceDownload = false;
 		
-		log = LoggerFactory.getLogger(BaseViewRegister.class);
+		log = LoggerFactory.getLogger(BaseViewRegisterPaged.class);
 		
 		this.listPage = listPage;
 		this.editPage = editPage;
@@ -64,10 +67,9 @@ public abstract class BaseViewRegister<T,
 		this.clazz = clazz;
 	}
 
-	/*
 	@GetMapping
 	public String listPaged(@RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
-			@RequestParam(value = "size", required = false, defaultValue = "5") int size, 
+			@RequestParam(value = "size", required = false, defaultValue = "10") int size, 
 			@RequestParam(value = "sort", required = false, defaultValue = "ASC,id") String sort,
 			Model model) {
 		
@@ -75,7 +77,7 @@ public abstract class BaseViewRegister<T,
 	    String[] paramSort = sort.split(",", 2);
 	    
 	    if (paramSort.length > 0) {
-	    	if (paramSort[0].equals("ASC")) 
+	    	if (paramSort[0].toUpperCase().equals("ASC")) 
 	    		sorted = Sort.by(Direction.ASC, paramSort[1].toLowerCase());
 	    	else
 	    		sorted = Sort.by(Direction.DESC, paramSort[1].toLowerCase());
@@ -84,8 +86,8 @@ public abstract class BaseViewRegister<T,
 		model.addAttribute("pagedBean", service.getPage(pageNumber, size, sorted));
 		return getListPage();
 	}
-	*/
 	 
+	/*
 	@GetMapping
 	public ModelAndView list(T bean) {
 		Optional<ModelAndView> mv = getPage(getListPage());
@@ -97,6 +99,7 @@ public abstract class BaseViewRegister<T,
 		}
 		return mv.get();
 	}
+	*/
 
 	@GetMapping("/add")
 	public ModelAndView add(T bean) throws Exception {
@@ -139,9 +142,10 @@ public abstract class BaseViewRegister<T,
 			
 			mv.get().addObject("bean", bean);
 			
-			List<T> lista = service.findAll();
-			mv.get().addObject("listBean", lista);
-			
+			//List<T> lista = service.findAll();
+			//mv.get().addObject("listBean", lista);
+			mv.get().addObject("pagedBean", service.getPage(1, 10, Sort.by(Direction.ASC, "id")));
+						
 		} catch (RestClientException e) {
 			this.showDangerMessage(mv.get(), e);
 			return mv.get();

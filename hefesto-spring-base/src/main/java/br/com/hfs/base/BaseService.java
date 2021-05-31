@@ -13,9 +13,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import br.com.hfs.base.pagination.BasePaged;
+import br.com.hfs.base.pagination.BasePaging;
 import br.com.hfs.util.exceptions.TransactionException;
 
 public abstract class BaseService<T, I extends Serializable, C extends JpaRepository<T, I>>
@@ -61,6 +65,12 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 	public Page<T> findAll(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
+	
+	public BasePaged<T> getPage(int pageNumber, int size, Sort sort) {
+		PageRequest request = PageRequest.of(pageNumber - 1, size, sort);
+        Page<T> objPage = repository.findAll(request);
+        return new BasePaged<T>(objPage, BasePaging.of(objPage.getTotalPages(), pageNumber, size));
+    }
 	
 	@Override
 	public T insert(T bean) throws TransactionException {

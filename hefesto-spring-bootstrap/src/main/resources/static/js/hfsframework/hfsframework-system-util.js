@@ -1,3 +1,95 @@
+class HFSSystemObject {
+
+	constructor(paginationNumber, columnTitle, paginationSort)
+	{
+		this.tableRowIndex = -1;
+		this.rowId = -1;
+		this.paginationNumber = paginationNumber;
+		this.paginationSize = "10";
+		this.paginationSort = paginationSort;
+		this.columnOrder = 1;
+		this.columnTitle = columnTitle;
+	}
+	
+	setJSON(obj) 
+	{
+		this.tableRowIndex = obj.tableRowIndex;
+		this.rowId = obj.rowId;
+		this.paginationNumber = obj.paginationNumber;
+		this.paginationSize = obj.paginationSize;
+		this.paginationSort = obj.paginationSort;
+		this.columnOrder = obj.columnOrder;
+		this.columnTitle = obj.columnTitle;
+	}
+	
+	setTableRowIndex(tableRowIndex) {
+		this.tableRowIndex = tableRowIndex;
+	}
+	
+	getTableRowIndex() {
+		return this.tableRowIndex;
+	}
+
+	setRowId(rowId) {
+		this.rowId = rowId;
+	}
+	
+	getRowId() {
+		return this.rowId;
+	}
+	
+	setPaginationNumber(paginationNumber){
+		this.paginationNumber = paginationNumber;
+	}
+		
+	getPaginationNumber(){
+		return this.paginationNumber;
+	}
+
+	setPaginationSize(paginationSize){
+		this.paginationSize = paginationSize;
+	}
+		
+	getPaginationSize(){
+		return this.paginationSize;
+	}
+	
+	setPaginationSort(paginationSort){
+		this.paginationSort = paginationSort;
+	}
+		
+	getPaginationSort(){
+		return this.paginationSort;
+	}
+
+	setColumnOrder(columnOrder){
+		this.columnOrder = columnOrder;
+	}
+	
+	getColumnOrder(){
+		return this.columnOrder;
+	}
+	
+	setColumnTitle(columnTitle){
+		this.columnTitle = columnTitle;
+	}
+	
+	getColumnTitle(){
+		return this.columnTitle;
+	}
+	
+	toString() {
+		return "tableRowIndex = " + this.tableRowIndex +
+		", rowId = " + this.rowId + 
+		", paginationNumber = " + this.paginationNumber +
+		", paginationSize = " + this.paginationSize + 
+		", paginationSort = " + this.paginationSort +
+		", columnOrder = " + this.columnOrder +
+		", columnTitle = " + this.columnTitle;
+	}
+	
+}
+
 class HFSSystemUtil {
 	constructor()
 	{
@@ -37,6 +129,14 @@ class HFSSystemUtil {
 		this._dlgAlertMessage = $('#dlgAlertMessage');
 		this._dlgAlertMessageText = $('#dlgAlertMessage-text');
 
+		$('#btnAlertPrimary').click(this.btnAlertPrimaryClick.bind(this));
+		$('#btnAlertSecondary').click(this.btnAlertSecondaryClick.bind(this));
+		$('#btnAlertSuccess').click(this.btnAlertSuccessClick.bind(this));
+		$('#btnAlertDanger').click(this.btnAlertDangerClick.bind(this));
+		$('#btnAlertWarning').click(this.btnAlertWarningClick.bind(this));
+		$('#btnAlertInfo').click(this.btnAlertInfoClick.bind(this));
+		$('#btnAlertLight').click(this.btnAlertLightClick.bind(this));
+		$('#btnAlertDark').click(this.btnAlertDarkClick.bind(this));
 	}
 	
 	getSystemPage() {
@@ -84,7 +184,7 @@ class HFSSystemUtil {
 
 	dangerShow(message) {
 		this._alertDanger.show();
-		this._textAlertDanger.html(message);		
+		this._textAlertDanger.html(message);
 	}
 	
 	dangerHide() {
@@ -186,6 +286,18 @@ class HFSSystemUtil {
 			removeCookie(key, value);
 		}
 	}
+	
+	persistObj(key, value) {
+		window.sessionStorage.setItem(key, JSON.stringify(value));
+	}
+
+	getPersistedObj(key) {
+		return JSON.parse(window.sessionStorage.getItem(key));
+	}
+
+	removePersistedObj(key) {
+		window.sessionStorage.removeItem(key);
+	}	
 		
 	showDialogAlertMessage(title, message) {
 		this.hideDialogAlertMessage();
@@ -199,6 +311,125 @@ class HFSSystemUtil {
 		this._dlgAlertMessage.puidialog('hide');
 	}
 	
+	btnAlertPrimaryClick(event){
+		event.preventDefault();
+		this.primaryHide();
+	}
+
+	btnAlertSecondaryClick(event){
+		event.preventDefault();
+		this.secondaryHide();
+	}
+	
+	btnAlertSuccessClick(event){
+		event.preventDefault();
+		this.successHide();
+	}
+
+	btnAlertDangerClick(event){
+		event.preventDefault();
+		this.dangerHide();
+	}
+	
+	btnAlertWarningClick(event){
+		event.preventDefault();
+		this.warningHide();
+	}
+
+	btnAlertInfoClick(event){
+		event.preventDefault();
+		this.infoHide();
+	}
+
+	btnAlertLightClick(event){
+		event.preventDefault();
+		this.lightHide();
+	}
+
+	btnAlertDarkClick(event){
+		event.preventDefault();
+		this.darkHide();
+	}
+	
+	sysTableRowClick(systemObjKEY, systemObj, tableList, tableRow, rowId) {
+		var oldTableRowIndex = systemObj.getTableRowIndex();
+		
+		if (oldTableRowIndex && oldTableRowIndex > 0) {
+			tableList.rows[oldTableRowIndex].style.backgroundColor = "transparent";
+		}
+	
+  		systemObj.setTableRowIndex(tableRow.rowIndex);
+  		systemObj.setRowId(rowId);  		
+  		this.persistObj(systemObjKEY, systemObj);
+  		
+  		if (tableRow.rowIndex > 0){
+	  		tableList.rows[tableRow.rowIndex].style.backgroundColor = "lightblue";
+  		}  		  		
+	}
+	
+	
+	sysCmbPaginationSizeChange(systemObjKEY, systemObj, paginationNumber, paginationSize) {
+		//event.preventDefault();
+		this.dangerHide();
+				
+		//var paginationNumber = this._paginationNumber[0].value;  
+		//var paginationSize = event.target.value;		
+		
+		if (this._paginationNumber && paginationSize > 0) {
+			var paginationSort = systemObj.getPaginationSort();
+			
+			systemObj.setPaginationNumber(paginationNumber);
+			systemObj.setPaginationSize(paginationSize);
+			systemObj.setPaginationSort(paginationSort);
+			
+			this.persistObj(systemObjKEY, systemObj);
+		
+			window.location.href = window.location.href + "?pageNumber=1&size="+ paginationSize + "&sort=" + paginationSort;
+		}
+	}	
+	
+	sysTableHeaderColumnClick(systemObjKEY, systemObj, tableColumn, columnOrder, columnTitle){
+		var up=columnTitle + "  <i class='fas fa-sort-alpha-up fa-sm'></i>";
+		var down=columnTitle + "  <i class='fas fa-sort-alpha-down fa-sm'></i>";
+		
+		var paginationSort = "ASC,id";
+		
+		if (tableColumn.innerHTML.includes("fa-sort-alpha-up")) {
+			tableColumn.innerHTML=down;
+			paginationSort = "DESC," + columnTitle.toLowerCase();
+		} else {
+			tableColumn.innerHTML=up;
+			paginationSort = "ASC," + columnTitle.toLowerCase();
+		}
+			
+		var paginationNumber = systemObj.getPaginationNumber();  
+		var paginationSize = systemObj.getPaginationSize();		
+						
+		if (paginationNumber && paginationSize > 0) {
+			systemObj.setPaginationSort(paginationSort);
+			systemObj.setColumnOrder(columnOrder);
+			systemObj.setColumnTitle(columnTitle);
+			
+			this.persistObj(systemObjKEY, systemObj);
+		
+			window.location.href = window.location.href + "?pageNumber=1&size="+ paginationSize + "&sort=" + paginationSort;
+		}
+	}	
+
+	tableHeaderColumnSetSort(tableList, systemObj) {
+		for (var i = 1; i < tableList.rows[0].cells.length; i++) {
+			if (systemObj.getColumnOrder() == i) {
+				if (systemObj.getPaginationSort().includes("ASC")) {
+					tableList.rows[0].cells[i].innerHTML = systemObj.getColumnTitle() + "  <i class='fas fa-sort-alpha-up fa-sm'></i>";
+				} else {
+					tableList.rows[0].cells[i].innerHTML = systemObj.getColumnTitle() + "  <i class='fas fa-sort-alpha-down fa-sm'></i>";
+				}
+			} else {
+				tableList.rows[0].cells[i].innerHTML = tableList.rows[0].cells[i].innerHTML.replace("-down", "-up");
+			}
+		}
+	}	
+
 }
 
 

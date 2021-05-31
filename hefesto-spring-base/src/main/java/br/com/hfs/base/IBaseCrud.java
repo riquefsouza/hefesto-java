@@ -6,7 +6,10 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.TransactionException;
+
+import br.com.hfs.base.pagination.BasePaged;
 
 public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 
@@ -23,6 +26,8 @@ public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 	List<T> findAll();
 	
 	Page<T> findAll(Pageable pageable);
+	
+	BasePaged<T> getPage(int pageNumber, int size, Sort sort);
 
 	T insert(T bean) throws TransactionException;
 

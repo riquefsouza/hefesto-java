@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.hfs.admin.model.AdmParameterCategory;
 import br.com.hfs.admin.service.AdmParameterCategoryService;
-import br.com.hfs.base.BaseViewRegister;
+import br.com.hfs.base.BaseViewRegisterPaged;
 
 @Controller
 @RequestMapping(value = "/private/admParameterCategoryView")
 public class AdmParameterCategoryController
-		extends BaseViewRegister<AdmParameterCategory, Long, AdmParameterCategoryService> {
+		extends BaseViewRegisterPaged<AdmParameterCategory, Long, AdmParameterCategoryService> {
 
 	private static final long serialVersionUID = 1L;
 

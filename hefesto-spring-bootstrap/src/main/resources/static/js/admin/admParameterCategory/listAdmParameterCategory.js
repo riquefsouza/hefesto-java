@@ -5,6 +5,20 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		
 		this.hideQueryString();
 		
+		this._paginationNumber = $('#admParameterCategory_paginationNumber');
+		
+		this.systemObjKEY = 'admParameterCategory_systemObj';
+		this.systemObj = new HFSSystemObject(this._paginationNumber[0].value, "Description", "ASC,description");
+		
+		var obj = this.getPersistedObj(this.systemObjKEY);
+				
+		if (obj) {			
+			this.systemObj.setJSON(obj);
+			this.systemObj.setPaginationNumber(this._paginationNumber[0].value);
+		} else {			
+			this.persistObj(this.systemObjKEY, this.systemObj);
+		}
+		
 		this._form = $('#formListAdmParameterCategory');
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
@@ -12,9 +26,16 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
 		this._formListAdmParameterCategory = $('#formListAdmParameterCategory');
+			
+		$('#btnExport').click(this.btnExportClick.bind(this));
+		$('#btnAdd').click(this.btnAddClick.bind(this));
+		$('#btnEdit').click(this.btnEditClick.bind(this));
+		$('#btnDelete').click(this.btnDeleteClick.bind(this));
+		$('#btnBack').click(this.btnBackClick.bind(this));
+	
+		$('#cmbPaginationSize').change(this.cmbPaginationSizeChange.bind(this));
 		
-		this._admParameterCategoryId = $('#admParameterCategoryId');
-		this._admParameterCategoryTableRowIndex = $('#admParameterCategoryTableRowIndex');
+		this.tableHeaderColumnSetSort(this._tableList[0], this.systemObj);
 	}
 	
 	btnExportClick(event) {
@@ -33,11 +54,21 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		window.location.href=this._url.replace("View", "View/add");
 	}
 	
-	btnEditClick(rowId) {
-		//event.preventDefault();		
+	/*
+	getSystemObj(){
+		var obj = this.getPersistedObj(this.systemObjKEY);
+		this.systemObj.setJSON(obj);
+		return this.systemObj; 
+	}
+	*/
+	
+	btnEditClick(event) {
+		event.preventDefault();		
 		this.dangerHide();
+			
+		var rowId = this.systemObj.getRowId();
 		
-		if (rowId) {		
+		if (rowId >= 0) {		
 			this._form[0].action+= '/' + rowId;
 			
 			this._formListAdmParameterCategory.submit();	
@@ -46,29 +77,14 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		}
 	}
 	
-	tableRowClick(tableRow, rowId) {
-		var oldTableRowIndex = this._admParameterCategoryTableRowIndex.value;
-		
-		if (oldTableRowIndex && oldTableRowIndex > 0) {
-			this._tableList[0].rows[oldTableRowIndex].style.backgroundColor = "transparent";
-		}
-	
-		this._admParameterCategoryTableRowIndex.value = tableRow.rowIndex;
-  		this._admParameterCategoryId.value = rowId;
-  		
-  		if (tableRow.rowIndex > 0){
-	  		this._tableList[0].rows[tableRow.rowIndex].style.backgroundColor = "lightblue";
-  		}  		  		
-	}
-
 	btnDeleteClick(event) {
 		event.preventDefault();
 		this.dangerHide();
 		
-		var rowId = this._admParameterCategoryId.value;
-		var tableRow = this._admParameterCategoryTableRowIndex.value;
+		var rowId = this.systemObj.getRowId();
+		var tableRow = this.systemObj.getTableRowIndex();
 		
-		if (rowId) {
+		if (rowId >= 0) {
 			
 			$.ajax({
 				method: "DELETE",
@@ -79,6 +95,7 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 			})
 			.done(function(data) {
 				this._tableList[0].deleteRow(tableRow);
+				location.reload();
         	})
 			.fail(function(xhr){
 	            //alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
@@ -91,21 +108,28 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 
 	btnBackClick(event) {
 		event.preventDefault();
+		
+		this.removePersistedObj(this.systemObjKEY);
 		this._anchorHomePage[0].click();
 	}
-			
+
+	tableRowClick(tableRow, rowId) {
+		this.sysTableRowClick(this.systemObjKEY, this.systemObj, this._tableList[0], tableRow, rowId);
+	}
+	
+	cmbPaginationSizeChange(event) {
+		event.preventDefault();
+		
+		this.sysCmbPaginationSizeChange(this.systemObjKEY, this.systemObj, this._paginationNumber[0].value, event.target.value);
+	}
+		
+	tableHeaderColumnClick(tableColumn, columnOrder, columnTitle){
+		this.sysTableHeaderColumnClick(this.systemObjKEY, this.systemObj, tableColumn, columnOrder, columnTitle);
+	}	
 }
 
 const listAdmParameterCategory = new ListAdmParameterCategory();
 
 $(function() {
-	//const listAdmParameterCategory = new ListAdmParameterCategory();
-	
-	$('#btnExport').click(listAdmParameterCategory.btnExportClick.bind(listAdmParameterCategory));
-	$('#btnAdd').click(listAdmParameterCategory.btnAddClick.bind(listAdmParameterCategory));
-	//$('#btnEdit').click(listAdmParameterCategory.btnEditClick.bind(listAdmParameterCategory));
-	$('#btnDelete').click(listAdmParameterCategory.btnDeleteClick.bind(listAdmParameterCategory));
-	$('#btnBack').click(listAdmParameterCategory.btnBackClick.bind(listAdmParameterCategory));
-	
-	
+	//const listAdmParameterCategory = new ListAdmParameterCategory();	
 });

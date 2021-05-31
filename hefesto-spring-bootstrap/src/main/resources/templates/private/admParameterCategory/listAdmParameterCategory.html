@@ -37,6 +37,19 @@
 					<i class="fa fa-plus-circle"></i>
 				</span>
 				<span class="text" th:text="#{button.add}"></span>
+			</button>
+			<button type="button" class="btn btn-warning" id="btnEdit">
+				<span class="icon text-white-50">
+					<i class="fa fa-chevron-circle-up"></i>
+				</span>
+				<span class="text" th:text="#{button.edit}"></span>
+			</button>			
+			<button type="button" class="btn btn-danger" id="btnPreDelete"
+				data-bs-toggle="modal" data-bs-target="#dlgDeleteConfirmation">
+				<span class="icon text-white-50">
+					<i class="fa fa-minus-circle"></i>
+				</span>
+				<span class="text" th:text="#{button.delete}"></span>					
 			</button>			
 			<button type="button" class="btn btn-primary" id="btnBack">
 				<span class="icon text-white-50">
@@ -45,7 +58,6 @@
 				<span class="text" th:text="#{button.back}"></span>
 			</button>			
 		</div>
-
 
 		<div class="modal fade" id="dlgDeleteConfirmation" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
@@ -64,57 +76,23 @@
 		    </div>
 		  </div>
 		</div>
-		 
-		  <ul class="pagination justify-content-center">
-		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Previous">
-		        <span aria-hidden="true">&laquo;</span>
-		      </a>
-		    </li>
-		    <li class="page-item"><a class="page-link" href="#">1</a></li>
-		    <li class="page-item"><a class="page-link" href="#">2</a></li>
-		    <li class="page-item"><a class="page-link" href="#">3</a></li>
-		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		      </a>
-		    </li>
-		  </ul>
 		
-		<input type="hidden" id="admParameterCategoryId" />
-		<input type="hidden" id="admParameterCategoryTableRowIndex" />
-		 
+		<input type="hidden" id="admParameterCategory_paginationNumber" th:value="${pagedBean.paging.pageNumber}" />
+		<th:block th:include="/fragments/panelPagination"></th:block>
+		
 		<table class="table table-sm table-striped table-bordered" id="tableAdmParameterCategory" style="width: 100%">
 		    <thead>
 		      <tr>
 		      	<th style="display: none" >Id</th>
-		        <th>Description</th>
-		        <th>Order</th>
-		        <th><span class="text" th:text="#{button.edit}"></span></th>
-		        <th><span class="text" th:text="#{button.delete}"></span></th>
+		        <th th:onclick="listAdmParameterCategory.tableHeaderColumnClick(this, 1, 'Description');">Description  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
+		        <th th:onclick="listAdmParameterCategory.tableHeaderColumnClick(this, 2, 'Order');">Order  <i class='fas fa-sort-alpha-up fa-sm'></i></th>
 		      </tr>
 		    </thead>
 		    <tbody>
-		      <tr th:each="item : ${listBean}" th:onclick="'listAdmParameterCategory.tableRowClick(this, ' + ${item.id} + ');'">		      	
+		      <tr th:each="item : ${pagedBean.page}" th:onclick="'listAdmParameterCategory.tableRowClick(this, ' + ${item.id} + ');'">		      	
 		      	<td style="display: none" th:text="${item.id}"></td>
 		        <td th:text="${item.description}"></td>
 		        <td th:text="${item.order}"></td>
-		        <td style="text-align: center; width: 20px">
-					<button type="button" class="btn btn-sm btn-warning" id="btnEdit"
-						th:onclick="'listAdmParameterCategory.btnEditClick(' + ${item.id} + ');'">
-						<span class="icon text-white-50">
-							<i class="fa fa-chevron-circle-up"></i>
-						</span>
-					</button>		        
-		        </td>
-		        <td style="text-align: center; width: 20px">
-					<button type="button" class="btn btn-sm btn-danger" 
-						data-bs-toggle="modal" data-bs-target="#dlgDeleteConfirmation">
-						<span class="icon text-white-50">
-							<i class="fa fa-minus-circle"></i>
-						</span>						
-					</button>					        
-		        </td>
 		      </tr>
 		    </tbody>
 		  </table>		  		

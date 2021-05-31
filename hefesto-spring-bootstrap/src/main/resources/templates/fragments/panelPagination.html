@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+	<div class="col-md-auto">
+
+	    <ul class="pagination">
+	        <li class="page-item" th:classappend="${!pagedBean.paging.isPrevEnabled()? 'disabled' : ''}">
+	            <a class="page-link" th:href="@{'__${#request.requestURI}__?pageNumber=' + ${pagedBean.paging.pageNumber - 1}}" aria-label="Previous" tabindex="-1">
+	               <span aria-hidden="true">&laquo;</span>
+	            </a>
+	        </li>
+	        <th:block th:each="item : ${pagedBean.paging.getItems()}">
+	            <li class="page-item" th:classappend="${item.index == pagedBean.paging.pageNumber? 'active' : ''}"
+	                th:if="${item.pageItemType.name() == 'PAGE'}">
+	                <a class="page-link" th:href="@{'__${#request.requestURI}__?pageNumber=' + ${item.index}}" th:text="${item.index}"></a>
+	            </li>
+	            <li class="page-item disabled" th:if="${item.pageItemType.name() == 'DOTS'}">
+	                <a class="page-link" href="#">...</a>
+	            </li>
+	        </th:block>
+	        <li class="page-item" th:classappend="${!pagedBean.paging.isNextEnabled()? 'disabled' : ''}" aria-label="Next">
+	            <a class="page-link" th:href="@{'__${#request.requestURI}__?pageNumber=' + ${pagedBean.paging.pageNumber + 1}}">
+	            	<span aria-hidden="true">&raquo;</span>
+	            </a>
+	        </li>
+	    </ul>
+		
+	</div>	
+	<div class="col-md-auto">
+		<select class="form-select" id="cmbPaginationSize">
+		  <option value="10" th:attr="selected=${pagedBean.paging.pageSize == 10 ? 'selected' : null}">10</option>
+		  <option value="20" th:attr="selected=${pagedBean.paging.pageSize == 20 ? 'selected' : null}">20</option>
+		  <option value="30" th:attr="selected=${pagedBean.paging.pageSize == 30 ? 'selected' : null}">30</option>
+		  <option value="50" th:attr="selected=${pagedBean.paging.pageSize == 50 ? 'selected' : null}">50</option>
+		  <option value="100" th:attr="selected=${pagedBean.paging.pageSize == 100 ? 'selected' : null}">100</option>
+		</select>	    
+	
+	</div>
+</div>
