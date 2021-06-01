@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+</head>
+<body>
+<div class="wrapper">
+	<div id="content">
+		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->		
+
+	<form id="formEditAdmUser" action="#" th:action="@{/private/admUserView}" method="post" th:object="${bean}">
+	
+		<div class="card">
+			<div class="card-header" 
+				style="font-weight: bold;font-size: large;">
+				<span th:text="#{editAdmUser.title}" th:remove="tag"></span>
+			</div>
+			<div class="card-body">				
+				<div class="form-actions">				
+					<button type="submit" class="btn btn-success" id="btnSave">
+						<span class="icon text-white-50">
+							<i class="fa fa-check-circle"></i>
+						</span>
+						<span class="text" th:text="#{button.save}"></span>
+					</button>
+								
+					<button type="reset" class="btn btn-light" id="btnReset">
+	                    <span class="icon text-gray-600">
+	                      <i class="fa fa-eraser"></i>
+	                    </span>
+						<span class="text" th:text="#{button.reset}"></span>
+					</button>
+
+					<button type="button" class="btn btn-primary" id="btnCancel">
+						<span class="icon text-white-50"> 
+							<i class="fa fa-times-circle"></i>
+						</span>	
+						<span class="text" th:text="#{button.cancel}"></span>
+					</button>
+				</div>				
+				<div class="row">
+					<div class="col-md-4 form-group mb-2">
+						<input type="hidden" id="admUser_id" th:field="*{id}" />
+						
+						<label for="admUser_login"><span th:text="#{editAdmUser.login}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admUser_login" maxlength="64" required="required" th:field="*{login}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8 form-group mb-2">
+						<label for="admUser_name"><span th:text="#{editAdmUser.name}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admUser_name" maxlength="64" required="required" th:field="*{name}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8 form-group mb-2">
+						<label for="admUser_email"><span th:text="#{editAdmUser.email}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admUser_email" maxlength="64" required="required" th:field="*{email}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+					</div>
+				</div>
+				<div class="row">				
+					<div class="col-md-3 form-group mb-2">
+						<div class="form-check">
+						  <input class="form-check-input" type="checkbox" value="" id="admUser_active" th:field="*{active}">
+						  <label class="form-check-label" for="admUser_active">
+						    &nbsp;<span th:text="#{editAdmUser.active}" th:remove="tag"></span>
+						  </label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>	
+ 
+<script th:src="@{/js/admin/admUser/editAdmUser.js}"></script>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
+
+</body>
+</html>

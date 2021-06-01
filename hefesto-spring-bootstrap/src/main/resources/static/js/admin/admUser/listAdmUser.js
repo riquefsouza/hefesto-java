@@ -8,13 +8,24 @@ class ListAdmUser extends HFSSystemUtil {
 		this._form = $('#formListAdmUser');
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmUser').DataTable({
-			select: true, 
-			responsive: true
-		} );
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
 		this._formListAdmUser = $('#formListAdmUser');
+		
+		this._tableList = $('#tableAdmUser');
+		this._tableList.DataTable( {
+	        "dom": '<"top"flp>rt<"bottom"i><"clear">'
+	    } );		
+		
+		this._tableRowIndex = $('#admUser_tableRowIndex');
+		this._rowId = $('#admUser_rowId');
+		
+		$('#btnExport').click(this.btnExportClick.bind(this));
+		$('#btnAdd').click(this.btnAddClick.bind(this));
+		$('#btnEdit').click(this.btnEditClick.bind(this));
+		$('#btnPreDelete').click(this.btnPreDeleteClick.bind(this));
+		$('#btnDelete').click(this.btnDeleteClick.bind(this));
+		$('#btnBack').click(this.btnBackClick.bind(this));		
 	}
 	
 	btnExportClick(event) {
@@ -37,23 +48,37 @@ class ListAdmUser extends HFSSystemUtil {
 		event.preventDefault();		
 		this.dangerHide();
 		
-		var dataRowSelected = this._tableList.row('.selected').data();
+		var rowId = this._rowId[0].value;
 		
-		if (dataRowSelected.length > 0) {		
-			this._form[0].action+= '/' + dataRowSelected[0];
+		if (rowId > 0) {		
+			this._form[0].action+= '/' + rowId;
 			this._formListAdmUser.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
 	}
 
+	btnPreDeleteClick(event) {
+		event.preventDefault();
+		this.dangerHide();
+		
+		var rowId = this._rowId[0].value;
+		
+		if (rowId && rowId > 0) {					
+			this._dlgDeleteConfirmation.modal("show");
+		} else {
+			this.dangerShow(this._messageSelectTable);
+		}			
+	}	
+
 	btnDeleteClick(event) {
 		event.preventDefault();
 		this.dangerHide();
 		
-		var dataRowSelected = this._tableList.row('.selected').data();
+		var rowId = this._rowId[0].value;
+		var tableRow = this._tableRowIndex[0].value;
 		
-		if (dataRowSelected.length > 0) {
+		if (rowId && rowId > 0) {
 			
 			$.ajax({
 				method: "DELETE",
@@ -62,8 +87,9 @@ class ListAdmUser extends HFSSystemUtil {
 			    contentType: "application/json; charset=utf-8",								
 		        context: this
 			})
-			.done(function(data) {
-				this._tableList.row('.selected').remove().draw( false );
+			.done(function() {
+				this._tableList[0].deleteRow(tableRow);
+				location.reload();
         	})
 			.fail(function(xhr){
 	            //alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
@@ -79,16 +105,25 @@ class ListAdmUser extends HFSSystemUtil {
 		this._anchorHomePage[0].click();
 	}
 			
+	tableRowClick(tableRow, rowId) {
+		var oldTableRowIndex = this._tableRowIndex[0].value;
+		
+		if (oldTableRowIndex && oldTableRowIndex > 0) {
+			this._tableList[0].rows[oldTableRowIndex].style.backgroundColor = "transparent";
+		}
+		
+		this._tableRowIndex[0].value = tableRow.rowIndex;
+		this._rowId[0].value = rowId;  		
+  		
+  		if (tableRow.rowIndex > 0){
+	  		this._tableList[0].rows[tableRow.rowIndex].style.backgroundColor = "lightblue";
+  		}
+	}
+			
 }
 
+const listAdmUser = new ListAdmUser();
+
 $(function() {
-	const listAdmUser = new ListAdmUser();
-	
-	$('#btnExport').click(listAdmUser.btnExportClick.bind(listAdmUser));
-	$('#btnAdd').click(listAdmUser.btnAddClick.bind(listAdmUser));
-	$('#btnEdit').click(listAdmUser.btnEditClick.bind(listAdmUser));
-	$('#btnDelete').click(listAdmUser.btnDeleteClick.bind(listAdmUser));
-	$('#btnBack').click(listAdmUser.btnBackClick.bind(listAdmUser));
-	
-	
+	//const listAdmUser = new ListAdmUser();
 });
