@@ -430,6 +430,85 @@ class HFSSystemUtil {
 		}
 	}	
 
+	pickListEdtKeyUp(source, bufferSource, svalue) {
+	
+		var sizeSource = bufferSource.options.length;
+
+		for (var i = sizeSource-1; i >= 0; i--) {		
+			source.options.remove(i);
+		}
+
+		if (svalue.trim().length > 0) {
+			for (var i = 0; i < sizeSource; i++) {
+				if (bufferSource.options[i].text.toLowerCase().includes(svalue.toLowerCase())) {
+					var newOption = document.createElement("option");
+					newOption.text = bufferSource.options[i].text;
+					source.options.add(newOption);					
+				}	
+			}
+		} else {
+			for (var i = 0; i < sizeSource; i++) {
+				var newOption = document.createElement("option");
+				newOption.text = bufferSource.options[i].text;
+				source.options.add(newOption);					
+			}			
+		}		
+	}
+	
+	findOptionIndexByText(source, text){
+		for (var i = 0; i < source.options.length; i++) {
+			if (source.options[i].text === text) {
+				return i;	
+			}			
+		}
+		return -1;
+	}
+	
+	pickListBtnAllClick(source, target, bufferSource, bufferTarget) {
+				
+		var sizeSource = source.options.length; 		
+
+		for (var i = 0; i < sizeSource; i++) {
+			var newOption = document.createElement("option");
+			newOption.text = source.options[i].text;
+			target.options.add(newOption);
+			
+			var newOption = document.createElement("option");
+			newOption.text = source.options[i].text;			
+			bufferTarget.options.add(newOption);			
+		}
+
+		for (var i = sizeSource-1; i >= 0; i--) {			
+			bufferSource.options.remove(
+				this.findOptionIndexByText(bufferSource, source.options[i].text));
+			source.options.remove(i);
+		}	
+	}
+	
+	pickListBtnClick(source, target, bufferSource, bufferTarget) {
+				
+		var sizeSource = source.options.length;
+		
+		for (var i = 0; i < sizeSource; i++) {
+			if (source.options[i].selected) {		
+				var newOption = document.createElement("option");
+				newOption.text = source.options[i].text;
+				target.options.add(newOption);
+				
+				var newOption = document.createElement("option");
+				newOption.text = source.options[i].text;				
+				bufferTarget.options.add(newOption);
+			}				
+		}
+
+		for (var i = sizeSource-1; i >= 0; i--) {
+			if (source.options[i].selected) {
+				bufferSource.options.remove(
+					this.findOptionIndexByText(bufferSource, source.options[i].text));
+				source.options.remove(i);				
+			}	
+		}		
+	}
 }
 
 

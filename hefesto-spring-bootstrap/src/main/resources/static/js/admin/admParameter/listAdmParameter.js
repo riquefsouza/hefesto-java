@@ -12,12 +12,13 @@ class ListAdmParameter extends HFSSystemUtil {
 		this._formTitle = $('#formTitle');
 		this._formListAdmParameter = $('#formListAdmParameter');
 		
-		this._tableList = $('#tableAdmParameter');
+		this._tableList = $('#tableAdmParameter');		
+		this._tableList.DataTable( {
+	        "dom": '<"top"flp>rt<"bottom"i><"clear">'
+	    } );		
 		
-		this._tableList.DataTable();		
-		
-		this._admParameterTableRowIndex = $('#admParameter_tableRowIndex');
-		this._admParameterRowId = $('#admParameter_rowId');
+		this._tableRowIndex = $('#admParameter_tableRowIndex');
+		this._rowId = $('#admParameter_rowId');
 		
 		$('#btnExport').click(this.btnExportClick.bind(this));
 		$('#btnAdd').click(this.btnAddClick.bind(this));
@@ -47,7 +48,7 @@ class ListAdmParameter extends HFSSystemUtil {
 		event.preventDefault();		
 		this.dangerHide();
 		
-		var rowId = this._admParameterRowId[0].value;
+		var rowId = this._rowId[0].value;
 		
 		if (rowId > 0) {		
 			this._form[0].action+= '/' + rowId;
@@ -63,8 +64,8 @@ class ListAdmParameter extends HFSSystemUtil {
 		event.preventDefault();
 		this.dangerHide();
 
-		var rowId = this._admParameterRowId[0].value;
-		var tableRow = this._admParameterTableRowIndex[0].value;
+		var rowId = this._rowId[0].value;
+		var tableRow = this._tableRowIndex[0].value;
 		
 		if (rowId && rowId > 0) {
 			
@@ -97,14 +98,14 @@ class ListAdmParameter extends HFSSystemUtil {
 	}
 	
 	tableRowClick(tableRow, rowId) {
-		var oldTableRowIndex = this._admParameterTableRowIndex[0].value;
+		var oldTableRowIndex = this._tableRowIndex[0].value;
 		
 		if (oldTableRowIndex && oldTableRowIndex > 0) {
 			this._tableList[0].rows[oldTableRowIndex].style.backgroundColor = "transparent";
 		}
 		
-		this._admParameterTableRowIndex[0].value = tableRow.rowIndex;
-		this._admParameterRowId[0].value = rowId;  		
+		this._tableRowIndex[0].value = tableRow.rowIndex;
+		this._rowId[0].value = rowId;  		
   		
   		if (tableRow.rowIndex > 0){
 	  		this._tableList[0].rows[tableRow.rowIndex].style.backgroundColor = "lightblue";
