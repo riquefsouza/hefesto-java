@@ -41,7 +41,11 @@
 			</ul>
 		  </li>	  
 		  <li class="nav-item">
-		  	<a class="nav-link" th:href="@{/logout}"><img class="inverted-image" th:src="@{/img/sair.png}" /><span th:text="#{menu.exit}" th:remove="tag"></span></a>
+		  	<a class="nav-link" th:href="@{/logout}">
+		  		<span class="icon text-white-50">
+					<i class="fa fa-door-open"></i>
+				</span>
+				<span th:text="#{menu.exit}" th:remove="tag"></span></a>
 		  </li>	
         
       </ul>

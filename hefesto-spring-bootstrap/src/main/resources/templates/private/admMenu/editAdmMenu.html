@@ -5,7 +5,6 @@
 </head>
 <body>
 <div class="wrapper">
-	<div th:replace="private/menu-sidebar :: menu-sidebar"></div>
 	<div id="content">
 		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
 		<div class="web-content">
@@ -20,36 +19,70 @@
 			</div>
 			<div class="card-body">				
 				<div class="form-actions">				
-					<button type="submit" class="btn btn-success btn-icon-split" id="btnSave">
+					<button type="submit" class="btn btn-success" id="btnSave">
 						<span class="icon text-white-50">
 							<i class="fa fa-check-circle"></i>
 						</span>
 						<span class="text" th:text="#{button.save}"></span>
 					</button>
 								
-					<button type="reset" class="btn btn-light btn-icon-split" id="btnReset">
+					<button type="reset" class="btn btn-light" id="btnReset">
 	                    <span class="icon text-gray-600">
 	                      <i class="fa fa-eraser"></i>
 	                    </span>
 						<span class="text" th:text="#{button.reset}"></span>
 					</button>
 
-					<button type="button" class="btn btn-primary btn-icon-split" id="btnCancel">
+					<button type="button" class="btn btn-primary" id="btnCancel">
 						<span class="icon text-white-50"> 
 							<i class="fa fa-times-circle"></i>
 						</span>	
 						<span class="text" th:text="#{button.cancel}"></span>
 					</button>
 				</div>				
+
 				<div class="row">
-					<div class="col-md-4 form-group">
+					<div class="col-md-4 form-group mb-2">
 						<input type="hidden" id="admMenu_id" th:field="*{id}" />
 						
-						<label for="admMenu_name"><span th:text="#{editAdmMenu.name}" th:remove="tag"></span></label>
-						<input type="text" class="form-control" id="admMenu_name" maxlength="64" required="required" th:field="*{name}" />
-						<span style="color: red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+						<label for="admMenu_admPage"><span th:text="#{editAdmMenu.page}" th:remove="tag"></span></label>			
+					    <select  id="admMenu_admPage" class="form-select" th:field="*{admPage}">
+					        <option th:each="itemPage : ${listAdmPages}" 
+					        	th:value="${itemPage.id}" 
+					        	th:text="${itemPage.description}" 
+					        	th:selected="${#lists.contains(bean.admPage,itemPage)}">
+					        </option>
+					    </select>						
 					</div>
-				</div>
+				</div>	
+
+				<div class="row">						
+					<div class="col-md-12 form-group mb-2">
+						<label for="admMenu_description"><span th:text="#{editAdmMenu.description}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admMenu_description" maxlength="255" required="required" th:field="*{description}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>					
+					</div>
+				</div>					
+				
+				<div class="row">
+					<div class="col-md-4 form-group mb-2">
+						<label for="admMenu_admMenuParent"><span th:text="#{editAdmMenu.menuParent}" th:remove="tag"></span></label>			
+					    <select  id="admMenu_admMenuParent" class="form-select" th:field="*{admMenuParent}">
+					        <option th:each="itemMenuParent : ${listAdmMenuParents}" 
+					        	th:value="${itemMenuParent.id}" 
+					        	th:text="${itemMenuParent.description}">
+					        </option>
+					    </select>						
+					</div>
+				</div>	
+
+				<div class="row">						
+					<div class="col-md-2 form-group mb-2">
+						<label for="admMenu_order"><span th:text="#{editAdmMenu.order}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admMenu_order" maxlength="10" required="required" th:field="*{order}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('order')}" th:errors="*{order}"></span>					
+					</div>
+				</div>					
 				
 			</div>
 		</div>

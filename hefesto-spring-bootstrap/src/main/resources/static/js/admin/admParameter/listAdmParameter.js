@@ -23,6 +23,7 @@ class ListAdmParameter extends HFSSystemUtil {
 		$('#btnExport').click(this.btnExportClick.bind(this));
 		$('#btnAdd').click(this.btnAddClick.bind(this));
 		$('#btnEdit').click(this.btnEditClick.bind(this));
+		$('#btnPreDelete').click(this.btnPreDeleteClick.bind(this));
 		$('#btnDelete').click(this.btnDeleteClick.bind(this));
 		$('#btnBack').click(this.btnBackClick.bind(this));		
 
@@ -59,6 +60,19 @@ class ListAdmParameter extends HFSSystemUtil {
 		}
 
 	}
+
+	btnPreDeleteClick(event) {
+		event.preventDefault();
+		this.dangerHide();
+		
+		var rowId = this._rowId[0].value;
+		
+		if (rowId && rowId > 0) {					
+			this._dlgDeleteConfirmation.modal("show");
+		} else {
+			this.dangerShow(this._messageSelectTable);
+		}			
+	}	
 
 	btnDeleteClick(event) {
 		event.preventDefault();

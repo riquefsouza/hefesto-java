@@ -509,6 +509,33 @@ class HFSSystemUtil {
 			}	
 		}		
 	}
+	
+	mountTreeMenu() {
+	
+		var toggler = document.getElementsByClassName("caret");
+	
+		for (var i = 0; i < toggler.length; i++) {
+			toggler[i].addEventListener("click", function() {
+				this.parentElement.querySelector(".nested").classList
+						.toggle("active");
+				this.classList.toggle("caret-down");
+			});
+		}	
+	}
+
+	removeTreeNode(nodeId){
+		var nodes = document.getElementsByClassName("nodeText");
+
+		for (var i = 0; i < nodes.length; i++) {
+			var index = nodes[i].parentElement.getAttributeNode("name").value;
+		
+			if (index == nodeId) {			
+				nodes[i].parentElement.remove();
+			}	
+		}		
+	}
+			
+	
 }
 
 

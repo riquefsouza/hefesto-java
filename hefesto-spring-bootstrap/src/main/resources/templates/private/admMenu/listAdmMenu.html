@@ -5,52 +5,6 @@
 <head th:replace="fragments/header :: header">
 </head>
 <body>
-
-<style>
-
-	/* Remove default bullets */
-	ul, #myUL {
-		list-style-type: none;
-	}
-	
-	/* Remove margins and padding from the parent ul */
-	#myUL {
-		margin: 0;
-		padding: 0;
-	}
-	
-	/* Style the caret/arrow */
-	.caret {
-		cursor: pointer;
-		user-select: none; /* Prevent text selection */
-	}
-	
-	/* Create the caret/arrow with a unicode, and style it */
-	.caret::before {
-		content: "\25B6";
-		color: black;
-		display: inline-block;
-		margin-right: 6px;
-	}
-	
-	/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
-	.caret-down::before {
-		transform: rotate(90deg);
-	}
-	
-	/* Hide the nested list */
-	.nested {
-		display: none;
-	}
-	
-	/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
-	.active {
-		display: block;
-	}
-	
-</style>
-
-
 <div class="wrapper">
 	<div id="content">
 		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
@@ -90,8 +44,7 @@
 				</span>
 				<span class="text" th:text="#{button.edit}"></span>
 			</button>			
-			<button type="button" class="btn btn-danger" id="btnPreDelete"
-				data-bs-toggle="modal" data-bs-target="#dlgDeleteConfirmation">
+			<button type="button" class="btn btn-danger" id="btnPreDelete">
 				<span class="icon text-white-50">
 					<i class="fa fa-minus-circle"></i>
 				</span>
@@ -102,7 +55,7 @@
 					<i class="fa fa-arrow-circle-left"></i>
 				</span>
 				<span class="text" th:text="#{button.back}"></span>
-			</button>			
+			</button>									
 		</div>
 
 		<div class="modal fade" id="dlgDeleteConfirmation" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -123,59 +76,21 @@
 		  </div>
 		</div>
 
-		<ul id="myUL">
+		<input type="hidden" id="admMenu_nodeId" />
+		<ul id="hfstree">
 			<li th:each="adminMenu : ${listBean}"><span class="caret" th:text="${adminMenu.description}"></span>
 				<ul class="nested">
-					<li th:each="adminSubmenu : ${adminMenu.subMenus}"><span th:text="${adminSubmenu.description}"></span></li>
-				</ul>
-			</li>
-		</ul>
-
-
-<!-- 
-		<ul id="myUL">
-			<li><span class="caret">Beverages</span>
-				<ul class="nested">
-					<li>Water</li>
-					<li>Coffee</li>
-					<li><span class="caret">Tea</span>
-						<ul class="nested">
-							<li>Black Tea</li>
-							<li>White Tea</li>
-							<li><span class="caret">Green Tea</span>
-								<ul class="nested">
-									<li>Sencha</li>
-									<li>Gyokuro</li>
-									<li>Matcha</li>
-									<li>Pi Lo Chun</li>
-								</ul>
-							</li>
-						</ul>
+					<li th:each="adminSubmenu : ${adminMenu.subMenus}" th:name="${adminSubmenu.id}">
+						<span th:text="${adminSubmenu.description}" class="nodeText" 
+						th:onclick="'listAdmMenu.treeNodeClick(this, ' + ${adminSubmenu.id} + ');'"></span>
 					</li>
 				</ul>
 			</li>
 		</ul>
- -->
-
 
 	</form>
 
 <script th:src="@{/js/admin/admMenu/listAdmMenu.js}"></script>
-
-<script>
-
-	var toggler = document.getElementsByClassName("caret");
-	var i;
-
-	for (i = 0; i < toggler.length; i++) {
-		toggler[i].addEventListener("click", function() {
-			this.parentElement.querySelector(".nested").classList
-					.toggle("active");
-			this.classList.toggle("caret-down");
-		});
-	}
-	
-</script>
 
 <!-- =================================================================================== -->
 

@@ -8,14 +8,20 @@ class ListAdmMenu extends HFSSystemUtil {
 		this._form = $('#formListAdmMenu');
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmMenu').DataTable({
-			select: true, 
-			responsive: true
-		} );
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
 		this._formListAdmMenu = $('#formListAdmMenu');
+		
+		this._nodeId = $('#admMenu_nodeId');
 			
+		$('#btnExport').click(this.btnExportClick.bind(this));
+		$('#btnAdd').click(this.btnAddClick.bind(this));
+		$('#btnEdit').click(this.btnEditClick.bind(this));
+		$('#btnPreDelete').click(this.btnPreDeleteClick.bind(this));
+		$('#btnDelete').click(this.btnDeleteClick.bind(this));
+		$('#btnBack').click(this.btnBackClick.bind(this));
+			
+		this.mountTreeMenu();
 	}
 	
 	btnExportClick(event) {
@@ -38,23 +44,36 @@ class ListAdmMenu extends HFSSystemUtil {
 		event.preventDefault();		
 		this.dangerHide();
 		
-		var dataRowSelected = this._tableList.row('.selected').data();
+		var nodeId = this._nodeId[0].value;
 		
-		if (dataRowSelected.length > 0) {		
-			this._form[0].action+= '/' + dataRowSelected[0];
-			this._formListAdmMenu.submit();	
+		if (nodeId) {					
+			this._form[0].action+= '/' + nodeId;
+			this._formListAdmMenu.submit();				
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
 	}
 
+	btnPreDeleteClick(event) {
+		event.preventDefault();
+		this.dangerHide();
+		
+		var nodeId = this._nodeId[0].value;
+		
+		if (nodeId) {					
+			this._dlgDeleteConfirmation.modal("show");
+		} else {
+			this.dangerShow(this._messageSelectTable);
+		}			
+	}
+				
 	btnDeleteClick(event) {
 		event.preventDefault();
 		this.dangerHide();
 		
-		var dataRowSelected = this._tableList.row('.selected').data();
+		var nodeId = this._nodeId[0].value;
 		
-		if (dataRowSelected.length > 0) {
+		if (nodeId) {					
 			
 			$.ajax({
 				method: "DELETE",
@@ -63,8 +82,9 @@ class ListAdmMenu extends HFSSystemUtil {
 			    contentType: "application/json; charset=utf-8",								
 		        context: this
 			})
-			.done(function(data) {
-				this._tableList.row('.selected').remove().draw( false );
+			.done(function() {
+				this.removeTreeNode(nodeId);
+				//location.reload();				
         	})
 			.fail(function(xhr){
 	            //alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
@@ -79,17 +99,24 @@ class ListAdmMenu extends HFSSystemUtil {
 		event.preventDefault();
 		this._anchorHomePage[0].click();
 	}
-			
+	
+	treeNodeClick(nodeText, menuId) {
+		this._nodeId[0].value = menuId;
+		
+		var nodes = document.getElementsByClassName("nodeText");
+		
+		for (var i = 0; i < nodes.length; i++) {
+			nodes[i].style.backgroundColor = "transparent";
+		}
+		
+		nodeText.style.backgroundColor = "lightblue";
+		
+	}
+	
 }
 
+const listAdmMenu = new ListAdmMenu();
+
 $(function() {
-	const listAdmMenu = new ListAdmMenu();
-	
-	$('#btnExport').click(listAdmMenu.btnExportClick.bind(listAdmMenu));
-	$('#btnAdd').click(listAdmMenu.btnAddClick.bind(listAdmMenu));
-	$('#btnEdit').click(listAdmMenu.btnEditClick.bind(listAdmMenu));
-	$('#btnDelete').click(listAdmMenu.btnDeleteClick.bind(listAdmMenu));
-	$('#btnBack').click(listAdmMenu.btnBackClick.bind(listAdmMenu));
-	
-	
+	//const listAdmMenu = new ListAdmMenu();
 });
