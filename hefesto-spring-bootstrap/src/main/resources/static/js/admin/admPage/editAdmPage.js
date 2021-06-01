@@ -7,22 +7,22 @@ class EditAdmPage extends HFSSystemUtil {
 		
 		this._page = $('#admPageView');
 	
-		this._bufferSourceProfiles = $('#admPage_bufferSourceProfiles');
-		this._bufferTargetProfiles = $('#admPage_bufferTargetProfiles');
+		this._bufferSourceProfiles = $('#bufferSource_pickListProfiles');
+		this._bufferTargetProfiles = $('#bufferTarget_pickListProfiles');
 	
-		this._sourceProfiles = $('#admPage_sourceProfiles');
-		this._targetProfiles = $('#admPage_targetProfiles');
+		this._sourceProfiles = $('#source_pickListProfiles');
+		this._targetProfiles = $('#target_pickListProfiles');
 		
 		this._editAdmPageMessageSourceCaptionProfiles = $('#editAdmPage-message-sourceCaptionProfiles').text();
 		this._editAdmPageMessageTargetCaptionProfiles = $('#editAdmPage-message-targetCaptionProfiles').text();
 		
-		$('#admPage_edtSourceProfiles').keyup(this.edtSourceProfilesKeyUp.bind(this));
-		$('#admPage_edtTargetProfiles').keyup(this.edtTargetProfilesKeyUp.bind(this));
+		$('#edtSource_pickListProfiles').keyup(this.edtSourceProfilesKeyUp.bind(this));
+		$('#edtTarget_pickListProfiles').keyup(this.edtTargetProfilesKeyUp.bind(this));
 		
-		$('#admPage_pickListProfiles_btnRight').click(this.btnRightProfilesClick.bind(this));
-		$('#admPage_pickListProfiles_btnAllRight').click(this.btnAllRightProfilesClick.bind(this));
-		$('#admPage_pickListProfiles_btnLeft').click(this.btnLeftProfilesClick.bind(this));
-		$('#admPage_pickListProfiles_btnAllLeft').click(this.btnAllLeftProfilesClick.bind(this));
+		$('#btnRight_pickListProfiles').click(this.btnRightProfilesClick.bind(this));
+		$('#btnAllRight_pickListProfiles').click(this.btnAllRightProfilesClick.bind(this));
+		$('#btnLeft_pickListProfiles').click(this.btnLeftProfilesClick.bind(this));
+		$('#btnAllLeft_pickListProfiles').click(this.btnAllLeftProfilesClick.bind(this));
 		
 	}
 

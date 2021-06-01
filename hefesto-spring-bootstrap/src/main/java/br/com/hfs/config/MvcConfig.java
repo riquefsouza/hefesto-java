@@ -32,9 +32,9 @@ public class MvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/bootstrap-5.0.1/**", "/popper-2.9.2/**", "/fontawesome-free/**", "/jquery-3.6.0/**", 
+		registry.addResourceHandler("/bootstrap-5.0.1/**",  "/popper-2.9.2/**", "/fontawesome-free/**", "/jquery-3.6.0/**", 
 				"/dataTables-1.10.24/**", "/css/**", "/img/**", "/js/**")
-				.addResourceLocations("classpath:/static/bootstrap-5.0.1/","classpath:/static/popper-2.9.2/",
+				.addResourceLocations("classpath:/static/bootstrap-5.0.1/", "classpath:/static/popper-2.9.2/",
 						"classpath:/static/fontawesome-free/", "classpath:/static/jquery-3.6.0/",
 						"classpath:/static/dataTables-1.10.24/",
 						"classpath:/static/css/", "classpath:/static/img/", "classpath:/static/js/");

@@ -41,7 +41,7 @@
 					</button>
 				</div>				
 				<div class="row">
-					<div class="col-md-4 form-group">
+					<div class="col-md-4 form-group mb-2">
 						<input type="hidden" id="admParameter_id" th:field="*{id}" />
 						
 						<label for="divAdmParameter_category"><span th:text="#{editAdmParameter.category}" th:remove="tag"></span></label>			
@@ -55,14 +55,14 @@
 					</div>
 				</div>	
 				<div class="row">	
-					<div class="col-md-4 form-group">
+					<div class="col-md-4 form-group mb-2">
 						<label for="admParameter_code"><span th:text="#{editAdmParameter.code}" th:remove="tag"></span></label>
 						<input type="text" class="form-control" id="admParameter_code" maxlength="64" required="required" th:field="*{code}" />
 						<span style="color: red;" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></span>
 					</div>
 				</div>	
 				<div class="row">						
-					<div class="col-md-8 form-group">
+					<div class="col-md-8 form-group mb-2">
 						<label for="admParameter_value"><span th:text="#{editAdmParameter.value}" th:remove="tag"></span></label>
 						<textarea class="form-control" id="admParameter_value" rows="6" maxlength="4000" required="required" th:field="*{value}" >
 						</textarea>
@@ -70,7 +70,7 @@
 					</div>
 				</div>
 				<div class="row">						
-					<div class="col-md-12 form-group">
+					<div class="col-md-12 form-group mb-2">
 						<label for="admParameter_description"><span th:text="#{editAdmParameter.description}" th:remove="tag"></span></label>
 						<input type="text" class="form-control" id="admParameter_description" maxlength="255" required="required" th:field="*{description}" />
 						<span style="color: red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>					

@@ -9,14 +9,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.hibernate.Session;
 import org.hibernate.TransactionException;
 import org.hibernate.jdbc.ReturningWork;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import br.com.hfs.admin.controller.dto.AdmUserDTO;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
 import br.com.hfs.admin.repository.AdmUserRepository;
@@ -96,6 +100,24 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 	public Optional<AdmUser> findByEmail(String email){
 		return repository.findByEmail(email);
 	}
+	
+	private List<AdmUserDTO> toDTO(List<AdmUser> listaOrigem) {
+		ModelMapper modelMapper = new ModelMapper();		
+		AdmUserDTO userDTO; 
+		List<AdmUserDTO> lista = new ArrayList<AdmUserDTO>(); 
+		for (AdmUser item : listaOrigem) {
+			userDTO = modelMapper.map(item, AdmUserDTO.class);
+			lista.add(userDTO);
+		}
+		return lista;
+	}
+	
+	public List<AdmUserDTO> findByLikeEmail(String email){
+		List<AdmUser> listaOrigem = repository.findByLikeEmail(email);
+		List<AdmUserDTO> lista = toDTO(listaOrigem);
+		
+		return lista;
+	}	
 	
 	public List<AdmUser> findPaginated(int pageNumber, int pageSize) {
 		return findPaginated("ADM_USER", "USU_SEQ", pageNumber, pageSize);
@@ -220,7 +242,6 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 		}
 	}
 	
-	/*
 	
 	@Transactional
 	public AdmUser getUser(String login, String name, String email, boolean auditar) throws TransactionException {
@@ -238,6 +259,7 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 			}
 		}
 		
+		/*
 		if (auditar) {
 			String banco = findBanco();
 			if (banco.equals("Oracle")) {
@@ -248,9 +270,10 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 				setIPPostgreSQL(user.getIp());
 			}
 		}
+		*/
 
 		return user;
 	}
-	*/
+	
 
 }

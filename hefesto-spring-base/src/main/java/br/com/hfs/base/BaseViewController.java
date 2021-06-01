@@ -173,11 +173,11 @@ public abstract class BaseViewController {
 	}
 	
 	public AuthenticatedUserVO getAuthenticatedUser() {		
-		return (AuthenticatedUserVO) getSession().getAttribute("userAuthenticated");
+		return (AuthenticatedUserVO) getSession().getAttribute("authenticatedUser");
 	}
 	
 	public void setUserAuthenticated(AuthenticatedUserVO usu){
-		getSession().setAttribute("userAuthenticated", usu);
+		getSession().setAttribute("authenticatedUser", usu);
 	}
 	
 	private String getIdMenu() {

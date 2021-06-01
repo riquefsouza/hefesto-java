@@ -41,7 +41,7 @@
 					</button>
 				</div>				
 				<div class="row">
-					<div class="col-md-8 form-group">
+					<div class="col-md-8 form-group mb-2">
 						<input type="hidden" id="admPage_id" th:field="*{id}" />
 
 						<label for="admPage_url"><span th:text="#{editAdmPage.url}" th:remove="tag"></span></label>
@@ -50,75 +50,73 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-8 form-group">
+					<div class="col-md-8 form-group mb-2">
 						<label for="admPage_description"><span th:text="#{editAdmPage.description}" th:remove="tag"></span></label>
 						<input type="text" class="form-control" id="admPage_description" maxlength="255" required="required" th:field="*{description}" />
 						<span style="color: red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-5">
-						<label for="admPage_pickListProfiles"><span th:text="#{editAdmPage.pickListProfiles}" th:remove="tag"></span></label>
-						<div id="admPage_pickListProfiles" class="picklistBigger">
-							<div class="row">
-								<div class="col-md-5">
-									<div class="row">
-										<label for="admPage_description">available</label>
-										<input type="text" class="form-control" id="admPage_edtSourceProfiles" maxlength="20" />
-									</div>
-									<div class="row">
-									    <select id="admPage_bufferSourceProfiles" class="form-select" style="display: visible">
-									        <option th:each="itemProfile : ${listSourceProfiles}"
-									        	th:value="${itemProfile.id}" 
-									        	th:text="${itemProfile.description}" >
-									        </option>
-									    </select>
-									    <select id="admPage_sourceProfiles" class="form-select" size="10" multiple>
-									        <option th:each="itemProfile : ${listSourceProfiles}"
-									        	th:value="${itemProfile.id}" 
-									        	th:text="${itemProfile.description}" >
-									        </option>
-									    </select>
-									</div>
+					<div class="col-md-5 form-group mb-2">
+						<label for="pickListProfiles"><span th:text="#{editAdmPage.pickListProfiles}" th:remove="tag"></span></label>
+						<div class="row ms-1">
+							<div class="col-md-5">
+								<div class="row">
+									<input type="text" class="form-control" id="edtSource_pickListProfiles" maxlength="20" />
+									<input class="form-control" type="text" placeholder="Available" disabled>
 								</div>
-								<div class="col-md-1 d-flex align-items-center">
-									<div class="btn-group-vertical btn-group-sm">							
-										<button type="button" class="btn btn-primary" id="admPage_pickListProfiles_btnRight">
-											<span class="icon text-white-50"><i class="fa fa-angle-right"></i></span>
-										</button>
-										<button type="button" class="btn btn-primary" id="admPage_pickListProfiles_btnAllRight">
-											<span class="icon text-white-50"><i class="fa fa-angle-double-right"></i></span>
-										</button>
-										<button type="button" class="btn btn-primary" id="admPage_pickListProfiles_btnLeft">
-											<span class="icon text-white-50"><i class="fa fa-angle-left"></i></span>
-										</button>
-										<button type="button" class="btn btn-primary" id="admPage_pickListProfiles_btnAllLeft">
-											<span class="icon text-white-50"><i class="fa fa-angle-double-left"></i></span>
-										</button>
-									</div>
+								<div class="row">
+								    <select id="bufferSource_pickListProfiles" class="form-select" style="display: none">
+								        <option th:each="itemProfile : ${listSourceProfiles}"
+								        	th:value="${itemProfile.id}" 
+								        	th:text="${itemProfile.description}" >
+								        </option>
+								    </select>
+								    <select id="source_pickListProfiles" class="form-select" size="10" multiple>
+								        <option th:each="itemProfile : ${listSourceProfiles}"
+								        	th:value="${itemProfile.id}" 
+								        	th:text="${itemProfile.description}" >
+								        </option>
+								    </select>
 								</div>
-								<div class="col-md-5">
-									<div class="row">	
-										<label for="admPage_description">authorized</label>
-										<input type="text" class="form-control" id="admPage_edtTargetProfiles" maxlength="20" />
-									</div>
-									<div class="row">
-										<select id="admPage_bufferTargetProfiles" class="form-select" style="display: visible">
-											<option th:each="profile : ${listTargetProfiles}"
-													th:value="${profile.id}"
-													th:text="${profile.description}">
-											</option>
-										</select>
-										<select id="admPage_targetProfiles" class="form-select" size="10" multiple th:field="*{admProfiles}" >
-											<option th:each="profile : ${listTargetProfiles}"
-													th:value="${profile.id}"
-													th:text="${profile.description}">
-											</option>
-										</select>
-									</div>																    
-								</div>	
 							</div>
-						</div>
+							<div class="col-md-1 d-flex align-items-center">
+								<div class="btn-group-vertical btn-group-sm">							
+									<button type="button" class="btn btn-primary" id="btnRight_pickListProfiles">
+										<span class="icon text-white-50"><i class="fa fa-angle-right"></i></span>
+									</button>
+									<button type="button" class="btn btn-primary" id="btnAllRight_pickListProfiles">
+										<span class="icon text-white-50"><i class="fa fa-angle-double-right"></i></span>
+									</button>
+									<button type="button" class="btn btn-primary" id="btnLeft_pickListProfiles">
+										<span class="icon text-white-50"><i class="fa fa-angle-left"></i></span>
+									</button>
+									<button type="button" class="btn btn-primary" id="btnAllLeft_pickListProfiles">
+										<span class="icon text-white-50"><i class="fa fa-angle-double-left"></i></span>
+									</button>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<div class="row">								
+									<input type="text" class="form-control" id="edtTarget_pickListProfiles" maxlength="20" />
+									<input class="form-control" type="text" placeholder="Authorized" disabled>
+								</div>
+								<div class="row">
+									<select id="bufferTarget_pickListProfiles" class="form-select" style="display: none">
+										<option th:each="profile : ${listTargetProfiles}"
+												th:value="${profile.id}"
+												th:text="${profile.description}">
+										</option>
+									</select>
+									<select id="target_pickListProfiles" class="form-select" size="10" multiple th:field="*{admProfiles}" >
+										<option th:each="profile : ${listTargetProfiles}"
+												th:value="${profile.id}"
+												th:text="${profile.description}">
+										</option>
+									</select>
+								</div>																    
+							</div>	
+						</div>						
 					</div>
 				</div>
 								

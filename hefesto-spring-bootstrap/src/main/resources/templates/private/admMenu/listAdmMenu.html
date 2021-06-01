@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragments/header :: header">
+</head>
+<body>
+
+<style>
+
+	/* Remove default bullets */
+	ul, #myUL {
+		list-style-type: none;
+	}
+	
+	/* Remove margins and padding from the parent ul */
+	#myUL {
+		margin: 0;
+		padding: 0;
+	}
+	
+	/* Style the caret/arrow */
+	.caret {
+		cursor: pointer;
+		user-select: none; /* Prevent text selection */
+	}
+	
+	/* Create the caret/arrow with a unicode, and style it */
+	.caret::before {
+		content: "\25B6";
+		color: black;
+		display: inline-block;
+		margin-right: 6px;
+	}
+	
+	/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+	.caret-down::before {
+		transform: rotate(90deg);
+	}
+	
+	/* Hide the nested list */
+	.nested {
+		display: none;
+	}
+	
+	/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+	.active {
+		display: block;
+	}
+	
+</style>
+
+
+<div class="wrapper">
+	<div id="content">
+		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->		
+
+	<form id="formListAdmMenu" action="#" th:action="@{/private/admMenuView/edit}" method="get" th:object="${bean}">
+		
+		<div class="card">
+			<div class="card-header" 
+				style="font-weight: bold;font-size: large;">				
+				<span th:text="#{listAdmMenu.title}" id="formTitle"></span>
+			</div>
+			<div class="card-body">				
+				<div class="row">
+					<th:block th:include="/fragments/panelReport"></th:block>				
+				</div>
+			</div>
+		</div>
+
+		<div class="form-actions" style="margin:5px 0;">
+			<button type="button" class="btn btn-primary" id="btnExport">
+				<span class="icon text-white-50">
+					<i class="fa fa-file"></i>
+				</span>
+				<span class="text" th:text="#{button.export}"></span>
+			</button>			
+			<button type="button" class="btn btn-success" id="btnAdd">
+				<span class="icon text-white-50">
+					<i class="fa fa-plus-circle"></i>
+				</span>
+				<span class="text" th:text="#{button.add}"></span>
+			</button>			
+			<button type="button" class="btn btn-warning" id="btnEdit">
+				<span class="icon text-white-50">
+					<i class="fa fa-chevron-circle-up"></i>
+				</span>
+				<span class="text" th:text="#{button.edit}"></span>
+			</button>			
+			<button type="button" class="btn btn-danger" id="btnPreDelete"
+				data-bs-toggle="modal" data-bs-target="#dlgDeleteConfirmation">
+				<span class="icon text-white-50">
+					<i class="fa fa-minus-circle"></i>
+				</span>
+				<span class="text" th:text="#{button.delete}"></span>					
+			</button>			
+			<button type="button" class="btn btn-primary" id="btnBack">
+				<span class="icon text-white-50">
+					<i class="fa fa-arrow-circle-left"></i>
+				</span>
+				<span class="text" th:text="#{button.back}"></span>
+			</button>			
+		</div>
+
+		<div class="modal fade" id="dlgDeleteConfirmation" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel"><span th:text="#{dlgDeleteConfirmation.title}"></span></h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>		      
+		      </div>
+		      <div class="modal-body">
+		        <p><span th:text="#{dlgDeleteConfirmation.text}" th:remove="tag"></span></p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+		        <button type="button" id="btnDelete" class="btn btn-primary" data-bs-dismiss="modal">Yes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<ul id="myUL">
+			<li th:each="adminMenu : ${listBean}"><span class="caret" th:text="${adminMenu.description}"></span>
+				<ul class="nested">
+					<li th:each="adminSubmenu : ${adminMenu.subMenus}"><span th:text="${adminSubmenu.description}"></span></li>
+				</ul>
+			</li>
+		</ul>
+
+
+<!-- 
+		<ul id="myUL">
+			<li><span class="caret">Beverages</span>
+				<ul class="nested">
+					<li>Water</li>
+					<li>Coffee</li>
+					<li><span class="caret">Tea</span>
+						<ul class="nested">
+							<li>Black Tea</li>
+							<li>White Tea</li>
+							<li><span class="caret">Green Tea</span>
+								<ul class="nested">
+									<li>Sencha</li>
+									<li>Gyokuro</li>
+									<li>Matcha</li>
+									<li>Pi Lo Chun</li>
+								</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+ -->
+
+
+	</form>
+
+<script th:src="@{/js/admin/admMenu/listAdmMenu.js}"></script>
+
+<script>
+
+	var toggler = document.getElementsByClassName("caret");
+	var i;
+
+	for (i = 0; i < toggler.length; i++) {
+		toggler[i].addEventListener("click", function() {
+			this.parentElement.querySelector(".nested").classList
+					.toggle("active");
+			this.classList.toggle("caret-down");
+		});
+	}
+	
+</script>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
+
+</body>
+</html>

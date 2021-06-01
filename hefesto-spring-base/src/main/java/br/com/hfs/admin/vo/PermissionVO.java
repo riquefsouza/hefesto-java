@@ -49,4 +49,9 @@ public class PermissionVO implements Serializable {
 		this.pages = pages;
 	}
 
+	@Override
+	public String toString() {
+		return "PermissionVO [profile=" + profile + ", pages=" + pages + "]";
+	}
+
 }

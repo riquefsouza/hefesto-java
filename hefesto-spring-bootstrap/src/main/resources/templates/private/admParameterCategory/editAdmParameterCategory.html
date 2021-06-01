@@ -42,14 +42,14 @@
 					</button>
 				</div>				
 				<div class="row">
-					<div class="col-md-4 form-group">
+					<div class="col-md-4 form-group mb-3">
 						<input type="hidden" id="admParameterCategory_id" th:field="*{id}" />
 						
 						<label for="admParameterCategory_description"><span th:text="#{editAdmParameterCategory.description}" th:remove="tag"></span></label>
 						<input type="text" class="form-control" id="admParameterCategory_description" maxlength="64" required="required" th:field="*{description}" />
 						<span style="color: red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
 					</div>
-					<div class="col-md-4 form-group">
+					<div class="col-md-4 form-group mb-3">
 						<label for="admParameterCategory_order"><span th:text="#{editAdmParameterCategory.order}" th:remove="tag"></span></label>
 						<input type="text" class="form-control" id="admParameterCategory_order" maxlength="64" required="required" th:field="*{order}" />
 						<span style="color: red;" th:if="${#fields.hasErrors('order')}" th:errors="*{order}"></span>

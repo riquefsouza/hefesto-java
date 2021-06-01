@@ -22,6 +22,9 @@ public interface AdmUserRepository extends JpaRepository<AdmUser, Long> {
 
 	Optional<AdmUser> findByEmail(String email);
 	
+	@Query(name = "AdmUser.findByLikeEmail")
+	List<AdmUser> findByLikeEmail(String email);
+	
 	@Query(name = "AdmUser.findIPByOracle", nativeQuery = true)
 	public List<Object> findIPByOracle();
 

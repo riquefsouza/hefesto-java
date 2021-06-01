@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
+import br.com.hfs.admin.vo.AuthenticatedUserVO;
 
 public class HfsUserDetails implements UserDetails {
 
@@ -25,6 +26,7 @@ public class HfsUserDetails implements UserDetails {
 	private String password;
 	private boolean active;
 	private Set<AdmProfile> roles;
+	private AuthenticatedUserVO authenticatedUser;
 	
 	public HfsUserDetails() {
 		super();
@@ -105,6 +107,14 @@ public class HfsUserDetails implements UserDetails {
 		});
 		map.put("idProfiles", String.join(",", idProfiles));
 		return map;
+	}
+
+	public AuthenticatedUserVO getAuthenticatedUser() {
+		return authenticatedUser;
+	}
+
+	public void setAuthenticatedUser(AuthenticatedUserVO authenticatedUser) {
+		this.authenticatedUser = authenticatedUser;
 	}
 
 }

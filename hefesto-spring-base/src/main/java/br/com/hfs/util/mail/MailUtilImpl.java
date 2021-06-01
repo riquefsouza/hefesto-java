@@ -16,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.apache.commons.validator.routines.EmailValidator;
 
 @Service
 @PropertySource("classpath:email.properties")
@@ -65,4 +66,8 @@ public class MailUtilImpl implements IMailUtil {
 		return mailSender;
 	}
 
+	public static boolean isValidEmail(String email) {
+		EmailValidator validator = EmailValidator.getInstance();
+		return validator.isValid(email);
+	}
 }
