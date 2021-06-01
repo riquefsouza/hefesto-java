@@ -13,9 +13,6 @@ class EditAdmPage extends HFSSystemUtil {
 		this._sourceProfiles = $('#source_pickListProfiles');
 		this._targetProfiles = $('#target_pickListProfiles');
 		
-		this._editAdmPageMessageSourceCaptionProfiles = $('#editAdmPage-message-sourceCaptionProfiles').text();
-		this._editAdmPageMessageTargetCaptionProfiles = $('#editAdmPage-message-targetCaptionProfiles').text();
-		
 		$('#edtSource_pickListProfiles').keyup(this.edtSourceProfilesKeyUp.bind(this));
 		$('#edtTarget_pickListProfiles').keyup(this.edtTargetProfilesKeyUp.bind(this));
 		

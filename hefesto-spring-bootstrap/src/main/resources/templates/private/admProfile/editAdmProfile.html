@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+</head>
+<body>
+<div class="wrapper">
+	<div id="content">
+		<div th:replace="private/menu-horizontal :: menu-horizontal"></div>
+		<div class="web-content">
+<!-- =================================================================================== -->		
+
+	<form id="formEditAdmProfile" action="#" th:action="@{/private/admProfileView}" method="post" th:object="${bean}">
+	
+		<div class="card">
+			<div class="card-header" 
+				style="font-weight: bold;font-size: large;">
+				<span th:text="#{editAdmProfile.title}" th:remove="tag"></span>
+			</div>
+			<div class="card-body">				
+				<div class="form-actions">				
+					<button type="submit" class="btn btn-success" id="btnSave">
+						<span class="icon text-white-50">
+							<i class="fa fa-check-circle"></i>
+						</span>
+						<span class="text" th:text="#{button.save}"></span>
+					</button>
+								
+					<button type="reset" class="btn btn-light" id="btnReset">
+	                    <span class="icon text-gray-600">
+	                      <i class="fa fa-eraser"></i>
+	                    </span>
+						<span class="text" th:text="#{button.reset}"></span>
+					</button>
+
+					<button type="button" class="btn btn-primary" id="btnCancel">
+						<span class="icon text-white-50"> 
+							<i class="fa fa-times-circle"></i>
+						</span>	
+						<span class="text" th:text="#{button.cancel}"></span>
+					</button>
+				</div>				
+				<div class="row">
+					<div class="col-md-4 form-group mb-2">
+						<input type="hidden" id="admProfile_id" th:field="*{id}" />
+						
+						<label for="admProfile_description"><span th:text="#{editAdmProfile.description}" th:remove="tag"></span></label>
+						<input type="text" class="form-control" id="admProfile_description" maxlength="64" required="required" th:field="*{description}" />
+						<span style="color: red;" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-8 form-group mb-2">
+						<label for="pickListUsers"><span th:text="#{editAdmProfile.pickListUsers}" th:remove="tag"></span></label>
+						<div class="row ms-1">
+							<div class="col-md-5">
+								<div class="row">
+									<input type="text" class="form-control" id="edtSource_pickListUsers" maxlength="20" />
+									<input class="form-control" type="text" th:placeholder="#{editAdmProfile.sourceCaptionUsers}" disabled>
+								</div>
+								<div class="row">
+								    <select id="bufferSource_pickListUsers" class="form-select" style="display: none">
+								        <option th:each="itemUser : ${listSourceAdmUsers}"
+								        	th:value="${itemUser.id}" 
+								        	th:text="${itemUser.name}" >
+								        </option>
+								    </select>
+								    <select id="source_pickListUsers" class="form-select" size="10" multiple>
+								        <option th:each="itemUser : ${listSourceAdmUsers}"
+								        	th:value="${itemUser.id}" 
+								        	th:text="${itemUser.name}" >
+								        </option>
+								    </select>
+								</div>
+							</div>
+							<div class="col-md-1 d-flex justify-content-center align-items-center">
+								<div class="btn-group-vertical btn-group-sm">							
+									<button type="button" class="btn btn-primary" id="btnRight_pickListUsers">
+										<span class="icon text-white-50"><i class="fa fa-angle-right"></i></span>
+									</button>
+									<button type="button" class="btn btn-primary" id="btnAllRight_pickListUsers">
+										<span class="icon text-white-50"><i class="fa fa-angle-double-right"></i></span>
+									</button>
+									<button type="button" class="btn btn-primary" id="btnLeft_pickListUsers">
+										<span class="icon text-white-50"><i class="fa fa-angle-left"></i></span>
+									</button>
+									<button type="button" class="btn btn-primary" id="btnAllLeft_pickListUsers">
+										<span class="icon text-white-50"><i class="fa fa-angle-double-left"></i></span>
+									</button>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<div class="row">								
+									<input type="text" class="form-control" id="edtTarget_pickListUsers" maxlength="20" />
+									<input class="form-control" type="text" th:placeholder="#{editAdmProfile.targetCaptionUsers}" disabled>
+								</div>
+								<div class="row">
+									<select id="bufferTarget_pickListUsers" class="form-select" style="display: none">
+										<option th:each="user : ${listTargetAdmUsers}"
+												th:value="${user.id}"
+												th:text="${user.name}">
+										</option>
+									</select>
+									<select id="target_pickListUsers" class="form-select" size="10" multiple th:field="*{admUsers}" >
+										<option th:each="user : ${listTargetAdmUsers}"
+												th:value="${user.id}"
+												th:text="${user.name}">
+										</option>
+									</select>
+								</div>																    
+							</div>	
+						</div>						
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-8 form-group mb-2">
+						<label for="pickListPages"><span th:text="#{editAdmProfile.pickListPages}" th:remove="tag"></span></label>
+						<div class="row ms-1">
+							<div class="col-md-5">
+								<div class="row">
+									<input type="text" class="form-control" id="edtSource_pickListPages" maxlength="20" />
+									<input class="form-control" type="text" th:placeholder="#{editAdmProfile.sourceCaptionPages}" disabled>
+								</div>
+								<div class="row">
+								    <select id="bufferSource_pickListPages" class="form-select" style="display: none">
+								        <option th:each="itemPage : ${listSourceAdmPages}"
+								        	th:value="${itemPage.id}" 
+								        	th:text="${itemPage.description}" >
+								        </option>
+								    </select>
+								    <select id="source_pickListPages" class="form-select" size="10" multiple>
+								        <option th:each="itemPage : ${listSourceAdmPages}"
+								        	th:value="${itemPage.id}" 
+								        	th:text="${itemPage.description}" >
+								        </option>
+								    </select>
+								</div>
+							</div>
+							<div class="col-md-1 d-flex justify-content-center align-items-center">
+								<div class="btn-group-vertical btn-group-sm">							
+									<button type="button" class="btn btn-primary" id="btnRight_pickListPages">
+										<span class="icon text-white-50"><i class="fa fa-angle-right"></i></span>
+									</button>
+									<button type="button" class="btn btn-primary" id="btnAllRight_pickListPages">
+										<span class="icon text-white-50"><i class="fa fa-angle-double-right"></i></span>
+									</button>
+									<button type="button" class="btn btn-primary" id="btnLeft_pickListPages">
+										<span class="icon text-white-50"><i class="fa fa-angle-left"></i></span>
+									</button>
+									<button type="button" class="btn btn-primary" id="btnAllLeft_pickListPages">
+										<span class="icon text-white-50"><i class="fa fa-angle-double-left"></i></span>
+									</button>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<div class="row">								
+									<input type="text" class="form-control" id="edtTarget_pickListPages" maxlength="20" />
+									<input class="form-control" type="text" th:placeholder="#{editAdmProfile.targetCaptionPages}" disabled>
+								</div>
+								<div class="row">
+									<select id="bufferTarget_pickListPages" class="form-select" style="display: none">
+										<option th:each="page : ${listTargetAdmPages}"
+												th:value="${page.id}"
+												th:text="${page.description}">
+										</option>
+									</select>
+									<select id="target_pickListPages" class="form-select" size="10" multiple th:field="*{admPages}" >
+										<option th:each="page : ${listTargetAdmPages}"
+												th:value="${page.id}"
+												th:text="${page.description}">
+										</option>
+									</select>
+								</div>																    
+							</div>	
+						</div>						
+					</div>
+				</div>
+								
+								
+			</div>
+		</div>
+		
+		<br>
+		<br>		
+	</form>	
+ 
+<script th:src="@{/js/admin/admProfile/editAdmProfile.js}"></script>
+
+<!-- =================================================================================== -->
+
+		</div>
+	</div>
+</div>
+
+<div class="overlay"></div>
+
+</body>
+</html>

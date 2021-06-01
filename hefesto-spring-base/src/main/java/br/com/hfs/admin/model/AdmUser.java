@@ -354,5 +354,5 @@ public class AdmUser implements Serializable {
 	public void setUserProfiles(String userProfiles) {
 		this.userProfiles = userProfiles;
 	}
-
+	
  }

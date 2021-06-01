@@ -61,14 +61,6 @@ public class AdmPageController extends BaseViewRegister<AdmPage, Long, AdmPageSe
 		if (bEdit) { 
 			listProfilesSelected = new ArrayList<AdmProfile>();
 			
-			/*
-			bean.getAdmProfiles().forEach(id -> {
-				listProfilesSelected.add(listAllAdmProfiles.stream()
-						.filter(p -> p.getId().equals(id))
-						.findFirst().get());	
-			});
-			*/
-			
 			for (AdmProfile profile : listAllAdmProfiles) {
 				for (AdmPage page : profile.getAdmPages()) {
 					if (page.equals(bean)) {
@@ -76,8 +68,7 @@ public class AdmPageController extends BaseViewRegister<AdmPage, Long, AdmPageSe
 						break;
 					}
 				}
-			}
-			
+			}			
 			
 			listProfiles.removeAll(listProfilesSelected);
 		} else {

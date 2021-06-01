@@ -57,13 +57,13 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-5 form-group mb-2">
+					<div class="col-md-8 form-group mb-2">
 						<label for="pickListProfiles"><span th:text="#{editAdmPage.pickListProfiles}" th:remove="tag"></span></label>
 						<div class="row ms-1">
 							<div class="col-md-5">
 								<div class="row">
 									<input type="text" class="form-control" id="edtSource_pickListProfiles" maxlength="20" />
-									<input class="form-control" type="text" placeholder="Available" disabled>
+									<input class="form-control" type="text" th:placeholder="#{editAdmPage.sourceCaptionProfiles}" disabled>
 								</div>
 								<div class="row">
 								    <select id="bufferSource_pickListProfiles" class="form-select" style="display: none">
@@ -80,7 +80,7 @@
 								    </select>
 								</div>
 							</div>
-							<div class="col-md-1 d-flex align-items-center">
+							<div class="col-md-1 d-flex justify-content-center align-items-center">
 								<div class="btn-group-vertical btn-group-sm">							
 									<button type="button" class="btn btn-primary" id="btnRight_pickListProfiles">
 										<span class="icon text-white-50"><i class="fa fa-angle-right"></i></span>
@@ -99,7 +99,7 @@
 							<div class="col-md-5">
 								<div class="row">								
 									<input type="text" class="form-control" id="edtTarget_pickListProfiles" maxlength="20" />
-									<input class="form-control" type="text" placeholder="Authorized" disabled>
+									<input class="form-control" type="text" th:placeholder="#{editAdmPage.targetCaptionProfiles}" disabled>
 								</div>
 								<div class="row">
 									<select id="bufferTarget_pickListProfiles" class="form-select" style="display: none">
@@ -122,11 +122,11 @@
 								
 			</div>
 		</div>
+		
+		<br>
+		<br>		
 	</form>	
- 
-<span id="editAdmPage-message-sourceCaptionProfiles" th:text="#{editAdmPage.sourceCaptionProfiles}" style="display: none"></span>
-<span id="editAdmPage-message-targetCaptionProfiles" th:text="#{editAdmPage.targetCaptionProfiles}" style="display: none"></span>
- 
+  
 <script th:src="@{/js/admin/admPage/editAdmPage.js}"></script>
 
 <!-- =================================================================================== -->

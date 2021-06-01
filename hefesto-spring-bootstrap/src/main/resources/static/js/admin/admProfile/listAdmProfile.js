@@ -8,13 +8,24 @@ class ListAdmProfile extends HFSSystemUtil {
 		this._form = $('#formListAdmProfile');
 		this._cmbReportType = $('#cmbReportType');
 		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmProfile').DataTable({
-			select: true, 
-			responsive: true
-		} );
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
 		this._formListAdmProfile = $('#formListAdmProfile');
+		
+		this._tableList = $('#tableAdmProfile');
+		this._tableList.DataTable( {
+	        "dom": '<"top"flp>rt<"bottom"i><"clear">'
+	    } );		
+		
+		this._tableRowIndex = $('#admProfile_tableRowIndex');
+		this._rowId = $('#admProfile_rowId');
+		
+		$('#btnExport').click(this.btnExportClick.bind(this));
+		$('#btnAdd').click(this.btnAddClick.bind(this));
+		$('#btnEdit').click(this.btnEditClick.bind(this));
+		$('#btnPreDelete').click(this.btnPreDeleteClick.bind(this));
+		$('#btnDelete').click(this.btnDeleteClick.bind(this));
+		$('#btnBack').click(this.btnBackClick.bind(this));		
 	}
 	
 	btnExportClick(event) {
@@ -37,33 +48,48 @@ class ListAdmProfile extends HFSSystemUtil {
 		event.preventDefault();		
 		this.dangerHide();
 		
-		var dataRowSelected = this._tableList.row('.selected').data();
+		var rowId = this._rowId[0].value;
 		
-		if (dataRowSelected.length > 0) {		
-			this._form[0].action+= '/' + dataRowSelected[0];
+		if (rowId > 0) {		
+			this._form[0].action+= '/' + rowId;
 			this._formListAdmProfile.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
 		}
 	}
 
+	btnPreDeleteClick(event) {
+		event.preventDefault();
+		this.dangerHide();
+		
+		var rowId = this._rowId[0].value;
+		
+		if (rowId && rowId > 0) {					
+			this._dlgDeleteConfirmation.modal("show");
+		} else {
+			this.dangerShow(this._messageSelectTable);
+		}			
+	}	
+
 	btnDeleteClick(event) {
 		event.preventDefault();
 		this.dangerHide();
 		
-		var dataRowSelected = this._tableList.row('.selected').data();
+		var rowId = this._rowId[0].value;
+		var tableRow = this._tableRowIndex[0].value;
 		
-		if (dataRowSelected.length > 0) {
+		if (rowId && rowId > 0) {
 			
 			$.ajax({
 				method: "DELETE",
-				url: window.location.href + "/" + dataRowSelected[0],
+				url: window.location.href + "/" + rowId,
 				dataType: "json",
 			    contentType: "application/json; charset=utf-8",								
 		        context: this
 			})
-			.done(function(data) {
-				this._tableList.row('.selected').remove().draw( false );
+			.done(function() {
+				this._tableList[0].deleteRow(tableRow);
+				location.reload();
         	})
 			.fail(function(xhr){
 	            //alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);
@@ -79,16 +105,25 @@ class ListAdmProfile extends HFSSystemUtil {
 		this._anchorHomePage[0].click();
 	}
 			
+	tableRowClick(tableRow, rowId) {
+		var oldTableRowIndex = this._tableRowIndex[0].value;
+		
+		if (oldTableRowIndex && oldTableRowIndex > 0) {
+			this._tableList[0].rows[oldTableRowIndex].style.backgroundColor = "transparent";
+		}
+		
+		this._tableRowIndex[0].value = tableRow.rowIndex;
+		this._rowId[0].value = rowId;  		
+  		
+  		if (tableRow.rowIndex > 0){
+	  		this._tableList[0].rows[tableRow.rowIndex].style.backgroundColor = "lightblue";
+  		}
+	}
+			
 }
 
+const listAdmProfile = new ListAdmProfile();
+
 $(function() {
-	const listAdmProfile = new ListAdmProfile();
-	
-	$('#btnExport').click(listAdmProfile.btnExportClick.bind(listAdmProfile));
-	$('#btnAdd').click(listAdmProfile.btnAddClick.bind(listAdmProfile));
-	$('#btnEdit').click(listAdmProfile.btnEditClick.bind(listAdmProfile));
-	$('#btnDelete').click(listAdmProfile.btnDeleteClick.bind(listAdmProfile));
-	$('#btnBack').click(listAdmProfile.btnBackClick.bind(listAdmProfile));
-	
-	
+	//const listAdmProfile = new ListAdmProfile();
 });
