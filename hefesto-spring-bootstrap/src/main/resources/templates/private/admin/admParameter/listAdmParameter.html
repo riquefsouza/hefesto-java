@@ -11,7 +11,8 @@
 		<div class="web-content">
 <!-- =================================================================================== -->		
 
-	<form id="formListAdmParameter" action="#" th:action="@{/private/admin/admParameterView/edit}" method="get" th:object="${bean}">
+	<form id="formListAdmParameter" style="padding: 5px;" action="#" 
+		th:action="@{/private/admin/admParameterView/edit}" method="get" th:object="${bean}">
 	
 		<div class="card">
 			<div class="card-header" 
@@ -76,9 +77,6 @@
 		  </div>
 		</div>
 		
-		<input type="hidden" id="admParameter_tableRowIndex" />
-		<input type="hidden" id="admParameter_rowId" />
-		
 		<table class="table table-striped table-bordered" id="tableAdmParameter" style="width: 100%">
 		    <thead>
 		      <tr>
@@ -90,7 +88,7 @@
 		      </tr>
 		    </thead>
 		    <tbody>
-		      <tr th:each="item : ${listBean}" th:onclick="'listAdmParameter.tableRowClick(this, ' + ${item.id} + ');'">
+		      <tr th:each="item : ${listBean}" th:id="${item.id}" th:onclick="listAdmParameter.tableRowClick(this);">
 		      	<td style="display: none" th:text="${item.id}"></td>
 		        <td th:text="${item.admParameterCategory.description}"></td>
 		        <td th:text="${item.code}"></td>

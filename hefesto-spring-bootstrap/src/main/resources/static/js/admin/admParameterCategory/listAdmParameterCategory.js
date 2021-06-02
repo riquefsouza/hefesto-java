@@ -6,26 +6,23 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		this.hideQueryString();
 		
 		this._paginationNumber = $('#admParameterCategory_paginationNumber');
+		this._paginationSize = $('#admParameterCategory_paginationSize');
+		this._paginationSort = $('#admParameterCategory_paginationSort');
+		this._columnOrder = $('#admParameterCategory_columnOrder');
+		this._columnTitle = $('#admParameterCategory_columnTitle');
 		
-		this.systemObjKEY = 'admParameterCategory_systemObj';
-		this.systemObj = new HFSSystemObject(this._paginationNumber[0].value, "Description", "ASC,description");
-		
-		var obj = this.getPersistedObj(this.systemObjKEY);
-				
-		if (obj) {			
-			this.systemObj.setJSON(obj);
-			this.systemObj.setPaginationNumber(this._paginationNumber[0].value);
-		} else {			
-			this.persistObj(this.systemObjKEY, this.systemObj);
-		}
+		this.systemObj = new HFSSystemObject(this._paginationNumber[0].value, this._paginationSize[0].value,
+			this._paginationSort[0].value, this._columnOrder[0].value, this._columnTitle[0].value);
 		
 		this._form = $('#formListAdmParameterCategory');
 		this._cmbReportType = $('#cmbReportType');
-		this._forceDownload = $('#forceDownload');
-		this._tableList = $('#tableAdmParameterCategory');			
+		this._forceDownload = $('#forceDownload');			
 		this._dlgDeleteConfirmation = $('#dlgDeleteConfirmation');
 		this._formTitle = $('#formTitle');
 		this._formListAdmParameterCategory = $('#formListAdmParameterCategory');
+			
+		this._tableList = $('#tableAdmParameterCategory');
+		this._selectedRow = '#tableAdmParameterCategory tbody tr.selected';
 			
 		$('#btnExport').click(this.btnExportClick.bind(this));
 		$('#btnAdd').click(this.btnAddClick.bind(this));
@@ -36,7 +33,7 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 	
 		$('#cmbPaginationSize').change(this.cmbPaginationSizeChange.bind(this));
 		
-		this.tableHeaderColumnSetSort(this._tableList[0], this.systemObj);
+		this.tableHeaderColumnSetSort(this.systemObj, this._tableList[0]);
 	}
 	
 	btnExportClick(event) {
@@ -59,11 +56,10 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		event.preventDefault();		
 		this.dangerHide();
 			
-		var rowId = this.systemObj.getRowId();
+		var selectedRow = $(this._selectedRow)[0];
 		
-		if (rowId && rowId > 0) {		
-			this._form[0].action+= '/' + rowId;
-			
+		if (selectedRow && selectedRow.id > 0) {		
+			this._form[0].action+= '/' + selectedRow.id;
 			this._formListAdmParameterCategory.submit();	
 		} else {
 			this.dangerShow(this._messageSelectTable);
@@ -74,9 +70,9 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		event.preventDefault();
 		this.dangerHide();
 		
-		var rowId = this.systemObj.getRowId();
+		var selectedRow = $(this._selectedRow)[0];
 		
-		if (rowId && rowId > 0) {					
+		if (selectedRow && selectedRow.id > 0) {		
 			this._dlgDeleteConfirmation.modal("show");
 		} else {
 			this.dangerShow(this._messageSelectTable);
@@ -87,14 +83,13 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		event.preventDefault();
 		this.dangerHide();
 		
-		var rowId = this.systemObj.getRowId();
-		var tableRow = this.systemObj.getTableRowIndex();
+		var selectedRow = $(this._selectedRow)[0];
 		
-		if (rowId && rowId > 0) {
+		if (selectedRow && selectedRow.id > 0) {		
 			
 			$.ajax({
 				method: "DELETE",
-				url: window.location.href + "/" + rowId,
+				url: window.location.href + "/" + selectedRow.id,
 				dataType: "json",
 			    contentType: "application/json; charset=utf-8",								
 		        context: this
@@ -118,18 +113,28 @@ class ListAdmParameterCategory extends HFSSystemUtil {
 		this._anchorHomePage[0].click();
 	}
 
-	tableRowClick(tableRow, rowId) {
-		this.sysTableRowClick(this.systemObjKEY, this.systemObj, this._tableList[0], tableRow, rowId);
+	tableRowClick(tableRow) {
+		var selectedRow = $(this._selectedRow);
+		this.sysTableRowClick(tableRow, selectedRow);
 	}
 	
 	cmbPaginationSizeChange(event) {
 		event.preventDefault();
 		
-		this.sysCmbPaginationSizeChange(this.systemObjKEY, this.systemObj, this._paginationNumber[0].value, event.target.value);
+		var paginationSize = event.target.value;
+		
+		this.systemObj = new HFSSystemObject(this._paginationNumber[0].value, paginationSize,
+			this._paginationSort[0].value, this._columnOrder[0].value, this._columnTitle[0].value);
+		
+		this.sysCmbPaginationSizeChange(this.systemObj);
 	}
 		
 	tableHeaderColumnClick(tableColumn, columnOrder, columnTitle){
-		this.sysTableHeaderColumnClick(this.systemObjKEY, this.systemObj, tableColumn, columnOrder, columnTitle);
+
+		this.systemObj = new HFSSystemObject(this._paginationNumber[0].value, this._paginationSize[0].value,
+			this._paginationSort[0].value, columnOrder, columnTitle);
+
+		this.sysTableHeaderColumnClick(this.systemObj, tableColumn);
 	}	
 }
 

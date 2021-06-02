@@ -1,9 +1,6 @@
-/*
-* {
-	font-size: 11px;
-	line-height: 1.428;	
+.selected {
+	background-color: lightblue;
 }
-*/
 
 .main-theme {
 	background-color: lightblue;

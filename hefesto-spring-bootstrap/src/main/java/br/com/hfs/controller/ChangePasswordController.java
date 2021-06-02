@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.hfs.admin.model.AdmUser;
 import br.com.hfs.admin.service.AdmUserService;
+import br.com.hfs.admin.service.ChangePasswordService;
 import br.com.hfs.admin.vo.UserVO;
 import br.com.hfs.base.BaseViewController;
 import br.com.hfs.security.HfsUserDetails;
@@ -35,6 +36,9 @@ public class ChangePasswordController extends BaseViewController {
 	
 	@Autowired
 	private AdmUserService admUserService;
+	
+	@Autowired
+	private ChangePasswordService changePasswordService;
 	
 	public ChangePasswordController() {
 		this.listPage = "private/admin/changePassword";
@@ -68,19 +72,32 @@ public class ChangePasswordController extends BaseViewController {
 			
 		} else {
 
-			if (BCrypt.checkpw(user.getCurrentPassword(), user.getPassword())) {
+			//if (BCrypt.checkpw(user.getCurrentPassword(), user.getPassword())) {
 
 				if (user.getNewPassword().equals(user.getConfirmNewPassword())) {
 					return true;
 				} else {
 					this.showWarningMessage(mv, "changePasswordView.notEqual");					
 				}
-			} else {
-				this.showWarningMessage(mv, "changePasswordView.currentPwdNotEqual");
-			}
+			//} else {
+			//	this.showWarningMessage(mv, "changePasswordView.currentPwdNotEqual");
+			//}
 		}
 		return false;
 	}
+	
+	public boolean validatePassword(UserVO user, ModelAndView mv) {
+		if (!this.changePasswordService.validatePassword(user.getLogin(), user.getCurrentPassword())) {
+			this.showWarningMessage(mv, "changePasswordView.validatePassword");
+			return false;
+		}
+
+		if (!this.changePasswordService.validatePassword(user.getLogin(), user.getNewPassword())) {
+			this.showWarningMessage(mv, "changePasswordView.validatePassword");
+			return false;
+		}
+		return true;
+	}	
 	
 	@PostMapping
 	public ModelAndView save(@Valid UserVO user, 
@@ -95,6 +112,10 @@ public class ChangePasswordController extends BaseViewController {
 		}
 
 		if (!prepararParaSalvar(user, mv.get())){
+			return mv.get();
+		}
+		
+		if (!validatePassword(user, mv.get())){
 			return mv.get();
 		}
 		

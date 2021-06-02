@@ -1,41 +1,21 @@
 class HFSSystemObject {
 
-	constructor(paginationNumber, columnTitle, paginationSort)
+	constructor(paginationNumber, paginationSize, paginationSort, columnOrder, columnTitle)
 	{
-		this.tableRowIndex = -1;
-		this.rowId = -1;
 		this.paginationNumber = paginationNumber;
-		this.paginationSize = "10";
+		this.paginationSize = paginationSize;
 		this.paginationSort = paginationSort;
-		this.columnOrder = 1;
+		this.columnOrder = columnOrder;
 		this.columnTitle = columnTitle;
 	}
 	
 	setJSON(obj) 
 	{
-		this.tableRowIndex = obj.tableRowIndex;
-		this.rowId = obj.rowId;
 		this.paginationNumber = obj.paginationNumber;
 		this.paginationSize = obj.paginationSize;
 		this.paginationSort = obj.paginationSort;
 		this.columnOrder = obj.columnOrder;
 		this.columnTitle = obj.columnTitle;
-	}
-	
-	setTableRowIndex(tableRowIndex) {
-		this.tableRowIndex = tableRowIndex;
-	}
-	
-	getTableRowIndex() {
-		return this.tableRowIndex;
-	}
-
-	setRowId(rowId) {
-		this.rowId = rowId;
-	}
-	
-	getRowId() {
-		return this.rowId;
 	}
 	
 	setPaginationNumber(paginationNumber){
@@ -79,9 +59,7 @@ class HFSSystemObject {
 	}
 	
 	toString() {
-		return "tableRowIndex = " + this.tableRowIndex +
-		", rowId = " + this.rowId + 
-		", paginationNumber = " + this.paginationNumber +
+		return "paginationNumber = " + this.paginationNumber +
 		", paginationSize = " + this.paginationSize + 
 		", paginationSort = " + this.paginationSort +
 		", columnOrder = " + this.columnOrder +
@@ -351,72 +329,61 @@ class HFSSystemUtil {
 		this.darkHide();
 	}
 	
-	sysTableRowClick(systemObjKEY, systemObj, tableList, tableRow, rowId) {
-		var oldTableRowIndex = systemObj.getTableRowIndex();
-		
-		if (oldTableRowIndex && oldTableRowIndex > 0) {
-			tableList.rows[oldTableRowIndex].style.backgroundColor = "transparent";
-		}
+	sysTableRowClick(tableRow, selectedRow) {
+	 	if ( $(tableRow).hasClass('selected') ) {
+            $(tableRow).removeClass('selected');
+        } else {
+            selectedRow.removeClass('selected');
+            $(tableRow).addClass('selected');
+        }  		  		  		
+	}	  		  		  		
 	
-  		systemObj.setTableRowIndex(tableRow.rowIndex);
-  		systemObj.setRowId(rowId);  		
-  		this.persistObj(systemObjKEY, systemObj);
-  		
-  		if (tableRow.rowIndex > 0){
-	  		tableList.rows[tableRow.rowIndex].style.backgroundColor = "lightblue";
-  		}  		  		
-	}
+	sysDataTableRowClick(tableRow, dataTableList) {
+ 		if ( $(tableRow).hasClass('selected') ) {
+            $(tableRow).removeClass('selected');
+        } else {
+            dataTableList.$('tr.selected').removeClass('selected');
+            $(tableRow).addClass('selected');
+        }  		  		  		
+	}	
 	
-	
-	sysCmbPaginationSizeChange(systemObjKEY, systemObj, paginationNumber, paginationSize) {
-		//event.preventDefault();
+	sysCmbPaginationSizeChange(systemObj) {
 		this.dangerHide();
 				
-		//var paginationNumber = this._paginationNumber[0].value;  
-		//var paginationSize = event.target.value;		
-		
-		if (this._paginationNumber && paginationSize > 0) {
-			var paginationSort = systemObj.getPaginationSort();
-			
-			systemObj.setPaginationNumber(paginationNumber);
-			systemObj.setPaginationSize(paginationSize);
-			systemObj.setPaginationSort(paginationSort);
-			
-			this.persistObj(systemObjKEY, systemObj);
-		
-			window.location.href = window.location.href + "?pageNumber=1&size="+ paginationSize + "&sort=" + paginationSort;
+		if (systemObj && systemObj.getPaginationNumber() && systemObj.getPaginationSize() > 0) {
+			window.location.href = window.location.href + "?pageNumber=1&size=" + systemObj.getPaginationSize() 
+			+ "&sort=" + systemObj.getPaginationSort() 
+			+ "&columnOrder=" + systemObj.getColumnOrder() 
+			+ "&columnTitle=" + systemObj.getColumnTitle();
 		}
 	}	
 	
-	sysTableHeaderColumnClick(systemObjKEY, systemObj, tableColumn, columnOrder, columnTitle){
-		var up=columnTitle + "  <i class='fas fa-sort-alpha-up fa-sm'></i>";
-		var down=columnTitle + "  <i class='fas fa-sort-alpha-down fa-sm'></i>";
+	sysTableHeaderColumnClick(systemObj, tableColumn){
+		var up=systemObj.getColumnTitle() + "  <i class='fas fa-sort-alpha-up fa-sm'></i>";
+		var down=systemObj.getColumnTitle() + "  <i class='fas fa-sort-alpha-down fa-sm'></i>";
 		
 		var paginationSort = "ASC,id";
 		
 		if (tableColumn.innerHTML.includes("fa-sort-alpha-up")) {
 			tableColumn.innerHTML=down;
-			paginationSort = "DESC," + columnTitle.toLowerCase();
+			paginationSort = "DESC," + systemObj.getColumnTitle().toLowerCase();
 		} else {
 			tableColumn.innerHTML=up;
-			paginationSort = "ASC," + columnTitle.toLowerCase();
+			paginationSort = "ASC," + systemObj.getColumnTitle().toLowerCase();
 		}
 			
-		var paginationNumber = systemObj.getPaginationNumber();  
-		var paginationSize = systemObj.getPaginationSize();		
-						
-		if (paginationNumber && paginationSize > 0) {
+		if (systemObj && systemObj.getPaginationNumber() && systemObj.getPaginationSize() > 0) {
 			systemObj.setPaginationSort(paginationSort);
-			systemObj.setColumnOrder(columnOrder);
-			systemObj.setColumnTitle(columnTitle);
-			
-			this.persistObj(systemObjKEY, systemObj);
 		
-			window.location.href = window.location.href + "?pageNumber=1&size="+ paginationSize + "&sort=" + paginationSort;
+			window.location.href = window.location.href + "?pageNumber=" + systemObj.getPaginationNumber() 
+			+ "&size=" + systemObj.getPaginationSize() 
+			+ "&sort=" + systemObj.getPaginationSort() 
+			+ "&columnOrder=" + systemObj.getColumnOrder() 
+			+ "&columnTitle=" + systemObj.getColumnTitle();
 		}
 	}	
 
-	tableHeaderColumnSetSort(tableList, systemObj) {
+	tableHeaderColumnSetSort(systemObj, tableList) {
 		for (var i = 1; i < tableList.rows[0].cells.length; i++) {
 			if (systemObj.getColumnOrder() == i) {
 				if (systemObj.getPaginationSort().includes("ASC")) {

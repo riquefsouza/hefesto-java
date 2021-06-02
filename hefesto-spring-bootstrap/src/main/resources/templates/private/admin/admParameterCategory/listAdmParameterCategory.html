@@ -77,6 +77,11 @@
 		</div>
 		
 		<input type="hidden" id="admParameterCategory_paginationNumber" th:value="${pagedBean.paging.pageNumber}" />
+		<input type="hidden" id="admParameterCategory_paginationSize" th:value="${pagedBean.paging.pageSize}" />
+		<input type="hidden" id="admParameterCategory_paginationSort" th:value="${pagedBean.paging.pageSort}" />
+		<input type="hidden" id="admParameterCategory_columnOrder" th:value="${pagedBean.paging.columnOrder}" />
+		<input type="hidden" id="admParameterCategory_columnTitle" th:value="${pagedBean.paging.columnTitle}" />
+		
 		<th:block th:include="/fragments/panelPagination"></th:block>
 		
 		<table class="table table-sm table-striped table-bordered" id="tableAdmParameterCategory" style="width: 100%">
@@ -88,14 +93,16 @@
 		      </tr>
 		    </thead>
 		    <tbody>
-		      <tr th:each="item : ${pagedBean.page}" th:onclick="'listAdmParameterCategory.tableRowClick(this, ' + ${item.id} + ');'">		      	
+		      <tr th:each="item : ${pagedBean.page}" th:id="${item.id}" th:onclick="listAdmParameterCategory.tableRowClick(this);">		      	
 		      	<td style="display: none" th:text="${item.id}"></td>
 		        <td th:text="${item.description}"></td>
 		        <td th:text="${item.order}"></td>
 		      </tr>
 		    </tbody>
-		  </table>		  		
-				
+		  </table>	
+		  
+		<br>	  		
+		<br>		
 	</form>
 
 <script th:src="@{/js/admin/admParameterCategory/listAdmParameterCategory.js}"></script>

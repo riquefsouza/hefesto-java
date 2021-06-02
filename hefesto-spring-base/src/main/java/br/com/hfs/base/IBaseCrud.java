@@ -27,7 +27,7 @@ public interface IBaseCrud <T, I extends Serializable> extends Serializable {
 	
 	Page<T> findAll(Pageable pageable);
 	
-	BasePaged<T> getPage(int pageNumber, int size, Sort sort);
+	BasePaged<T> getPage(int pageNumber, int size, Sort sort, String paramSort, int columnOrder, String columnTitle);
 
 	T insert(T bean) throws TransactionException;
 

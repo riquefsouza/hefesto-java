@@ -71,6 +71,8 @@ public abstract class BaseViewRegisterPaged<T,
 	public String listPaged(@RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
 			@RequestParam(value = "size", required = false, defaultValue = "10") int size, 
 			@RequestParam(value = "sort", required = false, defaultValue = "ASC,id") String sort,
+			@RequestParam(value = "columnOrder", required = false, defaultValue = "0") int columnOrder,
+			@RequestParam(value = "columnTitle", required = false, defaultValue = "id") String columnTitle,			
 			Model model) {
 		
 		Sort sorted = Sort.by(Direction.ASC, "id");
@@ -83,7 +85,7 @@ public abstract class BaseViewRegisterPaged<T,
 	    		sorted = Sort.by(Direction.DESC, paramSort[1].toLowerCase());
 	    }
 	    
-		model.addAttribute("pagedBean", service.getPage(pageNumber, size, sorted));
+		model.addAttribute("pagedBean", service.getPage(pageNumber, size, sorted, sort, columnOrder, columnTitle));
 		return getListPage();
 	}
 	 
@@ -144,7 +146,7 @@ public abstract class BaseViewRegisterPaged<T,
 			
 			//List<T> lista = service.findAll();
 			//mv.get().addObject("listBean", lista);
-			mv.get().addObject("pagedBean", service.getPage(1, 10, Sort.by(Direction.ASC, "id")));
+			mv.get().addObject("pagedBean", service.getPage(1, 10, Sort.by(Direction.ASC, "id"), "ASC,id", 0, "id"));
 						
 		} catch (RestClientException e) {
 			this.showDangerMessage(mv.get(), e);

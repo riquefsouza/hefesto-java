@@ -66,10 +66,10 @@ public abstract class BaseService<T, I extends Serializable, C extends JpaReposi
 		return repository.findAll(pageable);
 	}
 	
-	public BasePaged<T> getPage(int pageNumber, int size, Sort sort) {
+	public BasePaged<T> getPage(int pageNumber, int size, Sort sort, String paramSort, int columnOrder, String columnTitle) {
 		PageRequest request = PageRequest.of(pageNumber - 1, size, sort);
         Page<T> objPage = repository.findAll(request);
-        return new BasePaged<T>(objPage, BasePaging.of(objPage.getTotalPages(), pageNumber, size));
+        return new BasePaged<T>(objPage, BasePaging.of(objPage.getTotalPages(), pageNumber, size, paramSort, columnOrder, columnTitle));
     }
 	
 	@Override

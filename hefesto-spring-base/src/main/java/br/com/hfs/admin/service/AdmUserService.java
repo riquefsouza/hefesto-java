@@ -245,14 +245,14 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 	
 	@Transactional
 	public AdmUser getUser(String login, String name, String email, boolean auditar) throws TransactionException {
-		AdmUser user = null; //this.load(AdmUserPK);
+		AdmUser user = null;
 		if (user == null) {
 			user = new AdmUser();
 			user.setId(null);
 			user.setLogin(login);
 			user.setName(name);
 			user.setEmail(email);
-			//usuario.setIp(Faces.getRemoteAddr()); OmniFaces
+			//user.setIp();
 			
 			if (auditar) {
 				this.insert(user);

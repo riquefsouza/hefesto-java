@@ -46,7 +46,7 @@ class ListAdmMenu extends HFSSystemUtil {
 		
 		var nodeId = this._nodeId[0].value;
 		
-		if (nodeId) {					
+		if (nodeId && nodeId > 0) {					
 			this._form[0].action+= '/' + nodeId;
 			this._formListAdmMenu.submit();				
 		} else {
@@ -60,7 +60,7 @@ class ListAdmMenu extends HFSSystemUtil {
 		
 		var nodeId = this._nodeId[0].value;
 		
-		if (nodeId) {					
+		if (nodeId && nodeId > 0) {					
 			this._dlgDeleteConfirmation.modal("show");
 		} else {
 			this.dangerShow(this._messageSelectTable);
@@ -73,11 +73,11 @@ class ListAdmMenu extends HFSSystemUtil {
 		
 		var nodeId = this._nodeId[0].value;
 		
-		if (nodeId) {					
+		if (nodeId && nodeId > 0) {					
 			
 			$.ajax({
 				method: "DELETE",
-				url: window.location.href + "/" + dataRowSelected[0],
+				url: window.location.href + "/" + nodeId,
 				dataType: "json",
 			    contentType: "application/json; charset=utf-8",								
 		        context: this

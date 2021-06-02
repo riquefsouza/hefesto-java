@@ -11,7 +11,8 @@
 		<div class="web-content">
 <!-- =================================================================================== -->		
 
-	<form id="formListAdmUser" action="#" th:action="@{/private/admin/admUserView/edit}" method="get" th:object="${bean}">
+	<form id="formListAdmUser" style="padding: 5px;" action="#" 
+		th:action="@{/private/admin/admUserView/edit}" method="get" th:object="${bean}">
 		
 		<div class="card">
 			<div class="card-header" 
@@ -76,9 +77,6 @@
 		  </div>
 		</div>
 		
-		<input type="hidden" id="admUser_tableRowIndex" />
-		<input type="hidden" id="admUser_rowId" />
-
 		<table class="table table-striped table-bordered" id="tableAdmUser"
 			style="width: 100%">
 			<thead>
@@ -92,8 +90,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="item : ${listBean}"
-					th:onclick="'listAdmUser.tableRowClick(this, ' + ${item.id} + ');'">
+				<tr th:each="item : ${listBean}" th:id="${item.id}" th:onclick="listAdmUser.tableRowClick(this);">
 					<td style="display: none" th:text="${item.id}"></td>
 					<td th:text="${item.login}"></td>
 					<td th:text="${item.name}"></td>

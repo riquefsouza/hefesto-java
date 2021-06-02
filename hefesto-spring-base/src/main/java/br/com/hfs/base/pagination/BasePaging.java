@@ -11,6 +11,10 @@ public class BasePaging {
     private boolean prevEnabled;
     private int pageSize;
     private int pageNumber;
+    
+    private String pageSort;
+    private int columnOrder;
+    private String columnTitle;    
 
     private List<BasePageItem> items = new ArrayList<>();
 
@@ -19,12 +23,18 @@ public class BasePaging {
 	}
 
 	public BasePaging(boolean nextEnabled, boolean prevEnabled, int pageSize, int pageNumber,
+			String pageSort, int columnOrder, String columnTitle,
 			List<BasePageItem> items) {
 		super();
 		this.nextEnabled = nextEnabled;
 		this.prevEnabled = prevEnabled;
 		this.pageSize = pageSize;
 		this.pageNumber = pageNumber;
+		
+	    this.pageSort = pageSort;
+	    this.columnOrder = columnOrder;
+	    this.columnTitle = columnTitle;    
+		
 		this.items = items;
 	}
 
@@ -64,12 +74,17 @@ public class BasePaging {
                           .build());
     }
 
-    public static BasePaging of(int totalPages, int pageNumber, int pageSize) {
+    public static BasePaging of(int totalPages, int pageNumber, int pageSize, String pageSort, int columnOrder, String columnTitle) {
         BasePaging paging = new BasePaging();
         paging.setPageSize(pageSize);
         paging.setNextEnabled(pageNumber != totalPages);
         paging.setPrevEnabled(pageNumber != 1);
         paging.setPageNumber(pageNumber);
+        
+        paging.setPageSort(pageSort);
+        paging.setColumnOrder(columnOrder);
+        paging.setColumnTitle(columnTitle);
+        
 
         if (totalPages < PAGINATION_STEP * 2 + 6) {
             paging.addPageItems(1, totalPages + 1, pageNumber);
@@ -129,5 +144,29 @@ public class BasePaging {
 
 	public void setItems(List<BasePageItem> items) {
 		this.items = items;
+	}
+
+	public String getPageSort() {
+		return pageSort;
+	}
+
+	public void setPageSort(String pageSort) {
+		this.pageSort = pageSort;
+	}
+
+	public int getColumnOrder() {
+		return columnOrder;
+	}
+
+	public void setColumnOrder(int columnOrder) {
+		this.columnOrder = columnOrder;
+	}
+
+	public String getColumnTitle() {
+		return columnTitle;
+	}
+
+	public void setColumnTitle(String columnTitle) {
+		this.columnTitle = columnTitle;
 	}
 }
