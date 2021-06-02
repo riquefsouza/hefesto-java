@@ -131,5 +131,11 @@ public class PageVO implements Serializable {
 		return ret;
 	}
 	
+	public String getName() {
+		if (url.contains("/"))
+			return url.substring(url.lastIndexOf("/") + 1, url.length());
+		else
+			return url;
+	}
 
 }

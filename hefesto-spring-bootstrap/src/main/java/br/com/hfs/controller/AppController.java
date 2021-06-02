@@ -1,27 +1,52 @@
 package br.com.hfs.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 import org.unbescape.html.HtmlEscape;
+
+import br.com.hfs.admin.vo.MenuVO;
+import br.com.hfs.security.HfsUserDetails;
 
 @Controller
 @RequestMapping("/")
+@SessionAttributes("listMenu")
 public class AppController {
+	
+	private List<MenuVO> listMenu;
 
 	@RequestMapping("/")
     public String root(Locale locale) {
-        return "redirect:/index.html";
+        return "redirect:/home";
     }
 
+	@ModelAttribute("listMenu")
+	public List<MenuVO> listMenu() {
+		return listMenu;
+	}
+	 
     /** Home page. */
-    @RequestMapping("/index.html")
-    public String index() {
-        return "index";
+    @RequestMapping("/home")
+    public ModelAndView index() {
+    	ModelAndView mv = new ModelAndView("index.html");
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		HfsUserDetails userDetails = (HfsUserDetails)authentication.getPrincipal();
+
+		listMenu = userDetails.getAuthenticatedUser().getListAdminMenus();
+		mv.addObject("listMenu", listMenu);
+
+        return mv;
     }
     
     /** Login form. */

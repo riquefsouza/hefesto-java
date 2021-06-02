@@ -92,8 +92,7 @@ class ListAdmParameter extends HFSSystemUtil {
 			})
 			.done(function() {
 				this._tableList[0].deleteRow(tableRow);
-				location.reload();
-				//this._tableList[0].row(tableRow).remove().draw( false );
+				//location.reload();
         	})
 			.fail(function(xhr){
 	            //alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);

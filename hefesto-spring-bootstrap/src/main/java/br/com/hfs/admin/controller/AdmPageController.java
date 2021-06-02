@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,7 +28,8 @@ import br.com.hfs.base.BaseDualList;
 import br.com.hfs.base.BaseViewRegister;
 
 @Controller
-@RequestMapping(value = "/private/admPageView")
+@RequestMapping(value = "/private/admin/admPageView")
+@SessionAttributes("listMenu")
 public class AdmPageController extends BaseViewRegister<AdmPage, Long, AdmPageService> {
 
 	private static final long serialVersionUID = 1L;
@@ -40,8 +42,8 @@ public class AdmPageController extends BaseViewRegister<AdmPage, Long, AdmPageSe
 	private List<AdmProfile> listAllAdmProfiles;
 	
 	public AdmPageController() {
-		super("/private/admPage/listAdmPage", 
-				"/private/admPage/editAdmPage", 
+		super("/private/admin/admPage/listAdmPage", 
+				"/private/admin/admPage/editAdmPage", 
 				"AdmPage", AdmPage.class);
 		this.listAllAdmProfiles = new ArrayList<AdmProfile>();
 	}

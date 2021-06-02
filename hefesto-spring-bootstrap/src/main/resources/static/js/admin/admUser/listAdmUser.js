@@ -89,7 +89,7 @@ class ListAdmUser extends HFSSystemUtil {
 			})
 			.done(function() {
 				this._tableList[0].deleteRow(tableRow);
-				location.reload();
+				//location.reload();
         	})
 			.fail(function(xhr){
 	            //alert("An error occured DELETE: " + xhr.status + " " + xhr.statusText);

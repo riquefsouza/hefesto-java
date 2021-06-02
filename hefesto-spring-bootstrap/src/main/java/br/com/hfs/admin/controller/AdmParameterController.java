@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,7 +26,8 @@ import br.com.hfs.admin.service.AdmParameterService;
 import br.com.hfs.base.BaseViewRegister;
 
 @Controller
-@RequestMapping(value = "/private/admParameterView")
+@RequestMapping(value = "/private/admin/admParameterView")
+@SessionAttributes("listMenu")
 public class AdmParameterController
 		extends BaseViewRegister<AdmParameter, Long, AdmParameterService> {
 
@@ -37,8 +39,8 @@ public class AdmParameterController
 	private List<AdmParameterCategory> listAdmParameterCategory;
 	
 	public AdmParameterController() {
-		super("/private/admParameter/listAdmParameter",
-				"/private/admParameter/editAdmParameter", 
+		super("/private/admin/admParameter/listAdmParameter",
+				"/private/admin/admParameter/editAdmParameter", 
 				"AdmParameter", AdmParameter.class);
 		
 		this.listAdmParameterCategory = new ArrayList<AdmParameterCategory>();

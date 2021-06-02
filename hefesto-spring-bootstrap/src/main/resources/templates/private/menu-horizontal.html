@@ -6,7 +6,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-	 <a class="navbar-brand" id="anchorHomePage" th:href="@{'/index.html'}"  
+	 <a class="navbar-brand" id="anchorHomePage" th:href="@{'/home'}"  
 	   style="float: left; height: 50px; padding: 5px 5px; font-size: 14px; text-decoration:none">
 	 	<span th:text="#{main.framework}"></span><br>
 	 	<span th:text="#{main.app.title}"></span>
@@ -17,29 +17,20 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        
-        <li class="nav-item dropdown">
+
+        <li class="nav-item dropdown" th:each="menu : ${listMenu}">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          	<span th:text="#{menu.administrative}" th:remove="tag"></span>
+          	<span th:text="${menu.description}" th:remove="tag"></span>
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-			<li><a class="dropdown-item" id="admParameterCategoryView" th:href="@{/private/admParameterCategoryView}"><span th:text="#{menu.admParameterCategory}" th:remove="tag"></span></a></li>
-			<li><a class="dropdown-item" id="admParameterView" th:href="@{/private/admParameterView}"><span th:text="#{menu.admParameter}" th:remove="tag"></span></a></li>
-			<li><a class="dropdown-item" id="admPageView" th:href="@{/private/admPageView}"><span th:text="#{menu.admPage}" th:remove="tag"></span></a></li>
-			<li><a class="dropdown-item" id="admMenuView" th:href="@{/private/admMenuView}"><span th:text="#{menu.admMenu}" th:remove="tag"></span></a></li>
-			<li><a class="dropdown-item" id="admProfileView" th:href="@{/private/admProfileView}"><span th:text="#{menu.admProfile}" th:remove="tag"></span></a></li>
-			<li><a class="dropdown-item" id="admUserView" th:href="@{/private/admUserView}"><span th:text="#{menu.admUser}" th:remove="tag"></span></a></li>
+			<li th:each="submenu : ${menu.subMenus}">
+				<a class="dropdown-item" th:id="${submenu.page.name} + 'View'" th:href="@{'/private' + ${submenu.page.url} + 'View'}">
+					<span th:text="${submenu.description}" th:remove="tag"></span>
+				</a>
+			</li>
           </ul>
         </li>
-        
-		  <li class="nav-item dropdown">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-				<span th:text="#{menu.settings}" th:remove="tag"></span>
-			</a>
-			<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-			  <li><a class="dropdown-item" th:href="@{/private/changePassword}"><span th:text="#{menu.changePassword}" th:remove="tag"></span></a></li>
-			</ul>
-		  </li>	  
+         
 		  <li class="nav-item">
 		  	<a class="nav-link" th:href="@{/logout}">
 		  		<span class="icon text-white-50">
