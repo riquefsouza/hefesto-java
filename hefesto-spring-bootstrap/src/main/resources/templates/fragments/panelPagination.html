@@ -2,8 +2,13 @@
 	<div class="col-md-auto">
 
 	    <ul class="pagination">
-	        <li class="page-item" th:classappend="${!pagedBean.paging.isPrevEnabled()? 'disabled' : ''}">
-	            <a class="page-link" th:href="@{'__${#request.requestURI}__?pageNumber=' + ${pagedBean.paging.pageNumber - 1}}" aria-label="Previous" tabindex="-1">
+			<li class="page-item" th:classappend="${!pagedBean.paging.isPrevEnabled()? 'disabled' : ''}">
+				<a class="page-link" th:href="@{__${#request.requestURI}__?pageNumber=1}" aria-label="First">
+					<span aria-hidden="true" style="font-size: small">|&lt;</span>
+				</a>
+			</li>
+			<li class="page-item" th:classappend="${!pagedBean.paging.isPrevEnabled()? 'disabled' : ''}">
+	            <a class="page-link" th:href="@{'__${#request.requestURI}__?pageNumber=' + ${pagedBean.paging.pageNumber - 1}}" aria-label="Previous">
 	               <span aria-hidden="true">&laquo;</span>
 	            </a>
 	        </li>
@@ -21,6 +26,11 @@
 	            	<span aria-hidden="true">&raquo;</span>
 	            </a>
 	        </li>
+			<li class="page-item" th:classappend="${!pagedBean.paging.isNextEnabled()? 'disabled' : ''}" aria-label="Last">
+				<a class="page-link" th:href="@{'__${#request.requestURI}__?pageNumber=' + ${pagedBean.paging.getItems().size()}}">
+					<span aria-hidden="true" style="font-size: small">&gt;|</span>
+				</a>
+			</li>
 	    </ul>
 		
 	</div>	

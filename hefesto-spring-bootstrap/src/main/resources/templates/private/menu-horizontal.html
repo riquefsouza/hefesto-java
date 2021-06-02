@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"	
+>
 <body>
 <div th:fragment="menu-horizontal">
 
@@ -40,6 +42,14 @@
 		  </li>	
         
       </ul>
+      
+		<div class="d-flex">
+			<span class="icon text-white-50">			
+				<i class="fas fa-user fa-sm"></i>
+				<span sec:authentication="name" th:remove="tag"></span>				
+			</span>			
+		</div>
+		      
     </div>
   </div>
 </nav>
