@@ -23,7 +23,7 @@
         <picketlink.version>2.7.1.Final</picketlink.version>
         
         <poi-ooxml.version>4.1.2</poi-ooxml.version>
-		<pdfbox.version>2.0.20</pdfbox.version>
+		<pdfbox.version>2.0.24</pdfbox.version>
     </properties>
     <dependencies>
         <dependency>
