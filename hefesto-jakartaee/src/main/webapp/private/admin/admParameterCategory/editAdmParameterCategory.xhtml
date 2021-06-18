@@ -16,32 +16,31 @@
 
 				<div class="ui-g">
 				    <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">	
-					
 						<p:commandButton id="btnSave" value="Save" ajax="false"
-							styleClass="btn btn-success" icon="pi pi-check-circle"
+							icon="pi pi-check" styleClass="ui-button-success p-mr-2 p-mb-2"
 							action="#{admParameterCategoryMB.save()}"
 							title="Save a admParameterCategory" />
 						
-						<p:commandButton value="Clean" icon="pi pi-star" id="btnClean"
-							styleClass="btn btn-primary" type="reset"
-							title="Clean Fields" />							
+						<p:commandButton value="Clean" id="btnClean"
+							icon="pi pi-star-o" styleClass="ui-button-primary p-mr-2"
+							type="reset" title="Clean Fields" />							
 					
 						<p:commandButton value="Cancel" immediate="true" ajax="false" 
-							icon="pi pi-arrow-circle-left" id="btnCancel"
+							icon="pi pi-times" styleClass="ui-button-secondary" 						 
 							action="#{admParameterCategoryMB.cancelEdition()}" 
-							styleClass="btn btn-primary" title="Cancel" />    
+							id="btnCancel" title="Cancel" />    
 				    </div>
-				</div>
+				</div>	
 				
 				<div class="ui-g">
-					<div class="ui-g-12 ui-md-6 ui-lg-3">
+					<div class="ui-g-12 ui-md-8 ui-lg-6">
 						<p:outputLabel for="description" value="Description:" />
-						<br></br>	
+						<br></br>
 						<p:inputText id="description" label="Description" required="true" style="width: 100%"
 							value="#{admParameterCategoryMB.bean.description}" maxlength="80">
 						</p:inputText>
 					</div>
-				</div>		
+				</div>
 
 			</p:panel>
 			

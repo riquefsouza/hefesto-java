@@ -30,7 +30,7 @@ public class BaseViewRegister<T, I extends Serializable,
 
 	private List<T> listEntity;
 
-	@Inject
+	//@Inject
 	private T entity;
 	
 	private Class<T> clazz;
@@ -54,8 +54,6 @@ public class BaseViewRegister<T, I extends Serializable,
 	protected boolean beanInSession() {
 		state = BaseViewState.getState(getSession());
 		
-		setEntity(null);
-		
 		T bean = (T) getSession().getAttribute(clazz.getSimpleName() + "_bean");
 		if (bean!=null) {
 			setEntity(bean);
@@ -75,7 +73,7 @@ public class BaseViewRegister<T, I extends Serializable,
 	protected String onInsert(T entity) {
 		this.state.insertMode(getSession());
 		
-		getSession().removeAttribute(clazz.getSimpleName() + "_bean");
+		getSession().setAttribute(clazz.getSimpleName() + "_bean", entity);
 		
 		setEntity(entity);
 
@@ -122,6 +120,8 @@ public class BaseViewRegister<T, I extends Serializable,
 	    }
 	    try {
 	        service.delete(entity);
+	        
+	        getSession().removeAttribute(clazz.getSimpleName() + "_bean");
 	        updateDataTableList();
 	        return true;
 	    } catch (Exception e) {
