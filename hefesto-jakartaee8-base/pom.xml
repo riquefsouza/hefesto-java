@@ -29,7 +29,7 @@
         <jasperreports.version>6.13.0</jasperreports.version>
         
         <poi-ooxml.version>4.1.2</poi-ooxml.version>
-		<pdfbox.version>2.0.20</pdfbox.version>
+		<pdfbox.version>2.0.24</pdfbox.version>
 		
 		<primefaces.version>8.0</primefaces.version>
 		<omnifaces.version>3.6.1</omnifaces.version>
