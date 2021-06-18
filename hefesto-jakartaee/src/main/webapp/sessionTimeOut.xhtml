@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+	<h:form prependId="false">
+		<p:dialog id="timeoutSession" header="Session time notice."
+			widgetVar="timeoutDialog" showEffect="fade" hideEffect="fade"
+			modal="true" width="400" height="140" closable="false"
+			draggable="false" resizable="false" appendToBody="true"
+			onShow="doTimer()">
+
+			<p:panel>
+				<span class="ui-icon ui-icon-alert" style="display: inline-block;" />
+           Your session will expire on
+           <span id="dialog-countdown" style="font-weight: bold"></span>
+           seconds.
+        </p:panel>
+			<div align="center">
+				<br />
+				<p:commandButton value="Stay connected"
+					styleClass="btn btn-primary"
+					oncomplete="stopCount();" />
+				<p:commandButton value="Sair" styleClass="btn" action="#{hfsAuthenticator.logOut()}"
+					oncomplete="PF('timeoutDialog').hide();" />
+			</div>
+		</p:dialog>
+
+		<p:remoteCommand name="keepAlive"
+			oncomplete="tempoTotalSessao = maxTempoTotalSessao;"
+			actionListener="#{systemMB.secureSession()}" />
+	</h:form>
+
+	<script type="text/javascript">
+	//<![CDATA[ 
+	
+	  // tempo restante para mostrar aviso sessão (segundos)
+	  var tempoRestanteAviso = 60;
+	
+      var countTimer;
+      var processTimer;
+      var timer_is_on = 0;
+      var redirectPage = "#{request.contextPath}/sessionExpired.xhtml";
+	  
+      var countDownDiv = "dialog-countdown";
+      var txtCountDown = null;
+      if (!txtCountDown)
+        txtCountDown = document.getElementById(countDownDiv);
+
+
+      var maxTempoTotalSessao = "#{session.maxInactiveInterval}";
+      var txtCountDownGeral = null;
+      var processTimerGeral;
+      var tempoTotalSessao = maxTempoTotalSessao;
+      
+	  function timedCountGeral() {
+		  if (!txtCountDownGeral)
+	    	  	txtCountDownGeral = document.getElementById("dialog-countdown-geral");
+		  txtCountDownGeral.innerHTML = converteSegundos(tempoTotalSessao);
+		    if(tempoTotalSessao < tempoRestanteAviso){
+		    	startIdleMonitor();
+		    }
+	        if (tempoTotalSessao == 0) {
+	            window.location.href = redirectPage;
+	            return;
+	        }
+	        tempoTotalSessao = tempoTotalSessao - 1;
+	        processTimerGeral = setTimeout("timedCountGeral()", 1000);
+	  }
+      function startIdleMonitor() {
+        countTimer = tempoTotalSessao;
+        txtCountDown.innerHTML = countTimer;
+        PF('timeoutDialog').show();
+      }
+      function timedCount() {
+        txtCountDown.innerHTML = countTimer;
+        if (countTimer == 0) {
+            window.location.href = redirectPage;
+            return;
+        }
+        countTimer = countTimer - 1;
+        processTimer = setTimeout("timedCount()", 1000);
+      }
+      function doTimer() {
+        if (!timer_is_on) {
+            timer_is_on = 1;
+            timedCount();
+        }
+      }
+      function stopCount() {
+    	clearTimeout(processTimer);  
+    	clearTimeout(processTimerGeral); 
+    	timer_is_on = 0;
+    	PF('timeoutDialog').hide();
+    	tempoTotalSessao = maxTempoTotalSessao;
+    	timedCountGeral();
+    	keepAlive();
+      }
+
+      function converteSegundos(tempo){
+    	  var minutes = Math.floor(tempo / 60);
+    	  var seconds = tempo - minutes * 60;
+    	  return minutes+"min"+seconds+"s";
+      }
+      
+      $(document).ready(function () {
+    	  timedCountGeral();
+    	});
+    //]]>
+      </script>
+</ui:composition>
+</html>

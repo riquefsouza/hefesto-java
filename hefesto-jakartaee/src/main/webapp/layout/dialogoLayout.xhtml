@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<f:facet name="first">
+		<ui:insert name="dialogo-titulo"></ui:insert>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</f:facet>
+
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+		
+	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/css/system.css" />
+	
+	<h:outputScript name="js/jquery.js" />
+	<h:outputScript name="js/system.js" />
+	
+</h:head>
+
+<h:body style="padding-top: 0px;">
+	<h:form>
+		<div class="container-fluid">
+			<p:outputPanel id="alert-messages" autoUpdate="true">
+				<h:messages id="messages" styleClass="alert-messages"
+					infoClass="alert alert-info" showDetail="true"
+					successClass="alert alert-success" showSummary="false"
+					errorClass="alert alert-danger" warnClass="alert alert-warning" />
+
+			</p:outputPanel>
+
+			<ui:insert name="dialogo-conteudo-maior">
+			</ui:insert>
+			
+			<fieldset>
+			</fieldset>
+
+		</div>
+	</h:form>
+
+
+	<!-- Default ajaxErrorHandler -->
+	<p:ajaxExceptionHandler />
+
+</h:body>
+</html>

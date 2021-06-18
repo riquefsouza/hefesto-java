@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" template="/layout/layout.xhtml">
+
+	<ui:define name="itens-menu"></ui:define>
+	<ui:define name="conteudo-maior">
+		<h:form id="formErrorMsg">
+			<div class="row-fluid">
+				<div class="span2"></div>
+				<div class="span8" style="text-align: center;">
+					<div class="hero-unit">
+						<h1>Sorry, a system error has occurred!</h1>
+						<p>Please contact the Service Center and report the error so that we can correct it. So the system will soon be back to normal.</p>
+						<a class="btn btn-primary btn-large"
+							href="#{request.contextPath}/login.xhtml">Return to main screen</a>
+							
+						<p:commandButton value="See error" update="formErrorMsg" style="margin-left: 10px; padding: 4px !important;" 
+								 	oncomplete="PF('exceptionDialog').show()" styleClass="btn btn-primary btn-large disableSubmit"/>
+								 	
+					</div>
+				</div>
+			</div>
+			<p:dialog id="exceptionDialog" appendTo="@(body)" header="Exception occurred '#{errorType}'" 
+				widgetVar="exceptionDialog" height="500px" width="700px">
+			       <b>Exception Type: </b><h:outputText value="#{errorType}"/> <BR/><BR/>
+			       <b>Cause: </b><h:outputText value="#{errorCause}"/><BR/><BR/>
+			       <b>Message : </b><h:outputText value="#{errorMsg}"/><BR/><BR/>
+			       <b>StackTrace Exception: </b><h:outputText value="#{errorStackTrace}"/><BR/><BR/>
+			       <p:outputLabel value=""></p:outputLabel>
+			       <p:outputLabel value=""></p:outputLabel>
+			       <p:commandButton value="Close" 
+			       		onclick="PF('exceptionDialog').hide()" styleClass="btn btn-primary btn-large disableSubmit"/>
+		   	</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

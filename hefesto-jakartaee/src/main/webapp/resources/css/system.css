@@ -1,0 +1,122 @@
+/*
+.ui-widget, .ui-widget .ui-widget {    
+    font-size: 90% !important;
+}
+*/
+
+/* Dialog */
+
+.ui-dialog {
+	top: 4.5em !important;
+}
+
+.btn.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+  margin: 2px;
+}
+
+.btn-default:hover, .btn-default:focus, .btn-default:active,
+	.btn-default.active, .btn-default.disabled, .btn-default[disabled] {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+
+.btn.btn-primary {
+  color: #fff;
+  background-color: #428bca;
+  border-color: #357ebd;
+  margin: 2px;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active,
+	.btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
+  color: #fff;
+  background-color: #3071a9;
+  border-color: #285e8e;
+}
+
+.btn.btn-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  margin: 2px;
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active,
+	.btn-success.active, .btn-success.disabled, .btn-success[disabled] {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+
+.btn.btn-info {
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+  margin: 2px;
+}
+
+.btn-info:hover, .btn-info:focus, .btn-info:active,
+	.btn-info.active, .btn-info.disabled, .btn-info[disabled] {
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+}
+
+.btn.btn-warning {
+  color: #fff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+  margin: 2px;
+}
+
+.btn-warning:hover, .btn-warning:focus, .btn-warning:active,
+	.btn-warning.active, .btn-warning.disabled, .btn-warning[disabled] {
+  color: #fff;
+  background-color: #ec971f;
+  border-color: #d58512;
+}
+
+.btn.btn-danger {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+  margin: 2px;
+}
+
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active,
+	.btn-danger.active, .btn-danger.disabled, .btn-danger[disabled] {
+  color: #fff;
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
+
+.ui-picklist .ui-picklist-list {
+	height: 250px;
+	width: 380px;
+}
+
+.picklistMaior .ui-picklist-list {
+	height: 24em !important;
+	width: 24em !important;
+}
+
+.picklistMenor .ui-picklist-list {
+	height: 15em !important;
+	width: 20em !important;
+}
+
+.picklistGrande .ui-picklist-list {
+	height: 50em !important;
+	width: 35em !important;
+}
+
+.picklistGigante .ui-picklist-list {
+	height: 50em !important;
+	width: 45em !important;
+}
+
+

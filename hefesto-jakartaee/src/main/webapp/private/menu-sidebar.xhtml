@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:sidebar widgetVar="sidebar1" baseZIndex="10000">
+		<h1 style="font-weight: normal">HFS Hefesto</h1>
+
+		<h:form prependId="false">
+			<p:panelMenu style="width:250px">
+				<p:submenu label="Administrative">
+					<p:menuitem value="Category of Configuration Parameters"
+						url="#{request.contextPath}/private/admin/admParameterCategory/listAdmParameterCategory.xhtml" />
+
+					<p:menuitem value="Configuration Parameters"
+						url="#{request.contextPath}/private/admin/admParameter/listAdmParameter.xhtml" />
+
+					<p:menuitem value="Administer Profile"
+						url="#{request.contextPath}/private/admin/admProfile/listAdmProfile.xhtml" />
+
+					<p:menuitem value="Administer Page"
+						url="#{request.contextPath}/private/admin/admPage/listAdmPage.xhtml" />
+
+					<p:menuitem value="Administer Menu"
+						url="#{request.contextPath}/private/admin/admMenu/listAdmMenu.xhtml" />
+
+					<p:menuitem value="Administer User"
+						url="#{request.contextPath}/private/admin/admUser/listAdmUser.xhtml" />
+
+				</p:submenu>
+				<p:separator />
+				<p:submenu label="Exit" expanded="true">
+					<p:menuitem value="Exit" icon="pi pi-arrow-circle-left" action="#{hfsAuthenticator.logOut()}" immediate="true"  />
+				</p:submenu>
+			</p:panelMenu>
+		</h:form>
+
+	</p:sidebar>
+
+</ui:composition>

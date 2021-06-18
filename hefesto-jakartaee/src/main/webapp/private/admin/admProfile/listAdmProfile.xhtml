@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" template="/layout/layout.xhtml">
+
+	<ui:define name="tituloPagina"> - Manage Profile</ui:define>
+
+	<ui:define name="conteudo-maior">
+		<h:form id="listAdmProfile">
+			<p:panel id="panelBasic" header="Manage Profile"
+				style="margin-bottom:5px">
+				<div class="ui-g">
+					<div class="ui-g-12 ui-md-6 ui-lg-3">		
+						<p:outputLabel for="cmbTypeReport" value="Choose the type of report:" />	
+						<br></br>															
+					    <p:selectOneMenu id="cmbTypeReport" value="#{admProfileRelMB.typeReport}">
+					    	<f:selectItems value="#{admProfileRelMB.listTypeReport}" />			    	  	
+						</p:selectOneMenu>											
+					</div>					
+					
+					<div class="ui-g-12 ui-md-6 ui-lg-3">
+						<p:outputLabel for="forceDownload" value="Force Download:" />
+						<p:spacer width="10" height="10" />	
+						<p:selectBooleanCheckbox id="forceDownload" value="#{admProfileRelMB.forceDownload}" />
+					</div>
+				</div>							
+			</p:panel>
+
+			<div class="ui-g">
+			    <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">
+					<p:commandButton value="Export" title="Export" onclick="form.target='_blank'" 
+						styleClass="btn btn-primary disableSubmit" id="btnExport"
+						icon="pi pi-print" action="#{admProfileRelMB.export()}"
+						ajax="false" />
+						
+					<p:spacer width="10" height="10" />	
+				
+					<p:commandButton value="Insert" ajax="false" icon="pi pi-plus-circle"
+						action="#{admProfileMB.onInsert()}" id="btnInsert"
+						styleClass="btn btn-success disableSubmit"
+						title="Insert admProfile" />
+	
+					<p:commandButton id="btnEdit" value="Edit" ajax="false" icon="pi pi-chevron-circle-up"
+						styleClass="btn btn-warning disableSubmit"
+						action="#{admProfileMB.onEdit(admProfileMB.bean)}"
+						title="Edit admProfile">
+					</p:commandButton>
+	
+					<p:commandButton id="btnDelete" value="Delete" icon="pi pi-minus-circle"
+						styleClass="btn btn-danger disableSubmit"
+						action="#{admProfileMB.prepareToDelete(admProfileMB.bean)}"
+						title="Delete admProfile" update="@form">
+					</p:commandButton>
+	
+					<p:commandButton value="Return" immediate="true" ajax="false" 
+						icon="pi pi-arrow-circle-left"
+						action="#{admProfileMB.cancel()}" id="btnReturn"
+						styleClass="btn btn-primary disableSubmit" title="Return" />
+			    </div>
+			</div>
+
+			<p:confirmDialog message="#{messages['texto_confirmacao_exclusao']}"
+				header="#{messages['titulo_confirmacao']}" severity="alert"
+				widgetVar="confirmation">
+				<p:commandButton value="Sim" update="@form"
+					oncomplete="PF('confirmation').hide();PF('tableWidgetVar').filter();"
+					styleClass="btn btn-success disableSubmit"
+					action="#{admProfileMB.delete(admProfileMB.bean)}" />
+				<p:spacer width="10" height="10" />
+				<p:commandButton value="Não" onclick="PF('confirmation').hide()"
+					styleClass="btn btn-danger disableSubmit" type="button" />
+			</p:confirmDialog>
+
+			<p:dataTable var="item" rowKey="#{item.id}" id="table" widgetVar="tableWidgetVar"
+				selection="#{admProfileMB.bean}" selectionMode="single"
+				value="#{admProfileMB.listBean}" rows="#{applicationConfig.dtLines}" 
+				rowsPerPageTemplate="#{applicationConfig.dtLinesPerPageTemplate}"
+				paginator="true" paginatorPosition="#{applicationConfig.dtPagerPosition}"					
+				paginatorTemplate="#{applicationConfig.dtPagerModel}"
+					currentPageReportTemplate="#{applicationConfig.dtPagerReportModel}"					
+				emptyMessage="#{messages['main.none.register']}">
+
+				<f:facet name="{Exporters}">
+					<h:commandLink style="float: left;">
+						<p:graphicImage value="/resources/img/excel.png" width="24" />
+						<p:dataExporter type="xls" encoding="iso-8859-1" target="table" options="#{exporterUtil.excelOpt}" 
+							 fileName="admProfiles" />
+					</h:commandLink>
+
+					<h:commandLink style="float: left;">
+						<p:graphicImage value="/resources/img/pdf.png" width="24" />
+						<p:dataExporter type="pdf" encoding="iso-8859-1" target="table" options="#{exporterUtil.pdfOpt}" 
+							preProcessor="#{admProfileMB.preProcessPDF}" fileName="admProfiles" />
+					</h:commandLink>	
+				</f:facet>
+
+				<p:column headerText="Description" sortBy="#{item.description}"
+					style="width:25%"					
+					filterBy="#{item.description}" filterMatchMode="contains">
+					<h:outputText value="#{item.description}" />
+				</p:column>
+				<p:column headerText="Users" sortBy="#{item.admUsers}"
+					filterBy="#{item.admUsers}" filterMatchMode="contains">
+					<h:outputText value="#{item.admUsers}" />
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

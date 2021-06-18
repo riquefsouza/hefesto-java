@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<h:form id="infoUsuarioForm" rendered="#{identity.loggedIn}">
+			<p:dialog header="User Information" widgetVar="infoUsuarioDialog"
+			 modal="true" showEffect="fade" hideEffect="fade" resizable="false" id="infoUsuarioDetalhe">
+				<p:panelGrid  columns="2" >
+					<h:outputText value="Nome:" />
+					<h:outputText value="#{systemMB.authenticatedUser.user.name}" />
+
+					<h:outputText value="IP:" />
+					<h:outputText value="#{systemMB.authenticatedUser.user.ip}" />
+				
+					<h:outputText value="Login:" />
+					<h:outputText value="#{systemMB.authenticatedUser.user.login}" />
+
+					<h:outputText value="E-mail:" />
+					<h:outputText value="#{systemMB.authenticatedUser.user.email}" />					
+				</p:panelGrid>
+		    </p:dialog>	
+	</h:form>
+
+</ui:composition>
