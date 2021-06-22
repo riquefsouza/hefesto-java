@@ -5,11 +5,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Inject;
-import jakarta.inject.Named;
-
 import org.primefaces.model.DualListModel;
 
 import com.lowagie.text.BadElementException;
@@ -24,6 +19,10 @@ import br.com.hfs.admin.service.AdmUserService;
 import br.com.hfs.base.BaseViewRegister;
 import br.com.hfs.base.IBaseViewRegister;
 import br.com.hfs.util.interceptors.HandlingExpectedErrors;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
 
 @Named
 @ViewScoped
@@ -57,25 +56,26 @@ public class AdmProfileMB extends
 
 	@PostConstruct
 	public void init() {
-		updateDataTableList();
-
-		if (beanInSession()) 
-			onEditMode();
-		else 
-			onInserMode();
+		updateDataTableList();		
+		
+		if (beanInSession()) {
+			onEditMode(getBean());
+		}
+		
+		onInserMode();
 	}
 	
-	private void loadAdmPages() {
-		List<AdmPage> listAdmPageSelected = this.getBean().getId() == null ? new ArrayList<AdmPage>()
-				: this.getService().findPagesByProfile(this.getBean());
+	private void loadAdmPages(AdmProfile bean) {
+		List<AdmPage> listAdmPageSelected = bean.getId() == null ? new ArrayList<AdmPage>()
+				: this.getService().findPagesByProfile(bean);
 		this.listAdmPage = admPageService.findAll();
 		this.listAdmPage.removeAll(listAdmPageSelected);
 		this.dualListAdmPage = new DualListModel<AdmPage>(this.listAdmPage, listAdmPageSelected);
 	}
 
-	private void loadAdmUsers() {
-		List<AdmUser> listAdmUserSelected = this.getBean().getId() == null ? new ArrayList<AdmUser>()
-				: this.getService().findUsersByProfile(this.getBean());
+	private void loadAdmUsers(AdmProfile bean) {
+		List<AdmUser> listAdmUserSelected = bean.getId() == null ? new ArrayList<AdmUser>()
+				: this.getService().findUsersByProfile(bean);
 		this.listAdmUser = admUserService.findAll();
 		this.listAdmUser.removeAll(listAdmUserSelected);
 		this.dualListAdmUser = new DualListModel<AdmUser>(this.listAdmUser, listAdmUserSelected);
@@ -96,11 +96,16 @@ public class AdmProfileMB extends
 		}
 	}
 	
-	private void onEditMode() {
+	private void onEditMode(AdmProfile bean) {
 		if (getState().isEditMode()) {
-			loadAdmPages();
-			loadAdmUsers();
+			loadAdmPages(bean);
+			loadAdmUsers(bean);
 		}
+	}
+
+	@Override
+	public String onEdit(AdmProfile entity) {
+		return super.onEdit(entity);
 	}
 
 	@Override

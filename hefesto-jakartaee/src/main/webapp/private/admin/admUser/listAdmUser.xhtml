@@ -31,34 +31,30 @@
 
 			<div class="ui-g">
 			    <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">
-					<p:commandButton value="Export" title="Export" onclick="form.target='_blank'" 
-						styleClass="btn btn-primary disableSubmit" id="btnExport"
-						icon="pi pi-print" action="#{admUserRelMB.export()}"
+   					<p:commandButton value="Export" title="Export" onclick="form.target='_blank'"
+   					 	icon="pi pi-upload" styleClass="ui-button-help p-mr-2 p-mb-2"
+   						id="btnExport" action="#{admUserRelMB.export()}"
 						ajax="false" />
-						
-					<p:spacer width="10" height="10" />	
 				
-					<p:commandButton value="Insert" ajax="false" icon="pi pi-plus-circle"
-						action="#{admUserMB.onInsert()}" id="btnInsert"
-						styleClass="btn btn-success disableSubmit"
-						title="Insert admUser" />
-	
-					<p:commandButton id="btnEdit" value="Edit" ajax="false" icon="pi pi-chevron-circle-up"
-						styleClass="btn btn-warning disableSubmit"
+					<p:commandButton id="btnInsert" value="Insert"
+					 	icon="pi pi-plus" styleClass="ui-button-success p-mr-2"						
+						action="#{admUserMB.onInsert()}"
+						title="Insert a new user" />
+
+					<p:commandButton id="btnEdit" value="Edit" ajax="false"
+						icon="pi pi-pencil" styleClass="ui-button-warning p-mr-2"
 						action="#{admUserMB.onEdit(admUserMB.bean)}"
-						title="Edit admUser">
-					</p:commandButton>
-	
-					<p:commandButton id="btnDelete" value="Delete" icon="pi pi-minus-circle"
-						styleClass="btn btn-danger disableSubmit"
+						title="Edit user" />
+
+					<p:commandButton id="btnDelete" value="Delete"
+						icon="pi pi-trash" styleClass="ui-button-danger p-mr-2"
 						action="#{admUserMB.prepareToDelete(admUserMB.bean)}"
-						title="Delete admUser" update="@form">
-					</p:commandButton>
-	
-					<p:commandButton value="Return" immediate="true" ajax="false" 
-						icon="pi pi-arrow-circle-left"
-						action="#{admUserMB.cancel()}" id="btnReturn"
-						styleClass="btn btn-primary disableSubmit" title="Return" />
+						title="Delete user" update="@form" />
+				
+					<p:commandButton value="Return" immediate="true" ajax="false"
+						icon="pi pi-times" styleClass="ui-button-secondary" 
+						id="btnReturn" action="#{admUserMB.cancel()}"
+						title="Return" />   
 				</div>
 			</div>	
 
@@ -76,12 +72,11 @@
 
 			<p:dataTable var="item" rowKey="#{item.id}" id="table" reflow="true"
 				selection="#{admUserMB.bean}" selectionMode="single"
-				value="#{admUserMB.listBean}" paginator="true"
-				rows="#{applicationConfig.dtLines}" 
-				rowsPerPageTemplate="#{applicationConfig.dtLinesPerPageTemplate}"	
+				value="#{admUserMB.listBean}" rows="10" paginator="true"  
+				rowsPerPageTemplate="#{applicationConfig.dtLinesPerPageTemplate}"
 				paginatorPosition="#{applicationConfig.dtPagerPosition}"					
 				paginatorTemplate="#{applicationConfig.dtPagerModel}"
-					currentPageReportTemplate="#{applicationConfig.dtPagerReportModel}"					
+				currentPageReportTemplate="#{applicationConfig.dtPagerReportModel}"                
 				emptyMessage="#{messages['main.none.register']}">
 
 				<f:facet name="{Exporters}">

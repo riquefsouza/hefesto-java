@@ -30,35 +30,33 @@
 
 			<div class="ui-g">
 			    <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">
-					<p:commandButton value="Export" title="Export" onclick="form.target='_blank'" 
-						styleClass="btn btn-primary" id="btnExport"
-						icon="pi pi-print" action="#{admMenuRelMB.export()}"
+   					<p:commandButton value="Export" title="Export" onclick="form.target='_blank'"
+   					 	icon="pi pi-upload" styleClass="ui-button-help p-mr-2 p-mb-2"
+   						id="btnExport" action="#{admMenuRelMB.export()}"
 						ajax="false" />
-
-					<p:spacer width="10" height="10" />			
-				
+								
 					<p:commandButton id="btnInsert" value="Insert"
-						styleClass="btn btn-success disable-submit" icon="pi pi-plus-circle"
+						icon="pi pi-plus" styleClass="ui-button-success p-mr-2"
 						action="#{admMenuMB.onInsertItemMenu()}"
 						update="itemMenuForm" oncomplete="PF('itemMenuDlg').show()"
 						title="Insert a new menu item" />
 
 					<p:commandButton id="btnEdit" value="Edit"
-						styleClass="btn btn-warning disable-submit" icon="pi pi-chevron-circle-up"
+						icon="pi pi-pencil" styleClass="ui-button-warning p-mr-2"
 						action="#{admMenuMB.onEditItemMenu()}"
 						update="itemMenuForm"
 						oncomplete="if (!args.validationFailed) { PF('itemMenuDlg').show(); }"
 						title="Edit item de menu" />
 
 					<p:commandButton id="btnDelete" value="Delete"
-						styleClass="btn btn-danger disable-submit" icon="pi pi-minus-circle"
+						icon="pi pi-trash" styleClass="ui-button-danger p-mr-2"
 						action="#{admMenuMB.deleteItemMenu()}" ajax="false"
 						title="Edit item de menu" />
 				
 					<p:commandButton value="Return" immediate="true" ajax="false" 
-						icon="pi pi-arrow-circle-left"
+						icon="pi pi-times" styleClass="ui-button-secondary"
 						action="#{admMenuMB.cancel()}" id="btnReturn"
-						styleClass="btn btn-primary" title="Return" />
+						title="Return" />
 			    </div>
 			</div>
 
@@ -96,12 +94,12 @@
 					    <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">
 							<p:commandButton id="btnSalvar" value="Save"
 								action="#{admMenuMB.saveItemMenu()}"
-								styleClass="btn btn-primary btn-primary"
+								icon="pi pi-check" styleClass="ui-button-success p-mr-2 p-mb-2"
 								ajax="false" title="Salvar o item de menu" />
 	
 							<p:commandButton value="Cancel"
 								title="Cancel inclusion of menu item"
-								styleClass="btn  btn-primary"
+								icon="pi pi-times" styleClass="ui-button-secondary"
 								onclick="PF('itemMenuDlg').hide()" id="btnCancelar"
 								immediate="true" />
 						</div>		

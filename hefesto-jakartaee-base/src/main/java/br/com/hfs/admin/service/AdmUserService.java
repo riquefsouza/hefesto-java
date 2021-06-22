@@ -9,10 +9,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.TransactionException;
 import org.hibernate.jdbc.ReturningWork;
@@ -24,6 +20,10 @@ import br.com.hfs.admin.model.AdmUser;
 import br.com.hfs.admin.repository.AdmUserRepository;
 import br.com.hfs.admin.vo.UserVO;
 import br.com.hfs.base.BaseService;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository> {
 
@@ -32,12 +32,12 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 	@PersistenceContext
 	protected EntityManager em;
 
-	//@Inject
+	@Inject
 	private AdmProfileService admProfileService;
 	
-	public void setAdmProfileService(AdmProfileService admProfileService) {
-		this.admProfileService = admProfileService;
-	}
+	//public void setAdmProfileService(AdmProfileService admProfileService) {
+		//this.admProfileService = admProfileService;
+	//}
 	
 	private AdmUser setTransient(AdmUser item) {
 		List<Long> admIdProfiles = new ArrayList<Long>();

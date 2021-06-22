@@ -18,18 +18,18 @@
 				    <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">	
 					
 						<p:commandButton id="btnSave" value="Save" ajax="false"
-							styleClass="btn btn-success" icon="pi pi-check-circle"
+							icon="pi pi-check" styleClass="ui-button-success p-mr-2 p-mb-2"
 							action="#{admParameterMB.save()}"
-							title="Save a admParameterCategory" />
+							title="Save a parameter" />
 						
-						<p:commandButton value="Clean" icon="pi pi-star" id="btnClean"
-							styleClass="btn btn-primary" type="reset"
-							title="Clean Fields" />							
+						<p:commandButton value="Clean" id="btnClean"
+							icon="pi pi-star-o" styleClass="ui-button-primary p-mr-2"
+							type="reset" title="Clean Fields" />							
 					
 						<p:commandButton value="Cancel" immediate="true" ajax="false" 
-							icon="pi pi-arrow-circle-left"
-							action="#{admParameterMB.cancelEdition()}" id="btnCancel"
-							styleClass="btn btn-primary" title="Cancel" />    
+							icon="pi pi-times" styleClass="ui-button-secondary" 						 
+							action="#{admParameterMB.cancelEdition()}" 
+							id="btnCancel" title="Cancel" />    
 				    </div>
 				</div>	
 
@@ -70,7 +70,7 @@
 					</div>
 				</div>
 				<div class="ui-g">
-					<div class="ui-g-12 ui-md-8 ui-lg-6">
+					<div class="ui-g-12 ui-md-10 ui-lg-10">
 						<p:outputLabel for="description" value="Description:" />
 						<br></br>
 						<p:inputText id="description" required="true" label="Description"

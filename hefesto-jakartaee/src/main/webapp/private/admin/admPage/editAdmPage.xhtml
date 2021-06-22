@@ -16,20 +16,19 @@
 	
 				<div class="ui-g">
 				    <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">	
-						<p:commandButton value="Save" ajax="false" icon="pi pi-check-circle"
-							action="#{admPageMB.save()}" id="btnSave"
-							styleClass="btn btn-success"
-							title="Save a admPage" />
-	
-						<p:commandButton value="Clean" icon="pi pi-star" id="btnClean"
-							styleClass="btn btn-primary" type="reset"
-							title="Clean Fields" />
-	
+						<p:commandButton id="btnSave" value="Save" ajax="false"
+							icon="pi pi-check" styleClass="ui-button-success p-mr-2 p-mb-2"
+							action="#{admPageMB.save()}"
+							title="Save a page" />
+						
+						<p:commandButton value="Clean" id="btnClean"
+							icon="pi pi-star-o" styleClass="ui-button-primary p-mr-2"
+							type="reset" title="Clean Fields" />							
+					
 						<p:commandButton value="Cancel" immediate="true" ajax="false" 
-						    icon="pi pi-arrow-circle-left"
-							action="#{admPageMB.cancelEdition()}" id="btnCancel"
-							styleClass="btn  btn-primary"
-							title="Cancel" />
+							icon="pi pi-times" styleClass="ui-button-secondary" 						 
+							action="#{admPageMB.cancelEdition()}" 
+							id="btnCancel" title="Cancel" />    
 					</div>
 				</div>
 			
@@ -53,7 +52,7 @@
 					</div>
 				</div>						
 				<div class="ui-g">
-					<div class="ui-g-12 ui-md-4 ui-lg-4">
+					<div class="ui-g-12 ui-md-8 ui-lg-7">
 						<p:outputLabel for="pickListProfile" value="Page Profile(s):" />
 						<p:pickList id="pickListProfile" responsive="true"
 							value="#{admPageMB.dualListAdmProfile}"

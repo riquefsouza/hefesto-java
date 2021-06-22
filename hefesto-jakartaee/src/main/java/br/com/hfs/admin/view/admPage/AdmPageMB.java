@@ -56,15 +56,16 @@ public class AdmPageMB extends BaseViewRegister<AdmPage, Long, AdmPageService> i
 	public void init() {
 		updateDataTableList();
 		
-		if (beanInSession()) 
-			onEditMode();
-		else 
-			onInserMode();
+		if (beanInSession()) {
+			onEditMode(getBean());
+		}
+		
+		onInserMode();
 	}
 
-	private void loadAdmPerfis() {
-		List<AdmProfile> listaAdmProfileSelecionado = this.getBean().getId() == null ? new ArrayList<AdmProfile>()
-				: this.getService().findProfilesByPage(this.getBean());
+	private void loadAdmPerfis(AdmPage bean) {
+		List<AdmProfile> listaAdmProfileSelecionado = bean.getId() == null ? new ArrayList<AdmProfile>()
+				: this.getService().findProfilesByPage(bean);
 		this.listaAdmProfile = admProfileService.findAll();
 		this.listaAdmProfile.removeAll(listaAdmProfileSelecionado);
 		this.dualListAdmProfile = new DualListModel<AdmProfile>(this.listaAdmProfile, listaAdmProfileSelecionado);
@@ -76,16 +77,23 @@ public class AdmPageMB extends BaseViewRegister<AdmPage, Long, AdmPageService> i
 	}
 	
 	private void onInserMode() {
-		this.listaAdmProfile = admProfileService.findAll();
-	    this.dualListAdmProfile = new DualListModel<AdmProfile>(this.listaAdmProfile, new ArrayList<AdmProfile>());		
-	}
-	
-	private void onEditMode() {
-		if (getState().isEditMode()) {
-			loadAdmPerfis();
+		if (getState().isInsertMode()) {
+			this.listaAdmProfile = admProfileService.findAll();
+		    this.dualListAdmProfile = new DualListModel<AdmProfile>(this.listaAdmProfile, new ArrayList<AdmProfile>());
 		}
 	}
 	
+	private void onEditMode(AdmPage bean) {
+		if (getState().isEditMode()) {
+			loadAdmPerfis(bean);
+		}
+	}
+	
+	@Override
+	public String onEdit(AdmPage entity) {
+		return super.onEdit(entity);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

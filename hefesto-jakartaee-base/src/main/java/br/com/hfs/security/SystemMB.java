@@ -103,7 +103,7 @@ public class SystemMB extends BaseViewController implements Serializable {
 		this.authenticatedUser.setUserName(login);
 		if (applicationConfig.isEnableProfileControl()) {
 			
-			admUserService.setAdmProfileService(admProfileService);
+			//admUserService.setAdmProfileService(admProfileService);
 			/*
 			AdmFuncionarioDTO funcionario;
 			Long matricula = userVO.getMatricula();

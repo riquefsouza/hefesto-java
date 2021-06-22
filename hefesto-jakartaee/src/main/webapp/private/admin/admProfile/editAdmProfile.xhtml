@@ -16,20 +16,19 @@
 	
 				<div class="ui-g">
 				    <div class="ui-g-12 ui-md-12 ui-lg-12" style="text-align: right;">
-						<p:commandButton value="Save" ajax="false" icon="pi pi-check-circle"
-							action="#{admProfileMB.save()}" id="btnSave"
-							styleClass="btn btn-success disableSubmit"
-							title="Save a admProfile" />
-
-						<p:commandButton value="Clean" icon="pi pi-star" id="btnClean"
-							styleClass="btn btn-primary disableSubmit" type="reset"
-							title="Clean Fields" />
-
+						<p:commandButton id="btnSave" value="Save" ajax="false"
+							icon="pi pi-check" styleClass="ui-button-success p-mr-2 p-mb-2"
+							action="#{admProfileMB.save()}"
+							title="Save a profile" />
+						
+						<p:commandButton value="Clean" id="btnClean"
+							icon="pi pi-star-o" styleClass="ui-button-primary p-mr-2"
+							type="reset" title="Clean Fields" />							
+					
 						<p:commandButton value="Cancel" immediate="true" ajax="false" 
-						    icon="pi pi-arrow-circle-left"
-							action="#{admProfileMB.cancelEdition()}" id="btnCancel"
-							styleClass="btn  btn-primary disableSubmit"
-							title="Cancel" />
+							icon="pi pi-times" styleClass="ui-button-secondary" 						 
+							action="#{admProfileMB.cancelEdition()}" 
+							id="btnCancel" title="Cancel" />    
 					</div>
 				</div>
 			
@@ -87,5 +86,8 @@
 			</p:panel>
 
 		</h:form>
+		<br></br>
+		<br></br>
+		<br></br>		
 	</ui:define>
 </ui:composition>

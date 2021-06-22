@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import jakarta.inject.Inject;
-
 import br.com.hfs.admin.controller.dto.MenuItemDTO;
 import br.com.hfs.admin.model.AdmMenu;
 import br.com.hfs.admin.model.AdmPage;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
 import br.com.hfs.admin.repository.AdmProfileRepository;
+import br.com.hfs.admin.repository.AdmUserRepository;
 import br.com.hfs.admin.vo.AuthenticatedUserVO;
 import br.com.hfs.admin.vo.MenuVO;
 import br.com.hfs.admin.vo.PermissionVO;
 import br.com.hfs.admin.vo.ProfileVO;
 import br.com.hfs.base.BaseService;
+import jakarta.inject.Inject;
 
 public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileRepository> {
 
@@ -25,8 +25,11 @@ public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileR
 	@Inject
 	private AdmMenuService admMenuService;
 
+	//@Inject
+	//private AdmUserService admUserService;
+	
 	@Inject
-	private AdmUserService admUserService;
+	private AdmUserRepository admUserRepository;
 	
 	public List<AdmProfile> findPaginated(int pageNumber, int pageSize) {
 		return repository.findPaginated(pageNumber, pageSize);
@@ -115,9 +118,9 @@ public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileR
 		List<AdmUser> lista = new ArrayList<AdmUser>();
 		List<Long> listaCod = repository.findUsersByProfile(profile);
 		
-		admUserService.setAdmProfileService(this);
+		//admUserService.setAdmProfileService(this);
 		for (Long item : listaCod) {
-			lista.add(admUserService.findById(item).get());
+			lista.add(admUserRepository.findById(item).get());
 		}
 		
 		return lista;

@@ -56,21 +56,23 @@ BaseViewRegister<AdmParameter, Long, AdmParameterService>
 	public void init() {
 		listAdmParameterCategory = admParameterCategoryService.findAll();
 		updateDataTableList();
-		if (getBean().getAdmParameterCategory() != null && listAdmParameterCategory.size() > 0) {
-			getBean().getAdmParameterCategory().setId(listAdmParameterCategory.get(0).getId());
-			selectAdmParameterCategory();
-		}
-		
 		beanInSession();
 	}
 
 	/**
 	 * Select adm parametro categoria.
 	 */
-	public void selectAdmParameterCategory() {
+	public void selectAdmParameterCategory(AdmParameter bean) {
 		AdmParameterCategory admParametroCategoria = admParameterCategoryService
-				.findById(getBean().getAdmParameterCategory().getId()).get();
-		getBean().setAdmParameterCategory(admParametroCategoria);
+				.findById(bean.getAdmParameterCategory().getId()).get();
+		bean.setAdmParameterCategory(admParametroCategoria);
+	}
+	
+	private void setAdmParameterCategory(AdmParameter bean) {
+		if (bean.getAdmParameterCategory() != null && listAdmParameterCategory.size() > 0) {
+			bean.getAdmParameterCategory().setId(listAdmParameterCategory.get(0).getId());
+			selectAdmParameterCategory(bean);
+		}		
 	}
 
 	/* (non-Javadoc)
@@ -78,7 +80,14 @@ BaseViewRegister<AdmParameter, Long, AdmParameterService>
 	 */
 	@Override
 	public String onInsert() {
-		return super.onInsert(new AdmParameter());
+		AdmParameter obj = new AdmParameter();
+		setAdmParameterCategory(obj);
+		return super.onInsert(obj);
+	}
+	
+	@Override
+	public String onEdit(AdmParameter entity) {
+		return super.onEdit(entity);
 	}
 
 	/* (non-Javadoc)
