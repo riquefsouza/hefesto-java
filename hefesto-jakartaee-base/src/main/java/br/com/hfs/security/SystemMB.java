@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.directory.api.ldap.model.password.BCrypt;
-
 import br.com.hfs.ApplicationConfig;
 import br.com.hfs.ApplicationUtil;
 import br.com.hfs.admin.model.AdmUser;
@@ -18,8 +16,8 @@ import br.com.hfs.admin.vo.PageVO;
 import br.com.hfs.admin.vo.PermissionVO;
 import br.com.hfs.admin.vo.UserVO;
 import br.com.hfs.base.BaseViewController;
+import br.com.hfs.util.bcrypt.BCryptUtil;
 import br.com.hfs.util.interceptors.HandlingExpectedErrors;
-import br.com.hfs.util.ldap.LdapConfig;
 import br.com.hfs.util.ldap.LdapUtil;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
@@ -87,8 +85,11 @@ public class SystemMB extends BaseViewController implements Serializable {
 			return true;
 		}
 		*/
-		String hashed = BCrypt.hashPw(password, BCrypt.genSalt());
-		if (BCrypt.checkPw(password, hashed)) {
+		
+		//String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+		//if (BCrypt.checkpw(password, hashed)) {
+		String hashed = BCryptUtil.hash(password);
+		if (BCryptUtil.verifyAndUpdateHash(password, hashed, BCryptUtil.update)) {
 			Optional<AdmUser> user = admUserService.findByLogin(login);
 			if (user.isPresent()) {
 				setProperties(login, user.get().toUserVO());
@@ -182,6 +183,7 @@ public class SystemMB extends BaseViewController implements Serializable {
 		return this.authenticatedUser.getPageByMenu(idMenu);
 	}
 
+	/*
 	private boolean autenticarViaLDAP(String login, String senha) {
 		if (!login.isEmpty() && !senha.isEmpty()) {
 			LdapConfig config = new LdapConfig();				
@@ -203,6 +205,7 @@ public class SystemMB extends BaseViewController implements Serializable {
 
 		return false;
 	}
+	*/
 
 	/* (non-Javadoc)
 	 * @see br.jus.trt1.hfsframework.base.BaseViewController#getAuthenticatedUser()
