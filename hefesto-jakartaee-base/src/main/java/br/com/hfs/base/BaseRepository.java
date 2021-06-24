@@ -37,6 +37,65 @@ public abstract class BaseRepository<T, I extends Serializable> implements IBase
 		return em.createQuery("SELECT x FROM " + clazz.getName() + " x", clazz).getResultList();
 	}
 
+	public Integer queryIntegerSingle(String nameQuery, Object... lparams) {
+		TypedQuery<Integer> query = em.createNamedQuery(nameQuery, Integer.class);
+		for(int i = 0; i < lparams.length; i++){
+			Object param = lparams[i];
+			query.setParameter(i+1, param);
+		}
+		return query.getSingleResult();
+	}
+
+	public Long queryLongSingle(String nameQuery, Object... lparams) {
+		TypedQuery<Long> query = em.createNamedQuery(nameQuery, Long.class);
+		for(int i = 0; i < lparams.length; i++){
+			Object param = lparams[i];
+			query.setParameter(i+1, param);
+		}
+		return query.getSingleResult();
+	}
+
+	public List<Long> queryLongList(String nameQuery, Object... lparams) {
+		TypedQuery<Long> query = em.createNamedQuery(nameQuery, Long.class);
+		for(int i = 0; i < lparams.length; i++){
+			Object param = lparams[i];
+			query.setParameter(i+1, param);
+		}
+		return query.getResultList();
+	}
+
+	public String queryStringSingle(String nameQuery, Object... lparams) {
+		TypedQuery<String> query = em.createNamedQuery(nameQuery, String.class);
+		for(int i = 0; i < lparams.length; i++){
+			Object param = lparams[i];
+			query.setParameter(i+1, param);
+		}
+		return query.getSingleResult();
+	}
+
+	public <X> TypedQuery<X> query(Class<X> resultClass, String nameQuery, Object... lparams) {
+		TypedQuery<X> query = em.createNamedQuery(nameQuery, resultClass);
+		for(int i = 0; i < lparams.length; i++){
+			Object param = lparams[i];
+			query.setParameter(i+1, param);
+		}
+		return query;
+	}
+
+	public List<T> queryList(String nameQuery) {
+		TypedQuery<T> query = em.createNamedQuery(nameQuery, this.clazz);
+		return query.getResultList();
+	}
+	
+	public List<T> queryList(String nameQuery, Object... lparams) {
+		TypedQuery<T> query = em.createNamedQuery(nameQuery, this.clazz);
+		for(int i = 0; i < lparams.length; i++){
+			Object param = lparams[i];
+			query.setParameter(i+1, param);
+		}
+		return query.getResultList();
+	}
+	
 	@Transactional
 	public T insert(T entity) {
 		em.persist(entity);

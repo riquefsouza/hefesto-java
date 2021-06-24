@@ -2,8 +2,6 @@ package br.com.hfs.admin.repository;
 
 import java.util.List;
 
-import jakarta.persistence.TypedQuery;
-
 import br.com.hfs.admin.model.AdmMenu;
 import br.com.hfs.admin.model.AdmPage;
 import br.com.hfs.base.BaseRepository;
@@ -25,43 +23,31 @@ public class AdmMenuRepository extends BaseRepository<AdmMenu, Long> {
 	}
 
 	public List<AdmMenu> findChildrenMenus(AdmMenu menu) {
-		TypedQuery<AdmMenu> query = em.createNamedQuery("AdmMenu.findChildrenMenus", this.getClazz());
-		query.setParameter(1, menu);
-		return query.getResultList();
+		return queryList("AdmMenu.findChildrenMenus", menu);
 	}
 	
 	public List<AdmMenu> findMenuRoot() {
-		TypedQuery<AdmMenu> query = em.createNamedQuery("AdmMenu.findMenuRoot", this.getClazz());
-		return query.getResultList();
+		return queryList("AdmMenu.findMenuRoot");
 	}	
 
 	public List<AdmMenu> findMenuRootByDescription(String nomeItemMenu) {
-		TypedQuery<AdmMenu> query = em.createNamedQuery("AdmMenu.findMenuRootByDescription", this.getClazz());
-		query.setParameter(1, nomeItemMenu);
-		return query.getResultList();
+		return queryList("AdmMenu.findMenuRootByDescription", nomeItemMenu);
 	}
 	
 	public Integer countMenuByPage(AdmPage page) {
-		TypedQuery<Integer> query = em.createNamedQuery("AdmMenu.countMenuByPage", Integer.class);
-		query.setParameter(1, page);
-		return query.getSingleResult();
+		return queryIntegerSingle("AdmMenu.countMenuByPage", page);
 	}
 	
 	public List<AdmMenu> findAdminMenuParentByPage(AdmPage page) {
-		TypedQuery<AdmMenu> query = em.createNamedQuery("AdmMenu.findAdminMenuParentByPage", this.getClazz());
-		query.setParameter(1, page);
-		return query.getResultList();
+		return queryList("AdmMenu.findAdminMenuParentByPage", page);
 	}
 
 	public List<AdmMenu> findMenuParentByPage(AdmPage page) {
-		TypedQuery<AdmMenu> query = em.createNamedQuery("AdmMenu.findMenuParentByPage", this.getClazz());
-		query.setParameter(1, page);
-		return query.getResultList();
+		return queryList("AdmMenu.findMenuParentByPage", page);
 	}
 	
 	public AdmPage findPageByMenu(AdmPage page, Long idMenu) {
-		TypedQuery<AdmPage> query = em.createNamedQuery("AdmMenu.findPageByMenu", AdmPage.class);
-		query.setParameter(1, page);
-		return query.getSingleResult();
+		return query(AdmPage.class, "AdmMenu.findPageByMenu", page, idMenu)
+				.getSingleResult();
 	}
 }

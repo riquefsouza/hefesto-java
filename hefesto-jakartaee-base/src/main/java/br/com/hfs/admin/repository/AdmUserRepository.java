@@ -26,18 +26,15 @@ public class AdmUserRepository extends BaseRepository<AdmUser, Long> {
 
 	public Optional<AdmUser> findByLogin(String login) {
 		try {
-			TypedQuery<AdmUser> query = em.createNamedQuery("AdmUser.findByLogin", AdmUser.class);
-			query.setParameter(1, login);
-			return Optional.of(query.getSingleResult());
+			TypedQuery<AdmUser> tquery = query(AdmUser.class, "AdmUser.findByLogin", login);
+			return Optional.of(tquery.getSingleResult());
 		} catch (Exception e) {
 			return Optional.empty();
 		}		
 	}
 	
 	public List<AdmUser> findByLikeEmail(String email){
-		TypedQuery<AdmUser> query = em.createNamedQuery("AdmUser.findByLikeEmail", AdmUser.class);
-		query.setParameter(1, email + "%");
-		return query.getResultList();
+		return queryList("AdmUser.findByLikeEmail", email + "%");
 	}
 	
 	public List<?> findIPByOracle() {

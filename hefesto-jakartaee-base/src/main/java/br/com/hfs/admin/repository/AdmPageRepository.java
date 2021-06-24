@@ -2,8 +2,6 @@ package br.com.hfs.admin.repository;
 
 import java.util.List;
 
-import jakarta.persistence.TypedQuery;
-
 import br.com.hfs.admin.model.AdmPage;
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.base.BaseRepository;
@@ -25,8 +23,7 @@ public class AdmPageRepository extends BaseRepository<AdmPage, Long> {
 	}
 	
 	public List<AdmProfile> findProfilesByPage(AdmPage page){
-		TypedQuery<AdmProfile> query = em.createNamedQuery("AdmPage.findProfilesByPage", AdmProfile.class);
-		query.setParameter(1, page);
-		return query.getResultList();
+		return query(AdmProfile.class, "AdmPage.findProfilesByPage", page)
+				.getResultList();
 	}
 }
