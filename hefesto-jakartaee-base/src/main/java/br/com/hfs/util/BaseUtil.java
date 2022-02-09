@@ -12,7 +12,10 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
+
 import javax.swing.text.MaskFormatter;
 
 import org.apache.commons.lang3.ObjectUtils;
@@ -320,6 +323,18 @@ public class BaseUtil implements Serializable {
 			}
 		}
 		return lista.contains(stexto);
+	}
+
+	public static String getRemoteAddr() {		
+		HttpServletRequest request =  (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		
+		String ipAddress = request.getHeader("X-FORWARDED-FOR");  
+		if (ipAddress == null) {  
+			ipAddress = request.getRemoteAddr();  
+		}
+		
+		return ipAddress;
 	}
 	
 }

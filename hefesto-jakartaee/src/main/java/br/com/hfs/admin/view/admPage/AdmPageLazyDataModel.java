@@ -19,6 +19,7 @@ import org.primefaces.model.SortMeta;
 import br.com.hfs.admin.model.AdmPage;
 import br.com.hfs.admin.service.AdmPageService;
 import br.com.hfs.base.BaseLazyModel;
+import jakarta.faces.context.FacesContext;
 
 public class AdmPageLazyDataModel extends LazyDataModel<AdmPage> {
 	
@@ -76,4 +77,11 @@ public class AdmPageLazyDataModel extends LazyDataModel<AdmPage> {
 
 		return data;
 	}
+	
+	@Override
+	public int count(Map<String, FilterMeta> filterBy) {
+		return (int) this.baseLazyModel.getDatasource().stream()
+				.filter(o -> this.baseLazyModel.filter(FacesContext.getCurrentInstance(), filterBy.values(), o)).count();
+	}
+	
 }

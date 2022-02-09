@@ -1,21 +1,22 @@
 package br.com.hfs.admin.converter;
 
-import jakarta.faces.component.UIComponent;
-import jakarta.faces.context.FacesContext;
-import jakarta.faces.convert.Converter;
-import jakarta.faces.convert.FacesConverter;
-
-import org.omnifaces.util.Beans;
 import org.primefaces.component.picklist.PickList;
 import org.primefaces.model.DualListModel;
 
 import br.com.hfs.admin.model.AdmPage;
 import br.com.hfs.admin.service.AdmPageService;
+import jakarta.faces.component.UIComponent;
+import jakarta.faces.context.FacesContext;
+import jakarta.faces.convert.Converter;
+import jakarta.faces.convert.FacesConverter;
+import jakarta.inject.Inject;
 
 @FacesConverter(value = "admPageConverter")
 public class AdmPageConverter implements Converter<AdmPage> {
 
-	private AdmPageService admPageService = Beans.getReference(AdmPageService.class);
+	@Inject
+	private AdmPageService admPageService;
+	//private AdmPageService admPageService = Beans.getReference(AdmPageService.class);
 
 	@Override
 	public AdmPage getAsObject(FacesContext context, UIComponent component, String value) {

@@ -18,8 +18,8 @@
 
 		<jakartaee-api.version>9.1.0</jakartaee-api.version>
 
-		<primefaces.version>10.0.0</primefaces.version>
-		<primefaces-extensions.version>10.0.2</primefaces-extensions.version>
+		<primefaces.version>11.0.0</primefaces.version>
+		<primefaces-extensions.version>11.0.1</primefaces-extensions.version>
 		
 		<junit-jupiter.version>5.8.0-M1</junit-jupiter.version>
 		<junit.platform.version>1.8.0-M1</junit.platform.version>
@@ -56,7 +56,7 @@
 			<version>${primefaces.version}</version>
 			<classifier>jakarta</classifier>
 		</dependency>
-		
+
 		<dependency>
 		    <groupId>org.primefaces.extensions</groupId>
 		    <artifactId>primefaces-extensions</artifactId>

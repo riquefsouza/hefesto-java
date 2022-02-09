@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16238708744690" configfile="/hefesto-jakartaee/src/main/webapp/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16238708744690" configfile="/hefesto-jakartaee/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="login.xhtml" x="122" y="178" id="pf16444150220660" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" outlinks="pf16444150220661 pf16444150220672 pf16444150220673 pf16444150220674 pf16444150220675" inlinks="pf16444150220672 pf16444150220674 pf16444150220675" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="private/desktop.xhtml" x="338" y="178" id="pf16444150220676" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf16444150220661 pf16444150220673" path="/private/desktop.xhtml"/>
+  <links id="pf16444150220661" target="pf16444150220676" source="pf16444150220660" outcome="LOGIN_HOME_PAGE" redirect="true"/>
+  <links id="pf16444150220673" target="pf16444150220676" source="pf16444150220660" outcome="success" redirect="true" fromaction="#{identity.login()}"/>
+  <links id="pf16444150220672" target="pf16444150220660" source="pf16444150220660" outcome="LOGIN_PAGE" redirect="true">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+  <links id="pf16444150220674" target="pf16444150220660" source="pf16444150220660" outcome="failure" redirect="true" fromaction="#{identity.login()}">
+    <bendPoints d1Height="-66" d2Height="-66"/>
+    <bendPoints d1Width="-94" d1Height="-66" d2Width="-94" d2Height="-66"/>
+    <bendPoints d1Width="-94" d2Width="-94"/>
+  </links>
+  <links id="pf16444150220675" target="pf16444150220660" source="pf16444150220660" outcome="SUCESSO" redirect="true" fromaction="#{hfsAuthenticator.logOut()}">
+    <bendPoints d1Height="-96" d2Height="-96"/>
+    <bendPoints d1Width="-124" d1Height="-96" d2Width="-124" d2Height="-96"/>
+    <bendPoints d1Width="-124" d2Width="-124"/>
+  </links>
+</pageflow:Pageflow>

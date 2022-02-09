@@ -47,7 +47,7 @@
 		<resource-bundle>
 			<base-name>messages</base-name>
 			<var>messages</var>
-		</resource-bundle>		
+		</resource-bundle>
 	</application>
 
 </faces-config>

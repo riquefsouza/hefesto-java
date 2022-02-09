@@ -4,8 +4,8 @@ import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.FacesConverter;
+import jakarta.inject.Inject;
 
-import org.omnifaces.util.Beans;
 import org.primefaces.component.picklist.PickList;
 import org.primefaces.model.DualListModel;
 
@@ -15,7 +15,9 @@ import br.com.hfs.admin.service.AdmMenuService;
 @FacesConverter(value = "admMenuConverter")
 public class AdmMenuConverter implements Converter<AdmMenu> {
 
-	private AdmMenuService admMenuService = Beans.getReference(AdmMenuService.class);
+	@Inject
+	private AdmMenuService admMenuService;
+	//private AdmMenuService admMenuService = Beans.getReference(AdmMenuService.class);
 
 	@Override
 	public AdmMenu getAsObject(FacesContext context, UIComponent component, String value) {

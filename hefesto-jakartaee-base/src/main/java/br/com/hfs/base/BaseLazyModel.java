@@ -1,12 +1,19 @@
 package br.com.hfs.base;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.SortMeta;
+import org.primefaces.model.filter.FilterConstraint;
+import org.primefaces.util.LocaleUtils;
+
+import jakarta.faces.context.FacesContext;
 
 public class BaseLazyModel<T, I extends Serializable, B extends BaseService<T, I, ? extends BaseRepository<T, I>>>
 		implements Serializable {
@@ -130,4 +137,30 @@ public class BaseLazyModel<T, I extends Serializable, B extends BaseService<T, I
 		return service;
 	}
 
+	public boolean filter(FacesContext context, Collection<FilterMeta> filterBy, Object o) {
+		boolean matching = true;
+
+		for (FilterMeta filter : filterBy) {
+			FilterConstraint constraint = filter.getConstraint();
+			Object filterValue = filter.getFilterValue();
+
+			try {
+				Object columnValue = String.valueOf(this.getPropertyValueViaReflection(o, filter.getField()));
+				matching = constraint.isMatching(context, columnValue, filterValue, LocaleUtils.getCurrentLocale());
+			} catch (ReflectiveOperationException | IntrospectionException e) {
+				matching = false;
+			}
+
+			if (!matching) {
+				break;
+			}
+		}
+
+		return matching;
+	}
+
+	private Object getPropertyValueViaReflection(Object o, String field)
+			throws ReflectiveOperationException, IllegalArgumentException, IntrospectionException {
+		return new PropertyDescriptor(field, o.getClass()).getReadMethod().invoke(o);
+	}
 }

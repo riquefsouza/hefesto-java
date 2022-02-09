@@ -15,7 +15,6 @@ import org.hibernate.Session;
 import org.hibernate.TransactionException;
 import org.hibernate.jdbc.ReturningWork;
 import org.modelmapper.ModelMapper;
-import org.omnifaces.util.Faces;
 
 import br.com.hfs.admin.model.AdmProfile;
 import br.com.hfs.admin.model.AdmUser;
@@ -222,7 +221,7 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 			user.setLogin(login);
 			user.setName(name);
 			user.setEmail(email);
-			user.setIp(Faces.getRemoteAddr()); //OmniFaces
+			user.setIp(BaseUtil.getRemoteAddr());
 			user.setLdapDN(ldapDN);
 			
 			if (auditar) {

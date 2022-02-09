@@ -38,9 +38,9 @@ public class AdmMenuMB
 	@Inject
 	private AdmPageService admPaginaService;
 
-	private TreeNode menuRoot;
+	private TreeNode<AdmMenu> menuRoot;
 
-	private TreeNode menuSelected;
+	private TreeNode<AdmMenu> menuSelected;
 
 	private AdmMenu newItemMenu;
 	
@@ -131,7 +131,7 @@ public class AdmMenuMB
 	 *
 	 * @return o the menu root
 	 */
-	public TreeNode getMenuRoot() {
+	public TreeNode<AdmMenu> getMenuRoot() {
 		return menuRoot;
 	}
 
@@ -141,7 +141,7 @@ public class AdmMenuMB
 	 * @param menuRoot
 	 *            o novo the menu root
 	 */
-	public void setMenuRoot(TreeNode menuRoot) {
+	public void setMenuRoot(TreeNode<AdmMenu> menuRoot) {
 		this.menuRoot = menuRoot;
 	}
 
@@ -150,7 +150,7 @@ public class AdmMenuMB
 	 *
 	 * @return o the menu selecionado
 	 */
-	public TreeNode getMenuSelected() {
+	public TreeNode<AdmMenu> getMenuSelected() {
 		return menuSelected;
 	}
 
@@ -160,7 +160,7 @@ public class AdmMenuMB
 	 * @param menuSelected
 	 *            o novo the menu selecionado
 	 */
-	public void setMenuSelected(TreeNode menuSelected) {
+	public void setMenuSelected(TreeNode<AdmMenu> menuSelected) {
 		this.menuSelected = menuSelected;
 	}
 
@@ -212,22 +212,22 @@ public class AdmMenuMB
 
 		AdmMenu menu = new AdmMenu();
 		menu.setDescription("System Menu");
-		this.menuRoot = new DefaultTreeNode(menu, null);
+		this.menuRoot = new DefaultTreeNode<AdmMenu>(menu, null);
 		for (AdmMenu itemMenu : listaMenus) {
-			TreeNode m = new DefaultTreeNode(itemMenu, this.menuRoot);
+			TreeNode<AdmMenu> m = new DefaultTreeNode<AdmMenu>(itemMenu, this.menuRoot);
 			mountSubMenu(itemMenu, m);
 		}
 	}
 
-	private List<TreeNode> mountSubMenu(AdmMenu menu, TreeNode pMenu) {
-		List<TreeNode> lstSubMenu = new ArrayList<TreeNode>();
+	private List<TreeNode<AdmMenu>> mountSubMenu(AdmMenu menu, TreeNode<AdmMenu> pMenu) {
+		List<TreeNode<AdmMenu>> lstSubMenu = new ArrayList<TreeNode<AdmMenu>>();
 		if (menu.getAdmSubMenus() != null) {
 			for (AdmMenu subMenu : menu.getAdmSubMenus()) {
 				if (subMenu.isSubMenu()) {
-					TreeNode m = new DefaultTreeNode(subMenu, pMenu);
+					TreeNode<AdmMenu> m = new DefaultTreeNode<AdmMenu>(subMenu, pMenu);
 					mountSubMenu(subMenu, m);
 				} else {
-					new DefaultTreeNode(subMenu, pMenu);
+					new DefaultTreeNode<AdmMenu>(subMenu, pMenu);
 				}
 			}
 		}
@@ -247,15 +247,15 @@ public class AdmMenuMB
 	 *            the event
 	 */
 	public void onDragDrop(TreeDragDropEvent event) {
-		TreeNode dragNode = event.getDragNode();
-		TreeNode dropNode = event.getDropNode();
+		TreeNode<AdmMenu> dragNode = event.getDragNode();
+		TreeNode<AdmMenu> dropNode = event.getDropNode();
 		int dropIndex = event.getDropIndex();
 
 		AdmMenu menuMover = (AdmMenu) dragNode.getData();
 		AdmMenu menuPai = (AdmMenu) dropNode.getData();
 
 		int ordem = 1;
-		for (TreeNode tn : dropNode.getChildren()) {
+		for (TreeNode<AdmMenu> tn : dropNode.getChildren()) {
 			AdmMenu menu = (AdmMenu) tn.getData();
 			menu.setOrder(Integer.valueOf(ordem));
 			ordem++;

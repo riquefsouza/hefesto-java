@@ -13,9 +13,10 @@ import org.primefaces.model.SortMeta;
 import br.com.hfs.admin.model.AdmMenu;
 import br.com.hfs.admin.service.AdmMenuService;
 import br.com.hfs.base.BaseLazyModel;
+import jakarta.faces.context.FacesContext;
 
 public class AdmMenuLazyDataModel extends LazyDataModel<AdmMenu> {
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
@@ -27,7 +28,9 @@ public class AdmMenuLazyDataModel extends LazyDataModel<AdmMenu> {
 		this.baseLazyModel = new BaseLazyModel<AdmMenu, Long, AdmMenuService>(service);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.primefaces.model.LazyDataModel#getRowData(java.lang.String)
 	 */
 	@Override
@@ -39,7 +42,9 @@ public class AdmMenuLazyDataModel extends LazyDataModel<AdmMenu> {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see org.primefaces.model.LazyDataModel#getRowKey(java.lang.Object)
 	 */
 	@Override
@@ -47,8 +52,11 @@ public class AdmMenuLazyDataModel extends LazyDataModel<AdmMenu> {
 		return String.valueOf(admMenu.getId());
 	}
 
-	/* (non-Javadoc)
-	 * @see org.primefaces.model.LazyDataModel#load(int, int, java.lang.String, org.primefaces.model.SortOrder, java.util.Map)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.primefaces.model.LazyDataModel#load(int, int, java.lang.String,
+	 * org.primefaces.model.SortOrder, java.util.Map)
 	 */
 	@Override
 	public List<AdmMenu> load(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
@@ -56,17 +64,15 @@ public class AdmMenuLazyDataModel extends LazyDataModel<AdmMenu> {
 
 		// sort
 		/*
-		if (sortBy != null) {
-			Collections.sort(data, new AdmMenuLazySorter(sortField, sortOrder));
+		 * if (sortBy != null) { Collections.sort(data, new AdmMenuLazySorter(sortField,
+		 * sortOrder)); }
+		 */
+		if (!sortBy.isEmpty()) {
+			List<Comparator<AdmMenu>> comparators = sortBy.values().stream()
+					.map(o -> new AdmMenuLazySorter(o.getField(), o.getOrder())).collect(Collectors.toList());
+			Comparator<AdmMenu> cp = ComparatorUtils.chainedComparator(comparators);
+			data.sort(cp);
 		}
-		*/
-        if (!sortBy.isEmpty()) {
-            List<Comparator<AdmMenu>> comparators = sortBy.values().stream()
-                    .map(o -> new AdmMenuLazySorter(o.getField(), o.getOrder()))
-                    .collect(Collectors.toList());
-            Comparator<AdmMenu> cp = ComparatorUtils.chainedComparator(comparators);
-            data.sort(cp);
-        }		
 
 		if (filterBy.keySet().size() > 0 && this.baseLazyModel.isFound()) {
 			this.setRowCount(data.size());
@@ -75,6 +81,12 @@ public class AdmMenuLazyDataModel extends LazyDataModel<AdmMenu> {
 		}
 
 		return data;
+	}
+
+	@Override
+	public int count(Map<String, FilterMeta> filterBy) {
+		return (int) this.baseLazyModel.getDatasource().stream()
+				.filter(o -> this.baseLazyModel.filter(FacesContext.getCurrentInstance(), filterBy.values(), o)).count();
 	}
 
 }

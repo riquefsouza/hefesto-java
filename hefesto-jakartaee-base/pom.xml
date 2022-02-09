@@ -24,9 +24,9 @@
         <poi-ooxml.version>5.0.0</poi-ooxml.version>
 		<pdfbox.version>2.0.24</pdfbox.version>
 
-		<primefaces.version>10.0.0</primefaces.version>
+		<primefaces.version>11.0.0</primefaces.version>
 		
-		<log4j-core.version>2.13.3</log4j-core.version>
+		<log4j-core.version>2.17.1</log4j-core.version>
 		<jasperreports.version>6.17.0</jasperreports.version>
 		
 		<junit-jupiter.version>5.8.0-M1</junit-jupiter.version>
@@ -124,11 +124,11 @@
 		    <artifactId>modelmapper</artifactId>
 		    <version>2.4.4</version>
 		</dependency>
-
+<!--
 		<dependency>
 		    <groupId>org.omnifaces</groupId>
 		    <artifactId>omnifaces</artifactId>
-		    <version>4.0-M9</version>
+		    <version>4.0-M13</version>
 		</dependency>
 		
 		<dependency>
@@ -136,7 +136,7 @@
 		    <artifactId>omniutils</artifactId>
 		    <version>0.12</version>
 		</dependency>
-		
+ -->		
 		<dependency>
 		    <groupId>com.github.librepdf</groupId>
 		    <artifactId>openpdf</artifactId>
