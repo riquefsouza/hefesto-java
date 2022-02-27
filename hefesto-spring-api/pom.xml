@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.0</version>
+		<version>2.6.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.hfs</groupId>
@@ -15,7 +15,7 @@
 	<description>hefesto-spring-api (REST E JWT)</description>
 
 	<properties>
-		<java.version>16</java.version>
+		<java.version>17</java.version>
 		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
 	</properties>
 

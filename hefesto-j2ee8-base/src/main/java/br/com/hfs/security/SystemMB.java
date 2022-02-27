@@ -13,6 +13,7 @@ import org.picketlink.idm.credential.util.BCrypt;
 import br.com.hfs.ApplicationConfig;
 import br.com.hfs.ApplicationUtil;
 import br.com.hfs.admin.model.AdmUser;
+import br.com.hfs.admin.service.AdmProfileService;
 import br.com.hfs.admin.service.AdmUserService;
 import br.com.hfs.admin.service.TestModeService;
 import br.com.hfs.admin.vo.AuthenticatedUserVO;
@@ -50,6 +51,9 @@ public class SystemMB extends BaseViewController implements Serializable {
 	
 	@Inject
 	private TestModeService testModeService;
+	
+	@Inject
+	private AdmProfileService admProfileService;
 	
 	public void secureSession() {
 		this.log.warn(this.authenticatedUser.getDisplayName() + " remains connected in the session");
@@ -118,6 +122,7 @@ public class SystemMB extends BaseViewController implements Serializable {
 					&& !this.authenticatedUser.getModeTestLoginVirtual().isEmpty()){
 				
 				this.authenticatedUser.setUser(admUserService.getUser(
+						admProfileService,
 						this.authenticatedUser.getUser().getId(),
 						this.authenticatedUser.getUserName(),
 						this.authenticatedUser.getDisplayName(),
@@ -126,7 +131,8 @@ public class SystemMB extends BaseViewController implements Serializable {
 						userVO.getLdapDN(), false).toUserVO());											
 				
 			} else {			
-				this.authenticatedUser.setUser(admUserService.getUser(							
+				this.authenticatedUser.setUser(admUserService.getUser(
+						admProfileService,
 						this.authenticatedUser.getUser().getId(), 
 						userVO.getLogin(), userVO.getName(),
 					//this.authenticatedUser.getFuncionario().getCpf(),

@@ -1,7 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.hfs</groupId>
 	<artifactId>hefesto-j2ee8</artifactId>
@@ -10,8 +9,8 @@
 	<name>hefesto-j2ee8</name>
 
 	<properties>
-		<maven.compiler.source>16</maven.compiler.source>
-		<maven.compiler.target>16</maven.compiler.target>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -22,7 +21,7 @@
         <hibernate.version>6.0.0.Alpha5</hibernate.version>
         <hibernate-validator.version>7.0.0.Alpha4</hibernate-validator.version>
 
-        <log4j-core.version>2.13.3</log4j-core.version>
+        <log4j-core.version>2.17.1</log4j-core.version>
         <slf4j.version>2.0.0-alpha1</slf4j.version>
 
         <junit.version>5.7.0-M1</junit.version>

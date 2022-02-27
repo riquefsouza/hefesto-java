@@ -209,8 +209,10 @@ public class AdmUserService extends BaseService<AdmUser, Long, AdmUserRepository
 	}
 		
 	@Transactional
-	public AdmUser getUser(Long id, String login, String name, String email, String ldapDN, boolean auditar) throws TransactionException {
+	public AdmUser getUser(AdmProfileService profileService, 
+			Long id, String login, String name, String email, String ldapDN, boolean auditar) throws TransactionException {
 		AdmUser user;
+		this.setAdmProfileService(profileService);
 		Optional<AdmUser> ouser = this.findById(id);
 		if (ouser.isEmpty()) {
 			user = new AdmUser();

@@ -29,8 +29,8 @@ public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileR
 	@Autowired
 	private AdmMenuService admMenuService;
 
-	@Autowired
-	private AdmUserService admUserService;
+	//@Autowired
+	//private AdmUserService admUserService;
 
 	public AdmProfileService() {
 		super(AdmProfile.class);
@@ -122,7 +122,7 @@ public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileR
 		List<AdmMenu> listaMenuParent = this.findMenuParentByProfile(profilePai);
 		return admMenuService.toListMenuVO(listaMenuParent);		
 	}
-	
+	/*
 	public List<AdmUser> findUsersPorProfile(AdmProfile profile){
 		List<AdmUser> lista = new ArrayList<AdmUser>();
 		List<Long> listaCod = repository.findUsersByProfile(profile);
@@ -133,7 +133,7 @@ public class AdmProfileService extends BaseService<AdmProfile, Long, AdmProfileR
 		
 		return lista;
 	}
-	
+	*/
 	public List<AdmProfile> findProfilesByUser(Long idUser) {
 		return repository.findProfilesByUser(idUser);
 	}
